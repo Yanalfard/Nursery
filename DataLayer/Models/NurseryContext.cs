@@ -1,6 +1,4 @@
-﻿using System;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata;
+﻿using Microsoft.EntityFrameworkCore;
 
 namespace DataLayer.Models
 {
@@ -43,6 +41,8 @@ namespace DataLayer.Models
             modelBuilder.Entity<TblField>(entity =>
             {
                 entity.Property(e => e.IsDeleted).HasDefaultValueSql("((0))");
+
+                entity.Property(e => e.IsRequired).HasDefaultValueSql("((0))");
             });
 
             modelBuilder.Entity<TblForm>(entity =>

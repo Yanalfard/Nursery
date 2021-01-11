@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -24,6 +23,7 @@ namespace DataLayer.Models
         [StringLength(500)]
         public string Tooltip { get; set; }
         public string Options { get; set; }
+        public bool? IsRequired { get; set; }
         public bool? IsDeleted { get; set; }
 
         [InverseProperty("Field")]
