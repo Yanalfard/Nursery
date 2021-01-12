@@ -1,0 +1,203 @@
+@import '_colors.scss';
+@import '_layout.scss';
+
+button, .btn, a, a:hover .js-upload, input[type=file] {
+    cursor: pointer;
+    outline: none;
+    text-decoration: none !important;
+}
+
+.btn {
+    display: inline-block;
+    min-height: 27px;
+    @include border-def-radius;
+    border: 0;
+    padding: 4px 15px;
+    min-width: 100px;
+    text-align: center;
+    font-size: 14px;
+    font-weight: 400;
+    white-space: nowrap;
+    -moz-box-sizing: content-box;
+    -webkit-box-sizing: content-box;
+    box-sizing: padding-box;
+    @include trans(.3s);
+
+    span {
+        white-space: nowrap;
+    }
+}
+
+@mixin btn-click-glow {
+    $intensinty: 0.32;
+    -moz-box-shadow: 0 0 9px transparentize($primary,1 - $intensinty);
+    -webkit-box-shadow: 0 0 9px transparentize($primary,1 -$intensinty);
+    box-shadow: 0 0 9px transparentize($primary,1 -$intensinty);
+}
+
+@mixin btn-static-shadow {
+    -moz-box-shadow: 0 2px 2px rgba(0,0,0,0.1);
+    -webkit-box-shadow: 0 2px 2px rgba(0,0,0,0.1);
+    box-shadow: 0 2px 2px rgba(0,0,0,0.1);
+}
+
+@mixin component-border {
+    border: 1px #ddd solid;
+}
+
+
+.btn-primary {
+    background-color: $primary;
+    color: white;
+    @include btn-static-shadow;
+}
+
+.btn-primary:hover, .btn-primary:focus {
+    background-color: $primary-light;
+}
+
+.btn-primary:active {
+    background-color: $primary-dark;
+    @include btn-click-glow;
+    transition: background-color ease .2s;
+}
+
+//-
+
+.btn-secondary {
+    @include component-border;
+    background-color: transparent;
+    color: $Text;
+    @include btn-static-shadow;
+}
+
+.btn-dashed {
+    border: 1px #ddd dashed;
+    background-color: transparent;
+    color: $Text;
+    @include btn-static-shadow;
+}
+
+.btn-secondary:hover, .btn-secondary:focus, .btn-dashed:hover, .btn-dashed:focus {
+    border-color: $primary;
+    color: $primary-light;
+}
+
+.btn-secondary:active, .btn-dashed:active {
+    border-color: $primary-dark;
+    color: $primary-dark;
+    @include btn-click-glow;
+    transition: background-color ease .2s;
+}
+
+//-
+
+.btn-text {
+    background: rgba(0,0,0,.00);
+    color: $Text;
+}
+
+.btn-text:hover, .btn-text:focus {
+    background: rgba(0,0,0,.04);
+}
+
+.btn-text:active {
+    background: transparentize($primary-dark,.96);
+}
+
+//-
+
+.btn-link {
+    background: rgba(0,0,0,.0);
+    color: $link;
+}
+
+.btn-link:hover, .btn-link:focus {
+    text-shadow: 0 0 5px transparentize($primary-dark,.64);
+}
+
+.btn-link:active {
+    background: #E6F7FF;
+}
+
+/*#region Form */
+
+.entry {
+    background: transparent;
+    padding: 4px 11px;
+    direction: rtl;
+    @include component-border;
+    @include border-def-radius;
+    @include placeholder(#ddd);
+    @include trans(.3s);
+}
+
+.entry:not(.entry:disabled):hover, .entry:focus {
+    border: 1px $primary solid;
+}
+
+.entry:not(.entry:disabled):focus {
+    @include btn-click-glow;
+}
+
+.entry:disabled, .entry[disabled] {
+    background: #F5F5F5;
+    color: #BFBFBF;
+    cursor: not-allowed;
+}
+
+.fg-col {
+    margin-bottom: 24px;
+    @include column;
+
+    .fg-label {
+        font-size: 16px;
+        color: $Text;
+        margin-bottom: 8px;
+    }
+    /*.fg-label:after {
+        content: ":";
+        color: $Text;
+        font-size: 14px;
+    }*/
+    .input-error {
+        margin-top: 8px;
+        color: #DA4B1E;
+        font-size: 14px;
+    }
+}
+
+.fg-required {
+    .fg-label:before {
+        content: "*";
+        color: $danger;
+        font-size: 16px;
+    }
+}
+
+/*#endregion */
+
+.form {
+    $padding: 16px;
+    background-color: white;
+    border: 1px solid #e5e5e5;
+    @include border-def-radius;
+    @include shadow-medium;
+
+    &-header {
+        padding: $padding;
+        border-bottom: solid #e5e5e5 1px;
+    }
+
+    &-body {
+        padding: $padding;
+        @include column;
+    }
+
+    &-footer {
+        border-top: solid #e5e5e5 1px;
+        padding: $padding;
+        @include row-reverse;
+        grid-gap: 12px;
+    }
+}

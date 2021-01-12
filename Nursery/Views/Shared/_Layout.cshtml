@@ -1,11 +1,26 @@
 ﻿<!DOCTYPE html>
-<html lang="en">
+<html lang="fa">
 <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Nursery</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="@(ViewData["Description"] ?? "جستجو رستوران به صورت آنلاین")">
+    <meta name="keywords" content="@(ViewData["Keywords"] ?? "جستجو، رستوران، غذا، آنلاین، امتیاز دهی")">
+
+    <title>@(ViewData["Title"] ?? "وبسایت")</title>
+
+    <link href="~/css/Controls.min.css" rel="stylesheet" />
+    <link href="~/css/uikit.min.css" rel="stylesheet" />
+
+    @RenderSection("Styles", required: false)
 </head>
 <body>
+    <div class="uk-container col">
+        <div class="uk-margin-auto">
+            @RenderBody()
+        </div>
+    </div>
 
+    @RenderSection("Scripts", required: false)
 </body>
 </html>
