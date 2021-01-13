@@ -47,51 +47,6 @@ backdrop-filter: saturate(80%);
 .flex-9 {
   flex: 9; }
 
-.w-1 {
-  width: 50px; }
-
-.w-2 {
-  width: 100px; }
-
-.w-3 {
-  width: 150px; }
-
-.w-4 {
-  width: 200px; }
-
-.w-5 {
-  width: 250px; }
-
-.w-6 {
-  width: 300px; }
-
-.w-7 {
-  width: 350px; }
-
-.w-8 {
-  width: 400px; }
-
-.w-9 {
-  width: 450px; }
-
-.w-10 {
-  width: 500px; }
-
-.w-11 {
-  width: 550px; }
-
-.w-12 {
-  width: 600px; }
-
-.w-13 {
-  width: 650px; }
-
-.w-14 {
-  width: 700px; }
-
-.w-15 {
-  width: 750px; }
-
 .uk-slider-items .product {
   margin: auto; }
 
@@ -1889,13 +1844,18 @@ select.uk-form-width-xsmall {
 .uk-radio,
 .uk-checkbox {
   /* 1 */
-  display: inline-block;
-  height: 16px;
-  width: 16px;
+  display: block;
+  height: 18px;
+  width: 18px;
+  padding: 2px;
+  -moz-border-radius: 2px 2px 2px 2px;
+  -webkit-border-radius: 2px 2px 2px 2px;
+  border-radius: 2px 2px 2px 2px;
+  margin-left: 8px;
+  margin-top: auto;
+  margin-bottom: auto;
   /* 2 */
   overflow: hidden;
-  /* 3 */
-  margin-top: -4px;
   vertical-align: middle;
   /* 4 */
   -webkit-appearance: none;

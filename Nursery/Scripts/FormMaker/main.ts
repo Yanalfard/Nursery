@@ -1,6 +1,9 @@
-﻿class tblForm {
+﻿
+class tblForm {
     Id: number;
     Name: string;
+    DateCreated: Date;
+    IsDeleted: boolean;
 
     constructor() { }
 }
@@ -9,6 +12,7 @@ class tblRegex {
     Id: number;
     Regex: RegExp;
     Label: string;
+
 
     constructor(regex: RegExp, label?: string) {
         this.Regex = regex;
@@ -21,7 +25,9 @@ class tblField {
     FormId: number;
     Label: string;
     Type: Type;
+    IsRequired: boolean;
     Options: string[] = [];
+    Tooltip: string;
 
     validations: tblRegex[] = [];
 
@@ -38,6 +44,7 @@ class tblValue {
 
 enum Type {
     combo,
+    textarea,
     checkbox,
     color,
     date,
@@ -72,19 +79,22 @@ const exp = new RegExp("[0-9]{11}");
 const tblField1 = new tblField();
 tblField1.Id = 0;
 tblField1.FormId = 0;
+tblField1.IsRequired = true;
 tblField1.Type = Type.checkbox;
 tblField1.Label = "مرا به خاطر بسپار";
 
 const tblField2 = new tblField();
 tblField2.Id = 1;
 tblField2.FormId = 0;
+tblField2.IsRequired = false;
 tblField2.Type = Type.tel;
-tblField2.validations.push(new tblRegex(exp));
+tblField2.validations.push(new tblRegex(exp, 'شماره تلفن صحیح نمی باشد'));
 tblField2.Label = 'شماره تلفن';
 
 const tblField3 = new tblField();
 tblField3.Id = 2;
 tblField3.FormId = 0;
+tblField3.IsRequired = true;
 tblField3.Type = Type.radio;
 tblField3.Options = ['مرد', 'زن', 'ترجیح میدم نگم'];
 tblField3.Label = 'جنسیت';
@@ -92,11 +102,25 @@ tblField3.Label = 'جنسیت';
 const tblField4 = new tblField();
 tblField4.Id = 4;
 tblField4.FormId = 0;
+tblField4.IsRequired = false;
 tblField4.Type = Type.combo;
 tblField4.Options = ['سیب', 'موز', 'هلو', 'آلبالو'];
 tblField4.Label = 'میوه مورد علاقه';
 
 const tblFields = [tblField1, tblField2, tblField3, tblField4];
+//const tblFields = [];
+
+//for (var i = 0; i < 21; i++) {
+//    const f = new tblField();
+//    f.Id = i;
+//    f.FormId = 0;
+//    f.Type = i;
+//    f.Options = ['سیب', 'موز', 'هلو', 'آلبالو'];
+//    f.Label = Type[i];
+//    f.validations.push(new tblRegex(exp, 'Error'));
+//    tblFields.push(f);
+//}
+
 //#endregion
 
 class Form {
@@ -142,214 +166,224 @@ class Form {
     addField(tblField: tblField): void {
         const newField = new Field(tblField);
         this.Fields.push(newField);
-        this.body.innerHTML += newField.element;
+        newField.element.childNodes.forEach(node => this.body.appendChild(node));
         return;
     }
 
     attachForm(element: HTMLElement) { return element.appendChild(this.element) }
 
-    getInputValues(): tblValue[] {
+    validate(): boolean {
 
-        const ans: tblValue[] = [];
-        for (const f of this.Fields) {
-            ans.push(f.getVal());
-        }
+        let ans: boolean = true;
 
-        //return this.Fields.map(f => f.getVal());
+        for (var field of this.Fields)
+            if (!field.validate()) ans = false;
+
         return ans;
     }
 }
 
 class Field {
     private data: tblField;
-    element: string;
+    element: HTMLElement;
+    lblError: HTMLLabelElement;
 
     constructor(data: tblField) {
         this.data = data;
+        let templateString: string = '';
 
         switch (data.Type) {
             case Type.checkbox:
-                this.element =
-                    `<div class="fg-col">
-                        <label class="fg-label" for="${data.Label}">${data.Label}</label>
-                        <input class="entry" name="${data.Label}" type="checkbox">
-                        <span class="text-danger"></span>
-                    </div>`
+                templateString =
+                    `
+                <label class="fg-label uk-margin-auto-left row" for="${data.Label}">${data.Label}
+                    <input class="entry uk-checkbox" id="${data.Label}" ${data.IsRequired ? 'required' : ''} type="checkbox">
+                </label>
+                   `;
+                break;
+            case Type.textarea:
+                templateString =
+                    `
+                <label class="fg-label" for="${data.Label}">${data.Label}</label>
+                <textarea class="entry" id="${data.Label}" ${data.IsRequired ? 'required' : ''} placeholder="${data.Label}" pattern="${data.validations[0]?.Regex}"></textarea>
+                <span class="text-danger"></span>
+                   `;
                 break;
             case Type.color:
-                this.element =
-                    `<div class="fg-col">
+                templateString =
+                    `
                 <label class="fg-label" for="${data.Label}">${data.Label}</label>
-                <input class="entry" name="${data.Label}" type="color">
-                <span class="text-danger"></span>
-            </div>`
+                <input class="entry" id="${data.Label}" ${data.IsRequired ? 'required' : ''} type="color">
+                   `;
                 break;
             case Type.date:
-                this.element =
-                    `<div class="fg-col">
+                templateString =
+                    `
                 <label class="fg-label" for="${data.Label}">${data.Label}</label>
-                <input class="entry" name="${data.Label}" type="date" placeholder="${data.Label}" pattern="${data.validations[0].Regex}">
+                <input class="entry" id="${data.Label}" ${data.IsRequired ? 'required' : ''} type="date" placeholder="${data.Label}" pattern="${data.validations[0]?.Regex}">
                 <span class="text-danger"></span>
-            </div>`
+                   `;
                 break;
             case Type.dateTime:
-                this.element =
-                    `<div class="fg-col">
+                templateString =
+                    `
                 <label class="fg-label" for="${data.Label}">${data.Label}</label>
-                <input class="entry" name="${data.Label}" type="dateTime" placeholder="${data.Label}" pattern="${data.validations[0].Regex}">
+                <input class="entry" id="${data.Label}" ${data.IsRequired ? 'required' : ''} type="dateTime" placeholder="${data.Label}" pattern="${data.validations[0]?.Regex}">
                 <span class="text-danger"></span>
-            </div>`
+                   `;
                 break;
             case Type.email:
-                this.element =
-                    `<div class="fg-col">
+                templateString =
+                    `
                 <label class="fg-label" for="${data.Label}">${data.Label}</label>
-                <input class="entry" name="${data.Label}" type="email" placeholder="${data.Label}" pattern="${data.validations[0].Regex}">
+                <input class="entry" id="${data.Label}" ${data.IsRequired ? 'required' : ''} type="email" placeholder="${data.Label}" pattern="${data.validations[0]?.Regex}">
                 <span class="text-danger"></span>
-            </div>`
+                   `;
                 break;
             case Type.file:
-                this.element =
-                    `<div class="fg-col">
+                templateString =
+                    `
                 <label class="fg-label" for="${data.Label}">${data.Label}</label>
-                <input class="entry" name="${data.Label}" type="file">
+                <input class="entry" id="${data.Label}" ${data.IsRequired ? 'required' : ''} type="file">
                 <span class="text-danger"></span>
-            </div>`
+                   `;
                 break;
             case Type.hidden:
-                this.element =
-                    `<div class="fg-col">
+                templateString =
+                    `
                 <label class="fg-label" for="${data.Label}">${data.Label}</label>
-                <input class="entry" name="${data.Label}" type="hidden">
+                <input class="entry" id="${data.Label}" ${data.IsRequired ? 'required' : ''} type="hidden">
                 <span class="text-danger"></span>
-            </div>`
+                   `;
                 break;
             case Type.image:
-                this.element =
-                    `<div class="fg-col">
+                templateString =
+                    `
                 <label class="fg-label" for="${data.Label}">${data.Label}</label>
-                <input class="entry" name="${data.Label}" type="image">
+                <input class="entry" id="${data.Label}" ${data.IsRequired ? 'required' : ''} alt="${data.Label}" type="image">
                 <span class="text-danger"></span>
-            </div>`
+                   `;
                 break;
             case Type.month:
-                this.element =
-                    `<div class="fg-col">
+                templateString =
+                    `
                 <label class="fg-label" for="${data.Label}">${data.Label}</label>
-                <input class="entry" name="${data.Label}" type="month" placeholder="${data.Label}">
+                <input class="entry" id="${data.Label}" ${data.IsRequired ? 'required' : ''} type="month" placeholder="${data.Label}">
                 <span class="text-danger"></span>
-            </div>`
+                   `;
                 break;
             case Type.number:
-                this.element =
+                templateString =
                     ` <div class="fg-col">
                 <label class="fg-label" for="${data.Label}">${data.Label}</label>
-                <input class="entry" name="${data.Label}" type="number" placeholder="${data.Label}" pattern="${data.validations[0].Regex}">
+                <input class="entry" id="${data.Label}" ${data.IsRequired ? 'required' : ''} type="number" placeholder="${data.Label}" pattern="${data.validations[0]?.Regex}">
                 <span class="text-danger"></span>
-            </div>`
+                   `;
                 break;
             case Type.password:
-                this.element =
-                    `<div class="fg-col">
+                templateString =
+                    `
                 <label class="fg-label" for="${data.Label}">${data.Label}</label>
-                <input class="entry" name="${data.Label}" type="password" placeholder="${data.Label}" pattern="${data.validations[0].Regex}">
+                <input class="entry" id="${data.Label}" ${data.IsRequired ? 'required' : ''} type="password" placeholder="${data.Label}" pattern="${data.validations[0]?.Regex}">
                 <span class="text-danger"></span>
-            </div>`
+                   `;
                 break;
             case Type.radio:
-                this.element =
-                    `<div class="fg-col">
+                templateString =
+                    `
                         <label class="fg-label" for="${data.Label}">${data.Label}</label>
-                        ${data.Options.map(o => `<label class="radio"><span>${o}</span><input name="${data.Label}" value="${o}" type="radio"></label>`).join('')}
-                        <span class="text-danger"></span>
-                    </div>`
+                        ${data.Options.map(o => `<label class="radio"><span>${o}</span><input id="${data.Label + data.Options.indexOf(o)}" name="${data.Label}" class="uk-radio" value="${o}" type="radio"></label>`).join('')}
+                    `;
                 break;
             case Type.range:
-                this.element =
-                    `<div class="fg-col">
+                templateString =
+                    `
                         <label class="fg-label" for="${data.Label}">${data.Label}</label>
-                        <input class="entry" name="${data.Label}" type="range" placeholder="${data.Label}" pattern="${data.validations[0].Regex}">
-                        <span class="text-danger"></span>
-                    </div>`
+                        <input class="entry uk-range" id="${data.Label}" ${data.IsRequired ? 'required' : ''} min="${data.Options[0]}" max="${data.Options[1]}" type="range" placeholder="${data.Label}" pattern="${data.validations[0]?.Regex}">
+                   `;
                 break;
             case Type.reset:
-                this.element =
-                    `<div class="fg-col">
+                templateString =
+                    `
                 <label class="fg-label" for="${data.Label}">${data.Label}</label>
-                <input class="entry" name="${data.Label}" type="reset" placeholder="${data.Label}" pattern="${data.validations[0].Regex}">
-                <span class="text-danger"></span>
-            </div>`
+                <input class="entry" id="${data.Label}" type="reset" ${data.IsRequired ? 'required' : ''} placeholder="${data.Label}" pattern="${data.validations[0]?.Regex}">
+                   `;
                 break;
             case Type.search:
-                this.element =
-                    `<div class="fg-col">
+                templateString =
+                    `
                 <label class="fg-label" for="${data.Label}">${data.Label}</label>
-                <input class="entry" name="${data.Label}" type="search" placeholder="${data.Label}" pattern="${data.validations[0].Regex}">
+                <input class="entry" id="${data.Label}" type="search" ${data.IsRequired ? 'required' : ''} placeholder="${data.Label}" pattern="${data.validations[0]?.Regex}">
                 <span class="text-danger"></span>
-            </div>`
+                   `;
                 break;
             case Type.submit:
-                this.element =
-                    `<div class="fg-col">
+                templateString =
+                    `
                 <label class="fg-label" for="${data.Label}">${data.Label}</label>
-                <input class="entry" name="${data.Label}" type="submit" placeholder="${data.Label}" pattern="${data.validations[0].Regex}">
-                <span class="text-danger"></span>
-            </div>`
+                <input class="entry" id="${data.Label}" type="submit" ${data.IsRequired ? 'required' : ''} placeholder="${data.Label}" pattern="${data.validations[0]?.Regex}">
+                   `;
                 break;
             case Type.tel:
-                this.element =
-                    `<div class="fg-col">
+                templateString =
+                    `
                 <label class="fg-label" for="${data.Label}">${data.Label}</label>
-                <input class="entry" name="${data.Label}" type="tel" placeholder="${data.Label}" pattern="${data.validations[0].Regex}">
+                <input class="entry" id="${data.Label}" type="tel" ${data.IsRequired ? 'required' : ''} placeholder="${data.Label}" pattern="${data.validations[0]?.Regex}">
                 <span class="text-danger"></span>
-            </div>`
+                   `;
                 break;
             case Type.text:
-                this.element =
-                    `<div class="fg-col">
+                templateString =
+                    `
                 <label class="fg-label" for="${data.Label}">${data.Label}</label>
-                <input class="entry" name="${data.Label}" type="text" placeholder="${data.Label}" pattern="${data.validations[0].Regex}">
+                <input class="entry" id="${data.Label}" type="text" ${data.IsRequired ? 'required' : ''} placeholder="${data.Label}" pattern="${data.validations[0]?.Regex}">
                 <span class="text-danger"></span>
-            </div>`
+                   `;
                 break;
             case Type.time:
-                this.element =
-                    `<div class="fg-col">
+                templateString =
+                    `
                 <label class="fg-label" for="${data.Label}">${data.Label}</label>
-                <input class="entry" name="${data.Label}" type="time" placeholder="${data.Label}" pattern="${data.validations[0].Regex}">
+                <input class="entry" id="${data.Label}" type="time" ${data.IsRequired ? 'required' : ''} placeholder="${data.Label}" pattern="${data.validations[0]?.Regex}">
                 <span class="text-danger"></span>
-            </div>`
+                   `;
                 break;
             case Type.url:
-                this.element =
-                    `<div class="fg-col">
+                templateString =
+                    `
                 <label class="fg-label" for="${data.Label}">${data.Label}</label>
-                <input class="entry" name="${data.Label}" type="url" placeholder="${data.Label}" pattern="${data.validations[0].Regex}">
+                <input class="entry" id="${data.Label}" type="url" ${data.IsRequired ? 'required' : ''} placeholder="${data.Label}" pattern="${data.validations[0]?.Regex}">
                 <span class="text-danger"></span>
-            </div>`
+                   `;
                 break;
             case Type.week:
-                this.element =
-                    `<div class="fg-col">
+                templateString =
+                    `
                 <label class="fg-label" for="${data.Label}">${data.Label}</label>
-                <input class="entry" name="${data.Label}" type="week" placeholder="${data.Label}" pattern="${data.validations[0].Regex}">
+                <input class="entry" id="${data.Label}" ${data.IsRequired ? 'required' : ''} type="week" placeholder="${data.Label}" pattern="${data.validations[0]?.Regex}">
                 <span class="text-danger"></span>
-            </div>`
+                   `;
                 break;
             case Type.combo:
-                this.element =
-                    `<div class="fg-col">
+                templateString =
+                    `
                 <label class="fg-label" for="${data.Label}">${data.Label}</label>
-                <select class="entry" name="${data.Label}">
+                <select class="entry" id="${data.Label}">
                     ${data.Options.map(o => (`<option>${o}</option>`)).join('')}
                 </select>
-                <span class="text-danger"></span>
-            </div>`;
+                   `;
                 break;
             default:
                 console.log('type unknown');
                 break;
         }
+
+        //fg-col
+        templateString = `<div class="fg-col ${data.IsRequired ? 'fg-required' : ''}">${templateString}</div>`
+
+        const parser = new DOMParser();
+        this.element = (parser.parseFromString(templateString, 'text/html').body);
+        this.lblError = this.element.querySelector('.text-danger');
     }
 
     getVal(): tblValue {
@@ -358,38 +392,58 @@ class Field {
 
         switch (this.data.Type) {
             case Type.checkbox:
-                input = document.querySelector(`input[name="${this.data.Label}"][type="checkbox"]`);
+                input = document.querySelector(`input#${this.data.Label}[type="checkbox"]`);
                 ans.Value = input.checked;
-                console.log(input);
                 break;
             case Type.combo:
-                input = document.querySelector(`select[name="${this.data.Label}"]`);
+                input = document.querySelector(`select#${this.data.Label}`);
                 ans.Value = input.value;
-                console.log(input);
                 break;
             case Type.radio:
-                input = document.querySelector(`input[name="${this.data.Label}"][type="radio"]`);
-                ans.Value = input.value;
-                console.log(input);
+                input = document.querySelector(`input[name="${this.data.Label}"][type="radio"]:checked`);
+                ans.Value = input?.value;
                 break;
             case Type.file:
-                input = document.querySelector(`input[name="${this.data.Label}"][type="file"]`);
+                input = document.querySelector(`input#${this.data.Label}[type="file"]`);
                 ans.Value = input.value;
-                console.log(input);
                 break;
             case Type.image:
-                input = document.querySelector(`input[name="${this.data.Label}"][type="image"]`);
+                input = document.querySelector(`input#${this.data.Label}[type="image"]`);
                 ans.Value = input.value;
-                console.log(input);
                 break;
             default:
+                input = document.querySelector(`#${this.data.Label}`);
+                ans.Value = input.value;
+                break;
         }
 
-        return
+        return ans;
     }
+
+    validate(): boolean {
+
+        for (const validationRule of this.data.validations) {
+            if (!validationRule.Regex.test(this.getVal().Value)) {
+                if (this.lblError) this.lblError.innerText = validationRule.Label;
+                return false;
+            }
+            if (this.lblError) this.lblError.innerText = '';
+        }
+
+        return true;
+    }
+
 }
 
 let oi = new Form(form1);
 tblFields.forEach(f => oi.addField(f));
 oi.attachForm(document.getElementById('container'));
-oi.submit.addEventListener('click', () => { oi.Fields.forEach(i => console.log(i.getVal())) })
+oi.submit.addEventListener('click', submit)
+
+function submit() {
+    oi.Fields.forEach(i => console.log(i.getVal()))
+    //if (!oi.validate()) return;
+    //console.log(oi.Fields[0].getVal());
+}
+
+// img

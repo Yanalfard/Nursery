@@ -132,11 +132,11 @@ button, .btn, a, a:hover .js-upload, input[type=file] {
     @include trans(.3s);
 }
 
-.entry:not(.entry:disabled):hover, .entry:focus {
+.entry:hover, .entry:focus {
     border: 1px $primary solid;
 }
 
-.entry:not(.entry:disabled):focus {
+.entry:focus {
     @include btn-click-glow;
 }
 
@@ -155,16 +155,37 @@ button, .btn, a, a:hover .js-upload, input[type=file] {
         color: $Text;
         margin-bottom: 8px;
     }
-    /*.fg-label:after {
-        content: ":";
-        color: $Text;
-        font-size: 14px;
-    }*/
-    .input-error {
+
+    .text-danger {
         margin-top: 8px;
         color: #DA4B1E;
         font-size: 14px;
     }
+
+    .radio {
+        display: flex;
+        margin: 6px 0 6px auto;
+    }
+
+    textarea {
+        resize: vertical;
+        transition-property: border-color;
+        margin-bottom: 0;
+        min-height: 28px;
+        height: 72px;
+    }
+
+    input[type=color] {
+        padding: 0 2px;
+        width: 48px;
+        border: dashed 1px #aaa;
+        height: 32px;
+        @include border-def-radius;
+    }
+}
+
+.fg-col:last-child {
+    margin-bottom: 6px;
 }
 
 .fg-required {
