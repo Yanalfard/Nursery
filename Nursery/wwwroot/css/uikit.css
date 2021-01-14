@@ -78,7 +78,7 @@ html {
   scroll-behavior: smooth;
   overflow-x: hidden !important;
   min-height: 100vh;
-  background: #fff !important;
+  background: #F8F8FB !important;
   /*ScrollBar*/
   /* width */
   /* Track */
@@ -101,7 +101,7 @@ html {
  */
 body {
   margin: 0;
-  background: #fff;
+  background: #F8F8FB;
   overflow: hidden !important;
   min-height: 100vh; }
 

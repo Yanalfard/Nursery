@@ -12,5 +12,11 @@ namespace Nursery.Controllers
         {
             return View();
         }
+
+        public IActionResult Demo()
+        {
+            return View();
+        }
+
     }
 }

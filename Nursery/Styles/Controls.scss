@@ -196,8 +196,6 @@ button, .btn, a, a:hover .js-upload, input[type=file] {
     }
 }
 
-/*#endregion */
-
 .form {
     $padding: 16px;
     background-color: white;
@@ -221,4 +219,71 @@ button, .btn, a, a:hover .js-upload, input[type=file] {
         @include row-reverse;
         grid-gap: 12px;
     }
+}
+
+/*#endregion */
+
+$aside-width: 72px;
+$header-height: 72px;
+$content-padding: 16px;
+
+.m-top {
+    @include row;
+    position: fixed;
+    left: 0;
+    right: 0;
+    height: $header-height;
+
+    .m-logo {
+        background-color: $primary;
+        height: $header-height;
+        width: $aside-width + 4;
+        @include trans(.29s);
+    }
+
+    .m-header {
+        width: 100%;
+        height: $header-height;
+        background-color: #fff;
+        @include shadow-mild;
+        @include row;
+
+        .left {
+        }
+
+        .right {
+            flex: auto;
+        }
+    }
+}
+
+.m-aside {
+    height: 100%;
+    width: $aside-width;
+    background-color: #373B53;
+    top: $header-height;
+    right: 0;
+    position: fixed;
+    @include subtle-glow(transparentize(#373B53,.32));
+    @include trans(.3s);
+    -moz-transition-property: width;
+    -o-transition-property: width;
+    -webkit-transition-property: width;
+    transition-property: width;
+}
+
+.m-aside:hover {
+    width: $aside-width + 120px;
+}
+
+/*.m-aside:hover + .m-top > .m-logo {
+    width: $aside-width + 120px + 32px;
+}*/
+
+.m-content {
+    height: 100%;
+    margin-right: $aside-width;
+    margin-top: $header-height;
+    padding: $content-padding;
+    background: $Background;
 }

@@ -143,101 +143,103 @@ var Form = /** @class */ (function () {
 }());
 var Field = /** @class */ (function () {
     function Field(data) {
+        var _this = this;
         var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m, _o, _p, _q;
         this.data = data;
         var templateString = '';
+        this.id = "I" + data.Label.split('').map(function (i) { return (i.charCodeAt(0) - 1700); }).join('') + "O";
         switch (data.Type) {
             case Type.checkbox:
                 templateString =
-                    "\n                <label class=\"fg-label uk-margin-auto-left row\" for=\"" + data.Label + "\">" + data.Label + "\n                    <input class=\"entry uk-checkbox\" id=\"" + data.Label + "\" " + (data.IsRequired ? 'required' : '') + " type=\"checkbox\">\n                </label>\n                   ";
+                    "\n                <label class=\"fg-label uk-margin-auto-left row\" for=\"" + data.Label + "\">" + data.Label + "\n                    <input class=\"entry uk-checkbox\" id=\"" + this.id + "\" " + (data.IsRequired ? 'required' : '') + " type=\"checkbox\">\n                </label>\n                   ";
                 break;
             case Type.textarea:
                 templateString =
-                    "\n                <label class=\"fg-label\" for=\"" + data.Label + "\">" + data.Label + "</label>\n                <textarea class=\"entry\" id=\"" + data.Label + "\" " + (data.IsRequired ? 'required' : '') + " placeholder=\"" + data.Label + "\" pattern=\"" + ((_a = data.validations[0]) === null || _a === void 0 ? void 0 : _a.Regex) + "\"></textarea>\n                <span class=\"text-danger\"></span>\n                   ";
+                    "\n                <label class=\"fg-label\" for=\"" + data.Label + "\">" + data.Label + "</label>\n                <textarea class=\"entry\" id=\"" + this.id + "\" " + (data.IsRequired ? 'required' : '') + " placeholder=\"" + data.Label + "\" pattern=\"" + ((_a = data.validations[0]) === null || _a === void 0 ? void 0 : _a.Regex) + "\"></textarea>\n                <span class=\"text-danger\"></span>\n                   ";
                 break;
             case Type.color:
                 templateString =
-                    "\n                <label class=\"fg-label\" for=\"" + data.Label + "\">" + data.Label + "</label>\n                <input class=\"entry\" id=\"" + data.Label + "\" " + (data.IsRequired ? 'required' : '') + " type=\"color\">\n                   ";
+                    "\n                <label class=\"fg-label\" for=\"" + data.Label + "\">" + data.Label + "</label>\n                <input class=\"entry\" id=\"" + this.id + "\" " + (data.IsRequired ? 'required' : '') + " type=\"color\">\n                   ";
                 break;
             case Type.date:
                 templateString =
-                    "\n                <label class=\"fg-label\" for=\"" + data.Label + "\">" + data.Label + "</label>\n                <input class=\"entry\" id=\"" + data.Label + "\" " + (data.IsRequired ? 'required' : '') + " type=\"date\" placeholder=\"" + data.Label + "\" pattern=\"" + ((_b = data.validations[0]) === null || _b === void 0 ? void 0 : _b.Regex) + "\">\n                <span class=\"text-danger\"></span>\n                   ";
+                    "\n                <label class=\"fg-label\" for=\"" + data.Label + "\">" + data.Label + "</label>\n                <input class=\"entry\" id=\"" + this.id + "\" " + (data.IsRequired ? 'required' : '') + " type=\"date\" placeholder=\"" + data.Label + "\" pattern=\"" + ((_b = data.validations[0]) === null || _b === void 0 ? void 0 : _b.Regex) + "\">\n                <span class=\"text-danger\"></span>\n                   ";
                 break;
             case Type.dateTime:
                 templateString =
-                    "\n                <label class=\"fg-label\" for=\"" + data.Label + "\">" + data.Label + "</label>\n                <input class=\"entry\" id=\"" + data.Label + "\" " + (data.IsRequired ? 'required' : '') + " type=\"dateTime\" placeholder=\"" + data.Label + "\" pattern=\"" + ((_c = data.validations[0]) === null || _c === void 0 ? void 0 : _c.Regex) + "\">\n                <span class=\"text-danger\"></span>\n                   ";
+                    "\n                <label class=\"fg-label\" for=\"" + data.Label + "\">" + data.Label + "</label>\n                <input class=\"entry\" id=\"" + this.id + "\" " + (data.IsRequired ? 'required' : '') + " type=\"dateTime\" placeholder=\"" + data.Label + "\" pattern=\"" + ((_c = data.validations[0]) === null || _c === void 0 ? void 0 : _c.Regex) + "\">\n                <span class=\"text-danger\"></span>\n                   ";
                 break;
             case Type.email:
                 templateString =
-                    "\n                <label class=\"fg-label\" for=\"" + data.Label + "\">" + data.Label + "</label>\n                <input class=\"entry\" id=\"" + data.Label + "\" " + (data.IsRequired ? 'required' : '') + " type=\"email\" placeholder=\"" + data.Label + "\" pattern=\"" + ((_d = data.validations[0]) === null || _d === void 0 ? void 0 : _d.Regex) + "\">\n                <span class=\"text-danger\"></span>\n                   ";
+                    "\n                <label class=\"fg-label\" for=\"" + data.Label + "\">" + data.Label + "</label>\n                <input class=\"entry\" id=\"" + this.id + "\" " + (data.IsRequired ? 'required' : '') + " type=\"email\" placeholder=\"" + data.Label + "\" pattern=\"" + ((_d = data.validations[0]) === null || _d === void 0 ? void 0 : _d.Regex) + "\">\n                <span class=\"text-danger\"></span>\n                   ";
                 break;
             case Type.file:
                 templateString =
-                    "\n                <label class=\"fg-label\" for=\"" + data.Label + "\">" + data.Label + "</label>\n                <input class=\"entry\" id=\"" + data.Label + "\" " + (data.IsRequired ? 'required' : '') + " type=\"file\">\n                <span class=\"text-danger\"></span>\n                   ";
+                    "\n                <label class=\"fg-label\" for=\"" + data.Label + "\">" + data.Label + "</label>\n                <input class=\"entry\" id=\"" + this.id + "\" " + (data.IsRequired ? 'required' : '') + " type=\"file\">\n                <span class=\"text-danger\"></span>\n                   ";
                 break;
             case Type.hidden:
                 templateString =
-                    "\n                <label class=\"fg-label\" for=\"" + data.Label + "\">" + data.Label + "</label>\n                <input class=\"entry\" id=\"" + data.Label + "\" " + (data.IsRequired ? 'required' : '') + " type=\"hidden\">\n                <span class=\"text-danger\"></span>\n                   ";
+                    "\n                <label class=\"fg-label\" for=\"" + data.Label + "\">" + data.Label + "</label>\n                <input class=\"entry\" id=\"" + this.id + "\" " + (data.IsRequired ? 'required' : '') + " type=\"hidden\">\n                <span class=\"text-danger\"></span>\n                   ";
                 break;
             case Type.image:
                 templateString =
-                    "\n                <label class=\"fg-label\" for=\"" + data.Label + "\">" + data.Label + "</label>\n                <input class=\"entry\" id=\"" + data.Label + "\" " + (data.IsRequired ? 'required' : '') + " alt=\"" + data.Label + "\" type=\"image\">\n                <span class=\"text-danger\"></span>\n                   ";
+                    "\n                <label class=\"fg-label\" for=\"" + data.Label + "\">" + data.Label + "</label>\n                <input class=\"entry\" id=\"" + this.id + "\" " + (data.IsRequired ? 'required' : '') + " alt=\"" + data.Label + "\" type=\"image\">\n                <span class=\"text-danger\"></span>\n                   ";
                 break;
             case Type.month:
                 templateString =
-                    "\n                <label class=\"fg-label\" for=\"" + data.Label + "\">" + data.Label + "</label>\n                <input class=\"entry\" id=\"" + data.Label + "\" " + (data.IsRequired ? 'required' : '') + " type=\"month\" placeholder=\"" + data.Label + "\">\n                <span class=\"text-danger\"></span>\n                   ";
+                    "\n                <label class=\"fg-label\" for=\"" + data.Label + "\">" + data.Label + "</label>\n                <input class=\"entry\" id=\"" + this.id + "\" " + (data.IsRequired ? 'required' : '') + " type=\"month\" placeholder=\"" + data.Label + "\">\n                <span class=\"text-danger\"></span>\n                   ";
                 break;
             case Type.number:
                 templateString =
-                    " <div class=\"fg-col\">\n                <label class=\"fg-label\" for=\"" + data.Label + "\">" + data.Label + "</label>\n                <input class=\"entry\" id=\"" + data.Label + "\" " + (data.IsRequired ? 'required' : '') + " type=\"number\" placeholder=\"" + data.Label + "\" pattern=\"" + ((_e = data.validations[0]) === null || _e === void 0 ? void 0 : _e.Regex) + "\">\n                <span class=\"text-danger\"></span>\n                   ";
+                    "<div class=\"fg-col\">\n                <label class=\"fg-label\" for=\"" + data.Label + "\">" + data.Label + "</label>\n                <input class=\"entry\" id=\"" + this.id + "\" " + (data.IsRequired ? 'required' : '') + " type=\"number\" placeholder=\"" + data.Label + "\" pattern=\"" + ((_e = data.validations[0]) === null || _e === void 0 ? void 0 : _e.Regex) + "\">\n                <span class=\"text-danger\"></span>\n                   ";
                 break;
             case Type.password:
                 templateString =
-                    "\n                <label class=\"fg-label\" for=\"" + data.Label + "\">" + data.Label + "</label>\n                <input class=\"entry\" id=\"" + data.Label + "\" " + (data.IsRequired ? 'required' : '') + " type=\"password\" placeholder=\"" + data.Label + "\" pattern=\"" + ((_f = data.validations[0]) === null || _f === void 0 ? void 0 : _f.Regex) + "\">\n                <span class=\"text-danger\"></span>\n                   ";
+                    "\n                <label class=\"fg-label\" for=\"" + data.Label + "\">" + data.Label + "</label>\n                <input class=\"entry\" id=\"" + this.id + "\" " + (data.IsRequired ? 'required' : '') + " type=\"password\" placeholder=\"" + data.Label + "\" pattern=\"" + ((_f = data.validations[0]) === null || _f === void 0 ? void 0 : _f.Regex) + "\">\n                <span class=\"text-danger\"></span>\n                   ";
                 break;
             case Type.radio:
                 templateString =
-                    "\n                        <label class=\"fg-label\" for=\"" + data.Label + "\">" + data.Label + "</label>\n                        " + data.Options.map(function (o) { return "<label class=\"radio\"><span>" + o + "</span><input id=\"" + (data.Label + data.Options.indexOf(o)) + "\" name=\"" + data.Label + "\" class=\"uk-radio\" value=\"" + o + "\" type=\"radio\"></label>"; }).join('') + "\n                    ";
+                    "\n                <label class=\"fg-label\" for=\"" + data.Label + "\">" + data.Label + "</label>\n                " + data.Options.map(function (o) { return "<label class=\"radio\"><span>" + o + "</span><input id=\"" + (data.Label + data.Options.indexOf(o)) + "\" name=\"" + _this.id + "\" class=\"uk-radio entry\" value=\"" + o + "\" type=\"radio\"></label>"; }).join('') + "\n                    ";
                 break;
             case Type.range:
                 templateString =
-                    "\n                        <label class=\"fg-label\" for=\"" + data.Label + "\">" + data.Label + "</label>\n                        <input class=\"entry uk-range\" id=\"" + data.Label + "\" " + (data.IsRequired ? 'required' : '') + " min=\"" + data.Options[0] + "\" max=\"" + data.Options[1] + "\" type=\"range\" placeholder=\"" + data.Label + "\" pattern=\"" + ((_g = data.validations[0]) === null || _g === void 0 ? void 0 : _g.Regex) + "\">\n                   ";
+                    "\n                <label class=\"fg-label\" for=\"" + data.Label + "\">" + data.Label + "</label>\n                <input class=\"entry uk-range\" id=\"" + data.Label.toString() + "\" " + (data.IsRequired ? 'required' : '') + " min=\"" + data.Options[0] + "\" max=\"" + data.Options[1] + "\" type=\"range\" placeholder=\"" + data.Label + "\" pattern=\"" + ((_g = data.validations[0]) === null || _g === void 0 ? void 0 : _g.Regex) + "\">\n                   ";
                 break;
             case Type.reset:
                 templateString =
-                    "\n                <label class=\"fg-label\" for=\"" + data.Label + "\">" + data.Label + "</label>\n                <input class=\"entry\" id=\"" + data.Label + "\" type=\"reset\" " + (data.IsRequired ? 'required' : '') + " placeholder=\"" + data.Label + "\" pattern=\"" + ((_h = data.validations[0]) === null || _h === void 0 ? void 0 : _h.Regex) + "\">\n                   ";
+                    "\n                <label class=\"fg-label\" for=\"" + data.Label + "\">" + data.Label + "</label>\n                <input class=\"entry\" id=\"" + this.id + "\" type=\"reset\" " + (data.IsRequired ? 'required' : '') + " placeholder=\"" + data.Label + "\" pattern=\"" + ((_h = data.validations[0]) === null || _h === void 0 ? void 0 : _h.Regex) + "\">\n                   ";
                 break;
             case Type.search:
                 templateString =
-                    "\n                <label class=\"fg-label\" for=\"" + data.Label + "\">" + data.Label + "</label>\n                <input class=\"entry\" id=\"" + data.Label + "\" type=\"search\" " + (data.IsRequired ? 'required' : '') + " placeholder=\"" + data.Label + "\" pattern=\"" + ((_j = data.validations[0]) === null || _j === void 0 ? void 0 : _j.Regex) + "\">\n                <span class=\"text-danger\"></span>\n                   ";
+                    "\n                <label class=\"fg-label\" for=\"" + data.Label + "\">" + data.Label + "</label>\n                <input class=\"entry\" id=\"" + this.id + "\" type=\"search\" " + (data.IsRequired ? 'required' : '') + " placeholder=\"" + data.Label + "\" pattern=\"" + ((_j = data.validations[0]) === null || _j === void 0 ? void 0 : _j.Regex) + "\">\n                <span class=\"text-danger\"></span>\n                   ";
                 break;
             case Type.submit:
                 templateString =
-                    "\n                <label class=\"fg-label\" for=\"" + data.Label + "\">" + data.Label + "</label>\n                <input class=\"entry\" id=\"" + data.Label + "\" type=\"submit\" " + (data.IsRequired ? 'required' : '') + " placeholder=\"" + data.Label + "\" pattern=\"" + ((_k = data.validations[0]) === null || _k === void 0 ? void 0 : _k.Regex) + "\">\n                   ";
+                    "\n                <label class=\"fg-label\" for=\"" + data.Label + "\">" + data.Label + "</label>\n                <input class=\"entry\" id=\"" + this.id + "\" type=\"submit\" " + (data.IsRequired ? 'required' : '') + " placeholder=\"" + data.Label + "\" pattern=\"" + ((_k = data.validations[0]) === null || _k === void 0 ? void 0 : _k.Regex) + "\">\n                   ";
                 break;
             case Type.tel:
                 templateString =
-                    "\n                <label class=\"fg-label\" for=\"" + data.Label + "\">" + data.Label + "</label>\n                <input class=\"entry\" id=\"" + data.Label + "\" type=\"tel\" " + (data.IsRequired ? 'required' : '') + " placeholder=\"" + data.Label + "\" pattern=\"" + ((_l = data.validations[0]) === null || _l === void 0 ? void 0 : _l.Regex) + "\">\n                <span class=\"text-danger\"></span>\n                   ";
+                    "\n                <label class=\"fg-label\" for=\"" + data.Label + "\">" + data.Label + "</label>\n                <input class=\"entry\" id=\"" + this.id + "\" type=\"tel\" " + (data.IsRequired ? 'required' : '') + " placeholder=\"" + data.Label + "\" pattern=\"" + ((_l = data.validations[0]) === null || _l === void 0 ? void 0 : _l.Regex) + "\">\n                <span class=\"text-danger\"></span>\n                   ";
                 break;
             case Type.text:
                 templateString =
-                    "\n                <label class=\"fg-label\" for=\"" + data.Label + "\">" + data.Label + "</label>\n                <input class=\"entry\" id=\"" + data.Label + "\" type=\"text\" " + (data.IsRequired ? 'required' : '') + " placeholder=\"" + data.Label + "\" pattern=\"" + ((_m = data.validations[0]) === null || _m === void 0 ? void 0 : _m.Regex) + "\">\n                <span class=\"text-danger\"></span>\n                   ";
+                    "\n                <label class=\"fg-label\" for=\"" + data.Label + "\">" + data.Label + "</label>\n                <input class=\"entry\" id=\"" + this.id + "\" type=\"text\" " + (data.IsRequired ? 'required' : '') + " placeholder=\"" + data.Label + "\" pattern=\"" + ((_m = data.validations[0]) === null || _m === void 0 ? void 0 : _m.Regex) + "\">\n                <span class=\"text-danger\"></span>\n                   ";
                 break;
             case Type.time:
                 templateString =
-                    "\n                <label class=\"fg-label\" for=\"" + data.Label + "\">" + data.Label + "</label>\n                <input class=\"entry\" id=\"" + data.Label + "\" type=\"time\" " + (data.IsRequired ? 'required' : '') + " placeholder=\"" + data.Label + "\" pattern=\"" + ((_o = data.validations[0]) === null || _o === void 0 ? void 0 : _o.Regex) + "\">\n                <span class=\"text-danger\"></span>\n                   ";
+                    "\n                <label class=\"fg-label\" for=\"" + data.Label + "\">" + data.Label + "</label>\n                <input class=\"entry\" id=\"" + this.id + "\" type=\"time\" " + (data.IsRequired ? 'required' : '') + " placeholder=\"" + data.Label + "\" pattern=\"" + ((_o = data.validations[0]) === null || _o === void 0 ? void 0 : _o.Regex) + "\">\n                <span class=\"text-danger\"></span>\n                   ";
                 break;
             case Type.url:
                 templateString =
-                    "\n                <label class=\"fg-label\" for=\"" + data.Label + "\">" + data.Label + "</label>\n                <input class=\"entry\" id=\"" + data.Label + "\" type=\"url\" " + (data.IsRequired ? 'required' : '') + " placeholder=\"" + data.Label + "\" pattern=\"" + ((_p = data.validations[0]) === null || _p === void 0 ? void 0 : _p.Regex) + "\">\n                <span class=\"text-danger\"></span>\n                   ";
+                    "\n                <label class=\"fg-label\" for=\"" + data.Label + "\">" + data.Label + "</label>\n                <input class=\"entry\" id=\"" + this.id + "\" type=\"url\" " + (data.IsRequired ? 'required' : '') + " placeholder=\"" + data.Label + "\" pattern=\"" + ((_p = data.validations[0]) === null || _p === void 0 ? void 0 : _p.Regex) + "\">\n                <span class=\"text-danger\"></span>\n                   ";
                 break;
             case Type.week:
                 templateString =
-                    "\n                <label class=\"fg-label\" for=\"" + data.Label + "\">" + data.Label + "</label>\n                <input class=\"entry\" id=\"" + data.Label + "\" " + (data.IsRequired ? 'required' : '') + " type=\"week\" placeholder=\"" + data.Label + "\" pattern=\"" + ((_q = data.validations[0]) === null || _q === void 0 ? void 0 : _q.Regex) + "\">\n                <span class=\"text-danger\"></span>\n                   ";
+                    "\n                <label class=\"fg-label\" for=\"" + data.Label + "\">" + data.Label + "</label>\n                <input class=\"entry\" id=\"" + this.id + "\" " + (data.IsRequired ? 'required' : '') + " type=\"week\" placeholder=\"" + data.Label + "\" pattern=\"" + ((_q = data.validations[0]) === null || _q === void 0 ? void 0 : _q.Regex) + "\">\n                <span class=\"text-danger\"></span>\n                   ";
                 break;
             case Type.combo:
                 templateString =
-                    "\n                <label class=\"fg-label\" for=\"" + data.Label + "\">" + data.Label + "</label>\n                <select class=\"entry\" id=\"" + data.Label + "\">\n                    " + data.Options.map(function (o) { return ("<option>" + o + "</option>"); }).join('') + "\n                </select>\n                   ";
+                    "\n                <label class=\"fg-label\" for=\"" + data.Label + "\">" + data.Label + "</label>\n                <select class=\"entry\" id=\"" + this.id + "\">\n                    " + data.Options.map(function (o) { return ("<option>" + o + "</option>"); }).join('') + "\n                </select>\n                   ";
                 break;
             default:
                 console.log('type unknown');
@@ -254,27 +256,27 @@ var Field = /** @class */ (function () {
         var input;
         switch (this.data.Type) {
             case Type.checkbox:
-                input = document.querySelector("input#" + this.data.Label + "[type=\"checkbox\"]");
+                input = document.querySelector("input#" + this.id + "[type=\"checkbox\"]");
                 ans.Value = input.checked;
                 break;
             case Type.combo:
-                input = document.querySelector("select#" + this.data.Label);
+                input = document.querySelector("select#" + this.id);
                 ans.Value = input.value;
                 break;
             case Type.radio:
-                input = document.querySelector("input[name=\"" + this.data.Label + "\"][type=\"radio\"]:checked");
+                input = document.querySelector("input[name=\"" + this.id + "\"][type=\"radio\"]:checked");
                 ans.Value = input === null || input === void 0 ? void 0 : input.value;
                 break;
             case Type.file:
-                input = document.querySelector("input#" + this.data.Label + "[type=\"file\"]");
+                input = document.querySelector("input#" + this.id + "[type=\"file\"]");
                 ans.Value = input.value;
                 break;
             case Type.image:
-                input = document.querySelector("input#" + this.data.Label + "[type=\"image\"]");
+                input = document.querySelector("input#" + this.id + "[type=\"image\"]");
                 ans.Value = input.value;
                 break;
             default:
-                input = document.querySelector("#" + this.data.Label);
+                input = document.querySelector("#" + this.id);
                 ans.Value = input.value;
                 break;
         }
