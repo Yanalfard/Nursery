@@ -1,4 +1,4 @@
-@import '_colors.scss';
+﻿@import '_colors.scss';
 @import '_layout.scss';
 
 button, .btn, a, a:hover .js-upload, input[type=file] {
@@ -45,6 +45,29 @@ button, .btn, a, a:hover .js-upload, input[type=file] {
     border: 1px #ddd solid;
 }
 
+//-
+
+.btn-icon {
+    border: 0;
+    background-color: transparent;
+    min-height: 20px;
+    min-width: 20px;
+    padding: 8px;
+    @include trans(.2s);
+    color: #555;
+}
+
+.btn-icon:hover {
+    background-color: transparentize(#000,.94);
+    color: #444;
+}
+
+.btn-icon:active {
+    background-color: transparentize(#000,.88);
+    @include trans(.0s);
+}
+
+//-
 
 .btn-primary {
     background-color: $primary;
@@ -238,20 +261,117 @@ $content-padding: 16px;
         background-color: $primary;
         height: $header-height;
         width: $aside-width + 4;
+        min-width: $aside-width;
         @include trans(.29s);
+
+        a {
+            height: 100%;
+            width: 100%;
+            display: flex;
+
+            img {
+                height: 48px;
+                width: 48px;
+                margin: auto
+            }
+        }
     }
 
     .m-header {
+        $inner-margin: 8px;
+        $outer-margin: 12px;
+
         width: 100%;
         height: $header-height;
         background-color: #fff;
         @include shadow-mild;
         @include row;
+        grid-gap: 0 $outer-margin;
+        padding: 0 $outer-margin;
 
         .left {
+            margin: auto auto auto 0;
+            @include row;
+            grid-gap: $outer-margin;
+
+            .user {
+                @include row;
+                padding-left: 6px;
+
+                img {
+                    @include obj;
+                    width: 48px;
+                    height: 48px;
+                    @include border-circle;
+                    margin: auto 0;
+                    margin-right: $inner-margin;
+                }
+
+                > .uk-icon {
+                    margin: auto 0;
+                    color: #999;
+                }
+
+                .column {
+                    margin: auto 0;
+                    margin-right: $inner-margin;
+
+                    h6 {
+                        color: #555;
+                        font-size: 14px;
+                    }
+
+                    span {
+                        color: #aaa;
+                        font-size: 11px;
+                    }
+                }
+            }
+
+            .vertical-divider {
+                margin: 4px 0;
+                height: calc($header-height - 8px);
+                width: 1px;
+                background-color: #ddd;
+            }
+
+            .quick-actions {
+                @include row;
+
+                .btn-icon {
+                    margin: auto 4px auto 0;
+                }
+
+                .btn-icon:last-child {
+                    margin: auto 0 auto 0;
+                }
+
+                .notification-drop {
+                    min-width: 280px;
+
+                    .dropdown-list {
+                        a {
+                            span {
+                                direction: rtl;
+                                max-width: 260px;
+                                overflow: hidden;
+                                font-size: 14px;
+                                white-space: nowrap;
+                                text-overflow: ellipsis;
+                            }
+
+                            span.new:before {
+                                content: '●';
+                                color: red;
+                            }
+                        }
+                    }
+                }
+            }
         }
 
         .right {
+            margin: auto 0 auto auto;
             flex: auto;
         }
     }
@@ -270,10 +390,66 @@ $content-padding: 16px;
     -o-transition-property: width;
     -webkit-transition-property: width;
     transition-property: width;
+
+    .navigation {
+        $item-height: $aside-width;
+
+        li {
+            @include column;
+            height: auto;
+
+            a {
+                @include row-reverse;
+                @include trans(.2s);
+                height: $item-height;
+
+                .uk-icon {
+                    color: #fff;
+                    margin: auto;
+                    margin-right: 24px !important;
+                    min-height: 24px;
+                    min-width: 24px;
+                }
+
+                label {
+                    width: 0;
+                    margin: auto 0;
+                    margin-right: 100px;
+                    font-size: 14px;
+                    opacity: 0;
+                    //
+                    color: #fff;
+                    white-space: nowrap;
+                    @include trans(.2s);
+                }
+            }
+
+            a:hover {
+                background-color: transparentize(#fff,.85);
+            }
+        }
+    }
 }
 
 .m-aside:hover {
     width: $aside-width + 120px;
+
+    .navigation {
+        li {
+            a {
+                .uk-icon {
+                    margin: auto auto auto 8px;
+                }
+
+                label {
+                    width: $aside-width + 60px;
+                    height: auto;
+                    margin: auto 0px auto auto;
+                    opacity: 1;
+                }
+            }
+        }
+    }
 }
 
 /*.m-aside:hover + .m-top > .m-logo {
@@ -286,4 +462,55 @@ $content-padding: 16px;
     margin-top: $header-height;
     padding: $content-padding;
     background: $Background;
+}
+
+.dropdown {
+    background: #fff;
+    padding: 0;
+    @include shadow-medium;
+    @include border-def-radius;
+    border: 1px #dfdfdf solid;
+
+    .dropdown-list {
+        @include column;
+        margin-bottom: 0;
+
+        li {
+            @include trans(.2s);
+
+            a {
+                padding: 10px 12px;
+                color: lighten($Text,12%);
+                height: 100%;
+            }
+
+            a, span {
+                white-space: nowrap !important;
+            }
+        }
+
+        li:hover {
+            background-color: transparentize(#000,0.94);
+        }
+
+        li:active {
+            background-color: transparentize(#000,0.86);
+            @include trans(0s);
+        }
+    }
+}
+
+$between-card-margin: 16px;
+
+.margin-between {
+    margin-bottom: $between-card-margin;
+}
+
+$card-padding: 16px;
+
+.card {
+    @include mat;
+    margin-bottom: $between-card-margin;
+    @include shadow-medium;
+    padding: $card-padding;
 }

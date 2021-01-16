@@ -71,3 +71,10 @@
     grid-gap: $gap;
     grid-template-columns: repeat(auto-fit, minmax($width, 1fr));
 }
+
+@mixin obj() {
+    -o-object-fit: cover;
+    object-fit: cover;
+    -o-object-position: center;
+    object-position: center;
+}

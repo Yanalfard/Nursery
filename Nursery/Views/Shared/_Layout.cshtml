@@ -18,18 +18,30 @@
 <body>
 
     <aside class="m-aside">
-        <ul>
+        <ul class="navigation">
             <li>
-
+                <a href="">
+                    <span uk-icon="speedometer"></span>
+                    <label>داشبورد</label>
+                </a>
             </li>
             <li>
-
+                <a href="">
+                    <span uk-icon="skull"></span>
+                    <label>غیر داشبورد</label>
+                </a>
             </li>
             <li>
-
+                <a href="">
+                    <span uk-icon="snow"></span>
+                    <label>داده ها</label>
+                </a>
             </li>
             <li>
-
+                <a href="">
+                    <span uk-icon="server"></span>
+                    <label>پایگاه داده</label>
+                </a>
             </li>
         </ul>
     </aside>
@@ -38,20 +50,73 @@
         <div class="m-header">
             <div class="left">
                 <div class="quick-actions">
-                    <button class="btn-icon sign-out">
+                    <button class="btn-icon round sign-out">
                         <span uk-icon="log-out-outline"></span>
                     </button>
-                    <button class="btn-icon notifications">
+                    <button class="btn-icon round notifications">
                         <span uk-icon="notifications-outline"></span>
                     </button>
+                    <div class="notification-drop" uk-drop="pos: bottom-justify;">
+                        <div class="dropdown">
+                            <ul class="dropdown-list">
+                                <li>
+                                    <a href="" class="rowr">
+                                        <span class="new">
+                                            این یک متن بسیار بسیار بسیار دراز می باشد ها ها ها
+                                        </span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="" class="rowr">
+                                        <span class="new">
+                                            این یک متن بسیار بسیار بسیار دراز می باشد ها ها ها
+                                        </span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="" class="rowr">
+                                        <span>
+                                            این یک متن بسیار بسیار بسیار دراز می باشد ها ها ها
+                                        </span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="" class="rowr">
+                                        <span>
+                                            این یک متن بسیار بسیار بسیار دراز می باشد ها ها ها
+                                        </span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+
                 </div>
                 <div class="vertical-divider"></div>
                 <div class="user">
-                    <span uk-icon="chevron-down"></span>
-                    <img src="" alt="" />
                     <div class="column">
                         <h6>نام و نام خانوادگی</h6>
-                        <span>تیتر شغل</span>
+                        <span>نام شیفت</span>
+                    </div>
+                    <img src="~/img/blue.png" height="48" width="48" alt="عکس کاربر" />
+                    <span uk-icon="chevron-down"></span>
+                    <div uk-drop="pos: bottom-justify; boundary: .user; boundary-align: true">
+                        <div class="dropdown">
+                            <ul class="dropdown-list">
+                                <li>
+                                    <a href="" class="rowr">
+                                        <span class="uk-margin-small-left" uk-icon="person-circle-outline"></span>
+                                        <span>پروفایل</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="" class="rowr">
+                                        <span class="uk-margin-small-left" uk-icon="log-out-outline"></span>
+                                        <span>خروج</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -60,7 +125,9 @@
             </div>
         </div>
         <div class="m-logo">
-            <img src="/svg/logo.svg" alt="" />
+            <a href="">
+                <img src="/svg/logo.svg" width="48" height="48" alt="" />
+            </a>
         </div>
     </header>
 

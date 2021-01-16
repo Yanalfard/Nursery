@@ -47,6 +47,11 @@ backdrop-filter: saturate(80%);
 .flex-9 {
   flex: 9; }
 
+.round {
+  -moz-border-radius: 1000px 1000px 1000px 1000px;
+  -webkit-border-radius: 1000px 1000px 1000px 1000px;
+  border-radius: 1000px 1000px 1000px 1000px; }
+
 .uk-slider-items .product {
   margin: auto; }
 
@@ -163,10 +168,10 @@ body {
   user-select: none !important; }
 
 .mat {
-  background: #000;
-  -moz-border-radius: 16px 16px 16px 16px;
-  -webkit-border-radius: 16px 16px 16px 16px;
-  border-radius: 16px 16px 16px 16px; }
+  background: #fff;
+  -moz-border-radius: 2px 2px 2px 2px;
+  -webkit-border-radius: 2px 2px 2px 2px;
+  border-radius: 2px 2px 2px 2px; }
 
 /* clears the ‘X’ from Internet Explorer */
 input[type=search]::-ms-clear {

@@ -20,11 +20,11 @@ $checked-color: #fc0;
 
 /*#region Material  */
 
-$mat-background: #000;
+$mat-background: #fff;
 
 @mixin mat() {
     background: $mat-background;
-    @include border-radius(16px,16px,16px,16px);
+    @include border-def-radius;
 }
 
 /*#endregion */
@@ -52,9 +52,9 @@ backdrop-filter: saturate(80%);
 
 @mixin shadow-medium {
     $shadowColor: rgba(0, 0, 0, 0.12);
-    -moz-box-shadow: $shadowColor 0 -6px 16px;
-    -webkit-box-shadow: $shadowColor 0 -6px 16px;
-    box-shadow: $shadowColor 0 -6px 16px;
+    -moz-box-shadow: $shadowColor 0 6px 16px;
+    -webkit-box-shadow: $shadowColor 0 6px 16px;
+    box-shadow: $shadowColor 0 6px 16px;
 }
 
 @mixin shadow-more {
@@ -92,12 +92,27 @@ backdrop-filter: saturate(80%);
     border-radius: $tl $tr $bl $br;
 }
 
+@mixin border-circle() {
+    $px: 1000px;
+    -moz-border-radius: $px $px $px $px;
+    -webkit-border-radius: $px $px $px $px;
+    border-radius: $px $px $px $px;
+}
+
+@mixin border-bevel() {
+    $px: 100%;
+    -moz-border-radius: $px $px $px $px;
+    -webkit-border-radius: $px $px $px $px;
+    border-radius: $px $px $px $px;
+}
+
 @mixin border-def-radius() {
     $px: 2px;
     -moz-border-radius: $px $px $px $px;
     -webkit-border-radius: $px $px $px $px;
     border-radius: $px $px $px $px;
 }
+
 
 @mixin filter($filters) {
     filter: $filters;

@@ -1,4 +1,5 @@
-﻿/*Star*/
+﻿@charset "UTF-8";
+/*Star*/
 /*#region Material  */
 /*#endregion */
 /*
@@ -95,6 +96,29 @@ button, .btn, a, a:hover .js-upload, input[type=file] {
   transition: all ease 0.3s; }
   .btn span {
     white-space: nowrap; }
+
+.btn-icon {
+  border: 0;
+  background-color: transparent;
+  min-height: 20px;
+  min-width: 20px;
+  padding: 8px;
+  -moz-transition: all ease 0.2s;
+  -o-transition: all ease 0.2s;
+  -webkit-transition: all ease 0.2s;
+  transition: all ease 0.2s;
+  color: #555; }
+
+.btn-icon:hover {
+  background-color: rgba(0, 0, 0, 0.06);
+  color: #444; }
+
+.btn-icon:active {
+  background-color: rgba(0, 0, 0, 0.12);
+  -moz-transition: all ease 0s;
+  -o-transition: all ease 0s;
+  -webkit-transition: all ease 0s;
+  transition: all ease 0s; }
 
 .btn-primary {
   background-color: #1890FF;
@@ -243,9 +267,9 @@ button, .btn, a, a:hover .js-upload, input[type=file] {
   -moz-border-radius: 2px 2px 2px 2px;
   -webkit-border-radius: 2px 2px 2px 2px;
   border-radius: 2px 2px 2px 2px;
-  -moz-box-shadow: rgba(0, 0, 0, 0.12) 0 -6px 16px;
-  -webkit-box-shadow: rgba(0, 0, 0, 0.12) 0 -6px 16px;
-  box-shadow: rgba(0, 0, 0, 0.12) 0 -6px 16px; }
+  -moz-box-shadow: rgba(0, 0, 0, 0.12) 0 6px 16px;
+  -webkit-box-shadow: rgba(0, 0, 0, 0.12) 0 6px 16px;
+  box-shadow: rgba(0, 0, 0, 0.12) 0 6px 16px; }
   .form-header {
     padding: 16px;
     border-bottom: solid #e5e5e5 1px; }
@@ -272,10 +296,19 @@ button, .btn, a, a:hover .js-upload, input[type=file] {
     background-color: #1890FF;
     height: 72px;
     width: 76px;
+    min-width: 72px;
     -moz-transition: all ease 0.29s;
     -o-transition: all ease 0.29s;
     -webkit-transition: all ease 0.29s;
     transition: all ease 0.29s; }
+    .m-top .m-logo a {
+      height: 100%;
+      width: 100%;
+      display: flex; }
+      .m-top .m-logo a img {
+        height: 48px;
+        width: 48px;
+        margin: auto; }
   .m-top .m-header {
     width: 100%;
     height: 72px;
@@ -284,8 +317,68 @@ button, .btn, a, a:hover .js-upload, input[type=file] {
     -webkit-box-shadow: rgba(0, 0, 0, 0.12) 0 0px 12px;
     box-shadow: rgba(0, 0, 0, 0.12) 0 0px 12px;
     display: flex;
-    flex-direction: row; }
+    flex-direction: row;
+    grid-gap: 0 12px;
+    padding: 0 12px; }
+    .m-top .m-header .left {
+      margin: auto auto auto 0;
+      display: flex;
+      flex-direction: row;
+      grid-gap: 12px; }
+      .m-top .m-header .left .user {
+        display: flex;
+        flex-direction: row;
+        padding-left: 6px; }
+        .m-top .m-header .left .user img {
+          -o-object-fit: cover;
+          object-fit: cover;
+          -o-object-position: center;
+          object-position: center;
+          width: 48px;
+          height: 48px;
+          -moz-border-radius: 1000px 1000px 1000px 1000px;
+          -webkit-border-radius: 1000px 1000px 1000px 1000px;
+          border-radius: 1000px 1000px 1000px 1000px;
+          margin: auto 0;
+          margin-right: 8px; }
+        .m-top .m-header .left .user > .uk-icon {
+          margin: auto 0;
+          color: #999; }
+        .m-top .m-header .left .user .column {
+          margin: auto 0;
+          margin-right: 8px; }
+          .m-top .m-header .left .user .column h6 {
+            color: #555;
+            font-size: 14px; }
+          .m-top .m-header .left .user .column span {
+            color: #aaa;
+            font-size: 11px; }
+      .m-top .m-header .left .vertical-divider {
+        margin: 4px 0;
+        height: calc($header-height - 8px);
+        width: 1px;
+        background-color: #ddd; }
+      .m-top .m-header .left .quick-actions {
+        display: flex;
+        flex-direction: row; }
+        .m-top .m-header .left .quick-actions .btn-icon {
+          margin: auto 4px auto 0; }
+        .m-top .m-header .left .quick-actions .btn-icon:last-child {
+          margin: auto 0 auto 0; }
+        .m-top .m-header .left .quick-actions .notification-drop {
+          min-width: 280px; }
+          .m-top .m-header .left .quick-actions .notification-drop .dropdown-list a span {
+            direction: rtl;
+            max-width: 260px;
+            overflow: hidden;
+            font-size: 14px;
+            white-space: nowrap;
+            text-overflow: ellipsis; }
+          .m-top .m-header .left .quick-actions .notification-drop .dropdown-list a span.new:before {
+            content: '●';
+            color: red; }
     .m-top .m-header .right {
+      margin: auto 0 auto auto;
       flex: auto; }
 
 .m-aside {
@@ -306,9 +399,48 @@ button, .btn, a, a:hover .js-upload, input[type=file] {
   -o-transition-property: width;
   -webkit-transition-property: width;
   transition-property: width; }
+  .m-aside .navigation li {
+    display: flex;
+    flex-direction: column;
+    height: auto; }
+    .m-aside .navigation li a {
+      display: flex;
+      flex-direction: row-reverse;
+      -moz-transition: all ease 0.2s;
+      -o-transition: all ease 0.2s;
+      -webkit-transition: all ease 0.2s;
+      transition: all ease 0.2s;
+      height: 72px; }
+      .m-aside .navigation li a .uk-icon {
+        color: #fff;
+        margin: auto;
+        margin-right: 24px !important;
+        min-height: 24px;
+        min-width: 24px; }
+      .m-aside .navigation li a label {
+        width: 0;
+        margin: auto 0;
+        margin-right: 100px;
+        font-size: 14px;
+        opacity: 0;
+        color: #fff;
+        white-space: nowrap;
+        -moz-transition: all ease 0.2s;
+        -o-transition: all ease 0.2s;
+        -webkit-transition: all ease 0.2s;
+        transition: all ease 0.2s; }
+    .m-aside .navigation li a:hover {
+      background-color: rgba(255, 255, 255, 0.15); }
 
 .m-aside:hover {
   width: 192px; }
+  .m-aside:hover .navigation li a .uk-icon {
+    margin: auto auto auto 8px; }
+  .m-aside:hover .navigation li a label {
+    width: 132px;
+    height: auto;
+    margin: auto 0px auto auto;
+    opacity: 1; }
 
 /*.m-aside:hover + .m-top > .m-logo {
     width: $aside-width + 120px + 32px;
@@ -319,3 +451,51 @@ button, .btn, a, a:hover .js-upload, input[type=file] {
   margin-top: 72px;
   padding: 16px;
   background: #F8F8FB; }
+
+.dropdown {
+  background: #fff;
+  padding: 0;
+  -moz-box-shadow: rgba(0, 0, 0, 0.12) 0 6px 16px;
+  -webkit-box-shadow: rgba(0, 0, 0, 0.12) 0 6px 16px;
+  box-shadow: rgba(0, 0, 0, 0.12) 0 6px 16px;
+  -moz-border-radius: 2px 2px 2px 2px;
+  -webkit-border-radius: 2px 2px 2px 2px;
+  border-radius: 2px 2px 2px 2px;
+  border: 1px #dfdfdf solid; }
+  .dropdown .dropdown-list {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 0; }
+    .dropdown .dropdown-list li {
+      -moz-transition: all ease 0.2s;
+      -o-transition: all ease 0.2s;
+      -webkit-transition: all ease 0.2s;
+      transition: all ease 0.2s; }
+      .dropdown .dropdown-list li a {
+        padding: 10px 12px;
+        color: #454545;
+        height: 100%; }
+      .dropdown .dropdown-list li a, .dropdown .dropdown-list li span {
+        white-space: nowrap !important; }
+    .dropdown .dropdown-list li:hover {
+      background-color: rgba(0, 0, 0, 0.06); }
+    .dropdown .dropdown-list li:active {
+      background-color: rgba(0, 0, 0, 0.14);
+      -moz-transition: all ease 0s;
+      -o-transition: all ease 0s;
+      -webkit-transition: all ease 0s;
+      transition: all ease 0s; }
+
+.margin-between {
+  margin-bottom: 16px; }
+
+.card {
+  background: #fff;
+  -moz-border-radius: 2px 2px 2px 2px;
+  -webkit-border-radius: 2px 2px 2px 2px;
+  border-radius: 2px 2px 2px 2px;
+  margin-bottom: 16px;
+  -moz-box-shadow: rgba(0, 0, 0, 0.12) 0 6px 16px;
+  -webkit-box-shadow: rgba(0, 0, 0, 0.12) 0 6px 16px;
+  box-shadow: rgba(0, 0, 0, 0.12) 0 6px 16px;
+  padding: 16px; }
