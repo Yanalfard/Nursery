@@ -18,6 +18,7 @@ namespace DataLayer.Models
         [Required]
         [StringLength(150)]
         public string Name { get; set; }
+        public string Body { get; set; }
         [Column(TypeName = "datetime")]
         public DateTime? DateCreated { get; set; }
         public bool? IsDeleted { get; set; }
