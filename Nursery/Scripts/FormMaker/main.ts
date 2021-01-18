@@ -198,15 +198,15 @@ class Field {
             case Type.checkbox:
                 templateString =
                     `
-                <label class="fg-label uk-margin-auto-left row" for="${data.Label}">${data.Label}
-                    <input class="entry uk-checkbox" id="${this.id}" ${data.IsRequired ? 'required' : ''} type="checkbox">
+                <label class="fg-label uk-margin-auto-left row" id="${this.id}">${data.Label}
+                <input class="uk-checkbox" id="${this.id}" ${data.IsRequired ? 'required' : ''} type="checkbox">
                 </label>
                    `;
                 break;
             case Type.textarea:
                 templateString =
                     `
-                <label class="fg-label" for="${data.Label}">${data.Label}</label>
+                <label class="fg-label" id="${this.id}">${data.Label}</label>
                 <textarea class="entry" id="${this.id}" ${data.IsRequired ? 'required' : ''} placeholder="${data.Label}" pattern="${data.validations[0]?.Regex}"></textarea>
                 <span class="text-danger"></span>
                    `;
@@ -214,14 +214,14 @@ class Field {
             case Type.color:
                 templateString =
                     `
-                <label class="fg-label" for="${data.Label}">${data.Label}</label>
+                <label class="fg-label" id="${this.id}">${data.Label}</label>
                 <input class="entry" id="${this.id}" ${data.IsRequired ? 'required' : ''} type="color">
                    `;
                 break;
             case Type.date:
                 templateString =
                     `
-                <label class="fg-label" for="${data.Label}">${data.Label}</label>
+                <label class="fg-label" id="${this.id}">${data.Label}</label>
                 <input class="entry" id="${this.id}" ${data.IsRequired ? 'required' : ''} type="date" placeholder="${data.Label}" pattern="${data.validations[0]?.Regex}">
                 <span class="text-danger"></span>
                    `;
@@ -229,7 +229,7 @@ class Field {
             case Type.dateTime:
                 templateString =
                     `
-                <label class="fg-label" for="${data.Label}">${data.Label}</label>
+                <label class="fg-label" id="${this.id}">${data.Label}</label>
                 <input class="entry" id="${this.id}" ${data.IsRequired ? 'required' : ''} type="dateTime" placeholder="${data.Label}" pattern="${data.validations[0]?.Regex}">
                 <span class="text-danger"></span>
                    `;
@@ -237,7 +237,7 @@ class Field {
             case Type.email:
                 templateString =
                     `
-                <label class="fg-label" for="${data.Label}">${data.Label}</label>
+                <label class="fg-label" id="${this.id}">${data.Label}</label>
                 <input class="entry" id="${this.id}" ${data.IsRequired ? 'required' : ''} type="email" placeholder="${data.Label}" pattern="${data.validations[0]?.Regex}">
                 <span class="text-danger"></span>
                    `;
@@ -245,7 +245,7 @@ class Field {
             case Type.file:
                 templateString =
                     `
-                <label class="fg-label" for="${data.Label}">${data.Label}</label>
+                <label class="fg-label" id="${this.id}">${data.Label}</label>
                 <input class="entry" id="${this.id}" ${data.IsRequired ? 'required' : ''} type="file">
                 <span class="text-danger"></span>
                    `;
@@ -253,7 +253,7 @@ class Field {
             case Type.hidden:
                 templateString =
                     `
-                <label class="fg-label" for="${data.Label}">${data.Label}</label>
+                <label class="fg-label" id="${this.id}">${data.Label}</label>
                 <input class="entry" id="${this.id}" ${data.IsRequired ? 'required' : ''} type="hidden">
                 <span class="text-danger"></span>
                    `;
@@ -261,7 +261,7 @@ class Field {
             case Type.image:
                 templateString =
                     `
-                <label class="fg-label" for="${data.Label}">${data.Label}</label>
+                <label class="fg-label" id="${this.id}">${data.Label}</label>
                 <input class="entry" id="${this.id}" ${data.IsRequired ? 'required' : ''} alt="${data.Label}" type="image">
                 <span class="text-danger"></span>
                    `;
@@ -269,15 +269,15 @@ class Field {
             case Type.month:
                 templateString =
                     `
-                <label class="fg-label" for="${data.Label}">${data.Label}</label>
+                <label class="fg-label" id="${this.id}">${data.Label}</label>
                 <input class="entry" id="${this.id}" ${data.IsRequired ? 'required' : ''} type="month" placeholder="${data.Label}">
                 <span class="text-danger"></span>
                    `;
                 break;
             case Type.number:
                 templateString =
-                    `<div class="fg-col">
-                <label class="fg-label" for="${data.Label}">${data.Label}</label>
+                    `
+                <label class="fg-label" id="${this.id}">${data.Label}</label>
                 <input class="entry" id="${this.id}" ${data.IsRequired ? 'required' : ''} type="number" placeholder="${data.Label}" pattern="${data.validations[0]?.Regex}">
                 <span class="text-danger"></span>
                    `;
@@ -285,7 +285,7 @@ class Field {
             case Type.password:
                 templateString =
                     `
-                <label class="fg-label" for="${data.Label}">${data.Label}</label>
+                <label class="fg-label" id="${this.id}">${data.Label}</label>
                 <input class="entry" id="${this.id}" ${data.IsRequired ? 'required' : ''} type="password" placeholder="${data.Label}" pattern="${data.validations[0]?.Regex}">
                 <span class="text-danger"></span>
                    `;
@@ -293,28 +293,28 @@ class Field {
             case Type.radio:
                 templateString =
                     `
-                <label class="fg-label" for="${data.Label}">${data.Label}</label>
-                ${data.Options.map(o => `<label class="radio"><span>${o}</span><input id="${data.Label + data.Options.indexOf(o)}" name="${this.id}" class="uk-radio entry" value="${o}" type="radio"></label>`).join('')}
+                <label class="fg-label" id="${this.id}">${data.Label}</label>
+                ${data.Options.map(o => `<label class="radio"><span>${o}</span><input id="${data.Label + data.Options.indexOf(o)}" name="${this.id}" class="uk-radio" value="${o}" type="radio"></label>`).join('')}
                     `;
                 break;
             case Type.range:
                 templateString =
                     `
-                <label class="fg-label" for="${data.Label}">${data.Label}</label>
-                <input class="entry uk-range" id="${data.Label.toString()}" ${data.IsRequired ? 'required' : ''} min="${data.Options[0]}" max="${data.Options[1]}" type="range" placeholder="${data.Label}" pattern="${data.validations[0]?.Regex}">
+                <label class="fg-label" id="${this.id}">${data.Label}</label>
+                <input class="uk-range" id="${data.Label.toString()}" ${data.IsRequired ? 'required' : ''} min="${data.Options[0]}" max="${data.Options[1]}" type="range" placeholder="${data.Label}" pattern="${data.validations[0]?.Regex}">
                    `;
                 break;
             case Type.reset:
                 templateString =
                     `
-                <label class="fg-label" for="${data.Label}">${data.Label}</label>
+                <label class="fg-label" id="${this.id}">${data.Label}</label>
                 <input class="entry" id="${this.id}" type="reset" ${data.IsRequired ? 'required' : ''} placeholder="${data.Label}" pattern="${data.validations[0]?.Regex}">
                    `;
                 break;
             case Type.search:
                 templateString =
                     `
-                <label class="fg-label" for="${data.Label}">${data.Label}</label>
+                <label class="fg-label" id="${this.id}">${data.Label}</label>
                 <input class="entry" id="${this.id}" type="search" ${data.IsRequired ? 'required' : ''} placeholder="${data.Label}" pattern="${data.validations[0]?.Regex}">
                 <span class="text-danger"></span>
                    `;
@@ -322,14 +322,14 @@ class Field {
             case Type.submit:
                 templateString =
                     `
-                <label class="fg-label" for="${data.Label}">${data.Label}</label>
+                <label class="fg-label" id="${this.id}">${data.Label}</label>
                 <input class="entry" id="${this.id}" type="submit" ${data.IsRequired ? 'required' : ''} placeholder="${data.Label}" pattern="${data.validations[0]?.Regex}">
                    `;
                 break;
             case Type.tel:
                 templateString =
                     `
-                <label class="fg-label" for="${data.Label}">${data.Label}</label>
+                <label class="fg-label" id="${this.id}">${data.Label}</label>
                 <input class="entry" id="${this.id}" type="tel" ${data.IsRequired ? 'required' : ''} placeholder="${data.Label}" pattern="${data.validations[0]?.Regex}">
                 <span class="text-danger"></span>
                    `;
@@ -337,7 +337,7 @@ class Field {
             case Type.text:
                 templateString =
                     `
-                <label class="fg-label" for="${data.Label}">${data.Label}</label>
+                <label class="fg-label" id="${this.id}">${data.Label}</label>
                 <input class="entry" id="${this.id}" type="text" ${data.IsRequired ? 'required' : ''} placeholder="${data.Label}" pattern="${data.validations[0]?.Regex}">
                 <span class="text-danger"></span>
                    `;
@@ -345,7 +345,7 @@ class Field {
             case Type.time:
                 templateString =
                     `
-                <label class="fg-label" for="${data.Label}">${data.Label}</label>
+                <label class="fg-label" id="${this.id}">${data.Label}</label>
                 <input class="entry" id="${this.id}" type="time" ${data.IsRequired ? 'required' : ''} placeholder="${data.Label}" pattern="${data.validations[0]?.Regex}">
                 <span class="text-danger"></span>
                    `;
@@ -353,7 +353,7 @@ class Field {
             case Type.url:
                 templateString =
                     `
-                <label class="fg-label" for="${data.Label}">${data.Label}</label>
+                <label class="fg-label" id="${this.id}">${data.Label}</label>
                 <input class="entry" id="${this.id}" type="url" ${data.IsRequired ? 'required' : ''} placeholder="${data.Label}" pattern="${data.validations[0]?.Regex}">
                 <span class="text-danger"></span>
                    `;
@@ -361,7 +361,7 @@ class Field {
             case Type.week:
                 templateString =
                     `
-                <label class="fg-label" for="${data.Label}">${data.Label}</label>
+                <label class="fg-label" id="${this.id}">${data.Label}</label>
                 <input class="entry" id="${this.id}" ${data.IsRequired ? 'required' : ''} type="week" placeholder="${data.Label}" pattern="${data.validations[0]?.Regex}">
                 <span class="text-danger"></span>
                    `;
@@ -369,7 +369,7 @@ class Field {
             case Type.combo:
                 templateString =
                     `
-                <label class="fg-label" for="${data.Label}">${data.Label}</label>
+                <label class="fg-label" id="${this.id}">${data.Label}</label>
                 <select class="entry" id="${this.id}">
                     ${data.Options.map(o => (`<option>${o}</option>`)).join('')}
                 </select>

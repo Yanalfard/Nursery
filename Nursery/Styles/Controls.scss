@@ -70,6 +70,7 @@ button, .btn, a, a:hover .js-upload, input[type=file] {
 //-
 
 .btn-primary {
+    border: 0;
     background-color: $primary;
     color: white;
     @include btn-static-shadow;
@@ -90,10 +91,11 @@ button, .btn, a, a:hover .js-upload, input[type=file] {
 .btn-secondary {
     @include component-border;
     background-color: transparent;
-    color: $Text;
+    color: lighten($Text,12%);
     @include btn-static-shadow;
 }
 
+d
 .btn-dashed {
     border: 1px #ddd dashed;
     background-color: transparent;
@@ -141,6 +143,11 @@ button, .btn, a, a:hover .js-upload, input[type=file] {
 
 .btn-link:active {
     background: #E6F7FF;
+}
+
+input {
+    font-size: 13px;
+    min-height: 27px;
 }
 
 /*#region Form */
@@ -221,10 +228,7 @@ button, .btn, a, a:hover .js-upload, input[type=file] {
 
 .form {
     $padding: 16px;
-    background-color: white;
-    border: 1px solid #e5e5e5;
-    @include border-def-radius;
-    @include shadow-medium;
+    @include mat;
 
     &-header {
         padding: $padding;
@@ -421,6 +425,7 @@ $content-padding: 16px;
                     color: #fff;
                     white-space: nowrap;
                     @include trans(.2s);
+                    pointer-events: none;
                 }
             }
 
@@ -436,12 +441,16 @@ $content-padding: 16px;
 
     .navigation {
         li {
+            cursor: pointer;
+
             a {
                 .uk-icon {
                     margin: auto auto auto 8px;
+                    cursor: pointer;
                 }
 
                 label {
+                    cursor: pointer;
                     width: $aside-width + 60px;
                     height: auto;
                     margin: auto 0px auto auto;
@@ -514,3 +523,49 @@ $card-padding: 16px;
     @include shadow-medium;
     padding: $card-padding;
 }
+
+/*#region tbl */
+
+.controls-grid {
+    @include row-reverse;
+    -ms-flex-wrap: wrap;
+    -webkit-flex-wrap: wrap;
+    flex-wrap: wrap;
+    grid-gap: 8px;
+}
+
+$background-odd: #f9f9f9;
+$background-highlight: #eee;
+
+.tbl {
+    direction: rtl;
+    border-spacing: 0;
+
+    .actions {
+    }
+
+
+    td, th {
+        height: 48px;
+        padding: 0 20px;
+    }
+
+    tbody {
+
+        tr {
+            @include trans(.4s);
+        }
+
+        tr:nth-child(2n+1) {
+            background-color: $background-odd;
+        }
+
+        tr:hover {
+            background-color: $background-highlight;
+            @include trans(.1s);
+        }
+    }
+}
+
+/*#endregion */
+

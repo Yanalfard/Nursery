@@ -23,7 +23,9 @@ $checked-color: #fc0;
 $mat-background: #fff;
 
 @mixin mat() {
-    background: $mat-background;
+    background-color: $mat-background;
+    border: 1px solid #e5e5e5;
+    @include shadow-medium;
     @include border-def-radius;
 }
 

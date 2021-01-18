@@ -18,5 +18,19 @@ namespace Nursery.Controllers
             return View();
         }
 
+        public IActionResult Add()
+        {
+            return View();
+        }
+
+        public IActionResult List()
+        {
+            return View();
+        }
+
+        public IActionResult Config()
+        {
+            return View();
+        }
     }
 }

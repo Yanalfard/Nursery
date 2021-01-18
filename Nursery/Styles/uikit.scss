@@ -8,6 +8,12 @@
     font-display: swap;
 }
 
+@font-face {
+    font-family: 'Sahel';
+    src: url('../fonts/Sahel.woff') format('woff');
+    font-display: swap;
+}
+
 @for $var from 1 to 10 {
     .flex-#{$var} {
         flex: $var;
@@ -25,7 +31,7 @@
 * {
     margin: 0;
     padding: 0;
-    font-family: 'iranyekan', IRANYekan;
+    font-family: IRANYekan, Sahel;
     /*    font-family: 'Segoe UI';*/
     list-style: none;
     text-decoration: none;
@@ -39,10 +45,9 @@
     touch-action: manipulation;
 }
 
-
 html {
     /* 1 */
-    font-family: 'iranyekan', IRANYekan, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+    font-family: IRANYekan, Sahel, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
     font-display: swap;
     font-size: 0.93em;
     font-weight: normal;
@@ -61,16 +66,16 @@ html {
     }
     /* Track */
     ::-webkit-scrollbar-track {
-        background: #eee;
+        background: #474b62;
     }
     /* Handle */
     ::-webkit-scrollbar-thumb {
-        background: #888;
+        background: #5c6072;
         @include shadow-mild;
     }
     /* Handle on hover */
     ::-webkit-scrollbar-thumb:hover {
-        background: lighten(#888,8%);
+        background: lighten(#5c6072,8%);
     }
 }
 /*
@@ -1368,6 +1373,8 @@ a.uk-link-reset,
     fill: currentcolor;
     /* 10 */
     line-height: 0;
+    min-width: 24px;
+    min-height: 24px;
 }
 /* Required for `button`. */
 button.uk-icon:not(:disabled) {
