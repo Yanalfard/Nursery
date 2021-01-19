@@ -1,0 +1,38 @@
+﻿@import '_colors.scss';
+@import '_layout.scss';
+
+.login-image {
+    @include obj;
+    background: $primary-dark;
+    background: -moz-linear-gradient(45deg, $primary-dark 0%, $primary-light 100%);
+    background: -webkit-linear-gradient(45deg, $primary-dark 0%, $primary-light 100%);
+    background: -gradient(45deg, $primary-dark 0%, $primary-light 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#ffffff",endColorstr="#ff0000",GradientType=1);
+    border-right: 0;
+}
+
+@media only screen and (max-width: 700px) {
+    #loginForm {
+        width: 100%;
+    }
+
+    .login-image {
+        display: none;
+    }
+}
+
+.copyright {
+    background-color: #efefef;
+    padding: 20px;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+
+    p {
+        margin: 0 auto;
+        padding: 0 16px;
+        color: lighten($Text,32%);
+        text-align: center;
+    }
+}

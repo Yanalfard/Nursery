@@ -1,0 +1,100 @@
+﻿/*Star*/
+/*#region Material  */
+/*#endregion */
+/*
+backdrop-filter: blur(2px);
+backdrop-filter: brightness(60%);
+backdrop-filter: contrast(40%);
+backdrop-filter: drop-shadow(4px 4px 10px blue);
+backdrop-filter: grayscale(30%);
+backdrop-filter: hue-rotate(120deg);
+backdrop-filter: invert(70%);
+backdrop-filter: opacity(20%);
+backdrop-filter: sepia(90%);
+backdrop-filter: saturate(80%);
+*/
+/*#endregion */
+/*#region Alignment */
+.row {
+  display: flex;
+  flex-direction: row; }
+
+.rowr {
+  display: flex;
+  flex-direction: row-reverse; }
+
+.col {
+  display: flex;
+  flex-direction: column; }
+
+.colr {
+  display: flex;
+  flex-direction: column-reverse; }
+
+.flex-1 {
+  flex: 1; }
+
+.flex-2 {
+  flex: 2; }
+
+.flex-3 {
+  flex: 3; }
+
+.flex-4 {
+  flex: 4; }
+
+.flex-5 {
+  flex: 5; }
+
+.flex-6 {
+  flex: 6; }
+
+.flex-7 {
+  flex: 7; }
+
+.flex-8 {
+  flex: 8; }
+
+.flex-9 {
+  flex: 9; }
+
+.flex-10 {
+  flex: 10; }
+
+.flex-11 {
+  flex: 11; }
+
+.flex-auto {
+  flex: auto; }
+
+/*#endregion */
+.login-image {
+  -o-object-fit: cover;
+  object-fit: cover;
+  -o-object-position: center;
+  object-position: center;
+  background: #198af3;
+  background: -moz-linear-gradient(45deg, #198af3 0%, #40A9FF 100%);
+  background: -webkit-linear-gradient(45deg, #198af3 0%, #40A9FF 100%);
+  background: -gradient(45deg, #198af3 0%, #40A9FF 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#ffffff",endColorstr="#ff0000",GradientType=1);
+  border-right: 0; }
+
+@media only screen and (max-width: 700px) {
+  #loginForm {
+    width: 100%; }
+  .login-image {
+    display: none; } }
+
+.copyright {
+  background-color: #efefef;
+  padding: 20px;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0; }
+  .copyright p {
+    margin: 0 auto;
+    padding: 0 16px;
+    color: #787878;
+    text-align: center; }

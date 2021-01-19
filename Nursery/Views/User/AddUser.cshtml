@@ -1,0 +1,48 @@
+﻿@{
+    ViewData["Title"] = "کاربر جدید";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<form class="form">
+    <div class="form-header">
+        <h3>
+            کاربر جدید
+        </h3>
+    </div>
+    <div class="form-body">
+
+        <div class="fg-col ">
+            <label class="fg-label" for="name">نام و نام خانوادگی</label>
+            <input class="entry" id="name" type="text">
+            <span class="text-danger"></span>
+        </div>
+
+        <div class="fg-col ">
+            <label class="fg-label" for="tel">شماره تلفن</label>
+            <input class="entry" id="tel" type="tel">
+            <span class="text-danger"></span>
+        </div>
+
+        <div class="fg-col ">
+            <label class="fg-label" for="password">گذرواژه</label>
+            <input class="entry" id="password" type="text">
+            <span class="text-danger"></span>
+        </div>
+
+        <div class="fg-col ">
+            <label class="fg-label" for="identification">کد ملی</label>
+            <input class="entry" id="identification" type="text">
+            <span class="text-danger"></span>
+        </div>
+
+        <div class="fg-col ">
+            <label class="fg-label" for="image">عکس پروفایل</label>
+            <input class="entry" id="image" type="file">
+            <span class="text-danger"></span>
+        </div>
+
+    </div>
+    <div class="form-footer">
+        <button class="btn btn-primary">اضافه</button>
+    </div>
+</form>

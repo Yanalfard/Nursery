@@ -6,5 +6,9 @@
   {
     "outputFile": "wwwroot/css/uikit.css",
     "inputFile": "Styles/uikit.scss"
+  },
+  {
+    "outputFile": "wwwroot/css/Entry.css",
+    "inputFile": "Styles/Entry.scss"
   }
 ]

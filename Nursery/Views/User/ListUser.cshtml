@@ -1,0 +1,111 @@
+﻿
+@{
+    ViewData["Title"] = "لیست کاربر ها";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="form">
+    <div class="form-header">
+        <div class="rowr">
+            <h2>
+                لیست کاربر ها
+            </h2>
+            <button onclick="window.location = '/User/AddUser'" class="btn btn-primary uk-margin-auto-right">
+                <span>اضافه</span>
+                <span uk-icon="add-circle-outline"></span>
+            </button>
+        </div>
+    </div>
+    <div class="form-header">
+        <div class="controls-grid">
+            <div class="col">
+                <input class="entry" type="text" placeholder="نام">
+                <span class="text-danger"></span>
+            </div>
+            <div class="col">
+                <input class="entry" type="tel" placeholder="شماره تلفن">
+                <span class="text-danger"></span>
+            </div>
+            <div class="col">
+                <input class="entry" type="text" placeholder="گذرواژه">
+                <span class="text-danger"></span>
+            </div>
+            <div class="col">
+                <input class="entry" type="number" placeholder="کد ملی">
+                <span class="text-danger"></span>
+            </div>
+            <div class="col">
+                <input class="entry" type="text" placeholder="نام عکس">
+                <span class="text-danger"></span>
+            </div>
+            <div class="col">
+                <label class="fg-label uk-margin-auto-left row">
+                    حذف شده
+                    <input class="uk-checkbox" type="checkbox">
+                </label>
+                <span class="text-danger"></span>
+            </div>
+            <button class="btn btn-secondary">
+                <span>جستجو</span>
+                <span uk-icon="search"></span>
+            </button>
+        </div>
+    </div>
+
+    <div class="form-body scrollh-container uk-padding-remove">
+        <table class="tbl tbl-striped" dir="rtl">
+            <thead>
+                <tr>
+                    <th>کد</th>
+                    <th>نام</th>
+                    <th>شماره تماس</th>
+                    <th>تاریخ ثبت نام</th>
+                    <th>تاریخ آخرین ورود</th>
+                    <th>نقش</th>
+                    <th>عملیات</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>1</td>
+                    <td>صدرا محمدی</td>
+                    <td><bdi>0935 593 29 30</bdi></td>
+                    <td>1381/02/02</td>
+                    <td>1400/01/01</td>
+                    <td>ادمین</td>
+                    <td class="actions">
+                        <a class="btn-link" uk-icon="trash-outline"></a>
+                        <a class="btn-link" uk-icon="create-outline"></a>
+                    </td>
+                </tr>
+                <tr>
+                    <td>2</td>
+                    <td>ینال احمد زاده</td>
+                    <td><bdi>0903 984 57 75</bdi></td>
+                    <td>1379/10/17</td>
+                    <td>1400/01/01</td>
+                    <td>مدیر</td>
+                    <td class="actions">
+                        <a class="btn-link" uk-icon="trash-outline"></a>
+                        <a class="btn-link" uk-icon="create-outline"></a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="form-footer">
+        @*<button class="btn btn-primary">اضافه</button>*@
+        <div class="uk-margin-auto-right">
+            <ul class="uk-pagination uk-margin-remove uk-margin-auto-right">
+                <li><a href="#"><span uk-pagination-previous></span></a></li>
+                <li><a href="#">1</a></li>
+                <li class="uk-disabled"><span>...</span></li>
+                <li><a href="#">5</a></li>
+                <li><a href="#">6</a></li>
+                <li class="uk-active"><span>7</span></li>
+                <li><a href="#">8</a></li>
+                <li><a href="#"><span uk-pagination-next></span></a></li>
+            </ul>
+        </div>
+    </div>
+</div>

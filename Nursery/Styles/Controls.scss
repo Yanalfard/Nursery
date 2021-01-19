@@ -47,6 +47,16 @@ button, .btn, a, a:hover .js-upload, input[type=file] {
 
 //-
 
+a.btn {
+    line-height: 27px;
+}
+
+a.btn.btn-primary:hover {
+    color: white;
+}
+
+//-
+
 .btn-icon {
     border: 0;
     background-color: transparent;
@@ -95,7 +105,6 @@ button, .btn, a, a:hover .js-upload, input[type=file] {
     @include btn-static-shadow;
 }
 
-d
 .btn-dashed {
     border: 1px #ddd dashed;
     background-color: transparent;
@@ -144,6 +153,18 @@ d
 .btn-link:active {
     background: #E6F7FF;
 }
+
+//-
+
+.text-def {
+    color: $Text;
+}
+
+.text-lesser {
+    color: lighten($Text,32%) !important;
+}
+
+//-
 
 input {
     font-size: 13px;
@@ -246,6 +267,10 @@ input {
         @include row-reverse;
         grid-gap: 12px;
     }
+}
+
+.forms {
+    @include grid-gap(230px,16px)
 }
 
 /*#endregion */
@@ -517,6 +542,10 @@ $between-card-margin: 16px;
 
 $card-padding: 16px;
 
+.gap-card {
+    grid-gap: $card-padding;
+}
+
 .card {
     @include mat;
     margin-bottom: $between-card-margin;
@@ -531,28 +560,61 @@ $card-padding: 16px;
     -ms-flex-wrap: wrap;
     -webkit-flex-wrap: wrap;
     flex-wrap: wrap;
-    grid-gap: 8px;
+    grid-gap: 12px;
+
+    .entry {
+        min-width: 160px;
+    }
+
+    label {
+        margin: auto 0;
+
+        .uk-checkbox {
+            width: 28px;
+            height: 28px;
+            padding: 0 !important;
+            margin: auto 0 auto 8px;
+        }
+    }
 }
 
 $background-odd: #f9f9f9;
 $background-highlight: #eee;
+
+.scrollh-container {
+    overflow-x: auto !important;
+    overflow-y: hidden !important;
+}
 
 .tbl {
     direction: rtl;
     border-spacing: 0;
 
     .actions {
+        @include row;
+        grid-gap: 12px;
+
+        * {
+            margin: auto 0;
+        }
     }
 
+    td:first-child, th:first-child {
+        min-width: 28px !important;
+        width: 28px !important;
+        background-color: transparentize(darken($primary-light,8%),.96);
+    }
 
     td, th {
         height: 48px;
         padding: 0 20px;
+        min-width: 150px;
     }
 
     tbody {
 
         tr {
+            width: 100%;
             @include trans(.4s);
         }
 
@@ -564,6 +626,14 @@ $background-highlight: #eee;
             background-color: $background-highlight;
             @include trans(.1s);
         }
+    }
+
+    .btn-link:hover {
+        background-color: transparent;
+    }
+
+    .btn-link:active {
+        color: darken($primary-dark,18%);
     }
 }
 
