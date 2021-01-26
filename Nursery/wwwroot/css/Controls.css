@@ -198,7 +198,7 @@ a.btn.btn-primary:hover {
 .text-lesser {
   color: #787878 !important; }
 
-input {
+input:not(input[type=checkbox]):not(input[type=radio]) {
   font-size: 13px;
   min-height: 27px; }
 

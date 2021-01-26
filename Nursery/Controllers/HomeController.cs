@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using DataLayer.Models;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -32,5 +33,6 @@ namespace Nursery.Controllers
         {
             return View();
         }
+
     }
 }

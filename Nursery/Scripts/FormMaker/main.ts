@@ -1,17 +1,18 @@
-﻿
-class tblForm {
-    Id: number;
-    Name: string;
+﻿class tblForm {
+    Id: number = -1;
+    Name: string = '';
+    Body: string = '';
     DateCreated: Date;
-    IsDeleted: boolean;
+    IsDeleted: boolean = false;
 
     constructor() { }
 }
 
 class tblRegex {
-    Id: number;
-    Regex: RegExp;
-    Label: string;
+    Id: number = -1;
+    Regex: RegExp = new RegExp('');
+    Label: string = '';
+    IsDeleted: boolean = false;
 
     constructor(regex: RegExp, label?: string) {
         this.Regex = regex;
@@ -20,23 +21,26 @@ class tblRegex {
 }
 
 class tblField {
-    Id: number;
-    FormId: number;
-    Label: string;
-    Type: Type;
-    IsRequired: boolean;
+    Id: number = -1;
+    FormId: number = -1;
+    Label: string = '';
+    Type: Type = Type.text;
+    IsRequired: boolean = false;
     Options: string[] = [];
-    Tooltip: string;
+    Placeholder: string = '';
+    Tooltip: string = '';
+    IsDeleted: boolean = false;
 
     validations: tblRegex[] = [];
 
     constructor() { }
-};
+}
 
 class tblValue {
-    Id: number;
-    UserId: number;
-    Value: string;
+    Id: number = -1;
+    UserId: number = -1;
+    Value: string = '';
+    IsDeleted: boolean = false;
 
     constructor() { }
 }
@@ -75,50 +79,57 @@ form1.Name = 'این نام فرم می باشد';
 
 const exp = new RegExp("[0-9]{11}");
 
-//const tblField1 = new tblField();
-//tblField1.Id = 0;
-//tblField1.FormId = 0;
-//tblField1.IsRequired = true;
-//tblField1.Type = Type.checkbox;
-//tblField1.Label = "مرا به خاطر بسپار";
+const tblField1 = new tblField();
+tblField1.Id = 0;
+tblField1.FormId = 0;
+tblField1.IsRequired = true;
+tblField1.Type = Type.checkbox;
+tblField1.Label = "مرا به خاطر بسپار";
 
-//const tblField2 = new tblField();
-//tblField2.Id = 1;
-//tblField2.FormId = 0;
-//tblField2.IsRequired = false;
-//tblField2.Type = Type.tel;
-//tblField2.validations.push(new tblRegex(exp, 'شماره تلفن صحیح نمی باشد'));
-//tblField2.Label = 'شماره تلفن';
+const tblField2 = new tblField();
+tblField2.Id = 1;
+tblField2.FormId = 0;
+tblField2.IsRequired = false;
+tblField2.Type = Type.tel;
+tblField2.validations.push(new tblRegex(exp, 'شماره تلفن صحیح نمی باشد'));
+tblField2.Label = 'شماره تلفن';
 
-//const tblField3 = new tblField();
-//tblField3.Id = 2;
-//tblField3.FormId = 0;
-//tblField3.IsRequired = true;
-//tblField3.Type = Type.radio;
-//tblField3.Options = ['مرد', 'زن', 'ترجیح میدم نگم'];
-//tblField3.Label = 'جنسیت';
+const tblField3 = new tblField();
+tblField3.Id = 2;
+tblField3.FormId = 0;
+tblField3.IsRequired = true;
+tblField3.Type = Type.radio;
+tblField3.Options = ['مرد', 'زن', 'ترجیح میدم نگم'];
+tblField3.Label = 'جنسیت';
 
-//const tblField4 = new tblField();
-//tblField4.Id = 4;
-//tblField4.FormId = 0;
-//tblField4.IsRequired = false;
-//tblField4.Type = Type.combo;
-//tblField4.Options = ['سیب', 'موز', 'هلو', 'آلبالو'];
-//tblField4.Label = 'میوه مورد علاقه';
+const tblField4 = new tblField();
+tblField4.Id = 4;
+tblField4.FormId = 0;
+tblField4.IsRequired = false;
+tblField4.Type = Type.combo;
+tblField4.Options = ['سیب', 'موز', 'هلو', 'آلبالو'];
+tblField4.Label = 'میوه مورد علاقه';
 
-//const tblFields = [tblField1, tblField2, tblField3, tblField4];
-const tblFields = [];
+const tblField5 = new tblField();
+tblField5.Id = 5;
+tblField5.FormId = 0;
+tblField5.IsRequired = true;
+tblField5.Type = Type.text;
+tblField5.Label = 'فیلد ضروری';
 
-for (var i = 0; i < 21; i++) {
-    const f = new tblField();
-    f.Id = i;
-    f.FormId = 0;
-    f.Type = i;
-    f.Options = ['سیب', 'موز', 'هلو', 'آلبالو'];
-    f.Label = Type[i];
-    f.validations.push(new tblRegex(exp, 'Error'));
-    tblFields.push(f);
-}
+const tblFields = [tblField1, tblField2, tblField3, tblField4, tblField5];
+//const tblFields = [];
+
+//for (var i = 0; i < 21; i++) {
+//    const f = new tblField();
+//    f.Id = i;
+//    f.FormId = 0;
+//    f.Type = i;
+//    f.Options = ['سیب', 'موز', 'هلو', 'آلبالو'];
+//    f.Label = Type[i];
+//    f.validations.push(new tblRegex(exp, 'Error'));
+//    tblFields.push(f);
+//}
 
 //#endregion
 
@@ -129,7 +140,7 @@ class Form {
     footer: HTMLElement;
     submit: HTMLButtonElement;
 
-    private data: tblForm;
+    public readonly data: tblForm;
 
     public Fields: Field[] = [];
 
@@ -183,7 +194,7 @@ class Form {
 }
 
 class Field {
-    private data: tblField;
+    public readonly data: tblField;
     element: HTMLElement;
     lblError: HTMLLabelElement;
     id: string;
@@ -207,7 +218,7 @@ class Field {
                 templateString =
                     `
                 <label class="fg-label" for="${this.id}">${data.Label}</label>
-                <textarea class="entry" id="${this.id}" ${data.IsRequired ? 'required' : ''} placeholder="${data.Label}" pattern="${data.validations[0]?.Regex}"></textarea>
+                <textarea class="entry" id="${this.id}" ${data.IsRequired ? 'required' : ''} placeholder="${data.Placeholder}" pattern="${data.validations[0]?.Regex}"></textarea>
                 <span class="text-danger"></span>
                    `;
                 break;
@@ -222,7 +233,7 @@ class Field {
                 templateString =
                     `
                 <label class="fg-label" for="${this.id}">${data.Label}</label>
-                <input class="entry" id="${this.id}" ${data.IsRequired ? 'required' : ''} type="date" placeholder="${data.Label}" pattern="${data.validations[0]?.Regex}">
+                <input class="entry" id="${this.id}" ${data.IsRequired ? 'required' : ''} type="date" placeholder="${data.Placeholder}" pattern="${data.validations[0]?.Regex}">
                 <span class="text-danger"></span>
                    `;
                 break;
@@ -230,7 +241,7 @@ class Field {
                 templateString =
                     `
                 <label class="fg-label" for="${this.id}">${data.Label}</label>
-                <input class="entry" id="${this.id}" ${data.IsRequired ? 'required' : ''} type="dateTime" placeholder="${data.Label}" pattern="${data.validations[0]?.Regex}">
+                <input class="entry" id="${this.id}" ${data.IsRequired ? 'required' : ''} type="dateTime" placeholder="${data.Placeholder}" pattern="${data.validations[0]?.Regex}">
                 <span class="text-danger"></span>
                    `;
                 break;
@@ -238,7 +249,7 @@ class Field {
                 templateString =
                     `
                 <label class="fg-label" for="${this.id}">${data.Label}</label>
-                <input class="entry" id="${this.id}" ${data.IsRequired ? 'required' : ''} type="email" placeholder="${data.Label}" pattern="${data.validations[0]?.Regex}">
+                <input class="entry" id="${this.id}" ${data.IsRequired ? 'required' : ''} type="email" placeholder="${data.Placeholder}" pattern="${data.validations[0]?.Regex}">
                 <span class="text-danger"></span>
                    `;
                 break;
@@ -270,7 +281,7 @@ class Field {
                 templateString =
                     `
                 <label class="fg-label" for="${this.id}">${data.Label}</label>
-                <input class="entry" id="${this.id}" ${data.IsRequired ? 'required' : ''} type="month" placeholder="${data.Label}">
+                <input class="entry" id="${this.id}" ${data.IsRequired ? 'required' : ''} type="month" placeholder="${data.Placeholder}">
                 <span class="text-danger"></span>
                    `;
                 break;
@@ -278,7 +289,7 @@ class Field {
                 templateString =
                     `
                 <label class="fg-label" for="${this.id}">${data.Label}</label>
-                <input class="entry" id="${this.id}" ${data.IsRequired ? 'required' : ''} type="number" placeholder="${data.Label}" pattern="${data.validations[0]?.Regex}">
+                <input class="entry" id="${this.id}" ${data.IsRequired ? 'required' : ''} type="number" placeholder="${data.Placeholder}" pattern="${data.validations[0]?.Regex}">
                 <span class="text-danger"></span>
                    `;
                 break;
@@ -286,7 +297,7 @@ class Field {
                 templateString =
                     `
                 <label class="fg-label" for="${this.id}">${data.Label}</label>
-                <input class="entry" id="${this.id}" ${data.IsRequired ? 'required' : ''} type="password" placeholder="${data.Label}" pattern="${data.validations[0]?.Regex}">
+                <input class="entry" id="${this.id}" ${data.IsRequired ? 'required' : ''} type="password" placeholder="${data.Placeholder}" pattern="${data.validations[0]?.Regex}">
                 <span class="text-danger"></span>
                    `;
                 break;
@@ -301,21 +312,21 @@ class Field {
                 templateString =
                     `
                 <label class="fg-label" for="${this.id}">${data.Label}</label>
-                <input class="uk-range" id="${data.Label.toString()}" ${data.IsRequired ? 'required' : ''} min="${data.Options[0]}" max="${data.Options[1]}" type="range" placeholder="${data.Label}" pattern="${data.validations[0]?.Regex}">
+                <input class="uk-range" id="${data.Label.toString()}" ${data.IsRequired ? 'required' : ''} min="${data.Options[0]}" max="${data.Options[1]}" type="range" placeholder="${data.Placeholder}" pattern="${data.validations[0]?.Regex}">
                    `;
                 break;
             case Type.reset:
                 templateString =
                     `
                 <label class="fg-label" for="${this.id}">${data.Label}</label>
-                <input class="entry" id="${this.id}" type="reset" ${data.IsRequired ? 'required' : ''} placeholder="${data.Label}" pattern="${data.validations[0]?.Regex}">
+                <input class="entry" id="${this.id}" type="reset" ${data.IsRequired ? 'required' : ''} placeholder="${data.Placeholder}" pattern="${data.validations[0]?.Regex}">
                    `;
                 break;
             case Type.search:
                 templateString =
                     `
                 <label class="fg-label" for="${this.id}">${data.Label}</label>
-                <input class="entry" id="${this.id}" type="search" ${data.IsRequired ? 'required' : ''} placeholder="${data.Label}" pattern="${data.validations[0]?.Regex}">
+                <input class="entry" id="${this.id}" type="search" ${data.IsRequired ? 'required' : ''} placeholder="${data.Placeholder}" pattern="${data.validations[0]?.Regex}">
                 <span class="text-danger"></span>
                    `;
                 break;
@@ -323,14 +334,14 @@ class Field {
                 templateString =
                     `
                 <label class="fg-label" for="${this.id}">${data.Label}</label>
-                <input class="entry" id="${this.id}" type="submit" ${data.IsRequired ? 'required' : ''} placeholder="${data.Label}" pattern="${data.validations[0]?.Regex}">
+                <input class="entry" id="${this.id}" type="submit" ${data.IsRequired ? 'required' : ''} placeholder="${data.Placeholder}" pattern="${data.validations[0]?.Regex}">
                    `;
                 break;
             case Type.tel:
                 templateString =
                     `
                 <label class="fg-label" for="${this.id}">${data.Label}</label>
-                <input class="entry" id="${this.id}" type="tel" ${data.IsRequired ? 'required' : ''} placeholder="${data.Label}" pattern="${data.validations[0]?.Regex}">
+                <input class="entry" id="${this.id}" type="tel" ${data.IsRequired ? 'required' : ''} placeholder="${data.Placeholder}" pattern="${data.validations[0]?.Regex}">
                 <span class="text-danger"></span>
                    `;
                 break;
@@ -338,7 +349,7 @@ class Field {
                 templateString =
                     `
                 <label class="fg-label" for="${this.id}">${data.Label}</label>
-                <input class="entry" id="${this.id}" type="text" ${data.IsRequired ? 'required' : ''} placeholder="${data.Label}" pattern="${data.validations[0]?.Regex}">
+                <input class="entry" id="${this.id}" type="text" ${data.IsRequired ? 'required' : ''} placeholder="${data.Placeholder}" pattern="${data.validations[0]?.Regex}">
                 <span class="text-danger"></span>
                    `;
                 break;
@@ -346,7 +357,7 @@ class Field {
                 templateString =
                     `
                 <label class="fg-label" for="${this.id}">${data.Label}</label>
-                <input class="entry" id="${this.id}" type="time" ${data.IsRequired ? 'required' : ''} placeholder="${data.Label}" pattern="${data.validations[0]?.Regex}">
+                <input class="entry" id="${this.id}" type="time" ${data.IsRequired ? 'required' : ''} placeholder="${data.Placeholder}" pattern="${data.validations[0]?.Regex}">
                 <span class="text-danger"></span>
                    `;
                 break;
@@ -354,7 +365,7 @@ class Field {
                 templateString =
                     `
                 <label class="fg-label" for="${this.id}">${data.Label}</label>
-                <input class="entry" id="${this.id}" type="url" ${data.IsRequired ? 'required' : ''} placeholder="${data.Label}" pattern="${data.validations[0]?.Regex}">
+                <input class="entry" id="${this.id}" type="url" ${data.IsRequired ? 'required' : ''} placeholder="${data.Placeholder}" pattern="${data.validations[0]?.Regex}">
                 <span class="text-danger"></span>
                    `;
                 break;
@@ -362,7 +373,7 @@ class Field {
                 templateString =
                     `
                 <label class="fg-label" for="${this.id}">${data.Label}</label>
-                <input class="entry" id="${this.id}" ${data.IsRequired ? 'required' : ''} type="week" placeholder="${data.Label}" pattern="${data.validations[0]?.Regex}">
+                <input class="entry" id="${this.id}" ${data.IsRequired ? 'required' : ''} type="week" placeholder="${data.Placeholder}" pattern="${data.validations[0]?.Regex}">
                 <span class="text-danger"></span>
                    `;
                 break;
@@ -388,10 +399,10 @@ class Field {
         this.lblError = this.element.querySelector('.text-danger');
     }
 
-
-
+    /** Gets the field's Value.*/
     getVal(): tblValue {
         const ans = new tblValue();
+        ans.Value = null;
         let input: any;
 
         switch (this.data.Type) {
@@ -424,16 +435,30 @@ class Field {
         return ans;
     }
 
+    /** Validates the field's Value.
+     * Shows the first error in it's validation list.
+     * Clears the Errorprovider if there are no errors */
     validate(): boolean {
+
+        if (this.data.IsRequired) {
+            if (this.getVal() === null
+                || this.getVal() === undefined
+                || this.getVal().Value === null
+                || this.getVal().Value === ''
+                || this.getVal().Value === undefined) {
+                if (this.lblError) this.lblError.innerText = 'این فیلد اجباری است';
+                return false;
+            }
+        }
 
         for (const validationRule of this.data.validations) {
             if (!validationRule.Regex.test(this.getVal().Value)) {
                 if (this.lblError) this.lblError.innerText = validationRule.Label;
                 return false;
             }
-            if (this.lblError) this.lblError.innerText = '';
         }
 
+        if (this.lblError) this.lblError.innerText = '';
         return true;
     }
 
@@ -442,12 +467,15 @@ class Field {
 let oi = new Form(form1);
 tblFields.forEach(f => oi.addField(f));
 oi.attachForm(document.getElementById('container'));
-oi.submit.addEventListener('click', submit)
+oi.submit.addEventListener('click', submit);
 
 function submit() {
-    oi.Fields.forEach(i => console.log(i.getVal()))
-    //if (!oi.validate()) return;
+    //oi.Fields.forEach(i => console.log(i.getVal()))
+    //oi.validate();
+
+    if (!oi.validate()) return;
+    oi.Fields.forEach(i => console.log(i.getVal()));
+
     //console.log(oi.Fields[0].getVal());
 }
 
-// img

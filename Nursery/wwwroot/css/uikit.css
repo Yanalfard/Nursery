@@ -1987,8 +1987,8 @@ select.uk-form-width-xsmall {
 .uk-checkbox {
   /* 1 */
   display: block;
-  height: 18px;
-  width: 18px;
+  height: 20px;
+  width: 20px;
   padding: 2px;
   -moz-border-radius: 2px 2px 2px 2px;
   -webkit-border-radius: 2px 2px 2px 2px;

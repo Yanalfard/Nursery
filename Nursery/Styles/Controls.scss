@@ -166,7 +166,7 @@ a.btn.btn-primary:hover {
 
 //-
 
-input {
+input:not(input[type=checkbox]):not(input[type=radio]) {
     font-size: 13px;
     min-height: 27px;
 }
