@@ -1,6 +1,8 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using System;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata;
 
-namespace DataLayer.Models
+namespace Nursery.Models1
 {
     public partial class NurseryContext : DbContext
     {
