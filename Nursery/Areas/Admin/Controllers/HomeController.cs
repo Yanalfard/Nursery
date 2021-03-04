@@ -13,5 +13,11 @@ namespace Nursery.Areas.Admin.Controllers
         {
             return View();
         }
+
+        public IActionResult Config()
+        {
+            return View();
+        }
+
     }
 }

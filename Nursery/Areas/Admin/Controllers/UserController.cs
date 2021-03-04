@@ -4,8 +4,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Nursery.Controllers
+namespace Nursery.Areas.Admin.Controllers
 {
+    [Area("Admin")]
     public class UserController : Controller
     {
         public IActionResult Index()
@@ -22,11 +23,6 @@ namespace Nursery.Controllers
         {
             return View();
         }
-
-        public IActionResult UserRole()
-        {
-            return View();
-        }
-
+ 
     }
 }

@@ -173,7 +173,7 @@ input:not(input[type=checkbox]):not(input[type=radio]) {
 
 /*#region Form */
 
-.entry {
+.entry, .entry-invis {
     background: transparent;
     padding: 4px 11px;
     direction: rtl;
@@ -181,6 +181,11 @@ input:not(input[type=checkbox]):not(input[type=radio]) {
     @include border-def-radius;
     @include placeholder(#ddd);
     @include trans(.3s);
+}
+
+.entry-invis {
+    border: 0;
+    background-color: transparent;
 }
 
 .entry:hover, .entry:focus {
@@ -267,10 +272,6 @@ input:not(input[type=checkbox]):not(input[type=radio]) {
         @include row-reverse;
         grid-gap: 12px;
     }
-}
-
-.forms {
-    @include grid-gap(230px,16px)
 }
 
 /*#endregion */
@@ -414,7 +415,7 @@ $content-padding: 16px;
     right: 0;
     position: fixed;
     @include subtle-glow(transparentize(#373B53,.32));
-    @include trans(.3s);
+    @include trans(.32s);
     -moz-transition-property: width;
     -o-transition-property: width;
     -webkit-transition-property: width;
@@ -422,15 +423,20 @@ $content-padding: 16px;
 
     .navigation {
         $item-height: $aside-width;
+        margin: 0;
+        height: calc(100vh - #{$nav-bottom-height});
+        overflow: auto !important;
 
         li {
             @include column;
             height: auto;
+            cursor: pointer !important;
 
             a {
                 @include row-reverse;
                 @include trans(.2s);
                 height: $item-height;
+                cursor: pointer;
 
                 .uk-icon {
                     color: #fff;
@@ -449,7 +455,7 @@ $content-padding: 16px;
                     //
                     color: #fff;
                     white-space: nowrap;
-                    @include trans(.2s);
+                    @include trans(.3s);
                     pointer-events: none;
                 }
             }
@@ -458,6 +464,44 @@ $content-padding: 16px;
                 background-color: transparentize(#fff,.85);
             }
         }
+
+        [accordion] {
+
+            ul {
+                display: flex;
+                margin: 0;
+                overflow: hidden;
+                @include trans(.48s);
+                @include column;
+                max-height: 0;
+                -moz-transition-timing-function: ease-out;
+                -o-transition-timing-function: ease-out;
+                -webkit-transition-timing-function: ease-out;
+                transition-timing-function: ease-out;
+
+                * {
+                    @include trans(.2s);
+                    opacity: 0;
+                }
+
+                a {
+                    padding-right: 20px;
+                }
+            }
+
+            ul.open {
+                max-height: 200px;
+                background-color: transparentize(#000,.92);
+
+                * {
+                    opacity: 1;
+                }
+            }
+        }
+    }
+
+    ::-webkit-scrollbar {
+        display: none;
     }
 }
 
@@ -639,3 +683,13 @@ $background-highlight: #eee;
 
 /*#endregion */
 
+.bg-white {
+    background-color: #fff;
+}
+
+.text-1{color:$text-1}
+.text-2{color:$text-2}
+.text-3{color:$text-3}
+.text-4{color:$text-4}
+.text-5{color:$text-5}
+.text-6{color:$text-6}

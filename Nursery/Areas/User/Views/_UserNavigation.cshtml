@@ -1,14 +1,30 @@
 ﻿<ul class="navigation">
     <li>
-        <a href="">
+        <a href="/User/Home">
             <span uk-icon="speedometer"></span>
             <label>داشبورد</label>
         </a>
     </li>
     <li>
-        <a href="">
+        <a>
             <span uk-icon="archive"></span>
             <label>آرشیو</label>
         </a>
     </li>
 </ul>
+
+<script>
+    var accordions = document.querySelectorAll('[accordion]')
+    var navi = document.querySelector('.m-aside')
+
+    for (let acc of accordions) {
+
+        const trigger = acc.querySelector('[accordion-trigger]');
+        let ul = acc.querySelector('ul');
+        let closed = true;
+        trigger.addEventListener('click', () => {
+            ul.classList.toggle('open');
+        });
+        navi.addEventListener("mouseleave", () => { ul.classList.remove('open') })
+    }
+</script>

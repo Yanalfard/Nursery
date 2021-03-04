@@ -203,7 +203,7 @@ input:not(input[type=checkbox]):not(input[type=radio]) {
   min-height: 27px; }
 
 /*#region Form */
-.entry {
+.entry, .entry-invis {
   background: transparent;
   padding: 4px 11px;
   direction: rtl;
@@ -215,17 +215,21 @@ input:not(input[type=checkbox]):not(input[type=radio]) {
   -o-transition: all ease 0.3s;
   -webkit-transition: all ease 0.3s;
   transition: all ease 0.3s; }
-  .entry ::placeholder {
+  .entry ::placeholder, .entry-invis ::placeholder {
     /* Chrome, Firefox, Opera, Safari 10.1+ */
     color: #ddd;
     opacity: 1;
     /* Firefox */ }
-  .entry :-ms-input-placeholder {
+  .entry :-ms-input-placeholder, .entry-invis :-ms-input-placeholder {
     /* Internet Explorer 10-11 */
     color: #ddd; }
-  .entry ::-ms-input-placeholder {
+  .entry ::-ms-input-placeholder, .entry-invis ::-ms-input-placeholder {
     /* Microsoft Edge */
     color: #ddd; }
+
+.entry-invis {
+  border: 0;
+  background-color: transparent; }
 
 .entry:hover, .entry:focus {
   border: 1px #1890FF solid; }
@@ -300,12 +304,6 @@ input:not(input[type=checkbox]):not(input[type=radio]) {
     display: flex;
     flex-direction: row-reverse;
     grid-gap: 12px; }
-
-.forms {
-  display: grid;
-  grid-template-rows: auto;
-  grid-gap: 16px;
-  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); }
 
 /*#endregion */
 .m-top {
@@ -414,47 +412,83 @@ input:not(input[type=checkbox]):not(input[type=radio]) {
   -moz-box-shadow: rgba(55, 59, 83, 0.68) 0 6px 16px;
   -webkit-box-shadow: rgba(55, 59, 83, 0.68) 0 6px 16px;
   box-shadow: rgba(55, 59, 83, 0.68) 0 6px 16px;
-  -moz-transition: all ease 0.3s;
-  -o-transition: all ease 0.3s;
-  -webkit-transition: all ease 0.3s;
-  transition: all ease 0.3s;
+  -moz-transition: all ease 0.32s;
+  -o-transition: all ease 0.32s;
+  -webkit-transition: all ease 0.32s;
+  transition: all ease 0.32s;
   -moz-transition-property: width;
   -o-transition-property: width;
   -webkit-transition-property: width;
   transition-property: width; }
-  .m-aside .navigation li {
-    display: flex;
-    flex-direction: column;
-    height: auto; }
-    .m-aside .navigation li a {
+  .m-aside .navigation {
+    margin: 0;
+    height: calc(100vh - 65px);
+    overflow: auto !important; }
+    .m-aside .navigation li {
       display: flex;
-      flex-direction: row-reverse;
-      -moz-transition: all ease 0.2s;
-      -o-transition: all ease 0.2s;
-      -webkit-transition: all ease 0.2s;
-      transition: all ease 0.2s;
-      height: 72px; }
-      .m-aside .navigation li a .uk-icon {
-        color: #fff;
-        margin: auto;
-        margin-right: 24px !important;
-        min-height: 24px;
-        min-width: 24px; }
-      .m-aside .navigation li a label {
-        width: 0;
-        margin: auto 0;
-        margin-right: 100px;
-        font-size: 14px;
-        opacity: 0;
-        color: #fff;
-        white-space: nowrap;
+      flex-direction: column;
+      height: auto;
+      cursor: pointer !important; }
+      .m-aside .navigation li a {
+        display: flex;
+        flex-direction: row-reverse;
         -moz-transition: all ease 0.2s;
         -o-transition: all ease 0.2s;
         -webkit-transition: all ease 0.2s;
         transition: all ease 0.2s;
-        pointer-events: none; }
-    .m-aside .navigation li a:hover {
-      background-color: rgba(255, 255, 255, 0.15); }
+        height: 72px;
+        cursor: pointer; }
+        .m-aside .navigation li a .uk-icon {
+          color: #fff;
+          margin: auto;
+          margin-right: 24px !important;
+          min-height: 24px;
+          min-width: 24px; }
+        .m-aside .navigation li a label {
+          width: 0;
+          margin: auto 0;
+          margin-right: 100px;
+          font-size: 14px;
+          opacity: 0;
+          color: #fff;
+          white-space: nowrap;
+          -moz-transition: all ease 0.3s;
+          -o-transition: all ease 0.3s;
+          -webkit-transition: all ease 0.3s;
+          transition: all ease 0.3s;
+          pointer-events: none; }
+      .m-aside .navigation li a:hover {
+        background-color: rgba(255, 255, 255, 0.15); }
+    .m-aside .navigation [accordion] ul {
+      display: flex;
+      margin: 0;
+      overflow: hidden;
+      -moz-transition: all ease 0.48s;
+      -o-transition: all ease 0.48s;
+      -webkit-transition: all ease 0.48s;
+      transition: all ease 0.48s;
+      display: flex;
+      flex-direction: column;
+      max-height: 0;
+      -moz-transition-timing-function: ease-out;
+      -o-transition-timing-function: ease-out;
+      -webkit-transition-timing-function: ease-out;
+      transition-timing-function: ease-out; }
+      .m-aside .navigation [accordion] ul * {
+        -moz-transition: all ease 0.2s;
+        -o-transition: all ease 0.2s;
+        -webkit-transition: all ease 0.2s;
+        transition: all ease 0.2s;
+        opacity: 0; }
+      .m-aside .navigation [accordion] ul a {
+        padding-right: 20px; }
+    .m-aside .navigation [accordion] ul.open {
+      max-height: 200px;
+      background-color: rgba(0, 0, 0, 0.08); }
+      .m-aside .navigation [accordion] ul.open * {
+        opacity: 1; }
+  .m-aside ::-webkit-scrollbar {
+    display: none; }
 
 .m-aside:hover {
   width: 192px; }
@@ -594,3 +628,23 @@ input:not(input[type=checkbox]):not(input[type=radio]) {
     color: #095ba7; }
 
 /*#endregion */
+.bg-white {
+  background-color: #fff; }
+
+.text-1 {
+  color: #000; }
+
+.text-2 {
+  color: #333; }
+
+.text-3 {
+  color: #666; }
+
+.text-4 {
+  color: #999; }
+
+.text-5 {
+  color: #ccc; }
+
+.text-6 {
+  color: #fff; }

@@ -1,0 +1,28 @@
+﻿@import '_colors.scss';
+@import '_layout.scss';
+
+.forms {
+    direction: rtl;
+    @include grid-gap(290px,16px);
+
+    > * {
+        direction: ltr !important;
+        margin-bottom: 0;
+    }
+
+    .form-card {
+        .title {
+            color: $text-2;
+            @include max-line(1);
+        }
+
+        .body {
+            color: $text-4;
+            @include max-line(12);
+            max-height: 180px;
+        }
+
+        .rowr {
+        }
+    }
+}
