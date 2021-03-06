@@ -1446,6 +1446,11 @@ a.uk-link-reset,
     line-height: 0;
     min-width: 24px;
     min-height: 24px;
+
+    svg {
+        height: 24px;
+        width: 24px;
+    }
 }
 /* Required for `button`. */
 button.uk-icon:not(:disabled) {
@@ -4145,7 +4150,6 @@ select.uk-form-width-xsmall {
     /* 6 */
     opacity: 0;
     transition: opacity 0.15s linear;
-    backdrop-filter: blur(5px);
 }
 /* Phone landscape and bigger */
 @media (min-width: 640px) {
@@ -4243,8 +4247,8 @@ select.uk-form-width-xsmall {
 .uk-modal-body {
     position: relative;
     display: flow-root;
-    padding: 30px 30px;
-    @include border-radius(32px,32px,32px,32px);
+    padding: 20px;
+    @include mat;
 }
 
 .uk-modal-header {

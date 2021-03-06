@@ -26,10 +26,10 @@
             <div class="left">
                 <div class="quick-actions">
                     <button class="btn-icon round sign-out">
-                        <span uk-icon="log-out-outline"></span>
+                        <span uk-icon="sign-out-alt"></span>
                     </button>
                     <button class="btn-icon round notifications">
-                        <span uk-icon="notifications-outline"></span>
+                        <span uk-icon="bell"></span>
                     </button>
                     <div class="notification-drop" uk-drop="pos: bottom-justify;">
                         <div class="dropdown">
@@ -79,13 +79,13 @@
                             <ul class="dropdown-list">
                                 <li>
                                     <a href="" class="rowr">
-                                        <span class="uk-margin-small-left" uk-icon="person-circle-outline"></span>
+                                        <span class="uk-margin-small-left" uk-icon="user"></span>
                                         <span>پروفایل</span>
                                     </a>
                                 </li>
                                 <li>
                                     <a href="" class="rowr">
-                                        <span class="uk-margin-small-left" uk-icon="log-out-outline"></span>
+                                        <span class="uk-margin-small-left" uk-icon="sign-out-alt"></span>
                                         <span>خروج</span>
                                     </a>
                                 </li>
@@ -108,6 +108,12 @@
     <div class="m-content">
         @RenderBody()
     </div>
+
+    <footer class="footer row">
+        <label class="text-2 uk-margin-left uk-margin-auto-right uk-margin-auto-top uk-margin-auto-bottom">
+            طراحی و توسعه توسط  <a href="https://arvintavco.com">آروین تاو</a>
+        </label>
+    </footer>
 
     <script src="~/js/uikit.min.js"></script>
     <script src="~/js/uikit-icons.js"></script>

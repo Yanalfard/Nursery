@@ -1407,6 +1407,9 @@ a.uk-link-reset,
   line-height: 0;
   min-width: 24px;
   min-height: 24px; }
+  .uk-icon svg {
+    height: 24px;
+    width: 24px; }
 
 /* Required for `button`. */
 button.uk-icon:not(:disabled) {
@@ -3950,8 +3953,7 @@ select.uk-form-width-xsmall {
   background: rgba(0, 0, 0, 0.6);
   /* 6 */
   opacity: 0;
-  transition: opacity 0.15s linear;
-  backdrop-filter: blur(5px); }
+  transition: opacity 0.15s linear; }
 
 /* Phone landscape and bigger */
 @media (min-width: 640px) {
@@ -4046,10 +4048,15 @@ select.uk-form-width-xsmall {
 .uk-modal-body {
   position: relative;
   display: flow-root;
-  padding: 30px 30px;
-  -moz-border-radius: 32px 32px 32px 32px;
-  -webkit-border-radius: 32px 32px 32px 32px;
-  border-radius: 32px 32px 32px 32px; }
+  padding: 20px;
+  background-color: #fff;
+  border: 1px solid #e5e5e5;
+  -moz-box-shadow: rgba(0, 0, 0, 0.12) 0 6px 16px;
+  -webkit-box-shadow: rgba(0, 0, 0, 0.12) 0 6px 16px;
+  box-shadow: rgba(0, 0, 0, 0.12) 0 6px 16px;
+  -moz-border-radius: 2px 2px 2px 2px;
+  -webkit-border-radius: 2px 2px 2px 2px;
+  border-radius: 2px 2px 2px 2px; }
 
 .uk-modal-header {
   display: flow-root;

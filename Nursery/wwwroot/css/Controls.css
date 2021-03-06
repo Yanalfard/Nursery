@@ -96,6 +96,9 @@ button, .btn, a, a:hover .js-upload, input[type=file] {
   transition: all ease 0.3s; }
   .btn span {
     white-space: nowrap; }
+  .btn .uk-icon svg {
+    width: 20px;
+    height: 20px; }
 
 a.btn {
   line-height: 27px; }
@@ -294,6 +297,46 @@ input:not(input[type=checkbox]):not(input[type=radio]) {
   .form-header {
     padding: 16px;
     border-bottom: solid #e5e5e5 1px; }
+  .form-search {
+    padding: 0;
+    display: flex;
+    flex-direction: row-reverse;
+    margin-bottom: 0;
+    background-color: #fff; }
+    .form-search .controls-grid {
+      display: grid;
+      grid-template-rows: auto;
+      grid-gap: 0;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      flex: 1;
+      direction: rtl; }
+      .form-search .controls-grid * {
+        direction: ltr; }
+      .form-search .controls-grid .entry {
+        min-width: 160px;
+        direction: rtl; }
+      .form-search .controls-grid > * {
+        border-left: 1px #e5e5e5 solid !important;
+        border-bottom: 1px #e5e5e5 solid; }
+    .form-search .entry {
+      border: 0;
+      border-bottom: 1px #e5e5e5 solid; }
+    .form-search .entry:hover, .form-search .entry:focus, .form-search .col:hover, .form-search .col:focus {
+      -moz-box-shadow: none;
+      -webkit-box-shadow: none;
+      box-shadow: none;
+      background-color: #f8f8f8; }
+    .form-search .col {
+      -moz-transition: all ease 0.2s;
+      -o-transition: all ease 0.2s;
+      -webkit-transition: all ease 0.2s;
+      transition: all ease 0.2s; }
+      .form-search .col .fg-label {
+        margin: 8px;
+        margin-left: auto; }
+  .form .form-search + .form-body {
+    margin-top: -1px;
+    border-top: solid #e5e5e5 1px; }
   .form-body {
     padding: 16px;
     display: flex;
@@ -304,6 +347,10 @@ input:not(input[type=checkbox]):not(input[type=radio]) {
     display: flex;
     flex-direction: row-reverse;
     grid-gap: 12px; }
+
+.sticked {
+  background-color: #fff;
+  border-top: 1px #e5e5e5 solid; }
 
 /*#endregion */
 .m-top {
@@ -346,6 +393,9 @@ input:not(input[type=checkbox]):not(input[type=radio]) {
       display: flex;
       flex-direction: row;
       grid-gap: 12px; }
+      .m-top .m-header .left svg {
+        height: 20px;
+        width: 20px; }
       .m-top .m-header .left .user {
         display: flex;
         flex-direction: row;
@@ -382,6 +432,8 @@ input:not(input[type=checkbox]):not(input[type=radio]) {
       .m-top .m-header .left .quick-actions {
         display: flex;
         flex-direction: row; }
+        .m-top .m-header .left .quick-actions svg {
+          color: #999; }
         .m-top .m-header .left .quick-actions .btn-icon {
           margin: auto 4px auto 0; }
         .m-top .m-header .left .quick-actions .btn-icon:last-child {
@@ -408,6 +460,7 @@ input:not(input[type=checkbox]):not(input[type=radio]) {
   background-color: #373B53;
   top: 72px;
   right: 0;
+  z-index: 1150;
   position: fixed;
   -moz-box-shadow: rgba(55, 59, 83, 0.68) 0 6px 16px;
   -webkit-box-shadow: rgba(55, 59, 83, 0.68) 0 6px 16px;
@@ -570,23 +623,6 @@ input:not(input[type=checkbox]):not(input[type=radio]) {
   padding: 16px; }
 
 /*#region tbl */
-.controls-grid {
-  display: flex;
-  flex-direction: row-reverse;
-  -ms-flex-wrap: wrap;
-  -webkit-flex-wrap: wrap;
-  flex-wrap: wrap;
-  grid-gap: 12px; }
-  .controls-grid .entry {
-    min-width: 160px; }
-  .controls-grid label {
-    margin: auto 0; }
-    .controls-grid label .uk-checkbox {
-      width: 28px;
-      height: 28px;
-      padding: 0 !important;
-      margin: auto 0 auto 8px; }
-
 .scrollh-container {
   overflow-x: auto !important;
   overflow-y: hidden !important; }
@@ -648,3 +684,12 @@ input:not(input[type=checkbox]):not(input[type=radio]) {
 
 .text-6 {
   color: #fff; }
+
+.footer {
+  background-color: #fff;
+  -moz-box-shadow: rgba(0, 0, 0, 0.12) 0 6px 16px;
+  -webkit-box-shadow: rgba(0, 0, 0, 0.12) 0 6px 16px;
+  box-shadow: rgba(0, 0, 0, 0.12) 0 6px 16px;
+  height: 60px;
+  width: 100vw;
+  border-top: 1px solid #e5e5e5; }
