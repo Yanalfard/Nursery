@@ -46,6 +46,30 @@
     touch-action: manipulation;
 }
 
+.gap-0 {
+    grid-gap: 0 !important;
+}
+
+.gap-1 {
+    grid-gap: 4px;
+}
+
+.gap-2 {
+    grid-gap: 8px;
+}
+
+.gap-3, .gap-between-card {
+    grid-gap: 12px;
+}
+
+.gap-4 {
+    grid-gap: 16px;
+}
+
+.gap-5 {
+    grid-gap: 20px;
+}
+
 html {
     /* 1 */
     font-family: IRANYekan, Sahel, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";

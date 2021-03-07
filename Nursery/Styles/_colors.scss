@@ -26,8 +26,28 @@ $text-4: #999;
 $text-5: #ccc;
 $text-6: #fff;
 
-/*#region Material  */
+$blue: #3699FF;
+$blue-light: #AED6FF;
+$blue-background: #E1F0FF;
 
+$yellow: #FFA800;
+$yellow-light: #FFDD9C;
+$yellow-background: #FFF4DE;
+
+$red: #F64E60;
+$red-light: #FCB6BE;
+$red-background: #FFE2E5;
+
+$green: #1BC5BD;
+$green-light: #95E8E4;
+$green-background: #C9F7F5;
+
+$purple: #BB9AFD;
+$purple-light: #D0B9FE;
+$purple-background: #EEE5FF;
+
+
+/*#region Material  */
 $mat-background: #fff;
 
 @mixin mat() {

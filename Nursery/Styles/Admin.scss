@@ -12,19 +12,13 @@
 
 .counter {
     @include column;
-    background-color: transparentize($primary,.88);
-    border: solid 1px transparentize($primary,.2);
+    @include border-def-radius;
 
     .content {
         margin: auto;
         @include row-reverse;
         grid-gap: 16px;
-        padding: 20px 12px;
-
-        * {
-            color: $primary;
-            fill: $primary;
-        }
+        padding: 20px 16px;
 
         img {
             width: 64px;
@@ -37,6 +31,7 @@
             label {
                 flex: 1;
                 font-size: 20px;
+                font-weight: 700;
             }
 
             span {
@@ -46,44 +41,44 @@
     }
 }
 
-.counter.purple {
-    background: rgb(255,0,65);
-    background: -moz-linear-gradient(45deg, rgba(255,0,65,1) 0%, rgba(180,11,201,1) 100%);
-    background: -webkit-linear-gradient(45deg, rgba(255,0,65,1) 0%, rgba(180,11,201,1) 100%);
-    background: linear-gradient(45deg, rgba(255,0,65,1) 0%, rgba(180,11,201,1) 100%);
-    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#ff0041",endColorstr="#b40bc9",GradientType=1);
+.counter-yellow {
+    background-color: $yellow-background;
+    color: $yellow;
+    fill: $yellow;
+    border: solid 1px $yellow-light;
 }
 
-.counter.red {
-    background: rgb(255,199,15);
-    background: -moz-linear-gradient(45deg, rgba(255,199,15,1) 0%, rgba(255,63,10,1) 100%);
-    background: -webkit-linear-gradient(45deg, rgba(255,199,15,1) 0%, rgba(255,63,10,1) 100%);
-    background: linear-gradient(45deg, rgba(255,199,15,1) 0%, rgba(255,63,10,1) 100%);
-    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#ffc70f",endColorstr="#ff3f0a",GradientType=1);
+.counter-red {
+    background-color: $red-background;
+    color: $red;
+    fill: $red;
+    border: solid 1px $red-light;
 }
 
-.counter.blue {
-    background: rgb(15,250,255);
-    background: -moz-linear-gradient(45deg, rgba(15,250,255,1) 0%, rgba(10,31,255,1) 100%);
-    background: -webkit-linear-gradient(45deg, rgba(15,250,255,1) 0%, rgba(10,31,255,1) 100%);
-    background: linear-gradient(45deg, rgba(15,250,255,1) 0%, rgba(10,31,255,1) 100%);
-    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#0ffaff",endColorstr="#0a1fff",GradientType=1);
+.counter-blue {
+    background-color: $blue-background;
+    color: $blue;
+    fill: $blue;
+    border: solid 1px $blue-light;
 }
 
-.counter.green {
-    background: rgb(15,255,216);
-    background: -moz-linear-gradient(45deg, rgba(15,255,216,1) 0%, rgba(20,227,37,1) 100%);
-    background: -webkit-linear-gradient(45deg, rgba(15,255,216,1) 0%, rgba(20,227,37,1) 100%);
-    background: linear-gradient(45deg, rgba(15,255,216,1) 0%, rgba(20,227,37,1) 100%);
-    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#0fffd8",endColorstr="#14e325",GradientType=1);
+.counter-green {
+    background-color: $green-background ;
+    color: $green;
+    fill: $green;
+    border: solid 1px $green-light;
 }
 
-.counter.purple, .counter.red, .counter.blue, .counter.green {
-    @include shadow-medium;
+.counter-purple {
+    background-color: $purple-background;
+    color: $purple;
+    fill: $purple;
+    border: solid 1px $purple-light;
+}
+
+.counter-card {
+    background-color: #fff;
+    color: #333;
+    fill: #333;
     border: 0;
-
-    * {
-        color: #fff;
-        fill: #fff;
-    }
 }

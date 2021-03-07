@@ -4,21 +4,75 @@
     Layout = "~/Areas/Admin/Views/_AdminLayout.cshtml";
 }
 
-<div class="card col">
-    <h2>
-        داشبرد
-    </h2>
-</div>
+<div class="col margin-between gap-between-card">
 
-<div class="col-at-xs row-at-m gap-card uk-child-width-1-1-at-xs uk-child-width-1-2">
-    <div class="card col uk-margin-remove-bottom">
+    <div class="card col">
         <h3>
             داشبرد
         </h3>
     </div>
-    <div class="card col uk-margin-remove-bottom">
-        <h3>
-            داشبرد
-        </h3>
+
+    <div class="col-at-xs rowr-at-m gap-between-card uk-child-width-1-1-at-xs uk-child-width-1-2">
+
+        <partial name="Activity" />
+
+        <partial name="Counters" />
+
     </div>
+
+    <div class="col-at-xs rowr-at-m gap-between-card uk-child-width-1-1-at-xs uk-child-width-1-2">
+
+        <div class="card col gap-4">
+            @for (int i = 0; i < 5; i++)
+            {
+                <!-- #region User -->
+                <div class="icon-list-item">
+                    <img src="~/st/png/blue.png" class="round" width="42" height="42" alt="" />
+                    <div class="col">
+                        <label>صدرا محمدی</label>
+                        <span>برنامه نویس</span>
+                    </div>
+                    <a href="" class="btn btn-icon round text-4" uk-icon="icon:ellipsis-h;ratio:.72"></a>
+                    <div class="dropdown" uk-drop="mode: click">
+                        <ul class="dropdown-list">
+                            <li>
+                                <a href="" class="rowr">
+                                    <span class="new">ویرایش</span>
+                                    <span class="small" uk-icon="pen-square"></span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="" class="rowr">
+                                    <span>حذف</span>
+                                    <span class="small" uk-icon="trash"></span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <!-- #endregion -->
+            }
+        </div>
+
+        <div>
+            <div class="form">
+                <div class="form-header">
+                    این تایتل فرم می باشد
+                </div>
+                <div class="form-search card-padding">
+                    this is a test
+                </div>
+                <div class="form-body">
+                    Ut fusce varius nisl ac ipsum gravida vel pretium tellus tincidunt integer eu augue augue nunc elit dolor, luctus placerat.
+                </div>
+                <div class="form-footer">
+                    <button class="btn btn-primary">
+                        <span>تایید</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
 </div>

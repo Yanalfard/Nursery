@@ -18,11 +18,5 @@ namespace Nursery.Areas.Admin.Controllers
         {
             return View();
         }
-
-        public IActionResult Counters()
-        {
-            return View();
-        }
-
     }
 }

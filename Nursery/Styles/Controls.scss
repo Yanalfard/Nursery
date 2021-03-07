@@ -8,23 +8,33 @@ button, .btn, a, a:hover .js-upload, input[type=file] {
 }
 
 .btn {
-    display: inline-block;
+    display: flex;
     min-height: 27px;
     @include border-def-radius;
     border: 0;
     padding: 4px 15px;
-    min-width: 100px;
     text-align: center;
     font-size: 14px;
     font-weight: 400;
     white-space: nowrap;
+    min-width: 80px;
     -moz-box-sizing: content-box;
     -webkit-box-sizing: content-box;
     box-sizing: padding-box;
     @include trans(.3s);
+    grid-gap: 5px;
 
-    span {
+    span, text {
         white-space: nowrap;
+        margin: auto 0;
+    }
+
+    span:first-child {
+        margin-left: auto !important;
+    }
+
+    span:last-child {
+        margin-right: auto !important;
     }
 
     .uk-icon {
@@ -209,6 +219,8 @@ input:not(input[type=checkbox]):not(input[type=radio]) {
     cursor: not-allowed;
 }
 
+$title-fontsize: 20px;
+
 .fg-col {
     margin-bottom: 24px;
     @include column;
@@ -266,6 +278,9 @@ input:not(input[type=checkbox]):not(input[type=radio]) {
     &-header {
         padding: $padding;
         border-bottom: solid $border-def-color 1px;
+        position: relative;
+        z-index: 20 !important;
+        font-size: $title-fontsize;
     }
 
     &-search {
@@ -273,6 +288,8 @@ input:not(input[type=checkbox]):not(input[type=radio]) {
         @include row-reverse;
         margin-bottom: 0;
         background-color: #fff;
+        position: relative;
+        z-index: 19 !important;
 
         .controls-grid {
             @include grid-gap(200px,0);
@@ -336,6 +353,7 @@ input:not(input[type=checkbox]):not(input[type=radio]) {
 
 .sticked {
     background-color: #fff;
+    z-index: 20;
     border-top: 1px $border-def-color solid;
 }
 
@@ -350,6 +368,7 @@ $content-padding: 16px;
     left: 0;
     right: 0;
     height: $header-height;
+    z-index: 1020;
 
     .m-logo {
         background-color: $primary;
@@ -486,7 +505,7 @@ $content-padding: 16px;
     background-color: #373B53;
     top: $header-height;
     right: 0;
-    z-index: 1150;
+    z-index: 1020;
     position: fixed;
     @include subtle-glow(transparentize(#373B53,.32));
     @include trans(.32s);
@@ -609,6 +628,7 @@ $content-padding: 16px;
 }*/
 
 .m-content {
+    min-height: calc(100vh - 165px);
     height: 100%;
     margin-right: $aside-width;
     margin-top: $header-height;
@@ -652,23 +672,37 @@ $content-padding: 16px;
     }
 }
 
-$between-card-margin: 16px;
-
-.margin-between {
-    margin-bottom: $between-card-margin;
-}
+$between-card-margin: 20px;
 
 $card-padding: 16px;
 
-.gap-card {
-    grid-gap: $card-padding;
-}
-
 .card {
     @include mat;
-    margin-bottom: $between-card-margin;
     @include shadow-medium;
     padding: $card-padding;
+}
+
+.card-padding {
+    padding: $card-padding;
+}
+
+.card-mat {
+    @include mat;
+}
+
+.card-shadow {
+    @include shadow-medium;
+}
+
+.card-title {
+    color: $text-2;
+    font-size: $title-fontsize;
+}
+
+.card-subtitle {
+    color: $text-3;
+    font-size: 14px;
+    margin-top: 5px;
 }
 
 /*#region tbl */
@@ -770,4 +804,143 @@ $background-highlight: #eee;
     height: 60px;
     width: 100vw;
     border-top: 1px solid $border-def-color;
+}
+
+/* ACTIVITY CARD */
+.activity {
+
+    .header {
+        @include column;
+        border-bottom: $border-def-color 1px solid;
+
+        .title {
+            color: $text-2;
+            font-size: 20px;
+        }
+
+        .subtitle {
+            color: $text-3;
+            font-size: 14px;
+            margin-top: 4px;
+        }
+    }
+
+    .body {
+        position: relative;
+        grid-gap: 24px;
+        @include column;
+
+        .line {
+            display: block;
+            position: absolute;
+            right: 77px;
+            top: 20px;
+            bottom: 20px;
+            width: 4.5px;
+            height: auto;
+            background-color: #ddd;
+        }
+
+        .item {
+            @include row-reverse;
+            grid-gap: 8px;
+
+            .time {
+                font-weight: 500;
+                color: $text-1;
+                width: 44px;
+                min-width: 44px;
+                font-size: 14px;
+                @include border-circle;
+                text-align: center;
+            }
+
+            .badge {
+                @include border-circle;
+                background-color: #bbb;
+                position: relative;
+                z-index: 5;
+                height: 16px;
+                width: 16px;
+                min-width: 16px;
+                border: 3px solid #fff;
+                margin: auto 0;
+            }
+
+            .text {
+                color: $text-3;
+                margin: 0;
+                padding: 0;
+                @include max-line(1);
+            }
+        }
+
+        .item.red .badge {
+            background-color: $red;
+        }
+
+        .item.green .badge {
+            background-color: $green;
+        }
+
+        .item.blue .badge {
+            background-color: $blue;
+        }
+
+        .item.yellow .badge {
+            background-color: $yellow;
+        }
+
+        .item.purple .badge {
+            background-color: $purple;
+        }
+    }
+}
+
+.icon-list-item {
+    @include row-reverse;
+    grid-gap: 8px;
+
+    img {
+        width: 48px;
+        height: 48px;
+    }
+
+    .col {
+        label {
+            font-size: 16px;
+            color: $text-2;
+        }
+
+        span {
+            font-size: 14px;
+            color: $text-4;
+        }
+    }
+
+    a {
+        display: block;
+        margin: auto 0;
+        margin-right: auto;
+        @include border-circle;
+    }
+}
+
+.uk-icon.tiny svg {
+    width: 16px !important;
+    height: 16px !important;
+    margin-top: 4px;
+    margin-right: 4px;
+}
+
+.uk-icon.small svg {
+    width: 20px !important;
+    height: 20px !important;
+    margin-top: 2px;
+    margin-right: 2px;
+}
+
+.uk-icon.medium svg {
+    width: 24px !important;
+    height: 24px !important;
 }
