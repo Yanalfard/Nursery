@@ -8,126 +8,128 @@
 <div id="container" class="uk-container-small uk-margin-auto">
     <div role="none" class="space"></div>
 
+    <!-- #region Form -->
     <!-- Static Form For Future Reference #001-->
     @*<form id="form" class="form">
-        <div class="form-header"><h3>این نام فرم می باشد</h3></div>
-        <div class="form-body">
-            <div class="fg-col ">
-                <label class="fg-label" for="I-1601-1589-1591-1602-1589O">combo</label>
-                <select class="entry" id="I-1601-1589-1591-1602-1589O">
-                    <option>سیب</option>
-                    <option>موز</option>
-                    <option>هلو</option>
-                    <option>آلبالو</option>
-                </select>
-            </div>
-            <div class="fg-col ">
-                <label class="fg-label" for="I-1584-1599-1580-1584-1603-1586-1599-1603O">textarea</label>
-                <textarea class="entry" id="I-1584-1599-1580-1584-1603-1586-1599-1603O" placeholder="textarea" pattern="/[0-9]{11}/"></textarea>
-                <span class="text-danger"></span>
-            </div>
-            <div class="fg-col ">
-                <label class="fg-label uk-margin-auto-left row" for="I-1601-1596-1599-1601-1593-1602-1589-1580O">
-                    checkbox
-                    <input class="uk-checkbox" id="I-1601-1596-1599-1601-1593-1602-1589-1580O" type="checkbox">
-                </label>
-            </div>
-            <div class="fg-col ">
-                <label class="fg-label" for="I-1601-1589-1592-1589-1586O">color</label>
-                <input class="entry" id="I-1601-1589-1592-1589-1586O" type="color">
-            </div>
-            <div class="fg-col ">
-                <label class="fg-label" for="I-1600-1603-1584-1599O">date</label>
-                <input class="entry" id="I-1600-1603-1584-1599O" type="date" placeholder="date" pattern="/[0-9]{11}/">
-                <span class="text-danger"></span>
-            </div>
-            <div class="fg-col ">
-                <label class="fg-label" for="I-1600-1603-1584-1599-1616-1595-1591-1599O">dateTime</label>
-                <input class="entry" id="I-1600-1603-1584-1599-1616-1595-1591-1599O" type="dateTime" placeholder="dateTime" pattern="/[0-9]{11}/">
-                <span class="text-danger"></span>
-            </div>
-            <div class="fg-col ">
-                <label class="fg-label" for="I-1599-1591-1603-1595-1592O">email</label>
-                <input class="entry" id="I-1599-1591-1603-1595-1592O" type="email" placeholder="email" pattern="/[0-9]{11}/">
-                <span class="text-danger"></span>
-            </div>
-            <div class="fg-col ">
-                <label class="fg-label" for="I-1598-1595-1592-1599O">file</label>
-                <input class="entry" id="I-1598-1595-1592-1599O" type="file">
-                <span class="text-danger"></span>
-            </div>
-            <div class="fg-col ">
-                <label class="fg-label" for="I-1596-1595-1600-1600-1599-1590O">hidden</label>
-                <input class="entry" id="I-1596-1595-1600-1600-1599-1590O" type="hidden">
-                <span class="text-danger"></span>
-            </div>
-            <div class="fg-col ">
-                <label class="fg-label" for="I-1595-1591-1603-1597-1599O">image</label>
-                <input class="entry" id="I-1595-1591-1603-1597-1599O" alt="image" type="image">
-                <span class="text-danger"></span>
-            </div>
-            <div class="fg-col ">
-                <label class="fg-label" for="I-1591-1589-1590-1584-1596O">month</label>
-                <input class="entry" id="I-1591-1589-1590-1584-1596O" type="month" placeholder="month">
-                <span class="text-danger"></span>
-            </div>
-            <div class="fg-col ">
-                <div class="fg-col">
-                    <label class="fg-label" for="I-1590-1583-1591-1602-1599-1586O">number</label>
-                    <input class="entry" id="I-1590-1583-1591-1602-1599-1586O" type="number" placeholder="number" pattern="/[0-9]{11}/">
+            <div class="form-header"><h3>این نام فرم می باشد</h3></div>
+            <div class="form-body">
+                <div class="fg-col ">
+                    <label class="fg-label" for="I-1601-1589-1591-1602-1589O">combo</label>
+                    <select class="entry" id="I-1601-1589-1591-1602-1589O">
+                        <option>سیب</option>
+                        <option>موز</option>
+                        <option>هلو</option>
+                        <option>آلبالو</option>
+                    </select>
+                </div>
+                <div class="fg-col ">
+                    <label class="fg-label" for="I-1584-1599-1580-1584-1603-1586-1599-1603O">textarea</label>
+                    <textarea class="entry" id="I-1584-1599-1580-1584-1603-1586-1599-1603O" placeholder="textarea" pattern="/[0-9]{11}/"></textarea>
+                    <span class="text-danger"></span>
+                </div>
+                <div class="fg-col ">
+                    <label class="fg-label uk-margin-auto-left row" for="I-1601-1596-1599-1601-1593-1602-1589-1580O">
+                        checkbox
+                        <input class="uk-checkbox" id="I-1601-1596-1599-1601-1593-1602-1589-1580O" type="checkbox">
+                    </label>
+                </div>
+                <div class="fg-col ">
+                    <label class="fg-label" for="I-1601-1589-1592-1589-1586O">color</label>
+                    <input class="entry" id="I-1601-1589-1592-1589-1586O" type="color">
+                </div>
+                <div class="fg-col ">
+                    <label class="fg-label" for="I-1600-1603-1584-1599O">date</label>
+                    <input class="entry" id="I-1600-1603-1584-1599O" type="date" placeholder="date" pattern="/[0-9]{11}/">
+                    <span class="text-danger"></span>
+                </div>
+                <div class="fg-col ">
+                    <label class="fg-label" for="I-1600-1603-1584-1599-1616-1595-1591-1599O">dateTime</label>
+                    <input class="entry" id="I-1600-1603-1584-1599-1616-1595-1591-1599O" type="dateTime" placeholder="dateTime" pattern="/[0-9]{11}/">
+                    <span class="text-danger"></span>
+                </div>
+                <div class="fg-col ">
+                    <label class="fg-label" for="I-1599-1591-1603-1595-1592O">email</label>
+                    <input class="entry" id="I-1599-1591-1603-1595-1592O" type="email" placeholder="email" pattern="/[0-9]{11}/">
+                    <span class="text-danger"></span>
+                </div>
+                <div class="fg-col ">
+                    <label class="fg-label" for="I-1598-1595-1592-1599O">file</label>
+                    <input class="entry" id="I-1598-1595-1592-1599O" type="file">
+                    <span class="text-danger"></span>
+                </div>
+                <div class="fg-col ">
+                    <label class="fg-label" for="I-1596-1595-1600-1600-1599-1590O">hidden</label>
+                    <input class="entry" id="I-1596-1595-1600-1600-1599-1590O" type="hidden">
+                    <span class="text-danger"></span>
+                </div>
+                <div class="fg-col ">
+                    <label class="fg-label" for="I-1595-1591-1603-1597-1599O">image</label>
+                    <input class="entry" id="I-1595-1591-1603-1597-1599O" alt="image" type="image">
+                    <span class="text-danger"></span>
+                </div>
+                <div class="fg-col ">
+                    <label class="fg-label" for="I-1591-1589-1590-1584-1596O">month</label>
+                    <input class="entry" id="I-1591-1589-1590-1584-1596O" type="month" placeholder="month">
+                    <span class="text-danger"></span>
+                </div>
+                <div class="fg-col ">
+                    <div class="fg-col">
+                        <label class="fg-label" for="I-1590-1583-1591-1602-1599-1586O">number</label>
+                        <input class="entry" id="I-1590-1583-1591-1602-1599-1586O" type="number" placeholder="number" pattern="/[0-9]{11}/">
+                        <span class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="fg-col ">
+                    <label class="fg-label" for="I-1588-1603-1585-1585-1581-1589-1586-1600O">password</label>
+                    <input class="entry" id="I-1588-1603-1585-1585-1581-1589-1586-1600O" type="password" placeholder="password" pattern="/[0-9]{11}/">
+                    <span class="text-danger"></span>
+                </div>
+                <div class="fg-col ">
+                    <label class="fg-label" for="I-1586-1603-1600-1595-1589O">radio</label>
+                    <label class="radio"><span>سیب</span><input id="radio0" name="I-1586-1603-1600-1595-1589O" class="uk-radio" value="سیب" type="radio"></label><label class="radio"><span>موز</span><input id="radio1" name="I-1586-1603-1600-1595-1589O" class="uk-radio" value="موز" type="radio"></label><label class="radio"><span>هلو</span><input id="radio2" name="I-1586-1603-1600-1595-1589O" class="uk-radio" value="هلو" type="radio"></label><label class="radio"><span>آلبالو</span><input id="radio3" name="I-1586-1603-1600-1595-1589O" class="uk-radio" value="آلبالو" type="radio"></label>
+                </div>
+                <div class="fg-col ">
+                    <label class="fg-label" for="I-1586-1603-1590-1597-1599O">range</label>
+                    <input class="uk-range" id="range" min="سیب" max="موز" type="range" placeholder="range" pattern="/[0-9]{11}/">
+                </div>
+                <div class="fg-col ">
+                    <label class="fg-label" for="I-1586-1599-1585-1599-1584O">reset</label>
+                    <input class="entry" id="I-1586-1599-1585-1599-1584O" type="reset" placeholder="reset" pattern="/[0-9]{11}/">
+                </div>
+                <div class="fg-col ">
+                    <label class="fg-label" for="I-1585-1599-1603-1586-1601-1596O">search</label>
+                    <input class="entry" id="I-1585-1599-1603-1586-1601-1596O" type="search" placeholder="search" pattern="/[0-9]{11}/">
+                    <span class="text-danger"></span>
+                </div>
+                <div class="fg-col ">
+                    <label class="fg-label" for="I-1585-1583-1602-1591-1595-1584O">submit</label>
+                    <input class="entry" id="I-1585-1583-1602-1591-1595-1584O" type="submit" placeholder="submit" pattern="/[0-9]{11}/">
+                </div>
+                <div class="fg-col ">
+                    <label class="fg-label" for="I-1584-1599-1592O">tel</label>
+                    <input class="entry" id="I-1584-1599-1592O" type="tel" placeholder="tel" pattern="/[0-9]{11}/">
+                    <span class="text-danger"></span>
+                </div>
+                <div class="fg-col ">
+                    <label class="fg-label" for="I-1584-1599-1580-1584O">text</label>
+                    <input class="entry" id="I-1584-1599-1580-1584O" type="text" placeholder="text" pattern="/[0-9]{11}/">
+                    <span class="text-danger"></span>
+                </div>
+                <div class="fg-col ">
+                    <label class="fg-label" for="I-1584-1595-1591-1599O">time</label>
+                    <input class="entry" id="I-1584-1595-1591-1599O" type="time" placeholder="time" pattern="/[0-9]{11}/">
                     <span class="text-danger"></span>
                 </div>
             </div>
-            <div class="fg-col ">
-                <label class="fg-label" for="I-1588-1603-1585-1585-1581-1589-1586-1600O">password</label>
-                <input class="entry" id="I-1588-1603-1585-1585-1581-1589-1586-1600O" type="password" placeholder="password" pattern="/[0-9]{11}/">
-                <span class="text-danger"></span>
+            <div class="form-footer">
+                <button class="btn btn-primary">تایید</button>
+                <button class="btn btn-secondary">گزینه دوم</button>
+                <button class="btn btn-dashed">گزینه سوم</button>
+                <button class="btn btn-text">گزینه چهارم</button>
+                <button class="btn btn-link">گزینه پنجم</button>
             </div>
-            <div class="fg-col ">
-                <label class="fg-label" for="I-1586-1603-1600-1595-1589O">radio</label>
-                <label class="radio"><span>سیب</span><input id="radio0" name="I-1586-1603-1600-1595-1589O" class="uk-radio" value="سیب" type="radio"></label><label class="radio"><span>موز</span><input id="radio1" name="I-1586-1603-1600-1595-1589O" class="uk-radio" value="موز" type="radio"></label><label class="radio"><span>هلو</span><input id="radio2" name="I-1586-1603-1600-1595-1589O" class="uk-radio" value="هلو" type="radio"></label><label class="radio"><span>آلبالو</span><input id="radio3" name="I-1586-1603-1600-1595-1589O" class="uk-radio" value="آلبالو" type="radio"></label>
-            </div>
-            <div class="fg-col ">
-                <label class="fg-label" for="I-1586-1603-1590-1597-1599O">range</label>
-                <input class="uk-range" id="range" min="سیب" max="موز" type="range" placeholder="range" pattern="/[0-9]{11}/">
-            </div>
-            <div class="fg-col ">
-                <label class="fg-label" for="I-1586-1599-1585-1599-1584O">reset</label>
-                <input class="entry" id="I-1586-1599-1585-1599-1584O" type="reset" placeholder="reset" pattern="/[0-9]{11}/">
-            </div>
-            <div class="fg-col ">
-                <label class="fg-label" for="I-1585-1599-1603-1586-1601-1596O">search</label>
-                <input class="entry" id="I-1585-1599-1603-1586-1601-1596O" type="search" placeholder="search" pattern="/[0-9]{11}/">
-                <span class="text-danger"></span>
-            </div>
-            <div class="fg-col ">
-                <label class="fg-label" for="I-1585-1583-1602-1591-1595-1584O">submit</label>
-                <input class="entry" id="I-1585-1583-1602-1591-1595-1584O" type="submit" placeholder="submit" pattern="/[0-9]{11}/">
-            </div>
-            <div class="fg-col ">
-                <label class="fg-label" for="I-1584-1599-1592O">tel</label>
-                <input class="entry" id="I-1584-1599-1592O" type="tel" placeholder="tel" pattern="/[0-9]{11}/">
-                <span class="text-danger"></span>
-            </div>
-            <div class="fg-col ">
-                <label class="fg-label" for="I-1584-1599-1580-1584O">text</label>
-                <input class="entry" id="I-1584-1599-1580-1584O" type="text" placeholder="text" pattern="/[0-9]{11}/">
-                <span class="text-danger"></span>
-            </div>
-            <div class="fg-col ">
-                <label class="fg-label" for="I-1584-1595-1591-1599O">time</label>
-                <input class="entry" id="I-1584-1595-1591-1599O" type="time" placeholder="time" pattern="/[0-9]{11}/">
-                <span class="text-danger"></span>
-            </div>
-        </div>
-        <div class="form-footer">
-            <button class="btn btn-primary">تایید</button>
-            <button class="btn btn-secondary">گزینه دوم</button>
-            <button class="btn btn-dashed">گزینه سوم</button>
-            <button class="btn btn-text">گزینه چهارم</button>
-            <button class="btn btn-link">گزینه پنجم</button>
-        </div>
-    </form>*@
+        </form>*@
+    <!-- #endregion -->
 
 </div>
 

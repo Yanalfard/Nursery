@@ -1,26 +1,30 @@
+// HELLO WORLD
 var tblForm = /** @class */ (function () {
     function tblForm() {
-        this.Id = -1;
+        this.FormId = -1;
         this.Name = '';
+        /** A text to put on forms subtitle */
         this.Body = '';
         this.IsDeleted = false;
+        //-
+        this.Fields = [];
     }
     return tblForm;
 }());
 var tblRegex = /** @class */ (function () {
-    function tblRegex(regex, label) {
-        this.Id = -1;
+    function tblRegex(regex, validationMessage) {
+        this.RegexId = -1;
         this.Regex = new RegExp('');
-        this.Label = '';
+        this.ValidationMessage = '';
         this.IsDeleted = false;
         this.Regex = regex;
-        this.Label = label !== null && label !== void 0 ? label : '';
+        this.ValidationMessage = validationMessage !== null && validationMessage !== void 0 ? validationMessage : '';
     }
     return tblRegex;
 }());
 var tblField = /** @class */ (function () {
     function tblField() {
-        this.Id = -1;
+        this.FieldId = -1;
         this.FormId = -1;
         this.Label = '';
         this.Type = Type.text;
@@ -29,13 +33,14 @@ var tblField = /** @class */ (function () {
         this.Placeholder = '';
         this.Tooltip = '';
         this.IsDeleted = false;
-        this.validations = [];
+        //-
+        this.Validations = [];
     }
     return tblField;
 }());
 var tblValue = /** @class */ (function () {
     function tblValue() {
-        this.Id = -1;
+        this.ValueId = -1;
         this.UserId = -1;
         this.Value = '';
         this.IsDeleted = false;
@@ -69,44 +74,44 @@ var Type;
     Type[Type["week"] = 22] = "week";
 })(Type || (Type = {}));
 //#region Data Definition
-var form1 = new tblForm();
-form1.Id = 0;
-form1.Name = 'این نام فرم می باشد';
-var exp = new RegExp("[0-9]{11}");
-var tblField1 = new tblField();
-tblField1.Id = 0;
-tblField1.FormId = 0;
-tblField1.IsRequired = true;
-tblField1.Type = Type.checkbox;
-tblField1.Label = "مرا به خاطر بسپار";
-var tblField2 = new tblField();
-tblField2.Id = 1;
-tblField2.FormId = 0;
-tblField2.IsRequired = false;
-tblField2.Type = Type.tel;
-tblField2.validations.push(new tblRegex(exp, 'شماره تلفن صحیح نمی باشد'));
-tblField2.Label = 'شماره تلفن';
-var tblField3 = new tblField();
-tblField3.Id = 2;
-tblField3.FormId = 0;
-tblField3.IsRequired = true;
-tblField3.Type = Type.radio;
-tblField3.Options = ['مرد', 'زن', 'ترجیح میدم نگم'];
-tblField3.Label = 'جنسیت';
-var tblField4 = new tblField();
-tblField4.Id = 4;
-tblField4.FormId = 0;
-tblField4.IsRequired = false;
-tblField4.Type = Type.combo;
-tblField4.Options = ['سیب', 'موز', 'هلو', 'آلبالو'];
-tblField4.Label = 'میوه مورد علاقه';
-var tblField5 = new tblField();
-tblField5.Id = 5;
-tblField5.FormId = 0;
-tblField5.IsRequired = true;
-tblField5.Type = Type.text;
-tblField5.Label = 'فیلد ضروری';
-var tblFields = [tblField1, tblField2, tblField3, tblField4, tblField5];
+//const form1 = new tblForm();
+//form1.Id = 0;
+//form1.Name = 'این نام فرم می باشد';
+//const exp = new RegExp("[0-9]{11}");
+//const tblField1 = new tblField();
+//tblField1.Id = 0;
+//tblField1.FormId = 0;
+//tblField1.IsRequired = true;
+//tblField1.Type = Type.checkbox;
+//tblField1.Label = "مرا به خاطر بسپار";
+//const tblField2 = new tblField();
+//tblField2.Id = 1;
+//tblField2.FormId = 0;
+//tblField2.IsRequired = false;
+//tblField2.Type = Type.tel;
+//tblField2.validations.push(new tblRegex(exp, 'شماره تلفن صحیح نمی باشد'));
+//tblField2.Label = 'شماره تلفن';
+//const tblField3 = new tblField();
+//tblField3.Id = 2;
+//tblField3.FormId = 0;
+//tblField3.IsRequired = true;
+//tblField3.Type = Type.radio;
+//tblField3.Options = ['مرد', 'زن', 'ترجیح میدم نگم'];
+//tblField3.Label = 'جنسیت';
+//const tblField4 = new tblField();
+//tblField4.Id = 4;
+//tblField4.FormId = 0;
+//tblField4.IsRequired = false;
+//tblField4.Type = Type.combo;
+//tblField4.Options = ['سیب', 'موز', 'هلو', 'آلبالو'];
+//tblField4.Label = 'میوه مورد علاقه';
+//const tblField5 = new tblField();
+//tblField5.Id = 5;
+//tblField5.FormId = 0;
+//tblField5.IsRequired = true;
+//tblField5.Type = Type.text;
+//tblField5.Label = 'فیلد ضروری';
+//const tblFields = [tblField1, tblField2, tblField3, tblField4, tblField5];
 //const tblFields = [];
 //for (var i = 0; i < 21; i++) {
 //    const f = new tblField();
@@ -140,7 +145,7 @@ var Form = /** @class */ (function () {
         this.submit = document.createElement('button');
         this.submit.classList.add('btn');
         this.submit.classList.add('btn-primary');
-        this.submit.innerText = 'ثبت';
+        this.submit.innerHTML = '<span>ثبت</span>';
         this.submit.addEventListener('click', function (e) { e.preventDefault(); return null; });
         this.footer.appendChild(this.submit);
         this.element.appendChild(this.header);
@@ -180,7 +185,7 @@ var Field = /** @class */ (function () {
                 break;
             case Type.textarea:
                 templateString =
-                    "\n                <label class=\"fg-label\" for=\"" + this.id + "\">" + data.Label + "</label>\n                <textarea class=\"entry\" id=\"" + this.id + "\" " + (data.IsRequired ? 'required' : '') + " placeholder=\"" + data.Placeholder + "\" pattern=\"" + ((_a = data.validations[0]) === null || _a === void 0 ? void 0 : _a.Regex) + "\"></textarea>\n                <span class=\"text-danger\"></span>\n                   ";
+                    "\n                <label class=\"fg-label\" for=\"" + this.id + "\">" + data.Label + "</label>\n                <textarea class=\"entry\" id=\"" + this.id + "\" " + (data.IsRequired ? 'required' : '') + " placeholder=\"" + data.Placeholder + "\" pattern=\"" + ((_a = data.Validations[0]) === null || _a === void 0 ? void 0 : _a.Regex) + "\"></textarea>\n                <span class=\"text-danger\"></span>\n                   ";
                 break;
             case Type.color:
                 templateString =
@@ -188,15 +193,15 @@ var Field = /** @class */ (function () {
                 break;
             case Type.date:
                 templateString =
-                    "\n                <label class=\"fg-label\" for=\"" + this.id + "\">" + data.Label + "</label>\n                <input class=\"entry\" id=\"" + this.id + "\" " + (data.IsRequired ? 'required' : '') + " type=\"date\" placeholder=\"" + data.Placeholder + "\" pattern=\"" + ((_b = data.validations[0]) === null || _b === void 0 ? void 0 : _b.Regex) + "\">\n                <span class=\"text-danger\"></span>\n                   ";
+                    "\n                <label class=\"fg-label\" for=\"" + this.id + "\">" + data.Label + "</label>\n                <input class=\"entry\" id=\"" + this.id + "\" " + (data.IsRequired ? 'required' : '') + " type=\"date\" placeholder=\"" + data.Placeholder + "\" pattern=\"" + ((_b = data.Validations[0]) === null || _b === void 0 ? void 0 : _b.Regex) + "\">\n                <span class=\"text-danger\"></span>\n                   ";
                 break;
             case Type.dateTime:
                 templateString =
-                    "\n                <label class=\"fg-label\" for=\"" + this.id + "\">" + data.Label + "</label>\n                <input class=\"entry\" id=\"" + this.id + "\" " + (data.IsRequired ? 'required' : '') + " type=\"dateTime\" placeholder=\"" + data.Placeholder + "\" pattern=\"" + ((_c = data.validations[0]) === null || _c === void 0 ? void 0 : _c.Regex) + "\">\n                <span class=\"text-danger\"></span>\n                   ";
+                    "\n                <label class=\"fg-label\" for=\"" + this.id + "\">" + data.Label + "</label>\n                <input class=\"entry\" id=\"" + this.id + "\" " + (data.IsRequired ? 'required' : '') + " type=\"dateTime\" placeholder=\"" + data.Placeholder + "\" pattern=\"" + ((_c = data.Validations[0]) === null || _c === void 0 ? void 0 : _c.Regex) + "\">\n                <span class=\"text-danger\"></span>\n                   ";
                 break;
             case Type.email:
                 templateString =
-                    "\n                <label class=\"fg-label\" for=\"" + this.id + "\">" + data.Label + "</label>\n                <input class=\"entry\" id=\"" + this.id + "\" " + (data.IsRequired ? 'required' : '') + " type=\"email\" placeholder=\"" + data.Placeholder + "\" pattern=\"" + ((_d = data.validations[0]) === null || _d === void 0 ? void 0 : _d.Regex) + "\">\n                <span class=\"text-danger\"></span>\n                   ";
+                    "\n                <label class=\"fg-label\" for=\"" + this.id + "\">" + data.Label + "</label>\n                <input class=\"entry\" id=\"" + this.id + "\" " + (data.IsRequired ? 'required' : '') + " type=\"email\" placeholder=\"" + data.Placeholder + "\" pattern=\"" + ((_d = data.Validations[0]) === null || _d === void 0 ? void 0 : _d.Regex) + "\">\n                <span class=\"text-danger\"></span>\n                   ";
                 break;
             case Type.file:
                 templateString =
@@ -216,11 +221,11 @@ var Field = /** @class */ (function () {
                 break;
             case Type.number:
                 templateString =
-                    "\n                <label class=\"fg-label\" for=\"" + this.id + "\">" + data.Label + "</label>\n                <input class=\"entry\" id=\"" + this.id + "\" " + (data.IsRequired ? 'required' : '') + " type=\"number\" placeholder=\"" + data.Placeholder + "\" pattern=\"" + ((_e = data.validations[0]) === null || _e === void 0 ? void 0 : _e.Regex) + "\">\n                <span class=\"text-danger\"></span>\n                   ";
+                    "\n                <label class=\"fg-label\" for=\"" + this.id + "\">" + data.Label + "</label>\n                <input class=\"entry\" id=\"" + this.id + "\" " + (data.IsRequired ? 'required' : '') + " type=\"number\" placeholder=\"" + data.Placeholder + "\" pattern=\"" + ((_e = data.Validations[0]) === null || _e === void 0 ? void 0 : _e.Regex) + "\">\n                <span class=\"text-danger\"></span>\n                   ";
                 break;
             case Type.password:
                 templateString =
-                    "\n                <label class=\"fg-label\" for=\"" + this.id + "\">" + data.Label + "</label>\n                <input class=\"entry\" id=\"" + this.id + "\" " + (data.IsRequired ? 'required' : '') + " type=\"password\" placeholder=\"" + data.Placeholder + "\" pattern=\"" + ((_f = data.validations[0]) === null || _f === void 0 ? void 0 : _f.Regex) + "\">\n                <span class=\"text-danger\"></span>\n                   ";
+                    "\n                <label class=\"fg-label\" for=\"" + this.id + "\">" + data.Label + "</label>\n                <input class=\"entry\" id=\"" + this.id + "\" " + (data.IsRequired ? 'required' : '') + " type=\"password\" placeholder=\"" + data.Placeholder + "\" pattern=\"" + ((_f = data.Validations[0]) === null || _f === void 0 ? void 0 : _f.Regex) + "\">\n                <span class=\"text-danger\"></span>\n                   ";
                 break;
             case Type.radio:
                 templateString =
@@ -228,39 +233,39 @@ var Field = /** @class */ (function () {
                 break;
             case Type.range:
                 templateString =
-                    "\n                <label class=\"fg-label\" for=\"" + this.id + "\">" + data.Label + "</label>\n                <input class=\"uk-range\" id=\"" + data.Label.toString() + "\" " + (data.IsRequired ? 'required' : '') + " min=\"" + data.Options[0] + "\" max=\"" + data.Options[1] + "\" type=\"range\" placeholder=\"" + data.Placeholder + "\" pattern=\"" + ((_g = data.validations[0]) === null || _g === void 0 ? void 0 : _g.Regex) + "\">\n                   ";
+                    "\n                <label class=\"fg-label\" for=\"" + this.id + "\">" + data.Label + "</label>\n                <input class=\"uk-range\" id=\"" + data.Label.toString() + "\" " + (data.IsRequired ? 'required' : '') + " min=\"" + data.Options[0] + "\" max=\"" + data.Options[1] + "\" type=\"range\" placeholder=\"" + data.Placeholder + "\" pattern=\"" + ((_g = data.Validations[0]) === null || _g === void 0 ? void 0 : _g.Regex) + "\">\n                   ";
                 break;
             case Type.reset:
                 templateString =
-                    "\n                <label class=\"fg-label\" for=\"" + this.id + "\">" + data.Label + "</label>\n                <input class=\"entry\" id=\"" + this.id + "\" type=\"reset\" " + (data.IsRequired ? 'required' : '') + " placeholder=\"" + data.Placeholder + "\" pattern=\"" + ((_h = data.validations[0]) === null || _h === void 0 ? void 0 : _h.Regex) + "\">\n                   ";
+                    "\n                <label class=\"fg-label\" for=\"" + this.id + "\">" + data.Label + "</label>\n                <input class=\"entry\" id=\"" + this.id + "\" type=\"reset\" " + (data.IsRequired ? 'required' : '') + " placeholder=\"" + data.Placeholder + "\" pattern=\"" + ((_h = data.Validations[0]) === null || _h === void 0 ? void 0 : _h.Regex) + "\">\n                   ";
                 break;
             case Type.search:
                 templateString =
-                    "\n                <label class=\"fg-label\" for=\"" + this.id + "\">" + data.Label + "</label>\n                <input class=\"entry\" id=\"" + this.id + "\" type=\"search\" " + (data.IsRequired ? 'required' : '') + " placeholder=\"" + data.Placeholder + "\" pattern=\"" + ((_j = data.validations[0]) === null || _j === void 0 ? void 0 : _j.Regex) + "\">\n                <span class=\"text-danger\"></span>\n                   ";
+                    "\n                <label class=\"fg-label\" for=\"" + this.id + "\">" + data.Label + "</label>\n                <input class=\"entry\" id=\"" + this.id + "\" type=\"search\" " + (data.IsRequired ? 'required' : '') + " placeholder=\"" + data.Placeholder + "\" pattern=\"" + ((_j = data.Validations[0]) === null || _j === void 0 ? void 0 : _j.Regex) + "\">\n                <span class=\"text-danger\"></span>\n                   ";
                 break;
             case Type.submit:
                 templateString =
-                    "\n                <label class=\"fg-label\" for=\"" + this.id + "\">" + data.Label + "</label>\n                <input class=\"entry\" id=\"" + this.id + "\" type=\"submit\" " + (data.IsRequired ? 'required' : '') + " placeholder=\"" + data.Placeholder + "\" pattern=\"" + ((_k = data.validations[0]) === null || _k === void 0 ? void 0 : _k.Regex) + "\">\n                   ";
+                    "\n                <label class=\"fg-label\" for=\"" + this.id + "\">" + data.Label + "</label>\n                <input class=\"entry\" id=\"" + this.id + "\" type=\"submit\" " + (data.IsRequired ? 'required' : '') + " placeholder=\"" + data.Placeholder + "\" pattern=\"" + ((_k = data.Validations[0]) === null || _k === void 0 ? void 0 : _k.Regex) + "\">\n                   ";
                 break;
             case Type.tel:
                 templateString =
-                    "\n                <label class=\"fg-label\" for=\"" + this.id + "\">" + data.Label + "</label>\n                <input class=\"entry\" id=\"" + this.id + "\" type=\"tel\" " + (data.IsRequired ? 'required' : '') + " placeholder=\"" + data.Placeholder + "\" pattern=\"" + ((_l = data.validations[0]) === null || _l === void 0 ? void 0 : _l.Regex) + "\">\n                <span class=\"text-danger\"></span>\n                   ";
+                    "\n                <label class=\"fg-label\" for=\"" + this.id + "\">" + data.Label + "</label>\n                <input class=\"entry\" id=\"" + this.id + "\" type=\"tel\" " + (data.IsRequired ? 'required' : '') + " placeholder=\"" + data.Placeholder + "\" pattern=\"" + ((_l = data.Validations[0]) === null || _l === void 0 ? void 0 : _l.Regex) + "\">\n                <span class=\"text-danger\"></span>\n                   ";
                 break;
             case Type.text:
                 templateString =
-                    "\n                <label class=\"fg-label\" for=\"" + this.id + "\">" + data.Label + "</label>\n                <input class=\"entry\" id=\"" + this.id + "\" type=\"text\" " + (data.IsRequired ? 'required' : '') + " placeholder=\"" + data.Placeholder + "\" pattern=\"" + ((_m = data.validations[0]) === null || _m === void 0 ? void 0 : _m.Regex) + "\">\n                <span class=\"text-danger\"></span>\n                   ";
+                    "\n                <label class=\"fg-label\" for=\"" + this.id + "\">" + data.Label + "</label>\n                <input class=\"entry\" id=\"" + this.id + "\" type=\"text\" " + (data.IsRequired ? 'required' : '') + " placeholder=\"" + data.Placeholder + "\" pattern=\"" + ((_m = data.Validations[0]) === null || _m === void 0 ? void 0 : _m.Regex) + "\">\n                <span class=\"text-danger\"></span>\n                   ";
                 break;
             case Type.time:
                 templateString =
-                    "\n                <label class=\"fg-label\" for=\"" + this.id + "\">" + data.Label + "</label>\n                <input class=\"entry\" id=\"" + this.id + "\" type=\"time\" " + (data.IsRequired ? 'required' : '') + " placeholder=\"" + data.Placeholder + "\" pattern=\"" + ((_o = data.validations[0]) === null || _o === void 0 ? void 0 : _o.Regex) + "\">\n                <span class=\"text-danger\"></span>\n                   ";
+                    "\n                <label class=\"fg-label\" for=\"" + this.id + "\">" + data.Label + "</label>\n                <input class=\"entry\" id=\"" + this.id + "\" type=\"time\" " + (data.IsRequired ? 'required' : '') + " placeholder=\"" + data.Placeholder + "\" pattern=\"" + ((_o = data.Validations[0]) === null || _o === void 0 ? void 0 : _o.Regex) + "\">\n                <span class=\"text-danger\"></span>\n                   ";
                 break;
             case Type.url:
                 templateString =
-                    "\n                <label class=\"fg-label\" for=\"" + this.id + "\">" + data.Label + "</label>\n                <input class=\"entry\" id=\"" + this.id + "\" type=\"url\" " + (data.IsRequired ? 'required' : '') + " placeholder=\"" + data.Placeholder + "\" pattern=\"" + ((_p = data.validations[0]) === null || _p === void 0 ? void 0 : _p.Regex) + "\">\n                <span class=\"text-danger\"></span>\n                   ";
+                    "\n                <label class=\"fg-label\" for=\"" + this.id + "\">" + data.Label + "</label>\n                <input class=\"entry\" id=\"" + this.id + "\" type=\"url\" " + (data.IsRequired ? 'required' : '') + " placeholder=\"" + data.Placeholder + "\" pattern=\"" + ((_p = data.Validations[0]) === null || _p === void 0 ? void 0 : _p.Regex) + "\">\n                <span class=\"text-danger\"></span>\n                   ";
                 break;
             case Type.week:
                 templateString =
-                    "\n                <label class=\"fg-label\" for=\"" + this.id + "\">" + data.Label + "</label>\n                <input class=\"entry\" id=\"" + this.id + "\" " + (data.IsRequired ? 'required' : '') + " type=\"week\" placeholder=\"" + data.Placeholder + "\" pattern=\"" + ((_q = data.validations[0]) === null || _q === void 0 ? void 0 : _q.Regex) + "\">\n                <span class=\"text-danger\"></span>\n                   ";
+                    "\n                <label class=\"fg-label\" for=\"" + this.id + "\">" + data.Label + "</label>\n                <input class=\"entry\" id=\"" + this.id + "\" " + (data.IsRequired ? 'required' : '') + " type=\"week\" placeholder=\"" + data.Placeholder + "\" pattern=\"" + ((_q = data.Validations[0]) === null || _q === void 0 ? void 0 : _q.Regex) + "\">\n                <span class=\"text-danger\"></span>\n                   ";
                 break;
             case Type.combo:
                 templateString =
@@ -324,11 +329,11 @@ var Field = /** @class */ (function () {
                 return false;
             }
         }
-        for (var _i = 0, _a = this.data.validations; _i < _a.length; _i++) {
+        for (var _i = 0, _a = this.data.Validations; _i < _a.length; _i++) {
             var validationRule = _a[_i];
             if (!validationRule.Regex.test(this.getVal().Value)) {
                 if (this.lblError)
-                    this.lblError.innerText = validationRule.Label;
+                    this.lblError.innerText = validationRule.ValidationMessage;
                 return false;
             }
         }
@@ -338,16 +343,18 @@ var Field = /** @class */ (function () {
     };
     return Field;
 }());
-var oi = new Form(form1);
-tblFields.forEach(function (f) { return oi.addField(f); });
-oi.attachForm(document.getElementById('container'));
-oi.submit.addEventListener('click', submit);
-function submit() {
-    //oi.Fields.forEach(i => console.log(i.getVal()))
-    //oi.validate();
-    if (!oi.validate())
-        return;
-    oi.Fields.forEach(function (i) { return console.log(i.getVal()); });
-    //console.log(oi.Fields[0].getVal());
+//-
+var forms = document.querySelectorAll('dform');
+for (var _i = 0, forms_1 = forms; _i < forms_1.length; _i++) {
+    var item = forms_1[_i];
+    var stringModel = item.getAttribute('model');
+    var model = JSON.parse(stringModel);
+    var form = new Form(model);
+    for (var _a = 0, _b = model.Fields; _a < _b.length; _a++) {
+        var field = _b[_a];
+        form.addField(field);
+    }
+    form.attachForm(item);
+    console.log(form);
 }
 //# sourceMappingURL=main.js.map
