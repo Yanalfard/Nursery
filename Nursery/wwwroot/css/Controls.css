@@ -77,9 +77,9 @@ button, .btn, a, a:hover .js-upload, input[type=file] {
 .btn {
   display: flex;
   min-height: 27px;
-  -moz-border-radius: 2px 2px 2px 2px;
-  -webkit-border-radius: 2px 2px 2px 2px;
-  border-radius: 2px 2px 2px 2px;
+  -moz-border-radius: 2.5px 2.5px 2.5px 2.5px;
+  -webkit-border-radius: 2.5px 2.5px 2.5px 2.5px;
+  border-radius: 2.5px 2.5px 2.5px 2.5px;
   border: 0;
   padding: 4px 15px;
   text-align: center;
@@ -117,7 +117,7 @@ a.btn.btn-primary:hover {
   background-color: transparent;
   min-height: 20px;
   min-width: 20px;
-  padding: 8px;
+  padding: 7.6px 8px;
   -moz-transition: all ease 0.2s;
   -o-transition: all ease 0.2s;
   -webkit-transition: all ease 0.2s;
@@ -152,6 +152,30 @@ a.btn.btn-primary:hover {
   -webkit-box-shadow: 0 0 9px rgba(24, 144, 255, 0.32);
   box-shadow: 0 0 9px rgba(24, 144, 255, 0.32);
   transition: background-color ease .2s; }
+
+.btn-success {
+  background-color: #C9F7F5;
+  color: #1BC5BD; }
+
+.btn-success:hover {
+  background-color: #b7f4f2;
+  color: #19b3ac; }
+
+.btn-warning {
+  background-color: #FFF4DE;
+  color: #FFA800; }
+
+.btn-warning:hover {
+  background-color: #ffedca;
+  color: #ffaf14; }
+
+.btn-danger {
+  background-color: #FFE2E5;
+  color: #F64E60; }
+
+.btn-danger:hover {
+  background-color: #ffced3;
+  color: #f53b4f; }
 
 .btn-secondary {
   border: 1px #ddd solid;
@@ -217,9 +241,9 @@ input:not(input[type=checkbox]):not(input[type=radio]) {
   padding: 4px 11px;
   direction: rtl;
   border: 1px #ddd solid;
-  -moz-border-radius: 2px 2px 2px 2px;
-  -webkit-border-radius: 2px 2px 2px 2px;
-  border-radius: 2px 2px 2px 2px;
+  -moz-border-radius: 2.5px 2.5px 2.5px 2.5px;
+  -webkit-border-radius: 2.5px 2.5px 2.5px 2.5px;
+  border-radius: 2.5px 2.5px 2.5px 2.5px;
   -moz-transition: all ease 0.3s;
   -o-transition: all ease 0.3s;
   -webkit-transition: all ease 0.3s;
@@ -279,9 +303,9 @@ input:not(input[type=checkbox]):not(input[type=radio]) {
     width: 48px;
     border: dashed 1px #aaa;
     height: 32px;
-    -moz-border-radius: 2px 2px 2px 2px;
-    -webkit-border-radius: 2px 2px 2px 2px;
-    border-radius: 2px 2px 2px 2px; }
+    -moz-border-radius: 2.5px 2.5px 2.5px 2.5px;
+    -webkit-border-radius: 2.5px 2.5px 2.5px 2.5px;
+    border-radius: 2.5px 2.5px 2.5px 2.5px; }
 
 .fg-col:last-child {
   margin-bottom: 6px; }
@@ -297,9 +321,9 @@ input:not(input[type=checkbox]):not(input[type=radio]) {
   -moz-box-shadow: rgba(0, 0, 0, 0.12) 0 6px 16px;
   -webkit-box-shadow: rgba(0, 0, 0, 0.12) 0 6px 16px;
   box-shadow: rgba(0, 0, 0, 0.12) 0 6px 16px;
-  -moz-border-radius: 2px 2px 2px 2px;
-  -webkit-border-radius: 2px 2px 2px 2px;
-  border-radius: 2px 2px 2px 2px; }
+  -moz-border-radius: 2.5px 2.5px 2.5px 2.5px;
+  -webkit-border-radius: 2.5px 2.5px 2.5px 2.5px;
+  border-radius: 2.5px 2.5px 2.5px 2.5px; }
   .form-header {
     padding: 16px;
     border-bottom: solid #e5e5e5 1px;
@@ -587,9 +611,9 @@ input:not(input[type=checkbox]):not(input[type=radio]) {
   -moz-box-shadow: rgba(0, 0, 0, 0.12) 0 6px 16px;
   -webkit-box-shadow: rgba(0, 0, 0, 0.12) 0 6px 16px;
   box-shadow: rgba(0, 0, 0, 0.12) 0 6px 16px;
-  -moz-border-radius: 2px 2px 2px 2px;
-  -webkit-border-radius: 2px 2px 2px 2px;
-  border-radius: 2px 2px 2px 2px;
+  -moz-border-radius: 2.5px 2.5px 2.5px 2.5px;
+  -webkit-border-radius: 2.5px 2.5px 2.5px 2.5px;
+  border-radius: 2.5px 2.5px 2.5px 2.5px;
   border: 1px #dfdfdf solid; }
   .dropdown .dropdown-list {
     display: flex;
@@ -621,9 +645,9 @@ input:not(input[type=checkbox]):not(input[type=radio]) {
   -moz-box-shadow: rgba(0, 0, 0, 0.12) 0 6px 16px;
   -webkit-box-shadow: rgba(0, 0, 0, 0.12) 0 6px 16px;
   box-shadow: rgba(0, 0, 0, 0.12) 0 6px 16px;
-  -moz-border-radius: 2px 2px 2px 2px;
-  -webkit-border-radius: 2px 2px 2px 2px;
-  border-radius: 2px 2px 2px 2px;
+  -moz-border-radius: 2.5px 2.5px 2.5px 2.5px;
+  -webkit-border-radius: 2.5px 2.5px 2.5px 2.5px;
+  border-radius: 2.5px 2.5px 2.5px 2.5px;
   -moz-box-shadow: rgba(0, 0, 0, 0.12) 0 6px 16px;
   -webkit-box-shadow: rgba(0, 0, 0, 0.12) 0 6px 16px;
   box-shadow: rgba(0, 0, 0, 0.12) 0 6px 16px;
@@ -638,9 +662,9 @@ input:not(input[type=checkbox]):not(input[type=radio]) {
   -moz-box-shadow: rgba(0, 0, 0, 0.12) 0 6px 16px;
   -webkit-box-shadow: rgba(0, 0, 0, 0.12) 0 6px 16px;
   box-shadow: rgba(0, 0, 0, 0.12) 0 6px 16px;
-  -moz-border-radius: 2px 2px 2px 2px;
-  -webkit-border-radius: 2px 2px 2px 2px;
-  border-radius: 2px 2px 2px 2px; }
+  -moz-border-radius: 2.5px 2.5px 2.5px 2.5px;
+  -webkit-border-radius: 2.5px 2.5px 2.5px 2.5px;
+  border-radius: 2.5px 2.5px 2.5px 2.5px; }
 
 .card-shadow {
   -moz-box-shadow: rgba(0, 0, 0, 0.12) 0 6px 16px;
@@ -838,3 +862,22 @@ input:not(input[type=checkbox]):not(input[type=radio]) {
 .uk-icon.medium svg {
   width: 24px !important;
   height: 24px !important; }
+
+[preview] {
+  cursor: pointer; }
+  [preview] input[type=file] {
+    width: 0;
+    height: 0;
+    flex: 0;
+    max-height: 0;
+    max-width: 0;
+    visibility: collapse;
+    background-color: red; }
+
+.profile-image {
+  width: 92px;
+  height: 92px;
+  background-color: #eee;
+  -moz-border-radius: 1000px 1000px 1000px 1000px;
+  -webkit-border-radius: 1000px 1000px 1000px 1000px;
+  border-radius: 1000px 1000px 1000px 1000px; }

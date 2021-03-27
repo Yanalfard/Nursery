@@ -80,9 +80,9 @@ backdrop-filter: saturate(80%);
 .counter {
   display: flex;
   flex-direction: column;
-  -moz-border-radius: 2px 2px 2px 2px;
-  -webkit-border-radius: 2px 2px 2px 2px;
-  border-radius: 2px 2px 2px 2px; }
+  -moz-border-radius: 2.5px 2.5px 2.5px 2.5px;
+  -webkit-border-radius: 2.5px 2.5px 2.5px 2.5px;
+  border-radius: 2.5px 2.5px 2.5px 2.5px; }
   .counter .content {
     margin: auto;
     display: flex;

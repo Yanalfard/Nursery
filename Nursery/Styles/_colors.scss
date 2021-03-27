@@ -137,7 +137,7 @@ backdrop-filter: saturate(80%);
 }
 
 @mixin border-def-radius() {
-    $px: 2px;
+    $px: 2.5px;
     -moz-border-radius: $px $px $px $px;
     -webkit-border-radius: $px $px $px $px;
     border-radius: $px $px $px $px;

@@ -79,7 +79,7 @@ a.btn.btn-primary:hover {
     background-color: transparent;
     min-height: 20px;
     min-width: 20px;
-    padding: 8px;
+    padding: 7.6px 8px;
     @include trans(.2s);
     color: #555;
 }
@@ -111,6 +111,42 @@ a.btn.btn-primary:hover {
     background-color: $primary-dark;
     @include btn-click-glow;
     transition: background-color ease .2s;
+}
+
+//-
+
+.btn-success {
+    background-color: $green-background;
+    color: $green;
+}
+
+.btn-success:hover {
+    background-color: darken( $green-background, 4%);
+    color: darken( $green, 4%);
+}
+
+//-
+
+.btn-warning {
+    background-color: $yellow-background;
+    color: $yellow;
+}
+
+.btn-warning:hover {
+    background-color: darken( $yellow-background, 4%);
+    color: lighten($yellow, 4%);
+}
+
+//-
+
+.btn-danger {
+    background-color: $red-background;
+    color: $red;
+}
+
+.btn-danger:hover {
+    background-color: darken( $red-background, 4%);
+    color: darken( $red, 4%);
 }
 
 //-
@@ -943,4 +979,25 @@ $background-highlight: #eee;
 .uk-icon.medium svg {
     width: 24px !important;
     height: 24px !important;
+}
+
+[preview] {
+    cursor: pointer;
+
+    input[type=file] {
+        width: 0;
+        height: 0;
+        flex: 0;
+        max-height: 0;
+        max-width: 0;
+        visibility: collapse;
+        background-color: red;
+    }
+}
+
+.profile-image {
+    width: 92px;
+    height: 92px;
+    background-color: #eee;
+    @include border-circle;
 }
