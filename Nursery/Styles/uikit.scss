@@ -89,17 +89,19 @@ html {
     ::-webkit-scrollbar {
         width: 14px;
     }
+
+    $color: #66667f;
     /* Track */
     ::-webkit-scrollbar-track {
-        background: #eee;
+        background: darken($color,8%);
     }
     /* Handle */
     ::-webkit-scrollbar-thumb {
-        background: #ddd;
+        background: $color;
     }
     /* Handle on hover */
     ::-webkit-scrollbar-thumb:hover {
-        background: darken(#ddd,8%);
+        background: lighten($color,8%);
     }
 }
 /*
@@ -4866,6 +4868,7 @@ select.uk-form-width-xsmall {
 .uk-notification-close {
     display: flex;
     margin-right: auto;
+    /**/ display: none;
 
     svg {
         margin: auto;

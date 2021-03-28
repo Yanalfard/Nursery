@@ -549,6 +549,7 @@ $content-padding: 16px;
     -o-transition-property: width;
     -webkit-transition-property: width;
     transition-property: width;
+    overflow-x: hidden;
 
     .navigation {
         $item-height: $aside-width;
@@ -560,6 +561,7 @@ $content-padding: 16px;
             @include column;
             height: auto;
             cursor: pointer !important;
+            overflow-x: hidden;
 
             a {
                 @include row-reverse;
@@ -595,6 +597,8 @@ $content-padding: 16px;
         }
 
         [accordion] {
+            position: relative;
+            background-color: #2F3246;
 
             ul {
                 display: flex;
@@ -626,6 +630,16 @@ $content-padding: 16px;
                     opacity: 1;
                 }
             }
+        }
+
+        [accordion-trigger]:before {
+            content: " ";
+            position: absolute;
+            right: 0;
+            top: 0;
+            bottom: 0;
+            background-color: #fff;
+            width: 3px;
         }
     }
 
@@ -840,6 +854,8 @@ $background-highlight: #eee;
     height: 60px;
     width: 100vw;
     border-top: 1px solid $border-def-color;
+    position: relative;
+    z-index: 200;
 }
 
 /* ACTIVITY CARD */
@@ -983,6 +999,10 @@ $background-highlight: #eee;
 
 [preview] {
     cursor: pointer;
+    @include obj;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
 
     input[type=file] {
         width: 0;
@@ -1000,4 +1020,47 @@ $background-highlight: #eee;
     height: 92px;
     background-color: #eee;
     @include border-circle;
+}
+
+
+[gauge] {
+    position: relative;
+
+    .gauge {
+
+        .gauge-progress {
+            @include trans(.7s);
+            transition-timing-function: ease-in-out;
+            stroke: $primary;
+            stroke-linecap: round;
+            fill: transparent;
+            transform-origin: center;
+            transform: rotate(-90deg);
+        }
+
+        .gauge-background {
+            stroke: transparentize($primary-light,.72);
+            fill: transparent;
+        }
+    }
+
+    .gauge-content {
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 0;
+        bottom: 0;
+        display: flex;
+
+        .gauge-percent {
+            margin: auto;
+        }
+    }
+}
+
+.previewDrop {
+    background-color: transparentize($blue-light,.72);
+    min-height: 35px;
+    @include border-radius(5px,5px,5px,5px);
+    pointer-events: none;
 }

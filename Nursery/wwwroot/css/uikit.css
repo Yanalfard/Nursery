@@ -169,11 +169,11 @@ html {
   html ::-webkit-scrollbar {
     width: 14px; }
   html ::-webkit-scrollbar-track {
-    background: #eee; }
+    background: #545468; }
   html ::-webkit-scrollbar-thumb {
-    background: #ddd; }
+    background: #66667f; }
   html ::-webkit-scrollbar-thumb:hover {
-    background: #c9c9c9; }
+    background: #7a7a94; }
 
 /*
  * Remove the margin in all browsers.
@@ -4650,7 +4650,9 @@ select.uk-form-width-xsmall {
  ========================================================================== */
 .uk-notification-close {
   display: flex;
-  margin-right: auto; }
+  margin-right: auto;
+  /**/
+  display: none; }
   .uk-notification-close svg {
     margin: auto;
     width: 14px;

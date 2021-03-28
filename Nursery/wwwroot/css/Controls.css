@@ -509,7 +509,8 @@ input:not(input[type=checkbox]):not(input[type=radio]) {
   -moz-transition-property: width;
   -o-transition-property: width;
   -webkit-transition-property: width;
-  transition-property: width; }
+  transition-property: width;
+  overflow-x: hidden; }
   .m-aside .navigation {
     margin: 0;
     height: calc(100vh - 65px);
@@ -518,7 +519,8 @@ input:not(input[type=checkbox]):not(input[type=radio]) {
       display: flex;
       flex-direction: column;
       height: auto;
-      cursor: pointer !important; }
+      cursor: pointer !important;
+      overflow-x: hidden; }
       .m-aside .navigation li a {
         display: flex;
         flex-direction: row-reverse;
@@ -549,34 +551,45 @@ input:not(input[type=checkbox]):not(input[type=radio]) {
           pointer-events: none; }
       .m-aside .navigation li a:hover {
         background-color: rgba(255, 255, 255, 0.15); }
-    .m-aside .navigation [accordion] ul {
-      display: flex;
-      margin: 0;
-      overflow: hidden;
-      -moz-transition: all ease 0.48s;
-      -o-transition: all ease 0.48s;
-      -webkit-transition: all ease 0.48s;
-      transition: all ease 0.48s;
-      display: flex;
-      flex-direction: column;
-      max-height: 0;
-      -moz-transition-timing-function: ease-out;
-      -o-transition-timing-function: ease-out;
-      -webkit-transition-timing-function: ease-out;
-      transition-timing-function: ease-out; }
-      .m-aside .navigation [accordion] ul * {
-        -moz-transition: all ease 0.2s;
-        -o-transition: all ease 0.2s;
-        -webkit-transition: all ease 0.2s;
-        transition: all ease 0.2s;
-        opacity: 0; }
-      .m-aside .navigation [accordion] ul a {
-        padding-right: 20px; }
-    .m-aside .navigation [accordion] ul.open {
-      max-height: 200px;
-      background-color: rgba(0, 0, 0, 0.08); }
-      .m-aside .navigation [accordion] ul.open * {
-        opacity: 1; }
+    .m-aside .navigation [accordion] {
+      position: relative;
+      background-color: #2F3246; }
+      .m-aside .navigation [accordion] ul {
+        display: flex;
+        margin: 0;
+        overflow: hidden;
+        -moz-transition: all ease 0.48s;
+        -o-transition: all ease 0.48s;
+        -webkit-transition: all ease 0.48s;
+        transition: all ease 0.48s;
+        display: flex;
+        flex-direction: column;
+        max-height: 0;
+        -moz-transition-timing-function: ease-out;
+        -o-transition-timing-function: ease-out;
+        -webkit-transition-timing-function: ease-out;
+        transition-timing-function: ease-out; }
+        .m-aside .navigation [accordion] ul * {
+          -moz-transition: all ease 0.2s;
+          -o-transition: all ease 0.2s;
+          -webkit-transition: all ease 0.2s;
+          transition: all ease 0.2s;
+          opacity: 0; }
+        .m-aside .navigation [accordion] ul a {
+          padding-right: 20px; }
+      .m-aside .navigation [accordion] ul.open {
+        max-height: 200px;
+        background-color: rgba(0, 0, 0, 0.08); }
+        .m-aside .navigation [accordion] ul.open * {
+          opacity: 1; }
+    .m-aside .navigation [accordion-trigger]:before {
+      content: " ";
+      position: absolute;
+      right: 0;
+      top: 0;
+      bottom: 0;
+      background-color: #fff;
+      width: 3px; }
   .m-aside ::-webkit-scrollbar {
     display: none; }
 
@@ -750,7 +763,9 @@ input:not(input[type=checkbox]):not(input[type=radio]) {
   box-shadow: rgba(0, 0, 0, 0.12) 0 6px 16px;
   height: 60px;
   width: 100vw;
-  border-top: 1px solid #e5e5e5; }
+  border-top: 1px solid #e5e5e5;
+  position: relative;
+  z-index: 200; }
 
 /* ACTIVITY CARD */
 .activity .header {
@@ -864,7 +879,14 @@ input:not(input[type=checkbox]):not(input[type=radio]) {
   height: 24px !important; }
 
 [preview] {
-  cursor: pointer; }
+  cursor: pointer;
+  -o-object-fit: cover;
+  object-fit: cover;
+  -o-object-position: center;
+  object-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center; }
   [preview] input[type=file] {
     width: 0;
     height: 0;
@@ -881,3 +903,37 @@ input:not(input[type=checkbox]):not(input[type=radio]) {
   -moz-border-radius: 1000px 1000px 1000px 1000px;
   -webkit-border-radius: 1000px 1000px 1000px 1000px;
   border-radius: 1000px 1000px 1000px 1000px; }
+
+[gauge] {
+  position: relative; }
+  [gauge] .gauge .gauge-progress {
+    -moz-transition: all ease 0.7s;
+    -o-transition: all ease 0.7s;
+    -webkit-transition: all ease 0.7s;
+    transition: all ease 0.7s;
+    transition-timing-function: ease-in-out;
+    stroke: #1890FF;
+    stroke-linecap: round;
+    fill: transparent;
+    transform-origin: center;
+    transform: rotate(-90deg); }
+  [gauge] .gauge .gauge-background {
+    stroke: rgba(64, 169, 255, 0.28);
+    fill: transparent; }
+  [gauge] .gauge-content {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    display: flex; }
+    [gauge] .gauge-content .gauge-percent {
+      margin: auto; }
+
+.previewDrop {
+  background-color: rgba(174, 214, 255, 0.28);
+  min-height: 35px;
+  -moz-border-radius: 5px 5px 5px 5px;
+  -webkit-border-radius: 5px 5px 5px 5px;
+  border-radius: 5px 5px 5px 5px;
+  pointer-events: none; }

@@ -1,0 +1,91 @@
+﻿@{
+    ViewData["Title"] = "کانفیگ وبسایت";
+    Layout = "~/Areas/Admin/Views/_AdminLayout.cshtml";
+}
+
+<div class="form-builder">
+    <aside class="toolbox card-mat gap-3 col">
+        <div class="form-header uk-padding-remove">
+            <div class="rowr">
+                <input type="text" class="flex-auto entry-invis" placeholder="جستجو..." />
+                <button class="btn-icon">
+                    <span uk-icon="search"></span>
+                </button>
+            </div>
+        </div>
+        <div class="form-body">
+            <div class="tool" draggable="true" ondragstart="drag(event)">
+                <div class="fg-col">
+                    <label class="fg-label">نام و نام خانوادگی</label>
+                    <input type="text" class="entry" value="" />
+                </div>
+            </div>
+        </div>
+    </aside>
+    <div class="prototype form">
+        <div class="form-header">
+            <h3>فرم جدید</h3>
+        </div>
+        <div class="form-body" ondrop="drop(event)" ondragover="allowDrop(event)" ondragleave="dragLeave(event)" ondragenter="dragEnter(event)">
+
+        </div>
+        <div class="form-footer">
+            <div class="actions">
+                <button class="btn btn-primary">
+                    <span>تایید</span>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script>
+
+    let droppedElement;
+
+    let previewDrop = document.createElement('div');
+    previewDrop.classList.add('previewDrop');
+
+
+    function allowDrop(ev) {
+        console.log(ev);
+        ev.preventDefault();
+
+        droppedElement = ev.target;
+    }
+
+    function drag(ev) {
+        droppedElement = ev.target;
+    }
+
+    function allowDrop(ev) {
+        ev.preventDefault();
+    }
+
+    function dragEnter(ev) {
+        console.log('enter')
+
+        const target = ev.target;
+        previewDrop.offsetHeight = target.offsetHeight;
+        target.appendChild(previewDrop);
+    }
+
+    function dragLeave(ev) {
+        console.log('leave')
+
+        const target = ev.target;
+        target.removeChild(previewDrop);
+    }
+
+    function drop(ev) {
+        ev.preventDefault();
+        console.log('drop')
+
+        dragLeave(ev);
+
+        const target = ev.target;
+        console.log(droppedElement);
+        target.appendChild(droppedElement);
+    }
+</script>
