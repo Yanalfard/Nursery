@@ -7,7 +7,10 @@ export class TblField {
     Label: string = '';
     Type: InputType = InputType.text;
     IsRequired: boolean = false;
-    Options: string[] = [];
+    /** 
+     *  
+     *  */
+    Options: string | string[] = '';
     Placeholder: string = '';
     Tooltip: string = '';
     IsDeleted: boolean = false;

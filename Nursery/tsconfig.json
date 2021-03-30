@@ -1,6 +1,7 @@
 {
   "compileOnSave": true,
   "compilerOptions": {
+    "module": "AMD",
     "noImplicitAny": false,
     "noEmitOnError": true,
     "removeComments": false,

@@ -10,7 +10,7 @@
 
 <dform model="@formModel"
        submit="" onError="" onSubmit="">
-        
+
     <dform-content>
 
     </dform-content>
@@ -20,5 +20,15 @@
 </dform>
 
 @section Scripts{
-    <script src="~/js/main.js"></script>
+
+    <script data-main="js/config" src="~/js/require.js"></script>
+
+    <script>
+        require(['config'], function () {
+            require(['main'], function () {
+
+            })
+        });
+    </script>
+
 }

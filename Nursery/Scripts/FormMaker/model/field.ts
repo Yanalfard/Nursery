@@ -14,6 +14,8 @@ export class Field {
 
         this.id = "I" + data.Label.split('').map(i => (i.charCodeAt(0) - 1700)).join('') + "O";
 
+        data.Options = (data.Options as string).split(',');
+
         switch (data.Type) {
             case InputType.checkbox:
                 templateString =
@@ -114,7 +116,7 @@ export class Field {
                 templateString =
                     `
                 <label class="fg-label" for="${this.id}">${data.Label}</label>
-                ${data.Options.map(o => `<label class="radio"><span>${o}</span><input id="${data.Label + data.Options.indexOf(o)}" name="${this.id}" class="uk-radio" value="${o}" type="radio"></label>`).join('')}
+                ${data.Options?.map(o => `<label class="radio"><span>${o}</span><input id="${data.Label + data.Options.indexOf(o)}" name="${this.id}" class="uk-radio" value="${o}" type="radio"></label>`).join('')}
                     `;
                 break;
             case InputType.range:
@@ -201,7 +203,7 @@ export class Field {
         }
 
         //fg-col
-        templateString = `<div class="fg-col ${data.IsRequired ? 'fg-required' : ''}">${templateString}</div>`
+        templateString = `<div class="fg-col ${data.IsRequired ? 'fg-required' : ''}">${templateString.trim()}</div>`
 
         const parser = new DOMParser();
         this.element = (parser.parseFromString(templateString, 'text/html').body);
