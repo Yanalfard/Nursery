@@ -237,7 +237,7 @@ input:not(input[type=checkbox]):not(input[type=radio]) {
 
 /*#region Form */
 .entry, .entry-invis {
-  background: transparent;
+  background: #fff;
   padding: 4px 11px;
   direction: rtl;
   border: 1px #ddd solid;

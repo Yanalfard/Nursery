@@ -16,6 +16,10 @@ namespace DataLayer.ViewModels
         /// Message to show when the validation fails
         /// </summary>
         public string ValidationMessage { get; set; }
+        /// <summary>
+        /// A familiar name for the regex Rule
+        /// </summary>
+        public string Name { get; set; }
         public bool IsDeleted { get; set; }
 
         public DRegexVm(int regexId, string regex, string validationMessage, bool isDeleted = false)

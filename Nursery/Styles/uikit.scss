@@ -5006,7 +5006,7 @@ select.uk-form-width-xsmall {
  ========================================================================== */
 /* Hover */
 .uk-sortable-handle:hover {
-    cursor: move;
+    cursor: grabbing;
 }
 /* ========================================================================
    Component: Countdown
@@ -8994,7 +8994,7 @@ iframe.uk-cover {
  */
 .uk-drag,
 .uk-drag * {
-    cursor: move;
+    cursor: grabbing;
 }
 /* 2 */
 .uk-drag iframe {

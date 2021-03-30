@@ -4,7 +4,7 @@
 }
 
 <div class="form-builder">
-    <aside class="toolbox card-mat gap-3 col">
+    <aside class="toolbox card-mat col ">
         <div class="form-header uk-padding-remove">
             <div class="rowr">
                 <input type="text" class="flex-auto entry-invis" placeholder="جستجو..." />
@@ -13,20 +13,71 @@
                 </button>
             </div>
         </div>
-        <div class="form-body">
-            <div class="tool" draggable="true" ondragstart="drag(event)">
-                <div class="fg-col">
-                    <label class="fg-label">نام و نام خانوادگی</label>
-                    <input type="text" class="entry" value="" />
+        <div class="form-body gap-3 col"
+             uk-sortable="group:form;handle: .tool-actions; cls-item:grabbable; cls-custom: tool-grabbed">
+            <div class="grabbable">
+                <div class="tool">
+                    <header class="tool-actions">
+                        <button class="cell-btn" uk-icon="cog"></button>
+                        <button class="cell-btn" uk-icon="trash"></button>
+                    </header>
+                    <form class="tool-options">
+                        <div option="">
+                            <label class="option-name">نام</label>
+                            <input type="number" class="cell-entry" value="" />
+                        </div>
+                        <div option="">
+                            <label class="option-name">پلیس هولدر</label>
+                            <input type="text" class="cell-entry" value="" />
+                        </div>
+                        <div option="">
+                            <label class="option-name">انتخاب</label>
+                            <select class="cell-select">
+                                <option>موز</option>
+                                <option>سیب</option>
+                                <option>گلابی</option>
+                                <option>هویچ</option>
+                            </select>
+                        </div>
+                        <div option="">
+                            <label class="option-name">ضرورت</label>
+                            <label class="cell-checkbox-group">
+                                <span>ضروری است</span>
+                                <input type="checkbox" />
+                            </label>
+                        </div>
+                        <div regex>
+                            <select class="cell-select">
+                                <option>موز</option>
+                                <option>سیب</option>
+                                <option>گلابی</option>
+                                <option>هویچ</option>
+                            </select>
+                            <div class="regex-list">
+                                <div class="regex-item">
+                                    <label class="cell-label">موز</label>
+                                    <button class="cell-btn" uk-icon="times"></button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                    <div class="tool-content">
+                        <div class="fg-col">
+                            <label class="fg-label">نام و نام خانوادگی</label>
+                            <input type="text" class="entry" value="" />
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </aside>
+    <div class="toolbox-placeholder" role="none"></div>
     <div class="prototype form">
         <div class="form-header">
             <h3>فرم جدید</h3>
         </div>
-        <div class="form-body" ondrop="drop(event)" ondragover="allowDrop(event)" ondragleave="dragLeave(event)" ondragenter="dragEnter(event)">
+        <div class="form-body"
+             uk-sortable="group:form;handle: .tool-actions; cls-item:grabbable; cls-custom: tool-grabbed">
 
         </div>
         <div class="form-footer">
@@ -38,54 +89,3 @@
         </div>
     </div>
 </div>
-
-
-<script>
-
-    let droppedElement;
-
-    let previewDrop = document.createElement('div');
-    previewDrop.classList.add('previewDrop');
-
-
-    function allowDrop(ev) {
-        console.log(ev);
-        ev.preventDefault();
-
-        droppedElement = ev.target;
-    }
-
-    function drag(ev) {
-        droppedElement = ev.target;
-    }
-
-    function allowDrop(ev) {
-        ev.preventDefault();
-    }
-
-    function dragEnter(ev) {
-        console.log('enter')
-
-        const target = ev.target;
-        previewDrop.offsetHeight = target.offsetHeight;
-        target.appendChild(previewDrop);
-    }
-
-    function dragLeave(ev) {
-        console.log('leave')
-
-        const target = ev.target;
-        target.removeChild(previewDrop);
-    }
-
-    function drop(ev) {
-        ev.preventDefault();
-        console.log('drop')
-
-        dragLeave(ev);
-
-        const target = ev.target;
-        console.log(droppedElement);
-        target.appendChild(droppedElement);
-    }
-</script>
