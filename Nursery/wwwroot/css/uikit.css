@@ -182,7 +182,20 @@ body {
   margin: 0;
   background: #F8F8FB;
   overflow: hidden !important;
-  min-height: 100vh; }
+  min-height: 100vh;
+  /*ScrollBar*/
+  /* width */
+  /* Track */
+  /* Handle */
+  /* Handle on hover */ }
+  body ::-webkit-scrollbar {
+    width: 14px; }
+  body ::-webkit-scrollbar-track {
+    background: #efefef; }
+  body ::-webkit-scrollbar-thumb {
+    background: #e5e5e5; }
+  body ::-webkit-scrollbar-thumb:hover {
+    background: #d6d6d6; }
 
 /*#region Space */
 /* Phone landscape and bigger */
@@ -4777,7 +4790,7 @@ select.uk-form-width-xsmall {
  ========================================================================== */
 /* Hover */
 .uk-sortable-handle:hover {
-  cursor: grabbing; }
+  cursor: grab; }
 
 /* ========================================================================
    Component: Countdown

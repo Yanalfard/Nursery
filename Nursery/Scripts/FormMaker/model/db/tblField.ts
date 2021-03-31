@@ -7,9 +7,6 @@ export class TblField {
     Label: string = '';
     Type: InputType = InputType.text;
     IsRequired: boolean = false;
-    /** 
-     *  
-     *  */
     Options: string | string[] = '';
     Placeholder: string = '';
     Tooltip: string = '';

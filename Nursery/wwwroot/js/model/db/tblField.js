@@ -9,7 +9,6 @@ define(["require", "exports", "../inputType"], function (require, exports, input
             this.Label = '';
             this.Type = inputType_1.InputType.text;
             this.IsRequired = false;
-            /**  */
             this.Options = '';
             this.Placeholder = '';
             this.Tooltip = '';

@@ -1,13 +1,14 @@
 ﻿requirejs.config({
-    baseUrl: 'js',
+    baseUrl: '/js',
     paths: {
         main: 'main',
-        form: 'form',
-        field: 'field',
-        inputType: 'inputType',
-        tblField: 'db/tblField',
-        tblForm: 'db/tblForm',
-        tblRegex: 'db/tblRegex',
-        tblValue: 'db/tblValue',
+        builder: 'builder',
+        form: 'model/form',
+        field: 'model/field',
+        inputType: 'model/inputType',
+        tblField: 'model/db/tblField',
+        tblForm: 'model/db/tblForm',
+        tblRegex: 'model/db/tblRegex',
+        tblValue: 'model/db/tblValue',
     }
 });

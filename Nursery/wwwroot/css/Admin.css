@@ -151,7 +151,10 @@ backdrop-filter: saturate(80%);
     margin-right: 16px;
     height: calc(100vh - 72px);
     position: fixed;
-    z-index: 180; }
+    z-index: 180;
+    padding-bottom: 77px; }
+    .form-builder .toolbox .form-body, .form-builder .toolbox-placeholder .form-body {
+      overflow-y: auto !important; }
   .form-builder .toolbox-placeholder {
     position: relative;
     z-index: 179; }
@@ -211,6 +214,10 @@ backdrop-filter: saturate(80%);
     display: flex;
     flex-direction: row-reverse;
     grid-gap: 0; }
+    .tool .tool-actions .name {
+      color: #999;
+      flex: auto;
+      padding: 0 6px; }
   .tool .tool-options {
     display: flex;
     flex-direction: column;
@@ -234,17 +241,17 @@ backdrop-filter: saturate(80%);
       .tool .tool-options [option] *:nth-child(2) {
         height: 28px;
         flex: auto; }
-    .tool .tool-options [regex] {
+    .tool .tool-options [regex-list] {
       display: flex;
       flex-direction: column; }
-      .tool .tool-options [regex] .cell-select {
+      .tool .tool-options [regex-list] .cell-select {
         border-bottom: #e5e5e5 1px solid;
         height: 28px; }
-      .tool .tool-options [regex] .regex-list .regex-item {
+      .tool .tool-options [regex-list] .regex-list .regex-item {
         display: flex;
         flex-direction: row-reverse;
         border-bottom: #e5e5e5 1px solid; }
-        .tool .tool-options [regex] .regex-list .regex-item .cell-btn {
+        .tool .tool-options [regex-list] .regex-list .regex-item .cell-btn {
           margin-right: auto;
           border: 0;
           border-right: #e5e5e5 1px solid; }
@@ -290,4 +297,5 @@ backdrop-filter: saturate(80%);
   -moz-box-shadow: rgba(0, 0, 0, 0.12) 0 0px 12px;
   -webkit-box-shadow: rgba(0, 0, 0, 0.12) 0 0px 12px;
   box-shadow: rgba(0, 0, 0, 0.12) 0 0px 12px;
-  transform: rotate(-4deg); }
+  transform: rotate(-4deg);
+  cursor: grabbing !important; }

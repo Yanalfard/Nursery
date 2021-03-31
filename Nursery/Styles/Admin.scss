@@ -102,6 +102,11 @@
         height: calc(100vh - 72px);
         position: fixed;
         z-index: 180;
+        padding-bottom: 61px + 16px;
+
+        .form-body {
+            overflow-y: auto !important;
+        }
     }
 
     .toolbox-placeholder {
@@ -167,6 +172,12 @@ $cell-background: #fafafa;
         cursor: grab;
         @include row-reverse;
         grid-gap: 0;
+
+        .name {
+            color: $text-4;
+            flex: auto;
+            padding: 0 6px;
+        }
     }
 
     .tool-options {
@@ -197,7 +208,7 @@ $cell-background: #fafafa;
             }
         }
 
-        [regex] {
+        [regex-list] {
             @include column;
 
             .cell-select {
@@ -281,6 +292,7 @@ $cell-background: #fafafa;
 .tool-grabbed {
     @include shadow-mild;
     transform: rotate(-4deg);
+    cursor: grabbing !important;
 }
 
 .tool:active {
