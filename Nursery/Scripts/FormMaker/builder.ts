@@ -2,6 +2,7 @@
 import { TblForm } from "./model/db/tblForm";
 import { TblRegex } from "./model/db/tblRegex";
 import { TblValue } from "./model/db/tblValue";
+import { InputType } from "./model/inputType";
 import { Tool, Option, Regex } from "./model/tool";
 
 // Toolbox Element Recreation implementation
@@ -25,8 +26,11 @@ prototype.addEventListener('added', (event: any) => {
 
     const el: HTMLElement = event.detail[1];
 
+
     let toolModel = new Tool();
     toolModel.element = el;
+    toolModel.type = InputType[el.querySelector('[tool]').getAttribute('tool').toLowerCase()];
+
     toolModel.btnDelete = toolModel.element.querySelector('[btnDelete]') as HTMLButtonElement;
     toolModel.btnSettings = toolModel.element.querySelector('[btnSettings]') as HTMLButtonElement;
 
@@ -47,9 +51,9 @@ prototype.addEventListener('added', (event: any) => {
         }, 300);
     });
 
-    toolModel.regexList = toolModel.element.querySelector('[regex-list]');
     toolModel.optionsList = toolModel.element.querySelector('[option-list]');
 
+    // Option
     toolModel.element.querySelectorAll('[option]').forEach(div => {
         let optionModel = new Option();
         optionModel.element = div as HTMLElement;
@@ -58,9 +62,48 @@ prototype.addEventListener('added', (event: any) => {
         toolModel.options.push(optionModel);
     });
 
-    componentList.push(toolModel);
+    // Regex
+    let regexList = toolModel.element.querySelector('[regex-list]');
+    if (regexList) {
+        toolModel.regexList = regexList as HTMLElement;
+        toolModel.regexSelect = regexList.querySelector('[regex-select]');
 
-    console.log(componentList);
+
+
+        toolModel.regexSelect.addEventListener('change', () => {
+            const name = toolModel.regexSelect.value;
+            c
+
+            console.log(toolModel.regexSelect.selectedOptions);
+            const template =
+                `<div class="regex-item">
+                    <label regex="${name}" class="cell-label">${name}</label>
+                    <button class="cell-btn" uk-icon="times"></button>
+                </div>`;
+
+
+            const list = new DOMParser().parseFromString(template, 'text/html');
+            const label = list.querySelector('[regex]');
+            const btn = list.querySelector('button');
+
+
+            toolModel.regexList.innerHTML += template;
+        });
+
+    }
+
+    // Select
+    let selectList = toolModel.element.querySelector('[select-list]');
+    if (selectList) {
+        toolModel.selectList = selectList as HTMLElement;
+        toolModel.selectBtn = selectList.querySelector('[select-btn]');
+        toolModel.selectInput = selectList.querySelector('[select-input]');
+    }
+
+
+
+
+    componentList.push(toolModel);
 
 });
 

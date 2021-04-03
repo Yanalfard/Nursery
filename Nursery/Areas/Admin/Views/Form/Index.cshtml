@@ -15,12 +15,99 @@
         </div>
         <div class="form-body gap-3 col" id="toolbox"
              uk-sortable="group:form;handle: .tool-actions; cls-item:grabbable; cls-custom: tool-grabbed">
+            <!--11-->
+            <div class="grabbable">
+                <div tool="combo" class="tool">
+                    <header class="tool-actions">
+                        <button btnSettings class="cell-btn cell-border-left" uk-icon="cog"></button>
+                        <button btnDelete class="cell-btn cell-border-left" uk-icon="trash"></button>
+                        <label class="name">انتخاب</label>
+                    </header>
+                    <form option-list style="display:none" class="tool-options">
+                        <div option="">
+                            <label option-name class="option-name">تیتر</label>
+                            <input type="text" class="cell-entry" value="" />
+                        </div>
+                        <div option="">
+                            <label option-name class="option-name">ضرورت</label>
+                            <label class="cell-checkbox-group">
+                                <span>ضروری است</span>
+                                <input type="checkbox" />
+                            </label>
+                        </div>
+                        <div select="" class="col">
+                            <div select-adder class="select-adder cell-border-bottom">
+                                <input select-input type="text" placeholder="گزینه جدید..." class="cell-entry flex-auto" value="" />
+                                <button select-btn class="cell-btn cell-border-right" uk-icon="plus"></button>
+                            </div>
+                            <div select-list class="select-list">
+                                <div class="select-item">
+                                    <label select-item class="cell-label">موز</label>
+                                    <button class="cell-btn cell-border-right" uk-icon="times"></button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                    <div class="tool-content">
+                        <div class="fg-col">
+                            <label class="fg-label">نوع خودرو</label>
+                            <select class="uk-select" dir="rtl">
+                                <option>گزینه</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--11-->
+            <div class="grabbable">
+                <div tool="radio" class="tool">
+                    <header class="tool-actions">
+                        <button btnSettings class="cell-btn cell-border-left" uk-icon="cog"></button>
+                        <button btnDelete class="cell-btn cell-border-left" uk-icon="trash"></button>
+                        <label class="name">انتخاب دایره</label>
+                    </header>
+                    <form option-list style="display:none" class="tool-options">
+                        <div option="">
+                            <label option-name class="option-name">تیتر</label>
+                            <input type="text" class="cell-entry" value="" />
+                        </div>
+                        <div option="">
+                            <label option-name class="option-name">ضرورت</label>
+                            <label class="cell-checkbox-group">
+                                <span>ضروری است</span>
+                                <input type="checkbox" />
+                            </label>
+                        </div>
+                        <div select="" class="col">
+                            <div class="select-adder cell-border-bottom">
+                                <input type="text" placeholder="گزینه جدید..." class="cell-entry flex-auto" value="" />
+                                <button class="cell-btn cell-border-right" uk-icon="plus"></button>
+                            </div>
+                            <div class="select-list">
+                                <div class="select-item">
+                                    <label select-item class="cell-label">موز</label>
+                                    <button class="cell-btn cell-border-right" uk-icon="times"></button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                    <div class="tool-content">
+                        <div class="fg-col ">
+                            <label class="fg-label">جنسیت</label>
+                            <label class="radio">
+                                <span>گزینه</span>
+                                <input class="uk-radio" value="گزینه" type="radio">
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
             <!--01-->
             <div class="grabbable">
                 <div tool="text" class="tool">
                     <header class="tool-actions">
-                        <button btnSettings class="cell-btn" uk-icon="cog"></button>
-                        <button btnDelete class="cell-btn" uk-icon="trash"></button>
+                        <button btnSettings class="cell-btn cell-border-left" uk-icon="cog"></button>
+                        <button btnDelete class="cell-btn cell-border-left" uk-icon="trash"></button>
                         <label class="name">متن و نوشته</label>
                     </header>
                     <form option-list style="display:none" class="tool-options">
@@ -40,16 +127,16 @@
                             </label>
                         </div>
                         <div regex-list>
-                            <select class="cell-select">
+                            <select regex-select class="cell-select">
                                 <option>قوانین ولیدیشن</option>
-                                <option>موز</option>
-                                <option>سیب</option>
-                                <option>گلابی</option>
-                                <option>هویچ</option>
+                                <option value="[0-9]">شماره تلفن</option>
+                                <option value="[0-9]">سیب</option>
+                                <option value="[0-9]">گلابی</option>
+                                <option value="[0-9]">هویچ</option>
                             </select>
                             <div class="regex-list">
                                 <div class="regex-item">
-                                    <label regex class="cell-label">موز</label>
+                                    <label regex="/[0-9]/" class="cell-label">موز</label>
                                     <button class="cell-btn" uk-icon="times"></button>
                                 </div>
                             </div>
@@ -67,8 +154,8 @@
             <div class="grabbable">
                 <div tool="tel" class="tool">
                     <header class="tool-actions">
-                        <button btnSettings class="cell-btn" uk-icon="cog"></button>
-                        <button btnDelete class="cell-btn" uk-icon="trash"></button>
+                        <button btnSettings class="cell-btn cell-border-left" uk-icon="cog"></button>
+                        <button btnDelete class="cell-btn cell-border-left" uk-icon="trash"></button>
                         <label class="name">شماره تلفن</label>
                     </header>
                     <form option-list style="display:none" class="tool-options">
@@ -100,8 +187,8 @@
             <div class="grabbable">
                 <div tool="number" class="tool">
                     <header class="tool-actions">
-                        <button btnSettings class="cell-btn" uk-icon="cog"></button>
-                        <button btnDelete class="cell-btn" uk-icon="trash"></button>
+                        <button btnSettings class="cell-btn cell-border-left" uk-icon="cog"></button>
+                        <button btnDelete class="cell-btn cell-border-left" uk-icon="trash"></button>
                         <label class="name">عدد</label>
                     </header>
                     <form option-list style="display:none" class="tool-options">
@@ -133,8 +220,8 @@
             <div class="grabbable">
                 <div tool="password" class="tool">
                     <header class="tool-actions">
-                        <button btnSettings class="cell-btn" uk-icon="cog"></button>
-                        <button btnDelete class="cell-btn" uk-icon="trash"></button>
+                        <button btnSettings class="cell-btn cell-border-left" uk-icon="cog"></button>
+                        <button btnDelete class="cell-btn cell-border-left" uk-icon="trash"></button>
                         <label class="name">گذرواژه</label>
                     </header>
                     <form option-list style="display:none" class="tool-options">
@@ -166,8 +253,8 @@
             <div class="grabbable">
                 <div tool="url" class="tool">
                     <header class="tool-actions">
-                        <button btnSettings class="cell-btn" uk-icon="cog"></button>
-                        <button btnDelete class="cell-btn" uk-icon="trash"></button>
+                        <button btnSettings class="cell-btn cell-border-left" uk-icon="cog"></button>
+                        <button btnDelete class="cell-btn cell-border-left" uk-icon="trash"></button>
                         <label class="name">لینک و یوآرال</label>
                     </header>
                     <form option-list style="display:none" class="tool-options">
@@ -214,8 +301,8 @@
             <div class="grabbable">
                 <div tool="week" class="tool">
                     <header class="tool-actions">
-                        <button btnSettings class="cell-btn" uk-icon="cog"></button>
-                        <button btnDelete class="cell-btn" uk-icon="trash"></button>
+                        <button btnSettings class="cell-btn cell-border-left" uk-icon="cog"></button>
+                        <button btnDelete class="cell-btn cell-border-left" uk-icon="trash"></button>
                         <label class="name">هفته</label>
                     </header>
                     <form option-list style="display:none" class="tool-options">
@@ -243,8 +330,8 @@
             <div class="grabbable">
                 <div tool="textarea" class="tool">
                     <header class="tool-actions">
-                        <button btnSettings class="cell-btn" uk-icon="cog"></button>
-                        <button btnDelete class="cell-btn" uk-icon="trash"></button>
+                        <button btnSettings class="cell-btn cell-border-left" uk-icon="cog"></button>
+                        <button btnDelete class="cell-btn cell-border-left" uk-icon="trash"></button>
                         <label class="name">متن طولانی</label>
                     </header>
                     <form option-list style="display:none" class="tool-options">
@@ -291,8 +378,8 @@
             <div class="grabbable">
                 <div tool="checkbox" class="tool">
                     <header class="tool-actions">
-                        <button btnSettings class="cell-btn" uk-icon="cog"></button>
-                        <button btnDelete class="cell-btn" uk-icon="trash"></button>
+                        <button btnSettings class="cell-btn cell-border-left" uk-icon="cog"></button>
+                        <button btnDelete class="cell-btn cell-border-left" uk-icon="trash"></button>
                         <label class="name">چک باکس</label>
                     </header>
                     <form option-list style="display:none" class="tool-options">
@@ -315,8 +402,8 @@
             <div class="grabbable">
                 <div tool="color" class="tool">
                     <header class="tool-actions">
-                        <button btnSettings class="cell-btn" uk-icon="cog"></button>
-                        <button btnDelete class="cell-btn" uk-icon="trash"></button>
+                        <button btnSettings class="cell-btn cell-border-left" uk-icon="cog"></button>
+                        <button btnDelete class="cell-btn cell-border-left" uk-icon="trash"></button>
                         <label class="name">رنگ</label>
                     </header>
                     <form option-list style="display:none" class="tool-options">
@@ -328,7 +415,7 @@
                     <div class="tool-content">
                         <div class="fg-col">
                             <label class="cell-checkbox-group">
-                                <span>چک باکس</span>
+                                <span>رنگ</span>
                                 <input type="color" />
                             </label>
                         </div>
@@ -339,8 +426,8 @@
             <div class="grabbable">
                 <div tool="date" class="tool">
                     <header class="tool-actions">
-                        <button btnSettings class="cell-btn" uk-icon="cog"></button>
-                        <button btnDelete class="cell-btn" uk-icon="trash"></button>
+                        <button btnSettings class="cell-btn cell-border-left" uk-icon="cog"></button>
+                        <button btnDelete class="cell-btn cell-border-left" uk-icon="trash"></button>
                         <label class="name">تاریخ</label>
                     </header>
                     <form option-list style="display:none" class="tool-options">
@@ -372,8 +459,8 @@
             <div class="grabbable">
                 <div tool="dateTime" class="tool">
                     <header class="tool-actions">
-                        <button btnSettings class="cell-btn" uk-icon="cog"></button>
-                        <button btnDelete class="cell-btn" uk-icon="trash"></button>
+                        <button btnSettings class="cell-btn cell-border-left" uk-icon="cog"></button>
+                        <button btnDelete class="cell-btn cell-border-left" uk-icon="trash"></button>
                         <label class="name">تاریخ و زمان</label>
                     </header>
                     <form option-list style="display:none" class="tool-options">
@@ -405,8 +492,8 @@
             <div class="grabbable">
                 <div tool="email" class="tool">
                     <header class="tool-actions">
-                        <button btnSettings class="cell-btn" uk-icon="cog"></button>
-                        <button btnDelete class="cell-btn" uk-icon="trash"></button>
+                        <button btnSettings class="cell-btn cell-border-left" uk-icon="cog"></button>
+                        <button btnDelete class="cell-btn cell-border-left" uk-icon="trash"></button>
                         <label class="name">ایمیل</label>
                     </header>
                     <form option-list style="display:none" class="tool-options">
@@ -436,10 +523,46 @@
             </div>
             <!--11-->
             <div class="grabbable">
+                <div tool="range" class="tool">
+                    <header class="tool-actions">
+                        <button btnSettings class="cell-btn cell-border-left" uk-icon="cog"></button>
+                        <button btnDelete class="cell-btn cell-border-left" uk-icon="trash"></button>
+                        <label class="name">دامنه</label>
+                    </header>
+                    <form option-list style="display:none" class="tool-options">
+                        <div option="">
+                            <label option-name class="option-name">تیتر</label>
+                            <input type="text" class="cell-entry" value="" />
+                        </div>
+                        <div option="">
+                            <label option-name class="option-name">ضرورت</label>
+                            <label class="cell-checkbox-group">
+                                <span>ضروری است</span>
+                                <input type="checkbox" />
+                            </label>
+                        </div>
+                        <div option="">
+                            <label option-name class="option-name">دامنه</label>
+                            <input type="text" class="cell-entry cell-border-left flex-auto" placeholder="از" />
+                            <input type="text" class="cell-entry flex-auto" placeholder="تا" />
+                        </div>
+                    </form>
+                    <div class="tool-content">
+                        <div class="fg-col">
+                            <label class="fg-label">رضایت</label>
+                            <div class="row">
+                                <input type="range" value="10" min="0" max="20" class="uk-range" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--11-->
+            <div class="grabbable">
                 <div tool="month" class="tool">
                     <header class="tool-actions">
-                        <button btnSettings class="cell-btn" uk-icon="cog"></button>
-                        <button btnDelete class="cell-btn" uk-icon="trash"></button>
+                        <button btnSettings class="cell-btn cell-border-left" uk-icon="cog"></button>
+                        <button btnDelete class="cell-btn cell-border-left" uk-icon="trash"></button>
                         <label class="name">ماه</label>
                     </header>
                     <form option-list style="display:none" class="tool-options">
@@ -467,6 +590,7 @@
                     </div>
                 </div>
             </div>
+
         </div>
     </aside>
     <div class="toolbox-placeholder" role="none"></div>
@@ -505,8 +629,8 @@
 
 @*<div tool="text" class="tool">
         <header class="tool-actions">
-            <button btnSettings class="cell-btn" uk-icon="cog"></button>
-            <button btnDelete class="cell-btn" uk-icon="trash"></button>
+            <button btnSettings class="cell-btn cell-border-left" uk-icon="cog"></button>
+            <button btnDelete class="cell-btn cell-border-left" uk-icon="trash"></button>
             <label class="name">متن</label>
         </header>
         <form option-list style="display:none" class="tool-options">
@@ -521,10 +645,10 @@
             <div option="">
                 <label option-name class="option-name">انتخاب</label>
                 <select class="cell-select">
-                    <option>موز</option>
-                    <option>سیب</option>
-                    <option>گلابی</option>
-                    <option>هویچ</option>
+                    <option value="[0-9]">موز</option>
+                    <option value="[0-9]">سیب</option>
+                    <option value="[0-9]">گلابی</option>
+                    <option value="[0-9]">هویچ</option>
                 </select>
             </div>
             <div option="">
@@ -544,7 +668,7 @@
                 </select>
                 <div class="regex-list">
                     <div class="regex-item">
-                        <label regex class="cell-label">موز</label>
+                        <label regex="/[0-9]/" class="cell-label">موز</label>
                         <button class="cell-btn" uk-icon="times"></button>
                     </div>
                 </div>

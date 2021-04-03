@@ -1,19 +1,19 @@
 ﻿export enum InputType {
-    combo, //
+    combo, 
     textarea,
     checkbox,
     color,
     date,
     dateTime,
     email,
-    file, //
-    hidden, //
-    image, //
+    file, //*
+    hidden, //-
+    image, //*
     month, 
     number, 
     password,
-    radio, //
-    range, //
+    radio,
+    range, 
     reset, //-
     search, //-
     submit, //-

@@ -102,10 +102,15 @@
         height: calc(100vh - 72px);
         position: fixed;
         z-index: 180;
-        padding-bottom: 61px + 16px;
+        overflow-x: hidden;
+
+        .form-header {
+            @include shadow-mild;
+        }
 
         .form-body {
             overflow-y: auto !important;
+            padding-bottom: 61px + 16px;
         }
     }
 
@@ -126,6 +131,11 @@
             padding: 12px;
             height: auto;
             flex: auto;
+
+
+            .toolbox {
+                @include shadow-mild;
+            }
         }
     }
 }
@@ -139,10 +149,13 @@ $cell-background: #fafafa;
     vertical-align: central;
 }
 
+.cell-border-none {
+    border: 0;
+}
+
 .cell-btn {
     height: $cell-height;
     width: $cell-height;
-    border-left: $border-def-color 1px solid;
     cursor: pointer;
     margin: 0;
     @include trans(.2);
@@ -157,6 +170,23 @@ $cell-background: #fafafa;
 .cell-btn:hover {
     background-color: #f3f3f3;
 }
+
+.cell-border-bottom {
+    border-bottom: $border-def-color 1px solid !important;
+}
+
+.cell-border-right {
+    border-right: $border-def-color 1px solid !important;
+}
+
+.cell-border-top {
+    border-top: $border-def-color 1px solid !important;
+}
+
+.cell-border-left {
+    border-left: $border-def-color 1px solid !important;
+}
+
 
 .tool {
     display: block;
@@ -177,6 +207,12 @@ $cell-background: #fafafa;
             color: $text-4;
             flex: auto;
             padding: 0 6px;
+            cursor: grab;
+            line-height: 28px;
+        }
+
+        .name:active {
+            cursor: grabbing;
         }
     }
 
@@ -233,8 +269,25 @@ $cell-background: #fafafa;
                 }
             }
         }
-        /*#region Controls */
 
+        [select] {
+            .select-adder {
+                grid-gap: 0;
+                @include row-reverse;
+            }
+
+            .select-list {
+                .select-item {
+                    @include row-reverse;
+                    border-bottom: $border-def-color 1px solid;
+
+                    .cell-label {
+                        flex: auto;
+                    }
+                }
+            }
+        }
+        /*#region Controls */
         .cell-entry:focus,
         .cell-checkbox-group:focus,
         .cell-select:focus,

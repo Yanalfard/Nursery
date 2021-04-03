@@ -152,9 +152,14 @@ backdrop-filter: saturate(80%);
     height: calc(100vh - 72px);
     position: fixed;
     z-index: 180;
-    padding-bottom: 77px; }
+    overflow-x: hidden; }
+    .form-builder .toolbox .form-header, .form-builder .toolbox-placeholder .form-header {
+      -moz-box-shadow: rgba(0, 0, 0, 0.12) 0 0px 12px;
+      -webkit-box-shadow: rgba(0, 0, 0, 0.12) 0 0px 12px;
+      box-shadow: rgba(0, 0, 0, 0.12) 0 0px 12px; }
     .form-builder .toolbox .form-body, .form-builder .toolbox-placeholder .form-body {
-      overflow-y: auto !important; }
+      overflow-y: auto !important;
+      padding-bottom: 77px; }
   .form-builder .toolbox-placeholder {
     position: relative;
     z-index: 179; }
@@ -170,16 +175,22 @@ backdrop-filter: saturate(80%);
       padding: 12px;
       height: auto;
       flex: auto; }
+      .form-builder .prototype .form-body .toolbox {
+        -moz-box-shadow: rgba(0, 0, 0, 0.12) 0 0px 12px;
+        -webkit-box-shadow: rgba(0, 0, 0, 0.12) 0 0px 12px;
+        box-shadow: rgba(0, 0, 0, 0.12) 0 0px 12px; }
 
 .cell-label {
   line-height: 28px;
   padding-right: 7px;
   vertical-align: central; }
 
+.cell-border-none {
+  border: 0; }
+
 .cell-btn {
   height: 28px;
   width: 28px;
-  border-left: #e5e5e5 1px solid;
   cursor: pointer;
   margin: 0;
   -moz-transition: all ease 0.2;
@@ -193,6 +204,18 @@ backdrop-filter: saturate(80%);
 
 .cell-btn:hover {
   background-color: #f3f3f3; }
+
+.cell-border-bottom {
+  border-bottom: #e5e5e5 1px solid !important; }
+
+.cell-border-right {
+  border-right: #e5e5e5 1px solid !important; }
+
+.cell-border-top {
+  border-top: #e5e5e5 1px solid !important; }
+
+.cell-border-left {
+  border-left: #e5e5e5 1px solid !important; }
 
 .tool {
   display: block;
@@ -217,7 +240,11 @@ backdrop-filter: saturate(80%);
     .tool .tool-actions .name {
       color: #999;
       flex: auto;
-      padding: 0 6px; }
+      padding: 0 6px;
+      cursor: grab;
+      line-height: 28px; }
+    .tool .tool-actions .name:active {
+      cursor: grabbing; }
   .tool .tool-options {
     display: flex;
     flex-direction: column;
@@ -255,6 +282,16 @@ backdrop-filter: saturate(80%);
           margin-right: auto;
           border: 0;
           border-right: #e5e5e5 1px solid; }
+    .tool .tool-options [select] .select-adder {
+      grid-gap: 0;
+      display: flex;
+      flex-direction: row-reverse; }
+    .tool .tool-options [select] .select-list .select-item {
+      display: flex;
+      flex-direction: row-reverse;
+      border-bottom: #e5e5e5 1px solid; }
+      .tool .tool-options [select] .select-list .select-item .cell-label {
+        flex: auto; }
     .tool .tool-options .cell-entry:focus,
     .tool .tool-options .cell-checkbox-group:focus,
     .tool .tool-options .cell-select:focus,
