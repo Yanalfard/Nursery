@@ -23,13 +23,13 @@
                         <button btnDelete class="cell-btn cell-border-left" uk-icon="trash"></button>
                         <label class="name">انتخاب</label>
                     </header>
-                    <form option-list style="display:none" class="tool-options">
-                        <div option="">
-                            <label option-name class="option-name">تیتر</label>
+                    <div option-list style="display:none" class="tool-options">
+                        <div option="input">
+                            <label option-name="Label" class="option-name">تیتر</label>
                             <input type="text" class="cell-entry" value="" />
                         </div>
-                        <div option="">
-                            <label option-name class="option-name">ضرورت</label>
+                        <div option="checkbox">
+                            <label option-name="IsRequired" class="option-name">ضرورت</label>
                             <label class="cell-checkbox-group">
                                 <span>ضروری است</span>
                                 <input type="checkbox" />
@@ -37,17 +37,12 @@
                         </div>
                         <div select="" class="col">
                             <div select-adder class="select-adder cell-border-bottom">
-                                <input select-input type="text" placeholder="گزینه جدید..." class="cell-entry flex-auto" value="" />
+                                <input select-input type="text" placeholder="گزینه جدید..." class="cell-entry flex-auto" />
                                 <button select-btn class="cell-btn cell-border-right" uk-icon="plus"></button>
                             </div>
-                            <div select-list class="select-list">
-                                <div class="select-item">
-                                    <label select-item class="cell-label">موز</label>
-                                    <button class="cell-btn cell-border-right" uk-icon="times"></button>
-                                </div>
-                            </div>
+                            <div select-list class="select-list"></div>
                         </div>
-                    </form>
+                    </div>
                     <div class="tool-content">
                         <div class="fg-col">
                             <label class="fg-label">نوع خودرو</label>
@@ -66,31 +61,26 @@
                         <button btnDelete class="cell-btn cell-border-left" uk-icon="trash"></button>
                         <label class="name">انتخاب دایره</label>
                     </header>
-                    <form option-list style="display:none" class="tool-options">
-                        <div option="">
-                            <label option-name class="option-name">تیتر</label>
+                    <div option-list style="display:none" class="tool-options">
+                        <div option="input">
+                            <label option-name="Label" class="option-name">تیتر</label>
                             <input type="text" class="cell-entry" value="" />
                         </div>
-                        <div option="">
-                            <label option-name class="option-name">ضرورت</label>
+                        <div option="checkbox">
+                            <label option-name="IsRequired" class="option-name">ضرورت</label>
                             <label class="cell-checkbox-group">
                                 <span>ضروری است</span>
                                 <input type="checkbox" />
                             </label>
                         </div>
-                        <div select="" class="col">
-                            <div class="select-adder cell-border-bottom">
-                                <input type="text" placeholder="گزینه جدید..." class="cell-entry flex-auto" value="" />
-                                <button class="cell-btn cell-border-right" uk-icon="plus"></button>
+                        <div select class="col">
+                            <div select-adder class="select-adder cell-border-bottom">
+                                <input select-input type="text" placeholder="گزینه جدید..." class="cell-entry flex-auto" value="" />
+                                <button select-btn class="cell-btn cell-border-right" uk-icon="plus"></button>
                             </div>
-                            <div class="select-list">
-                                <div class="select-item">
-                                    <label select-item class="cell-label">موز</label>
-                                    <button class="cell-btn cell-border-right" uk-icon="times"></button>
-                                </div>
-                            </div>
+                            <div select-list class="select-list"></div>
                         </div>
-                    </form>
+                    </div>
                     <div class="tool-content">
                         <div class="fg-col ">
                             <label class="fg-label">جنسیت</label>
@@ -110,17 +100,17 @@
                         <button btnDelete class="cell-btn cell-border-left" uk-icon="trash"></button>
                         <label class="name">متن و نوشته</label>
                     </header>
-                    <form option-list style="display:none" class="tool-options">
-                        <div option="">
-                            <label option-name class="option-name">تیتر</label>
+                    <div option-list style="display:none" class="tool-options">
+                        <div option="input">
+                            <label option-name="Label" class="option-name">تیتر</label>
                             <input type="text" class="cell-entry" value="" />
                         </div>
-                        <div option="">
-                            <label option-name class="option-name">پلیس هولدر</label>
+                        <div option="input">
+                            <label option-name="Placeholder" class="option-name">پلیس هولدر</label>
                             <input type="text" class="cell-entry" value="" />
                         </div>
-                        <div option="">
-                            <label option-name class="option-name">ضرورت</label>
+                        <div option="checkbox">
+                            <label option-name="IsRequired" class="option-name">ضرورت</label>
                             <label class="cell-checkbox-group">
                                 <span>ضروری است</span>
                                 <input type="checkbox" />
@@ -129,19 +119,14 @@
                         <div regex-list>
                             <select regex-select class="cell-select">
                                 <option>قوانین ولیدیشن</option>
-                                <option value="[0-9]">شماره تلفن</option>
-                                <option value="[0-9]">سیب</option>
-                                <option value="[0-9]">گلابی</option>
-                                <option value="[0-9]">هویچ</option>
+                                <option value="[a-z,0-9]*4">بیشتر از 4 کاراکتر</option>
+                                <option value="[0-9]">فقط عدد</option>
+                                <option value="[a-z,0-9]*4">8 کاراکتر</option>
+                                <option value="[x-x]">حروف فارسی</option>
                             </select>
-                            <div class="regex-list">
-                                <div class="regex-item">
-                                    <label regex="/[0-9]/" class="cell-label">موز</label>
-                                    <button class="cell-btn" uk-icon="times"></button>
-                                </div>
-                            </div>
+                            <div class="regex-list"></div>
                         </div>
-                    </form>
+                    </div>
                     <div class="tool-content">
                         <div class="fg-col">
                             <label class="fg-label">نام و نام خانوادگی</label>
@@ -158,23 +143,23 @@
                         <button btnDelete class="cell-btn cell-border-left" uk-icon="trash"></button>
                         <label class="name">شماره تلفن</label>
                     </header>
-                    <form option-list style="display:none" class="tool-options">
-                        <div option="">
-                            <label option-name class="option-name">تیتر</label>
+                    <div option-list style="display:none" class="tool-options">
+                        <div option="input">
+                            <label option-name="Label" class="option-name">تیتر</label>
                             <input type="text" class="cell-entry" value="" />
                         </div>
-                        <div option="">
-                            <label option-name class="option-name">پلیس هولدر</label>
+                        <div option="input">
+                            <label option-name="Placeholder" class="option-name">پلیس هولدر</label>
                             <input type="text" class="cell-entry" value="" />
                         </div>
-                        <div option="">
-                            <label option-name class="option-name">ضرورت</label>
+                        <div option="checkbox">
+                            <label option-name="IsRequired" class="option-name">ضرورت</label>
                             <label class="cell-checkbox-group">
                                 <span>ضروری است</span>
                                 <input type="checkbox" />
                             </label>
                         </div>
-                    </form>
+                    </div>
                     <div class="tool-content">
                         <div class="fg-col">
                             <label class="fg-label">شماره تلفن</label>
@@ -191,23 +176,23 @@
                         <button btnDelete class="cell-btn cell-border-left" uk-icon="trash"></button>
                         <label class="name">عدد</label>
                     </header>
-                    <form option-list style="display:none" class="tool-options">
-                        <div option="">
-                            <label option-name class="option-name">تیتر</label>
+                    <div option-list style="display:none" class="tool-options">
+                        <div option="input">
+                            <label option-name="Label" class="option-name">تیتر</label>
                             <input type="text" class="cell-entry" value="" />
                         </div>
-                        <div option="">
-                            <label option-name class="option-name">پلیس هولدر</label>
+                        <div option="input">
+                            <label option-name="Placeholder" class="option-name">پلیس هولدر</label>
                             <input type="text" class="cell-entry" value="" />
                         </div>
-                        <div option="">
-                            <label option-name class="option-name">ضرورت</label>
+                        <div option="checkbox">
+                            <label option-name="IsRequired" class="option-name">ضرورت</label>
                             <label class="cell-checkbox-group">
                                 <span>ضروری است</span>
                                 <input type="checkbox" />
                             </label>
                         </div>
-                    </form>
+                    </div>
                     <div class="tool-content">
                         <div class="fg-col">
                             <label class="fg-label">کد ملی</label>
@@ -224,23 +209,23 @@
                         <button btnDelete class="cell-btn cell-border-left" uk-icon="trash"></button>
                         <label class="name">گذرواژه</label>
                     </header>
-                    <form option-list style="display:none" class="tool-options">
-                        <div option="">
-                            <label option-name class="option-name">تیتر</label>
+                    <div option-list style="display:none" class="tool-options">
+                        <div option="input">
+                            <label option-name="Label" class="option-name">تیتر</label>
                             <input type="text" class="cell-entry" value="" />
                         </div>
-                        <div option="">
-                            <label option-name class="option-name">پلیس هولدر</label>
+                        <div option="input">
+                            <label option-name="Placeholder" class="option-name">پلیس هولدر</label>
                             <input type="text" class="cell-entry" value="" />
                         </div>
-                        <div option="">
-                            <label option-name class="option-name">ضرورت</label>
+                        <div option="checkbox">
+                            <label option-name="IsRequired" class="option-name">ضرورت</label>
                             <label class="cell-checkbox-group">
                                 <span>ضروری است</span>
                                 <input type="checkbox" />
                             </label>
                         </div>
-                    </form>
+                    </div>
                     <div class="tool-content">
                         <div class="fg-col">
                             <label class="fg-label">رمز عبور</label>
@@ -257,17 +242,17 @@
                         <button btnDelete class="cell-btn cell-border-left" uk-icon="trash"></button>
                         <label class="name">لینک و یوآرال</label>
                     </header>
-                    <form option-list style="display:none" class="tool-options">
-                        <div option="">
-                            <label option-name class="option-name">تیتر</label>
+                    <div option-list style="display:none" class="tool-options">
+                        <div option="input">
+                            <label option-name="Label" class="option-name">تیتر</label>
                             <input type="url" class="cell-entry" value="" />
                         </div>
-                        <div option="">
-                            <label option-name class="option-name">پلیس هولدر</label>
+                        <div option="input">
+                            <label option-name="Placeholder" class="option-name">پلیس هولدر</label>
                             <input type="text" class="cell-entry" value="" />
                         </div>
-                        <div option="">
-                            <label option-name class="option-name">ضرورت</label>
+                        <div option="checkbox">
+                            <label option-name="IsRequired" class="option-name">ضرورت</label>
                             <label class="cell-checkbox-group">
                                 <span>ضروری است</span>
                                 <input type="checkbox" />
@@ -281,14 +266,9 @@
                                 <option>گلابی</option>
                                 <option>هویچ</option>
                             </select>
-                            <div class="regex-list">
-                                <div class="regex-item">
-                                    <label regex class="cell-label">موز</label>
-                                    <button class="cell-btn" uk-icon="times"></button>
-                                </div>
-                            </div>
+                            <div class="regex-list"></div>
                         </div>
-                    </form>
+                    </div>
                     <div class="tool-content">
                         <div class="fg-col">
                             <label class="fg-label">لینک وبسایت</label>
@@ -305,19 +285,19 @@
                         <button btnDelete class="cell-btn cell-border-left" uk-icon="trash"></button>
                         <label class="name">هفته</label>
                     </header>
-                    <form option-list style="display:none" class="tool-options">
-                        <div option="">
-                            <label option-name class="option-name">تیتر</label>
+                    <div option-list style="display:none" class="tool-options">
+                        <div option="input">
+                            <label option-name="Label" class="option-name">تیتر</label>
                             <input type="text" class="cell-entry" value="" />
                         </div>
-                        <div option="">
-                            <label option-name class="option-name">ضرورت</label>
+                        <div option="checkbox">
+                            <label option-name="IsRequired" class="option-name">ضرورت</label>
                             <label class="cell-checkbox-group">
                                 <span>ضروری است</span>
                                 <input type="checkbox" />
                             </label>
                         </div>
-                    </form>
+                    </div>
                     <div class="tool-content">
                         <div class="fg-col">
                             <label class="fg-label">هفته شروع</label>
@@ -334,17 +314,17 @@
                         <button btnDelete class="cell-btn cell-border-left" uk-icon="trash"></button>
                         <label class="name">متن طولانی</label>
                     </header>
-                    <form option-list style="display:none" class="tool-options">
-                        <div option="">
-                            <label option-name class="option-name">تیتر</label>
+                    <div option-list style="display:none" class="tool-options">
+                        <div option="input">
+                            <label option-name="Label" class="option-name">تیتر</label>
                             <input type="text" class="cell-entry" value="" />
                         </div>
-                        <div option="">
-                            <label option-name class="option-name">پلیس هولدر</label>
+                        <div option="input">
+                            <label option-name="Placeholder" class="option-name">پلیس هولدر</label>
                             <input type="text" class="cell-entry" value="" />
                         </div>
-                        <div option="">
-                            <label option-name class="option-name">ضرورت</label>
+                        <div option="checkbox">
+                            <label option-name="IsRequired" class="option-name">ضرورت</label>
                             <label class="cell-checkbox-group">
                                 <span>ضروری است</span>
                                 <input type="checkbox" />
@@ -358,14 +338,9 @@
                                 <option>گلابی</option>
                                 <option>هویچ</option>
                             </select>
-                            <div class="regex-list">
-                                <div class="regex-item">
-                                    <label regex class="cell-label">موز</label>
-                                    <button class="cell-btn" uk-icon="times"></button>
-                                </div>
-                            </div>
+                            <div class="regex-list"></div>
                         </div>
-                    </form>
+                    </div>
                     <div class="tool-content">
                         <div class="fg-col">
                             <label class="fg-label">توضیحات</label>
@@ -382,12 +357,12 @@
                         <button btnDelete class="cell-btn cell-border-left" uk-icon="trash"></button>
                         <label class="name">چک باکس</label>
                     </header>
-                    <form option-list style="display:none" class="tool-options">
-                        <div option="">
-                            <label option-name class="option-name">تیتر</label>
+                    <div option-list style="display:none" class="tool-options">
+                        <div option="input">
+                            <label option-name="Label" class="option-name">تیتر</label>
                             <input type="text" class="cell-entry" value="" />
                         </div>
-                    </form>
+                    </div>
                     <div class="tool-content">
                         <div class="fg-col">
                             <label class="row uk-margin-auto-left">
@@ -406,12 +381,12 @@
                         <button btnDelete class="cell-btn cell-border-left" uk-icon="trash"></button>
                         <label class="name">رنگ</label>
                     </header>
-                    <form option-list style="display:none" class="tool-options">
-                        <div option="">
-                            <label option-name class="option-name">تیتر</label>
+                    <div option-list style="display:none" class="tool-options">
+                        <div option="input">
+                            <label option-name="Label" class="option-name">تیتر</label>
                             <input type="text" class="cell-entry" value="" />
                         </div>
-                    </form>
+                    </div>
                     <div class="tool-content">
                         <div class="fg-col">
                             <label class="cell-checkbox-group">
@@ -430,23 +405,23 @@
                         <button btnDelete class="cell-btn cell-border-left" uk-icon="trash"></button>
                         <label class="name">تاریخ</label>
                     </header>
-                    <form option-list style="display:none" class="tool-options">
-                        <div option="">
-                            <label option-name class="option-name">تیتر</label>
+                    <div option-list style="display:none" class="tool-options">
+                        <div option="input">
+                            <label option-name="Label" class="option-name">تیتر</label>
                             <input type="text" class="cell-entry" value="" />
                         </div>
-                        <div option="">
-                            <label option-name class="option-name">پلیس هولدر</label>
+                        <div option="input">
+                            <label option-name="Placeholder" class="option-name">پلیس هولدر</label>
                             <input type="text" class="cell-entry" value="" />
                         </div>
-                        <div option="">
-                            <label option-name class="option-name">ضرورت</label>
+                        <div option="checkbox">
+                            <label option-name="IsRequired" class="option-name">ضرورت</label>
                             <label class="cell-checkbox-group">
                                 <span>ضروری است</span>
                                 <input type="checkbox" />
                             </label>
                         </div>
-                    </form>
+                    </div>
                     <div class="tool-content">
                         <div class="fg-col">
                             <label class="fg-label">تاریخ تولد</label>
@@ -463,23 +438,23 @@
                         <button btnDelete class="cell-btn cell-border-left" uk-icon="trash"></button>
                         <label class="name">تاریخ و زمان</label>
                     </header>
-                    <form option-list style="display:none" class="tool-options">
-                        <div option="">
-                            <label option-name class="option-name">تیتر</label>
+                    <div option-list style="display:none" class="tool-options">
+                        <div option="input">
+                            <label option-name="Label" class="option-name">تیتر</label>
                             <input type="text" class="cell-entry" value="" />
                         </div>
-                        <div option="">
-                            <label option-name class="option-name">پلیس هولدر</label>
+                        <div option="input">
+                            <label option-name="Placeholder" class="option-name">پلیس هولدر</label>
                             <input type="text" class="cell-entry" value="" />
                         </div>
-                        <div option="">
-                            <label option-name class="option-name">ضرورت</label>
+                        <div option="checkbox">
+                            <label option-name="IsRequired" class="option-name">ضرورت</label>
                             <label class="cell-checkbox-group">
                                 <span>ضروری است</span>
                                 <input type="checkbox" />
                             </label>
                         </div>
-                    </form>
+                    </div>
                     <div class="tool-content">
                         <div class="fg-col">
                             <label class="fg-label">زمان جلسه</label>
@@ -496,23 +471,23 @@
                         <button btnDelete class="cell-btn cell-border-left" uk-icon="trash"></button>
                         <label class="name">ایمیل</label>
                     </header>
-                    <form option-list style="display:none" class="tool-options">
-                        <div option="">
-                            <label option-name class="option-name">تیتر</label>
+                    <div option-list style="display:none" class="tool-options">
+                        <div option="input">
+                            <label option-name="Label" class="option-name">تیتر</label>
                             <input type="text" class="cell-entry" value="" />
                         </div>
-                        <div option="">
-                            <label option-name class="option-name">پلیس هولدر</label>
+                        <div option="input">
+                            <label option-name="Placeholder" class="option-name">پلیس هولدر</label>
                             <input type="text" class="cell-entry" value="" />
                         </div>
-                        <div option="">
-                            <label option-name class="option-name">ضرورت</label>
+                        <div option="checkbox">
+                            <label option-name="IsRequired" class="option-name">ضرورت</label>
                             <label class="cell-checkbox-group">
                                 <span>ضروری است</span>
                                 <input type="checkbox" />
                             </label>
                         </div>
-                    </form>
+                    </div>
                     <div class="tool-content">
                         <div class="fg-col">
                             <label class="fg-label">پست الکترونیکی</label>
@@ -529,24 +504,24 @@
                         <button btnDelete class="cell-btn cell-border-left" uk-icon="trash"></button>
                         <label class="name">دامنه</label>
                     </header>
-                    <form option-list style="display:none" class="tool-options">
-                        <div option="">
-                            <label option-name class="option-name">تیتر</label>
+                    <div option-list style="display:none" class="tool-options">
+                        <div option="input">
+                            <label option-name="Label" class="option-name">تیتر</label>
                             <input type="text" class="cell-entry" value="" />
                         </div>
-                        <div option="">
-                            <label option-name class="option-name">ضرورت</label>
+                        <div option="checkbox">
+                            <label option-name="IsRequired" class="option-name">ضرورت</label>
                             <label class="cell-checkbox-group">
                                 <span>ضروری است</span>
                                 <input type="checkbox" />
                             </label>
                         </div>
-                        <div option="">
-                            <label option-name class="option-name">دامنه</label>
-                            <input type="text" class="cell-entry cell-border-left flex-auto" placeholder="از" />
-                            <input type="text" class="cell-entry flex-auto" placeholder="تا" />
+                        <div option="doubleInput">
+                            <label option-name="Options" class="option-name">دامنه</label>
+                            <input type="number" input-from class="cell-entry cell-border-left flex-auto" placeholder="از" />
+                            <input type="number" input-to class="cell-entry flex-auto" placeholder="تا" />
                         </div>
-                    </form>
+                    </div>
                     <div class="tool-content">
                         <div class="fg-col">
                             <label class="fg-label">رضایت</label>
@@ -565,23 +540,23 @@
                         <button btnDelete class="cell-btn cell-border-left" uk-icon="trash"></button>
                         <label class="name">ماه</label>
                     </header>
-                    <form option-list style="display:none" class="tool-options">
-                        <div option="">
-                            <label option-name class="option-name">تیتر</label>
+                    <div option-list style="display:none" class="tool-options">
+                        <div option="input">
+                            <label option-name="Label" class="option-name">تیتر</label>
                             <input type="text" class="cell-entry" value="" />
                         </div>
-                        <div option="">
-                            <label option-name class="option-name">پلیس هولدر</label>
+                        <div option="input">
+                            <label option-name="Placeholder" class="option-name">پلیس هولدر</label>
                             <input type="text" class="cell-entry" value="" />
                         </div>
-                        <div option="">
-                            <label option-name class="option-name">ضرورت</label>
+                        <div option="checkbox">
+                            <label option-name="IsRequired" class="option-name">ضرورت</label>
                             <label class="cell-checkbox-group">
                                 <span>ضروری است</span>
                                 <input type="checkbox" />
                             </label>
                         </div>
-                    </form>
+                    </div>
                     <div class="tool-content">
                         <div class="fg-col">
                             <label class="fg-label">ماه</label>
@@ -602,11 +577,10 @@
              id="prototype"
              draggable="true"
              uk-sortable="group:form;handle: .tool-actions; cls-item:grabbable; cls-custom: tool-grabbed">
-
-        </div>
+</div>
         <div class="form-footer">
             <div class="actions">
-                <button class="btn btn-primary">
+                <button id="btn-finish" class="btn btn-primary">
                     <span>تایید</span>
                 </button>
             </div>
@@ -633,13 +607,13 @@
             <button btnDelete class="cell-btn cell-border-left" uk-icon="trash"></button>
             <label class="name">متن</label>
         </header>
-        <form option-list style="display:none" class="tool-options">
+        <div option-list style="display:none" class="tool-options">
             <div option="">
                 <label option-name class="option-name">نام</label>
                 <input type="text" class="cell-entry" value="" />
             </div>
             <div option="">
-                <label option-name class="option-name">پلیس هولدر</label>
+                <label option-name="Placeholder" class="option-name">پلیس هولدر</label>
                 <input type="text" class="cell-entry" value="" />
             </div>
             <div option="">
@@ -652,7 +626,7 @@
                 </select>
             </div>
             <div option="">
-                <label option-name class="option-name">ضرورت</label>
+                <label option-name="IsRequired" class="option-name">ضرورت</label>
                 <label class="cell-checkbox-group">
                     <span>ضروری است</span>
                     <input type="checkbox" />

@@ -4,6 +4,15 @@ define(["require", "exports", "./model/inputType", "./model/tool"], function (re
     // Toolbox Element Recreation implementation
     var toolbox = document.getElementById('toolbox');
     var toolboxHTML = toolbox.innerHTML;
+    var btnFinish = document.getElementById('btn-finish');
+    btnFinish.addEventListener('click', function () {
+        var temp;
+        componentList.forEach(function (tool) {
+            var index = parseInt(tool.element.getAttribute('order'));
+            temp[index] = tool;
+        });
+        componentList = temp;
+    });
     toolbox.addEventListener('removed', function () {
         toolbox.innerHTML = toolboxHTML;
     });
@@ -15,7 +24,17 @@ define(["require", "exports", "./model/inputType", "./model/tool"], function (re
     var prototype = document.getElementById('prototype');
     prototype.addEventListener('start', drag);
     prototype.addEventListener('stop', drag);
-    prototype.addEventListener('moved', drag);
+    prototype.addEventListener('moved', enumerateTools);
+    function enumerateTools() {
+        var counter = 0;
+        prototype.childNodes.forEach(function (formElement) {
+            if (formElement.nodeType === 1) {
+                var i = formElement;
+                i.setAttribute('order', counter.toString());
+                counter++;
+            }
+        });
+    }
     prototype.addEventListener('added', function (event) {
         var el = event.detail[1];
         var toolModel = new tool_1.Tool();
@@ -37,12 +56,15 @@ define(["require", "exports", "./model/inputType", "./model/tool"], function (re
                 delete toolModel.element;
             }, 300);
         });
+        // option
         toolModel.optionsList = toolModel.element.querySelector('[option-list]');
         // Option
         toolModel.element.querySelectorAll('[option]').forEach(function (div) {
-            var optionModel = new tool_1.Option();
-            optionModel.element = div;
-            optionModel.name = div.querySelector('[option-name]').innerText;
+            var element = div;
+            var mainElement = div.querySelector('[option-name]');
+            var type = element.getAttribute("option");
+            var name = mainElement.getAttribute("option-name");
+            var optionModel = new tool_1.Option(element, tool_1.OptionType[type], name);
             toolModel.options.push(optionModel);
         });
         // Regex
@@ -50,30 +72,71 @@ define(["require", "exports", "./model/inputType", "./model/tool"], function (re
         if (regexList) {
             toolModel.regexList = regexList;
             toolModel.regexSelect = regexList.querySelector('[regex-select]');
+            toolModel.regexAdder = regexList.querySelector('.regex-list');
             toolModel.regexSelect.addEventListener('change', function () {
                 var val = toolModel.regexSelect.value;
-                var template = "<div class=\"regex-item\">\n                    <label regex class=\"cell-label\">" + val + "</label>\n                    <button class=\"cell-btn\" uk-icon=\"times\"></button>\n                </div>";
-                var list = new DOMParser().parseFromString(template, 'text/html');
-                var label = list.querySelector('[regex]');
-                var btn = list;
-                toolModel.regexList.innerHTML += template;
+                var selectedOption = toolModel.regexSelect.selectedOptions[0];
+                toolModel.regexSelect.selectedIndex = 0;
+                if (!selectedOption.getAttribute('value'))
+                    return;
+                selectedOption.style.display = 'none';
+                var template = "<div class=\"regex-item\">\n                    <label regex=\"" + val + "\" class=\"cell-label\">" + selectedOption.innerText + "</label>\n                    <button type=\"button\" class=\"cell-btn\" uk-icon=\"times\"></button>\n                </div>";
+                var doc = new DOMParser().parseFromString(template, 'text/html');
+                var reg = new tool_1.Regex();
+                reg.element = doc.querySelector('.regex-item');
+                reg.label = doc.querySelector('[regex]');
+                reg.button = doc.querySelector('button');
+                reg.element.appendChild(reg.label);
+                reg.element.append(reg.button);
+                reg.button.addEventListener('click', function () {
+                    toolModel.regexs.splice(toolModel.regexs.indexOf(reg), 1);
+                    toolModel.regexAdder.removeChild(reg.element);
+                    selectedOption.style.display = 'block';
+                    toolModel.regexs.splice(toolModel.regexs.indexOf(reg), 1);
+                });
+                toolModel.regexs.push(reg);
+                toolModel.regexAdder.appendChild(reg.element);
             });
         }
         // Select
-        var selectList = toolModel.element.querySelector('[select-list]');
-        if (selectList) {
-            toolModel.selectList = selectList;
-            toolModel.selectBtn = selectList.querySelector('[select-btn]');
-            toolModel.selectInput = selectList.querySelector('[select-input]');
+        var selectElement = toolModel.element.querySelector('[select]');
+        if (selectElement) {
+            toolModel.selectElement = selectElement;
+            toolModel.selectAdder = selectElement.querySelector('[select-adder]');
+            toolModel.selectInput = toolModel.selectAdder.querySelector('[select-input]');
+            toolModel.selectBtn = toolModel.selectAdder.querySelector('[select-btn]');
+            toolModel.selectList = selectElement.querySelector('[select-list]');
+            // add
+            toolModel.selectBtn.addEventListener('click', function () {
+                var val = toolModel.selectInput.value;
+                if (!val)
+                    return;
+                var template = "<div class=\"select-item\">\n                    <label select-item=\"" + val + "\" class=\"cell-label\">" + val + "</label>\n                    <button btnSelect class=\"cell-btn cell-border-right\" uk-icon=\"times\"></button>\n                </div>";
+                var doc = new DOMParser().parseFromString(template, 'text/html');
+                var sel = new tool_1.Select();
+                sel.value = val;
+                sel.element = doc.querySelector('.select-item');
+                sel.label = doc.querySelector('[select-item]');
+                sel.button = doc.querySelector('[btnSelect]');
+                sel.button.addEventListener('click', function () {
+                    toolModel.selects.splice(toolModel.selects.indexOf(sel, 1));
+                    toolModel.selectList.removeChild(sel.element);
+                });
+                sel.element.appendChild(sel.label);
+                sel.element.appendChild(sel.button);
+                toolModel.selects.push(sel);
+                toolModel.selectList.appendChild(sel.element);
+            });
         }
         componentList.push(toolModel);
-        console.log(componentList);
+        enumerateTools();
     });
     prototype.addEventListener('removed', function (event) {
         var element = event.detail[1];
         var tool = componentList.filter(function (i) { return i.element == element; })[0];
         componentList.splice(componentList.indexOf(tool), 1);
         element.parentElement.removeChild(element);
+        enumerateTools();
     });
     function drag() {
     }
