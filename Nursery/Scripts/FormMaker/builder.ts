@@ -11,13 +11,57 @@ const toolbox = document.getElementById('toolbox');
 const toolboxHTML = toolbox.innerHTML;
 const btnFinish = document.getElementById('btn-finish');
 
+//#region Initialize Regex Select Options
+const regexSelectElements = document.querySelectorAll('[regex-select]');
+fetch('/Admin/Form/GetSelectOptions').then((json) => {
+    json.json().then((options: TblRegex[]) => {
+        regexSelectElements.forEach((selectElement: HTMLSelectElement) => {
+            selectElement.innerHTML = '';
+            const initElement = document.createElement('option') as HTMLOptionElement;
+            initElement.text = 'افزودن گزینه اصلاح...'
+            selectElement.options.add(initElement);
+            //-
+            options.forEach((option: any) => {
+                const optionElement = document.createElement('option') as HTMLOptionElement;
+                optionElement.value = JSON.stringify(option);
+                optionElement.text = option.name;
+                selectElement.options.add(optionElement);
+            });
+        });
+    });
+})
+//#endregion
+
+
 btnFinish.addEventListener('click', () => {
-    let temp: Tool[];
+    let temp: Tool[] = [];
     componentList.forEach((tool) => {
         let index = parseInt(tool.element.getAttribute('order'));
         temp[index] = tool;
     });
     componentList = temp;
+
+    let body = new TblForm();
+    const formName = (document.getElementById('txtFormName') as HTMLInputElement).value;
+    const description = (document.getElementById('txtDecsription') as HTMLTextAreaElement).value;
+    body.Name = formName;
+    body.Body = description;
+
+    componentList.forEach((f: Tool) => {
+        const field = new TblField();
+        field.IsRequired = f.options.filter(option => option.name === 'IsRequired')[0]?.value == 'true';
+        field.Placeholder = f.options.filter(option => option.name === 'Placeholder')[0]?.value;
+        field.Label = f.options.filter(option => option.name === 'Label')[0]?.value;
+        field.Tooltip = f.options.filter(option => option.name === 'Tooltip')[0]?.value;
+        field.Type = f.type;
+
+        // TODO Attach option names together using  ','
+        f.selects.forEach(i => {
+            field.Options += i + ','
+        });
+
+        console.log(field.Options);
+    });
 
 });
 
@@ -54,6 +98,8 @@ prototype.addEventListener('added', (event: any) => {
     let toolModel = new Tool();
     toolModel.element = el;
     toolModel.type = InputType[el.querySelector('[tool]').getAttribute('tool').toLowerCase()];
+    toolModel.label = el.querySelector('[tool-label]');
+    toolModel.preview = el.querySelector('.tool-content');
 
     toolModel.btnDelete = toolModel.element.querySelector('[btnDelete]') as HTMLButtonElement;
     toolModel.btnSettings = toolModel.element.querySelector('[btnSettings]') as HTMLButtonElement;
@@ -71,7 +117,6 @@ prototype.addEventListener('added', (event: any) => {
         setTimeout(() => {
             toolModel.element.parentElement.removeChild(toolModel.element);
             componentList = componentList.splice(componentList.indexOf(toolModel, 1));
-            delete toolModel.element;
         }, 300);
     });
 
@@ -86,6 +131,33 @@ prototype.addEventListener('added', (event: any) => {
         const name = mainElement.getAttribute("option-name");
         let optionModel = new Option(element, OptionType[type], name);
 
+        if (name === 'Label') {
+            const input = element.querySelector('input') as HTMLInputElement;
+            const def = toolModel.label.innerText;
+            input.addEventListener('input', () => {
+                toolModel.label.innerText = input.value || def;
+            });
+        }
+        else if (name === 'Placeholder') {
+            const input = element.querySelector('input[type=text]') as HTMLInputElement;
+            const output = toolModel.preview.querySelector('input') || toolModel.preview.querySelector('textarea');
+            if (output) {
+                input.addEventListener('input', () => {
+                    output.placeholder = input.value;
+                });
+            }
+        }
+        else if (name === 'IsRequired') {
+            const col = toolModel.preview.querySelector('.fg-col');
+            const check = element.querySelector('input[type=checkbox]') as HTMLInputElement;
+            check.addEventListener('change', () => {
+                if (check.checked)
+                    col.classList.add('fg-required');
+                else
+                    col.classList.remove('fg-required');
+            });
+        }
+
         toolModel.options.push(optionModel);
     });
 
@@ -98,7 +170,7 @@ prototype.addEventListener('added', (event: any) => {
 
         toolModel.regexSelect.addEventListener('change', () => {
 
-            const val = toolModel.regexSelect.value;
+            const val: TblRegex = JSON.parse(toolModel.regexSelect.value);
             const selectedOption = toolModel.regexSelect.selectedOptions[0];
 
             toolModel.regexSelect.selectedIndex = 0;
@@ -108,20 +180,19 @@ prototype.addEventListener('added', (event: any) => {
 
             const template =
                 `<div class="regex-item">
-                    <label regex="${val}" class="cell-label">${selectedOption.innerText}</label>
+                    <label regex="${val.Name}" class="cell-label">${selectedOption.innerText}</label>
                     <button type="button" class="cell-btn" uk-icon="times"></button>
                 </div>`;
 
             const doc = new DOMParser().parseFromString(template, 'text/html');
 
-            let reg = new Regex();
+            let reg = new Regex(val);
             reg.element = doc.querySelector('.regex-item');
             reg.label = doc.querySelector('[regex]');
             reg.button = doc.querySelector('button');
 
             reg.element.appendChild(reg.label);
             reg.element.append(reg.button);
-
 
             reg.button.addEventListener('click', () => {
                 toolModel.regexs.splice(toolModel.regexs.indexOf(reg), 1);
@@ -184,7 +255,7 @@ prototype.addEventListener('added', (event: any) => {
 
 });
 
-prototype.addEventListener('removed', (event: any): void => {
+prototype.addEventListener('removed', (event: any) => {
 
     const element = (event.detail[1] as HTMLElement);
     const tool = componentList.filter(i => i.element == element)[0];

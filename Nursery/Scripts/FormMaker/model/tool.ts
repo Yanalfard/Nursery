@@ -1,8 +1,10 @@
 ﻿import { TblField } from "./db/tblField";
+import { TblRegex } from "./db/tblRegex";
 import { InputType } from "./inputType";
 
 export class Tool {
     element: HTMLElement;
+    label: HTMLLabelElement;
     type: InputType;
 
     btnSettings: HTMLButtonElement;
@@ -20,6 +22,8 @@ export class Tool {
     selectAdder: HTMLElement;
     selectInput: HTMLInputElement;
     selectBtn: HTMLButtonElement;
+    //-
+    preview: HTMLElement;
 
     options: Option[] = [];
     regexs: Regex[] = [];
@@ -52,7 +56,7 @@ export class Option {
 
             case OptionType.input:
                 const input = element.querySelector('input') as HTMLInputElement;
-                input.addEventListener('change', () => {
+                input.addEventListener('input', () => {
                     value = input.value;
                 });
                 break;
@@ -62,12 +66,12 @@ export class Option {
                 select.addEventListener('change', () => {
                     value = select.value;
                 });
-                break
+                break;
 
             case OptionType.checkbox:
                 const checkbox = element.querySelector('input[type=checkbox]') as HTMLInputElement;
-                checkbox.addEventListener('change', () => {
-                    value = checkbox.value;
+                checkbox.addEventListener('input', () => {
+                    value = checkbox.checked ? 'true' : 'false';
                 });
                 break;
 
@@ -78,8 +82,8 @@ export class Option {
                 const change = () => {
                     value = from.value + ',' + to.value;
                 }
-                from.addEventListener('change', change);
-                to.addEventListener('change', change);
+                from.addEventListener('input', change);
+                to.addEventListener('input', change);
                 break;
 
             default:
@@ -88,11 +92,6 @@ export class Option {
         }
 
     }
-
-    private valueChanged() {
-
-    }
-
 }
 
 export class Regex {
@@ -100,15 +99,18 @@ export class Regex {
     label: HTMLLabelElement;
     button: HTMLButtonElement;
     name: string;
-    value: string;
-    constructor() { }
+    tblRegex: TblRegex
+
+    constructor(tblRegex: TblRegex) {
+        this.tblRegex = tblRegex;
+    }
 }
 
 export class Select {
     element: HTMLElement;
     label: HTMLLabelElement;
     button: HTMLButtonElement;
-
     value: string;
+
     constructor() { }
 }

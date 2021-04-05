@@ -22,12 +22,13 @@ namespace DataLayer.ViewModels
         public string Name { get; set; }
         public bool IsDeleted { get; set; }
 
-        public DRegexVm(int regexId, string regex, string validationMessage, bool isDeleted = false)
+        public DRegexVm(int regexId, string name, string regex, string validationMessage, bool isDeleted = false)
         {
             RegexId = regexId;
             Regex = regex;
             ValidationMessage = validationMessage;
             IsDeleted = isDeleted;
+            Name = name;
         }
     }
 }

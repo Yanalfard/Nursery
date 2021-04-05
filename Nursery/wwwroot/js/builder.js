@@ -1,17 +1,56 @@
-define(["require", "exports", "./model/inputType", "./model/tool"], function (require, exports, inputType_1, tool_1) {
+define(["require", "exports", "./model/db/tblField", "./model/db/tblForm", "./model/inputType", "./model/tool"], function (require, exports, tblField_1, tblForm_1, inputType_1, tool_1) {
     "use strict";
     exports.__esModule = true;
     // Toolbox Element Recreation implementation
     var toolbox = document.getElementById('toolbox');
     var toolboxHTML = toolbox.innerHTML;
     var btnFinish = document.getElementById('btn-finish');
+    //#region Initialize Regex Select Options
+    var regexSelectElements = document.querySelectorAll('[regex-select]');
+    fetch('/Admin/Form/GetSelectOptions').then(function (json) {
+        json.json().then(function (options) {
+            regexSelectElements.forEach(function (selectElement) {
+                selectElement.innerHTML = '';
+                var initElement = document.createElement('option');
+                initElement.text = 'افزودن گزینه اصلاح...';
+                selectElement.options.add(initElement);
+                //-
+                options.forEach(function (option) {
+                    var optionElement = document.createElement('option');
+                    optionElement.value = JSON.stringify(option);
+                    optionElement.text = option.name;
+                    selectElement.options.add(optionElement);
+                });
+            });
+        });
+    });
+    //#endregion
     btnFinish.addEventListener('click', function () {
-        var temp;
+        var temp = [];
         componentList.forEach(function (tool) {
             var index = parseInt(tool.element.getAttribute('order'));
             temp[index] = tool;
         });
         componentList = temp;
+        var body = new tblForm_1.TblForm();
+        var formName = document.getElementById('txtFormName').value;
+        var description = document.getElementById('txtDecsription').value;
+        body.Name = formName;
+        body.Body = description;
+        componentList.forEach(function (f) {
+            var _a, _b, _c, _d;
+            var field = new tblField_1.TblField();
+            field.IsRequired = ((_a = f.options.filter(function (option) { return option.name === 'IsRequired'; })[0]) === null || _a === void 0 ? void 0 : _a.value) == 'true';
+            field.Placeholder = (_b = f.options.filter(function (option) { return option.name === 'Placeholder'; })[0]) === null || _b === void 0 ? void 0 : _b.value;
+            field.Label = (_c = f.options.filter(function (option) { return option.name === 'Label'; })[0]) === null || _c === void 0 ? void 0 : _c.value;
+            field.Tooltip = (_d = f.options.filter(function (option) { return option.name === 'Tooltip'; })[0]) === null || _d === void 0 ? void 0 : _d.value;
+            field.Type = f.type;
+            // TODO Attach option names together using  ','
+            f.selects.forEach(function (i) {
+                field.Options += i + ',';
+            });
+            console.log(field.Options);
+        });
     });
     toolbox.addEventListener('removed', function () {
         toolbox.innerHTML = toolboxHTML;
@@ -40,6 +79,8 @@ define(["require", "exports", "./model/inputType", "./model/tool"], function (re
         var toolModel = new tool_1.Tool();
         toolModel.element = el;
         toolModel.type = inputType_1.InputType[el.querySelector('[tool]').getAttribute('tool').toLowerCase()];
+        toolModel.label = el.querySelector('[tool-label]');
+        toolModel.preview = el.querySelector('.tool-content');
         toolModel.btnDelete = toolModel.element.querySelector('[btnDelete]');
         toolModel.btnSettings = toolModel.element.querySelector('[btnSettings]');
         // btnSettings_Click
@@ -53,7 +94,6 @@ define(["require", "exports", "./model/inputType", "./model/tool"], function (re
             setTimeout(function () {
                 toolModel.element.parentElement.removeChild(toolModel.element);
                 componentList = componentList.splice(componentList.indexOf(toolModel, 1));
-                delete toolModel.element;
             }, 300);
         });
         // option
@@ -65,6 +105,32 @@ define(["require", "exports", "./model/inputType", "./model/tool"], function (re
             var type = element.getAttribute("option");
             var name = mainElement.getAttribute("option-name");
             var optionModel = new tool_1.Option(element, tool_1.OptionType[type], name);
+            if (name === 'Label') {
+                var input_1 = element.querySelector('input');
+                var def_1 = toolModel.label.innerText;
+                input_1.addEventListener('input', function () {
+                    toolModel.label.innerText = input_1.value || def_1;
+                });
+            }
+            else if (name === 'Placeholder') {
+                var input_2 = element.querySelector('input[type=text]');
+                var output_1 = toolModel.preview.querySelector('input') || toolModel.preview.querySelector('textarea');
+                if (output_1) {
+                    input_2.addEventListener('input', function () {
+                        output_1.placeholder = input_2.value;
+                    });
+                }
+            }
+            else if (name === 'IsRequired') {
+                var col_1 = toolModel.preview.querySelector('.fg-col');
+                var check_1 = element.querySelector('input[type=checkbox]');
+                check_1.addEventListener('change', function () {
+                    if (check_1.checked)
+                        col_1.classList.add('fg-required');
+                    else
+                        col_1.classList.remove('fg-required');
+                });
+            }
             toolModel.options.push(optionModel);
         });
         // Regex
@@ -74,15 +140,15 @@ define(["require", "exports", "./model/inputType", "./model/tool"], function (re
             toolModel.regexSelect = regexList.querySelector('[regex-select]');
             toolModel.regexAdder = regexList.querySelector('.regex-list');
             toolModel.regexSelect.addEventListener('change', function () {
-                var val = toolModel.regexSelect.value;
+                var val = JSON.parse(toolModel.regexSelect.value);
                 var selectedOption = toolModel.regexSelect.selectedOptions[0];
                 toolModel.regexSelect.selectedIndex = 0;
                 if (!selectedOption.getAttribute('value'))
                     return;
                 selectedOption.style.display = 'none';
-                var template = "<div class=\"regex-item\">\n                    <label regex=\"" + val + "\" class=\"cell-label\">" + selectedOption.innerText + "</label>\n                    <button type=\"button\" class=\"cell-btn\" uk-icon=\"times\"></button>\n                </div>";
+                var template = "<div class=\"regex-item\">\n                    <label regex=\"" + val.Name + "\" class=\"cell-label\">" + selectedOption.innerText + "</label>\n                    <button type=\"button\" class=\"cell-btn\" uk-icon=\"times\"></button>\n                </div>";
                 var doc = new DOMParser().parseFromString(template, 'text/html');
-                var reg = new tool_1.Regex();
+                var reg = new tool_1.Regex(val);
                 reg.element = doc.querySelector('.regex-item');
                 reg.label = doc.querySelector('[regex]');
                 reg.button = doc.querySelector('button');

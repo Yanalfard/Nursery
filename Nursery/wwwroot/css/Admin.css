@@ -160,6 +160,8 @@ backdrop-filter: saturate(80%);
     .form-builder .toolbox .form-body, .form-builder .toolbox-placeholder .form-body {
       overflow-y: auto !important;
       padding-bottom: 77px; }
+      .form-builder .toolbox .form-body .tool-actions button, .form-builder .toolbox-placeholder .form-body .tool-actions button {
+        display: none; }
   .form-builder .toolbox-placeholder {
     position: relative;
     z-index: 179; }

@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using DataLayer.Models;
+using DataLayer.ViewModels;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,5 +15,19 @@ namespace Nursery.Areas.Admin.Controllers
         {
             return View();
         }
+
+        DRegexVm[] options =
+        {
+            new DRegexVm(1,"Just numbers","[0-9]*4","This was Wrong"),
+            new DRegexVm(2,"Just Characters","[a-z]","Character"),
+            new DRegexVm(3,"Hello","[ha-ea-sd]","Bye"),
+        };
+
+        [HttpGet]
+        public IActionResult GetSelectOptions()
+        {
+            return Json(options);
+        }
+
     }
 }

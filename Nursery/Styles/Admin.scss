@@ -111,6 +111,12 @@
         .form-body {
             overflow-y: auto !important;
             padding-bottom: 61px + 16px;
+
+            .tool-actions {
+                button {
+                    display: none;
+                }
+            }
         }
     }
 

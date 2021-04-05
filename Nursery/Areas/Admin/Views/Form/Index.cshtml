@@ -5,93 +5,16 @@
 
 <div class="form-builder">
     <aside class="toolbox card-mat col ">
-        <div class="form-header uk-padding-remove">
-            <div class="rowr">
-                <input type="text" class="flex-auto entry-invis" placeholder="جستجو..." />
-                <button class="btn-icon">
-                    <span uk-icon="search"></span>
-                </button>
-            </div>
-        </div>
+        @*<div class="form-header uk-padding-remove">
+                <div class="rowr">
+                    <input type="text" class="flex-auto entry-invis" placeholder="جستجو..." />
+                    <button class="btn-icon">
+                        <span uk-icon="search"></span>
+                    </button>
+                </div>
+            </div>*@
         <div class="form-body gap-3 col" id="toolbox"
              uk-sortable="group:form;handle: .tool-actions; cls-item:grabbable; cls-custom: tool-grabbed">
-            <!--11-->
-            <div class="grabbable">
-                <div tool="combo" class="tool">
-                    <header class="tool-actions">
-                        <button btnSettings class="cell-btn cell-border-left" uk-icon="cog"></button>
-                        <button btnDelete class="cell-btn cell-border-left" uk-icon="trash"></button>
-                        <label class="name">انتخاب</label>
-                    </header>
-                    <div option-list style="display:none" class="tool-options">
-                        <div option="input">
-                            <label option-name="Label" class="option-name">تیتر</label>
-                            <input type="text" class="cell-entry" value="" />
-                        </div>
-                        <div option="checkbox">
-                            <label option-name="IsRequired" class="option-name">ضرورت</label>
-                            <label class="cell-checkbox-group">
-                                <span>ضروری است</span>
-                                <input type="checkbox" />
-                            </label>
-                        </div>
-                        <div select="" class="col">
-                            <div select-adder class="select-adder cell-border-bottom">
-                                <input select-input type="text" placeholder="گزینه جدید..." class="cell-entry flex-auto" />
-                                <button select-btn class="cell-btn cell-border-right" uk-icon="plus"></button>
-                            </div>
-                            <div select-list class="select-list"></div>
-                        </div>
-                    </div>
-                    <div class="tool-content">
-                        <div class="fg-col">
-                            <label class="fg-label">نوع خودرو</label>
-                            <select class="uk-select" dir="rtl">
-                                <option>گزینه</option>
-                            </select>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!--11-->
-            <div class="grabbable">
-                <div tool="radio" class="tool">
-                    <header class="tool-actions">
-                        <button btnSettings class="cell-btn cell-border-left" uk-icon="cog"></button>
-                        <button btnDelete class="cell-btn cell-border-left" uk-icon="trash"></button>
-                        <label class="name">انتخاب دایره</label>
-                    </header>
-                    <div option-list style="display:none" class="tool-options">
-                        <div option="input">
-                            <label option-name="Label" class="option-name">تیتر</label>
-                            <input type="text" class="cell-entry" value="" />
-                        </div>
-                        <div option="checkbox">
-                            <label option-name="IsRequired" class="option-name">ضرورت</label>
-                            <label class="cell-checkbox-group">
-                                <span>ضروری است</span>
-                                <input type="checkbox" />
-                            </label>
-                        </div>
-                        <div select class="col">
-                            <div select-adder class="select-adder cell-border-bottom">
-                                <input select-input type="text" placeholder="گزینه جدید..." class="cell-entry flex-auto" value="" />
-                                <button select-btn class="cell-btn cell-border-right" uk-icon="plus"></button>
-                            </div>
-                            <div select-list class="select-list"></div>
-                        </div>
-                    </div>
-                    <div class="tool-content">
-                        <div class="fg-col ">
-                            <label class="fg-label">جنسیت</label>
-                            <label class="radio">
-                                <span>گزینه</span>
-                                <input class="uk-radio" value="گزینه" type="radio">
-                            </label>
-                        </div>
-                    </div>
-                </div>
-            </div>
             <!--01-->
             <div class="grabbable">
                 <div tool="text" class="tool">
@@ -129,7 +52,7 @@
                     </div>
                     <div class="tool-content">
                         <div class="fg-col">
-                            <label class="fg-label">نام و نام خانوادگی</label>
+                            <label tool-label class="fg-label">نام و نام خانوادگی</label>
                             <input type="text" class="entry" value="" />
                         </div>
                     </div>
@@ -159,10 +82,20 @@
                                 <input type="checkbox" />
                             </label>
                         </div>
+                        <div regex-list>
+                            <select regex-select class="cell-select">
+                                <option>قوانین ولیدیشن</option>
+                                <option value="[a-z,0-9]*4">بیشتر از 4 کاراکتر</option>
+                                <option value="[0-9]">فقط عدد</option>
+                                <option value="[a-z,0-9]*4">8 کاراکتر</option>
+                                <option value="[x-x]">حروف فارسی</option>
+                            </select>
+                            <div class="regex-list"></div>
+                        </div>
                     </div>
                     <div class="tool-content">
                         <div class="fg-col">
-                            <label class="fg-label">شماره تلفن</label>
+                            <label tool-label class="fg-label">شماره تلفن</label>
                             <input type="tel" class="entry" value="" />
                         </div>
                     </div>
@@ -195,7 +128,7 @@
                     </div>
                     <div class="tool-content">
                         <div class="fg-col">
-                            <label class="fg-label">کد ملی</label>
+                            <label tool-label class="fg-label">کد ملی</label>
                             <input type="number" class="entry" value="" />
                         </div>
                     </div>
@@ -228,237 +161,8 @@
                     </div>
                     <div class="tool-content">
                         <div class="fg-col">
-                            <label class="fg-label">رمز عبور</label>
+                            <label tool-label class="fg-label">رمز عبور</label>
                             <input type="password" class="entry" value="" />
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!--03-->
-            <div class="grabbable">
-                <div tool="url" class="tool">
-                    <header class="tool-actions">
-                        <button btnSettings class="cell-btn cell-border-left" uk-icon="cog"></button>
-                        <button btnDelete class="cell-btn cell-border-left" uk-icon="trash"></button>
-                        <label class="name">لینک و یوآرال</label>
-                    </header>
-                    <div option-list style="display:none" class="tool-options">
-                        <div option="input">
-                            <label option-name="Label" class="option-name">تیتر</label>
-                            <input type="url" class="cell-entry" value="" />
-                        </div>
-                        <div option="input">
-                            <label option-name="Placeholder" class="option-name">پلیس هولدر</label>
-                            <input type="text" class="cell-entry" value="" />
-                        </div>
-                        <div option="checkbox">
-                            <label option-name="IsRequired" class="option-name">ضرورت</label>
-                            <label class="cell-checkbox-group">
-                                <span>ضروری است</span>
-                                <input type="checkbox" />
-                            </label>
-                        </div>
-                        <div regex-list>
-                            <select class="cell-select">
-                                <option>قوانین ولیدیشن</option>
-                                <option>موز</option>
-                                <option>سیب</option>
-                                <option>گلابی</option>
-                                <option>هویچ</option>
-                            </select>
-                            <div class="regex-list"></div>
-                        </div>
-                    </div>
-                    <div class="tool-content">
-                        <div class="fg-col">
-                            <label class="fg-label">لینک وبسایت</label>
-                            <input type="text" class="entry" value="" />
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!--04-->
-            <div class="grabbable">
-                <div tool="week" class="tool">
-                    <header class="tool-actions">
-                        <button btnSettings class="cell-btn cell-border-left" uk-icon="cog"></button>
-                        <button btnDelete class="cell-btn cell-border-left" uk-icon="trash"></button>
-                        <label class="name">هفته</label>
-                    </header>
-                    <div option-list style="display:none" class="tool-options">
-                        <div option="input">
-                            <label option-name="Label" class="option-name">تیتر</label>
-                            <input type="text" class="cell-entry" value="" />
-                        </div>
-                        <div option="checkbox">
-                            <label option-name="IsRequired" class="option-name">ضرورت</label>
-                            <label class="cell-checkbox-group">
-                                <span>ضروری است</span>
-                                <input type="checkbox" />
-                            </label>
-                        </div>
-                    </div>
-                    <div class="tool-content">
-                        <div class="fg-col">
-                            <label class="fg-label">هفته شروع</label>
-                            <input type="week" class="entry" value="" />
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!--05-->
-            <div class="grabbable">
-                <div tool="textarea" class="tool">
-                    <header class="tool-actions">
-                        <button btnSettings class="cell-btn cell-border-left" uk-icon="cog"></button>
-                        <button btnDelete class="cell-btn cell-border-left" uk-icon="trash"></button>
-                        <label class="name">متن طولانی</label>
-                    </header>
-                    <div option-list style="display:none" class="tool-options">
-                        <div option="input">
-                            <label option-name="Label" class="option-name">تیتر</label>
-                            <input type="text" class="cell-entry" value="" />
-                        </div>
-                        <div option="input">
-                            <label option-name="Placeholder" class="option-name">پلیس هولدر</label>
-                            <input type="text" class="cell-entry" value="" />
-                        </div>
-                        <div option="checkbox">
-                            <label option-name="IsRequired" class="option-name">ضرورت</label>
-                            <label class="cell-checkbox-group">
-                                <span>ضروری است</span>
-                                <input type="checkbox" />
-                            </label>
-                        </div>
-                        <div regex-list>
-                            <select class="cell-select">
-                                <option>قوانین ولیدیشن</option>
-                                <option>موز</option>
-                                <option>سیب</option>
-                                <option>گلابی</option>
-                                <option>هویچ</option>
-                            </select>
-                            <div class="regex-list"></div>
-                        </div>
-                    </div>
-                    <div class="tool-content">
-                        <div class="fg-col">
-                            <label class="fg-label">توضیحات</label>
-                            <textarea class="entry"></textarea>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!--06-->
-            <div class="grabbable">
-                <div tool="checkbox" class="tool">
-                    <header class="tool-actions">
-                        <button btnSettings class="cell-btn cell-border-left" uk-icon="cog"></button>
-                        <button btnDelete class="cell-btn cell-border-left" uk-icon="trash"></button>
-                        <label class="name">چک باکس</label>
-                    </header>
-                    <div option-list style="display:none" class="tool-options">
-                        <div option="input">
-                            <label option-name="Label" class="option-name">تیتر</label>
-                            <input type="text" class="cell-entry" value="" />
-                        </div>
-                    </div>
-                    <div class="tool-content">
-                        <div class="fg-col">
-                            <label class="row uk-margin-auto-left">
-                                <span>موافق می باشم</span>
-                                <input class="uk-checkbox" type="checkbox" />
-                            </label>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!--07-->
-            <div class="grabbable">
-                <div tool="color" class="tool">
-                    <header class="tool-actions">
-                        <button btnSettings class="cell-btn cell-border-left" uk-icon="cog"></button>
-                        <button btnDelete class="cell-btn cell-border-left" uk-icon="trash"></button>
-                        <label class="name">رنگ</label>
-                    </header>
-                    <div option-list style="display:none" class="tool-options">
-                        <div option="input">
-                            <label option-name="Label" class="option-name">تیتر</label>
-                            <input type="text" class="cell-entry" value="" />
-                        </div>
-                    </div>
-                    <div class="tool-content">
-                        <div class="fg-col">
-                            <label class="cell-checkbox-group">
-                                <span>رنگ</span>
-                                <input type="color" />
-                            </label>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!--08-->
-            <div class="grabbable">
-                <div tool="date" class="tool">
-                    <header class="tool-actions">
-                        <button btnSettings class="cell-btn cell-border-left" uk-icon="cog"></button>
-                        <button btnDelete class="cell-btn cell-border-left" uk-icon="trash"></button>
-                        <label class="name">تاریخ</label>
-                    </header>
-                    <div option-list style="display:none" class="tool-options">
-                        <div option="input">
-                            <label option-name="Label" class="option-name">تیتر</label>
-                            <input type="text" class="cell-entry" value="" />
-                        </div>
-                        <div option="input">
-                            <label option-name="Placeholder" class="option-name">پلیس هولدر</label>
-                            <input type="text" class="cell-entry" value="" />
-                        </div>
-                        <div option="checkbox">
-                            <label option-name="IsRequired" class="option-name">ضرورت</label>
-                            <label class="cell-checkbox-group">
-                                <span>ضروری است</span>
-                                <input type="checkbox" />
-                            </label>
-                        </div>
-                    </div>
-                    <div class="tool-content">
-                        <div class="fg-col">
-                            <label class="fg-label">تاریخ تولد</label>
-                            <input type="date" class="entry" value="" />
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!--09-->
-            <div class="grabbable">
-                <div tool="dateTime" class="tool">
-                    <header class="tool-actions">
-                        <button btnSettings class="cell-btn cell-border-left" uk-icon="cog"></button>
-                        <button btnDelete class="cell-btn cell-border-left" uk-icon="trash"></button>
-                        <label class="name">تاریخ و زمان</label>
-                    </header>
-                    <div option-list style="display:none" class="tool-options">
-                        <div option="input">
-                            <label option-name="Label" class="option-name">تیتر</label>
-                            <input type="text" class="cell-entry" value="" />
-                        </div>
-                        <div option="input">
-                            <label option-name="Placeholder" class="option-name">پلیس هولدر</label>
-                            <input type="text" class="cell-entry" value="" />
-                        </div>
-                        <div option="checkbox">
-                            <label option-name="IsRequired" class="option-name">ضرورت</label>
-                            <label class="cell-checkbox-group">
-                                <span>ضروری است</span>
-                                <input type="checkbox" />
-                            </label>
-                        </div>
-                    </div>
-                    <div class="tool-content">
-                        <div class="fg-col">
-                            <label class="fg-label">زمان جلسه</label>
-                            <input type="dateTime" class="entry" value="" />
                         </div>
                     </div>
                 </div>
@@ -490,8 +194,220 @@
                     </div>
                     <div class="tool-content">
                         <div class="fg-col">
-                            <label class="fg-label">پست الکترونیکی</label>
+                            <label tool-label class="fg-label">پست الکترونیکی</label>
                             <input type="email" class="entry" value="" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--03-->
+            <div class="grabbable">
+                <div tool="url" class="tool">
+                    <header class="tool-actions">
+                        <button btnSettings class="cell-btn cell-border-left" uk-icon="cog"></button>
+                        <button btnDelete class="cell-btn cell-border-left" uk-icon="trash"></button>
+                        <label class="name">لینک و یوآرال</label>
+                    </header>
+                    <div option-list style="display:none" class="tool-options">
+                        <div option="input">
+                            <label option-name="Label" class="option-name">تیتر</label>
+                            <input type="url" class="cell-entry" value="" />
+                        </div>
+                        <div option="input">
+                            <label option-name="Placeholder" class="option-name">پلیس هولدر</label>
+                            <input type="text" class="cell-entry" value="" />
+                        </div>
+                        <div option="checkbox">
+                            <label option-name="IsRequired" class="option-name">ضرورت</label>
+                            <label class="cell-checkbox-group">
+                                <span>ضروری است</span>
+                                <input type="checkbox" />
+                            </label>
+                        </div>
+                        <div regex-list>
+                            <select regex-select class="cell-select">
+                                <option>قوانین ولیدیشن</option>
+                                <option value="[a-z,0-9]*4">بیشتر از 4 کاراکتر</option>
+                                <option value="[0-9]">فقط عدد</option>
+                                <option value="[a-z,0-9]*4">8 کاراکتر</option>
+                                <option value="[x-x]">حروف فارسی</option>
+                            </select>
+                            <div class="regex-list"></div>
+                        </div>
+                    </div>
+                    <div class="tool-content">
+                        <div class="fg-col">
+                            <label tool-label class="fg-label">لینک وبسایت</label>
+                            <input type="text" class="entry" value="" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!--11-->
+            <div class="grabbable">
+                <div tool="combo" class="tool">
+                    <header class="tool-actions">
+                        <button btnSettings class="cell-btn cell-border-left" uk-icon="cog"></button>
+                        <button btnDelete class="cell-btn cell-border-left" uk-icon="trash"></button>
+                        <label class="name">انتخاب</label>
+                    </header>
+                    <div option-list style="display:none" class="tool-options">
+                        <div option="input">
+                            <label option-name="Label" class="option-name">تیتر</label>
+                            <input type="text" class="cell-entry" value="" />
+                        </div>
+                        <div option="checkbox">
+                            <label option-name="IsRequired" class="option-name">ضرورت</label>
+                            <label class="cell-checkbox-group">
+                                <span>ضروری است</span>
+                                <input type="checkbox" />
+                            </label>
+                        </div>
+                        <div select="" class="col">
+                            <div select-adder class="select-adder cell-border-bottom">
+                                <input select-input type="text" placeholder="گزینه جدید..." class="cell-entry flex-auto" />
+                                <button select-btn class="cell-btn cell-border-right" uk-icon="plus"></button>
+                            </div>
+                            <div select-list class="select-list"></div>
+                        </div>
+                    </div>
+                    <div class="tool-content">
+                        <div class="fg-col">
+                            <label tool-label class="fg-label">نوع خودرو</label>
+                            <select class="uk-select" dir="rtl">
+                                <option>گزینه</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--11-->
+            <div class="grabbable">
+                <div tool="radio" class="tool">
+                    <header class="tool-actions">
+                        <button btnSettings class="cell-btn cell-border-left" uk-icon="cog"></button>
+                        <button btnDelete class="cell-btn cell-border-left" uk-icon="trash"></button>
+                        <label class="name">انتخاب دایره</label>
+                    </header>
+                    <div option-list style="display:none" class="tool-options">
+                        <div option="input">
+                            <label option-name="Label" class="option-name">تیتر</label>
+                            <input type="text" class="cell-entry" value="" />
+                        </div>
+                        <div option="checkbox">
+                            <label option-name="IsRequired" class="option-name">ضرورت</label>
+                            <label class="cell-checkbox-group">
+                                <span>ضروری است</span>
+                                <input type="checkbox" />
+                            </label>
+                        </div>
+                        <div select class="col">
+                            <div select-adder class="select-adder cell-border-bottom">
+                                <input select-input type="text" placeholder="گزینه جدید..." class="cell-entry flex-auto" value="" />
+                                <button select-btn class="cell-btn cell-border-right" uk-icon="plus"></button>
+                            </div>
+                            <div select-list class="select-list"></div>
+                        </div>
+                    </div>
+                    <div class="tool-content">
+                        <div class="fg-col ">
+                            <label tool-label class="fg-label">جنسیت</label>
+                            <label class="radio">
+                                <span>گزینه</span>
+                                <input class="uk-radio" value="گزینه" type="radio">
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--05-->
+            <div class="grabbable">
+                <div tool="textarea" class="tool">
+                    <header class="tool-actions">
+                        <button btnSettings class="cell-btn cell-border-left" uk-icon="cog"></button>
+                        <button btnDelete class="cell-btn cell-border-left" uk-icon="trash"></button>
+                        <label class="name">متن طولانی</label>
+                    </header>
+                    <div option-list style="display:none" class="tool-options">
+                        <div option="input">
+                            <label option-name="Label" class="option-name">تیتر</label>
+                            <input type="text" class="cell-entry" value="" />
+                        </div>
+                        <div option="input">
+                            <label option-name="Placeholder" class="option-name">پلیس هولدر</label>
+                            <input type="text" class="cell-entry" value="" />
+                        </div>
+                        <div option="checkbox">
+                            <label option-name="IsRequired" class="option-name">ضرورت</label>
+                            <label class="cell-checkbox-group">
+                                <span>ضروری است</span>
+                                <input type="checkbox" />
+                            </label>
+                        </div>
+                        <div regex-list>
+                            <select regex-select class="cell-select">
+                                <option>قوانین ولیدیشن</option>
+                                <option value="[a-z,0-9]*4">بیشتر از 4 کاراکتر</option>
+                                <option value="[0-9]">فقط عدد</option>
+                                <option value="[a-z,0-9]*4">8 کاراکتر</option>
+                                <option value="[x-x]">حروف فارسی</option>
+                            </select>
+                            <div class="regex-list"></div>
+                        </div>
+                    </div>
+                    <div class="tool-content">
+                        <div class="fg-col">
+                            <label tool-label class="fg-label">توضیحات</label>
+                            <textarea class="entry"></textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--06-->
+            <div class="grabbable">
+                <div tool="checkbox" class="tool">
+                    <header class="tool-actions">
+                        <button btnSettings class="cell-btn cell-border-left" uk-icon="cog"></button>
+                        <button btnDelete class="cell-btn cell-border-left" uk-icon="trash"></button>
+                        <label class="name">چک باکس</label>
+                    </header>
+                    <div option-list style="display:none" class="tool-options">
+                        <div option="input">
+                            <label option-name="Label" class="option-name">تیتر</label>
+                            <input type="text" class="cell-entry" value="" />
+                        </div>
+                    </div>
+                    <div class="tool-content">
+                        <div class="fg-col">
+                            <label class="row uk-margin-auto-left">
+                                <span tool-label>موافق می باشم</span>
+                                <input class="uk-checkbox" type="checkbox" />
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--07-->
+            <div class="grabbable">
+                <div tool="color" class="tool">
+                    <header class="tool-actions">
+                        <button btnSettings class="cell-btn cell-border-left" uk-icon="cog"></button>
+                        <button btnDelete class="cell-btn cell-border-left" uk-icon="trash"></button>
+                        <label class="name">رنگ</label>
+                    </header>
+                    <div option-list style="display:none" class="tool-options">
+                        <div option="input">
+                            <label option-name="Label" class="option-name">تیتر</label>
+                            <input type="text" class="cell-entry" value="" />
+                        </div>
+                    </div>
+                    <div class="tool-content">
+                        <div class="fg-col">
+                            <label class="cell-checkbox-group">
+                                <span tool-label>رنگ</span>
+                                <input type="color" />
+                            </label>
                         </div>
                     </div>
                 </div>
@@ -524,7 +440,7 @@
                     </div>
                     <div class="tool-content">
                         <div class="fg-col">
-                            <label class="fg-label">رضایت</label>
+                            <label tool-label class="fg-label">رضایت</label>
                             <div class="row">
                                 <input type="range" value="10" min="0" max="20" class="uk-range" />
                             </div>
@@ -532,13 +448,42 @@
                     </div>
                 </div>
             </div>
-            <!--11-->
+            <!--08-->
             <div class="grabbable">
-                <div tool="month" class="tool">
+                <div tool="date" class="tool">
                     <header class="tool-actions">
                         <button btnSettings class="cell-btn cell-border-left" uk-icon="cog"></button>
                         <button btnDelete class="cell-btn cell-border-left" uk-icon="trash"></button>
-                        <label class="name">ماه</label>
+                        <label class="name">تاریخ</label>
+                    </header>
+                    <div option-list style="display:none" class="tool-options">
+                        <div option="input">
+                            <label option-name="Label" class="option-name">تیتر</label>
+                            <input type="text" class="cell-entry" value="" />
+                        </div>
+                        <div option="checkbox">
+                            <label option-name="IsRequired" class="option-name">ضرورت</label>
+                            <label class="cell-checkbox-group">
+                                <span>ضروری است</span>
+                                <input type="checkbox" />
+                            </label>
+                        </div>
+                    </div>
+                    <div class="tool-content">
+                        <div class="fg-col">
+                            <label tool-label class="fg-label">تاریخ تولد</label>
+                            <input type="date" class="entry" value="" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--09-->
+            <div class="grabbable">
+                <div tool="dateTime" class="tool">
+                    <header class="tool-actions">
+                        <button btnSettings class="cell-btn cell-border-left" uk-icon="cog"></button>
+                        <button btnDelete class="cell-btn cell-border-left" uk-icon="trash"></button>
+                        <label class="name">تاریخ و زمان</label>
                     </header>
                     <div option-list style="display:none" class="tool-options">
                         <div option="input">
@@ -559,25 +504,89 @@
                     </div>
                     <div class="tool-content">
                         <div class="fg-col">
-                            <label class="fg-label">ماه</label>
+                            <label tool-label class="fg-label">زمان جلسه</label>
+                            <input type="dateTime" class="entry" value="" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--04-->
+            <div class="grabbable">
+                <div tool="week" class="tool">
+                    <header class="tool-actions">
+                        <button btnSettings class="cell-btn cell-border-left" uk-icon="cog"></button>
+                        <button btnDelete class="cell-btn cell-border-left" uk-icon="trash"></button>
+                        <label class="name">هفته</label>
+                    </header>
+                    <div option-list style="display:none" class="tool-options">
+                        <div option="input">
+                            <label option-name="Label" class="option-name">تیتر</label>
+                            <input type="text" class="cell-entry" value="" />
+                        </div>
+                        <div option="checkbox">
+                            <label option-name="IsRequired" class="option-name">ضرورت</label>
+                            <label class="cell-checkbox-group">
+                                <span>ضروری است</span>
+                                <input type="checkbox" />
+                            </label>
+                        </div>
+                    </div>
+                    <div class="tool-content">
+                        <div class="fg-col">
+                            <label tool-label class="fg-label">هفته شروع</label>
+                            <input type="week" class="entry" value="" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--11-->
+            <div class="grabbable">
+                <div tool="month" class="tool">
+                    <header class="tool-actions">
+                        <button btnSettings class="cell-btn cell-border-left" uk-icon="cog"></button>
+                        <button btnDelete class="cell-btn cell-border-left" uk-icon="trash"></button>
+                        <label class="name">ماه</label>
+                    </header>
+                    <div option-list style="display:none" class="tool-options">
+                        <div option="input">
+                            <label option-name="Label" class="option-name">تیتر</label>
+                            <input type="text" class="cell-entry" value="" />
+                        </div>
+                        <div option="checkbox">
+                            <label option-name="IsRequired" class="option-name">ضرورت</label>
+                            <label class="cell-checkbox-group">
+                                <span>ضروری است</span>
+                                <input type="checkbox" />
+                            </label>
+                        </div>
+                    </div>
+                    <div class="tool-content">
+                        <div class="fg-col">
+                            <label tool-label class="fg-label">ماه</label>
                             <input type="month" class="entry" value="" />
                         </div>
                     </div>
                 </div>
             </div>
-
         </div>
     </aside>
     <div class="toolbox-placeholder" role="none"></div>
     <div class="prototype form">
-        <div class="form-header">
-            <h3>فرم جدید</h3>
+        <div class="form-header col">
+            <div class="fg-col uk-margin-small-bottom">
+                <label class="fg-label">نام فرم</label>
+                <input type="text" id="txtFormName" placeholder="فرم جدید..." class="entry" value="" />
+            </div>
+            <div class="fg-col">
+                <label class="fg-label">توضیحات</label>
+                <textarea class="entry" id="txtDecsription" placeholder="..."></textarea>
+            </div>
         </div>
         <div class="form-body gap-3"
              id="prototype"
              draggable="true"
              uk-sortable="group:form;handle: .tool-actions; cls-item:grabbable; cls-custom: tool-grabbed">
-</div>
+        </div>
         <div class="form-footer">
             <div class="actions">
                 <button id="btn-finish" class="btn btn-primary">
@@ -650,7 +659,7 @@
         </form>
         <div class="tool-content">
             <div class="fg-col">
-                <label class="fg-label">نام و نام خانوادگی</label>
+                <label tool-label class="fg-label">نام و نام خانوادگی</label>
                 <input type="text" class="entry" value="" />
             </div>
         </div>

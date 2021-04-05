@@ -27,7 +27,7 @@ define(["require", "exports"], function (require, exports) {
             switch (+optionType) {
                 case OptionType.input:
                     var input_1 = element.querySelector('input');
-                    input_1.addEventListener('change', function () {
+                    input_1.addEventListener('input', function () {
                         value = input_1.value;
                     });
                     break;
@@ -39,8 +39,8 @@ define(["require", "exports"], function (require, exports) {
                     break;
                 case OptionType.checkbox:
                     var checkbox_1 = element.querySelector('input[type=checkbox]');
-                    checkbox_1.addEventListener('change', function () {
-                        value = checkbox_1.value;
+                    checkbox_1.addEventListener('input', function () {
+                        value = checkbox_1.checked ? 'true' : 'false';
                     });
                     break;
                 case OptionType.doubleInput:
@@ -50,21 +50,20 @@ define(["require", "exports"], function (require, exports) {
                     var change = function () {
                         value = from_1.value + ',' + to_1.value;
                     };
-                    from_1.addEventListener('change', change);
-                    to_1.addEventListener('change', change);
+                    from_1.addEventListener('input', change);
+                    to_1.addEventListener('input', change);
                     break;
                 default:
                     console.error('Unknown Option Type');
                     break;
             }
         }
-        Option.prototype.valueChanged = function () {
-        };
         return Option;
     }());
     exports.Option = Option;
     var Regex = /** @class */ (function () {
-        function Regex() {
+        function Regex(tblRegex) {
+            this.tblRegex = tblRegex;
         }
         return Regex;
     }());
