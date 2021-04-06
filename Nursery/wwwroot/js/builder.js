@@ -6,23 +6,27 @@ define(["require", "exports", "./model/db/tblField", "./model/db/tblForm", "./mo
     var toolboxHTML = toolbox.innerHTML;
     var btnFinish = document.getElementById('btn-finish');
     //#region Initialize Regex Select Options
-    var regexSelectElements = document.querySelectorAll('[regex-select]');
-    fetch('/Admin/Form/GetSelectOptions').then(function (json) {
-        json.json().then(function (options) {
-            regexSelectElements.forEach(function (selectElement) {
-                selectElement.innerHTML = '';
-                var initElement = document.createElement('option');
-                initElement.text = 'افزودن گزینه اصلاح...';
-                selectElement.options.add(initElement);
-                //-
-                options.forEach(function (option) {
-                    var optionElement = document.createElement('option');
-                    optionElement.value = JSON.stringify(option);
-                    optionElement.text = option.name;
-                    selectElement.options.add(optionElement);
+    window.addEventListener('load', function () {
+        var regexSelectElements = document.querySelectorAll('[regex-select]');
+        fetch('/Admin/Form/GetSelectOptions').then(function (json) {
+            json.json().then(function (options) {
+                regexSelectElements.forEach(function (selectElement) {
+                    selectElement.innerHTML = '';
+                    var initElement = document.createElement('option');
+                    initElement.text = 'افزودن گزینه اصلاح...';
+                    selectElement.options.add(initElement);
+                    //-
+                    options.forEach(function (option) {
+                        var optionElement = document.createElement('option');
+                        optionElement.value = JSON.stringify(option);
+                        optionElement.text = option.name;
+                        selectElement.options.add(optionElement);
+                    });
+                    toolbox.style.opacity = '1';
+                    toolboxHTML = toolbox.innerHTML;
                 });
             });
-        });
+        })["catch"](function () { window.location.reload(); });
     });
     //#endregion
     btnFinish.addEventListener('click', function () {
@@ -40,16 +44,29 @@ define(["require", "exports", "./model/db/tblField", "./model/db/tblForm", "./mo
         componentList.forEach(function (f) {
             var _a, _b, _c, _d;
             var field = new tblField_1.TblField();
-            field.IsRequired = ((_a = f.options.filter(function (option) { return option.name === 'IsRequired'; })[0]) === null || _a === void 0 ? void 0 : _a.value) == 'true';
-            field.Placeholder = (_b = f.options.filter(function (option) { return option.name === 'Placeholder'; })[0]) === null || _b === void 0 ? void 0 : _b.value;
-            field.Label = (_c = f.options.filter(function (option) { return option.name === 'Label'; })[0]) === null || _c === void 0 ? void 0 : _c.value;
-            field.Tooltip = (_d = f.options.filter(function (option) { return option.name === 'Tooltip'; })[0]) === null || _d === void 0 ? void 0 : _d.value;
+            // Options
+            field.IsRequired = ((_a = f.options.filter(function (option) { return option.name == 'IsRequired'; })[0]) === null || _a === void 0 ? void 0 : _a.value) == 'true';
+            field.Placeholder = (_b = f.options.filter(function (option) { return option.name == 'Placeholder'; })[0]) === null || _b === void 0 ? void 0 : _b.value;
+            field.Label = (_c = f.options.filter(function (option) { return option.name == 'Label'; })[0]) === null || _c === void 0 ? void 0 : _c.value;
+            field.Tooltip = (_d = f.options.filter(function (option) { return option.name == 'Tooltip'; })[0]) === null || _d === void 0 ? void 0 : _d.value;
             field.Type = f.type;
-            // TODO Attach option names together using  ','
-            f.selects.forEach(function (i) {
-                field.Options += i + ',';
-            });
-            console.log(field.Options);
+            // Select
+            field.Options = f.selects.map(function (i) { return i.value; }).join(',');
+            // Regex
+            field.Validations = f.regexs.map(function (i) { return i.tblRegex; });
+            body.Fields.push(field);
+        });
+        fetch('/Admin/Form/Create', {
+            method: 'post',
+            mode: 'cors',
+            cache: 'no-cache',
+            credentials: 'same-origin',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(body)
+        }).then(function (response) {
+            console.log(response);
         });
     });
     toolbox.addEventListener('removed', function () {
@@ -154,8 +171,8 @@ define(["require", "exports", "./model/db/tblField", "./model/db/tblForm", "./mo
                 reg.button = doc.querySelector('button');
                 reg.element.appendChild(reg.label);
                 reg.element.append(reg.button);
+                // delete
                 reg.button.addEventListener('click', function () {
-                    toolModel.regexs.splice(toolModel.regexs.indexOf(reg), 1);
                     toolModel.regexAdder.removeChild(reg.element);
                     selectedOption.style.display = 'block';
                     toolModel.regexs.splice(toolModel.regexs.indexOf(reg), 1);
@@ -184,8 +201,9 @@ define(["require", "exports", "./model/db/tblField", "./model/db/tblForm", "./mo
                 sel.element = doc.querySelector('.select-item');
                 sel.label = doc.querySelector('[select-item]');
                 sel.button = doc.querySelector('[btnSelect]');
+                // delete
                 sel.button.addEventListener('click', function () {
-                    toolModel.selects.splice(toolModel.selects.indexOf(sel, 1));
+                    toolModel.selects.splice(toolModel.selects.indexOf(sel), 1);
                     toolModel.selectList.removeChild(sel.element);
                 });
                 sel.element.appendChild(sel.label);

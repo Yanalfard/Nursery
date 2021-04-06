@@ -20,27 +20,31 @@ define(["require", "exports"], function (require, exports) {
     })(OptionType = exports.OptionType || (exports.OptionType = {}));
     var Option = /** @class */ (function () {
         function Option(element, optionType, name, value) {
+            var _this = this;
+            this.name = '';
+            this.value = 'false';
             this.element = element;
             this.optionType = optionType;
             this.name = name;
-            this.value = value;
+            this.value = value || this.value;
             switch (+optionType) {
                 case OptionType.input:
                     var input_1 = element.querySelector('input');
                     input_1.addEventListener('input', function () {
-                        value = input_1.value;
+                        _this.value = input_1.value;
                     });
                     break;
                 case OptionType.select:
                     var select_1 = element.querySelector('select');
                     select_1.addEventListener('change', function () {
-                        value = select_1.value;
+                        _this.value = select_1.value;
                     });
                     break;
                 case OptionType.checkbox:
                     var checkbox_1 = element.querySelector('input[type=checkbox]');
                     checkbox_1.addEventListener('input', function () {
-                        value = checkbox_1.checked ? 'true' : 'false';
+                        console.log(_this.value);
+                        _this.value = checkbox_1.checked ? 'true' : 'false';
                     });
                     break;
                 case OptionType.doubleInput:
@@ -48,7 +52,7 @@ define(["require", "exports"], function (require, exports) {
                     var to_1 = element.querySelector('[input-to]');
                     //-
                     var change = function () {
-                        value = from_1.value + ',' + to_1.value;
+                        _this.value = from_1.value + ',' + to_1.value;
                     };
                     from_1.addEventListener('input', change);
                     to_1.addEventListener('input', change);

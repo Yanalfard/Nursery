@@ -29,5 +29,41 @@ namespace Nursery.Areas.Admin.Controllers
             return Json(options);
         }
 
+        [HttpPost]
+        public IActionResult Create([FromBody] DFormVm dform)
+        {
+            TblForm form = new TblForm();
+            form.Name = dform.Name;
+            form.Body = dform.Body;
+            form.DateCreated = DateTime.Now;
+            form.IsDeleted = false;
+
+            //form -> db
+
+            dform.Fields.ForEach(dfield =>
+            {
+                TblField field = new TblField();
+                field.Lable = dfield.Label;
+                field.Options = dfield.Options;
+                field.PlcaeHolder = dfield.Placeholder;
+                field.Tooltip = dfield.Tooltip;
+                field.Type = nameof(dfield.Type).ToLower();
+                field.IsDeleted = false;
+
+                //field -> db
+
+                dfield.Validations.ForEach(dvalidation =>
+                {
+                    
+
+                    //
+
+                });
+
+            });
+
+            return Ok("LOL");
+        }
+
     }
 }

@@ -141,6 +141,8 @@ backdrop-filter: saturate(80%);
   width: 100%;
   display: flex;
   flex-direction: row; }
+  .form-builder #toolbox {
+    opacity: 0; }
   .form-builder .toolbox, .form-builder .toolbox-placeholder {
     flex: 1fr;
     width: 424px;

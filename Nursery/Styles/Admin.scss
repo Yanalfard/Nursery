@@ -91,6 +91,10 @@
 
     @include row;
 
+    #toolbox {
+        opacity: 0;
+    }
+
     .toolbox, .toolbox-placeholder {
         flex: 1fr;
         width: $toolbox-width;

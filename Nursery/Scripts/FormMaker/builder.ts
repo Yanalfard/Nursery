@@ -8,28 +8,36 @@ import { Tool, Option, Regex, Select, OptionType } from "./model/tool";
 
 // Toolbox Element Recreation implementation
 const toolbox = document.getElementById('toolbox');
-const toolboxHTML = toolbox.innerHTML;
+let toolboxHTML = toolbox.innerHTML;
 const btnFinish = document.getElementById('btn-finish');
 
+
 //#region Initialize Regex Select Options
-const regexSelectElements = document.querySelectorAll('[regex-select]');
-fetch('/Admin/Form/GetSelectOptions').then((json) => {
-    json.json().then((options: TblRegex[]) => {
-        regexSelectElements.forEach((selectElement: HTMLSelectElement) => {
-            selectElement.innerHTML = '';
-            const initElement = document.createElement('option') as HTMLOptionElement;
-            initElement.text = 'افزودن گزینه اصلاح...'
-            selectElement.options.add(initElement);
-            //-
-            options.forEach((option: any) => {
-                const optionElement = document.createElement('option') as HTMLOptionElement;
-                optionElement.value = JSON.stringify(option);
-                optionElement.text = option.name;
-                selectElement.options.add(optionElement);
+window.addEventListener('load', () => {
+
+    const regexSelectElements = document.querySelectorAll('[regex-select]');
+    fetch('/Admin/Form/GetSelectOptions').then((json) => {
+        json.json().then((options: TblRegex[]) => {
+            regexSelectElements.forEach((selectElement: HTMLSelectElement) => {
+                selectElement.innerHTML = '';
+                const initElement = document.createElement('option') as HTMLOptionElement;
+                initElement.text = 'افزودن گزینه اصلاح...'
+                selectElement.options.add(initElement);
+                //-
+                options.forEach((option: any) => {
+                    const optionElement = document.createElement('option') as HTMLOptionElement;
+                    optionElement.value = JSON.stringify(option);
+                    optionElement.text = option.name;
+                    selectElement.options.add(optionElement);
+                });
+
+                toolbox.style.opacity = '1';
+                toolboxHTML = toolbox.innerHTML;
+
             });
         });
-    });
-})
+    }).catch(() => { window.location.reload() });
+});
 //#endregion
 
 
@@ -49,19 +57,34 @@ btnFinish.addEventListener('click', () => {
 
     componentList.forEach((f: Tool) => {
         const field = new TblField();
-        field.IsRequired = f.options.filter(option => option.name === 'IsRequired')[0]?.value == 'true';
-        field.Placeholder = f.options.filter(option => option.name === 'Placeholder')[0]?.value;
-        field.Label = f.options.filter(option => option.name === 'Label')[0]?.value;
-        field.Tooltip = f.options.filter(option => option.name === 'Tooltip')[0]?.value;
+        // Options
+        field.IsRequired = f.options.filter(option => option.name == 'IsRequired')[0]?.value == 'true';
+        field.Placeholder = f.options.filter(option => option.name == 'Placeholder')[0]?.value;
+        field.Label = f.options.filter(option => option.name == 'Label')[0]?.value;
+        field.Tooltip = f.options.filter(option => option.name == 'Tooltip')[0]?.value;
         field.Type = f.type;
 
-        // TODO Attach option names together using  ','
-        f.selects.forEach(i => {
-            field.Options += i + ','
-        });
+        // Select
+        field.Options = f.selects.map(i => i.value).join(',');
+        // Regex
+        field.Validations = f.regexs.map(i => i.tblRegex);
 
-        console.log(field.Options);
+        body.Fields.push(field);
     });
+
+    fetch('/Admin/Form/Create', {
+        method: 'post',
+        mode: 'cors',
+        cache: 'no-cache',
+        credentials: 'same-origin',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(body)
+    }).then(response => {
+        console.log(response);
+    })
+
 
 });
 
@@ -194,8 +217,8 @@ prototype.addEventListener('added', (event: any) => {
             reg.element.appendChild(reg.label);
             reg.element.append(reg.button);
 
+            // delete
             reg.button.addEventListener('click', () => {
-                toolModel.regexs.splice(toolModel.regexs.indexOf(reg), 1);
                 toolModel.regexAdder.removeChild(reg.element);
                 selectedOption.style.display = 'block';
                 toolModel.regexs.splice(toolModel.regexs.indexOf(reg), 1);
@@ -235,14 +258,14 @@ prototype.addEventListener('added', (event: any) => {
             sel.label = doc.querySelector('[select-item]');
             sel.button = doc.querySelector('[btnSelect]');
 
+            // delete
             sel.button.addEventListener('click', () => {
-                toolModel.selects.splice(toolModel.selects.indexOf(sel, 1));
+                toolModel.selects.splice(toolModel.selects.indexOf(sel), 1);
                 toolModel.selectList.removeChild(sel.element);
             });
 
             sel.element.appendChild(sel.label);
             sel.element.appendChild(sel.button);
-
 
             toolModel.selects.push(sel);
             toolModel.selectList.appendChild(sel.element);

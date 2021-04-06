@@ -43,35 +43,36 @@ export enum OptionType {
 export class Option {
     element: HTMLElement;
     optionType: OptionType;
-    name: string;
-    value: string;
+    name: string = '';
+    value: string = 'false';
 
     constructor(element?: HTMLElement, optionType?: OptionType, name?: string, value?: string) {
         this.element = element;
         this.optionType = optionType;
         this.name = name;
-        this.value = value;
+        this.value = value || this.value;
 
         switch (+optionType) {
 
             case OptionType.input:
                 const input = element.querySelector('input') as HTMLInputElement;
                 input.addEventListener('input', () => {
-                    value = input.value;
+                    this.value = input.value;
                 });
                 break;
 
             case OptionType.select:
                 const select = element.querySelector('select') as HTMLSelectElement;
                 select.addEventListener('change', () => {
-                    value = select.value;
+                    this.value = select.value;
                 });
                 break;
 
             case OptionType.checkbox:
                 const checkbox = element.querySelector('input[type=checkbox]') as HTMLInputElement;
                 checkbox.addEventListener('input', () => {
-                    value = checkbox.checked ? 'true' : 'false';
+                    console.log(this.value);
+                    this.value = checkbox.checked ? 'true' : 'false';
                 });
                 break;
 
@@ -80,7 +81,7 @@ export class Option {
                 const to = element.querySelector('[input-to]') as HTMLInputElement;
                 //-
                 const change = () => {
-                    value = from.value + ',' + to.value;
+                    this.value = from.value + ',' + to.value;
                 }
                 from.addEventListener('input', change);
                 to.addEventListener('input', change);
