@@ -7,19 +7,19 @@ using System.Threading.Tasks;
 namespace Nursery.Areas.Admin.Controllers
 {
     [Area("Admin")]
-    public class UserController : Controller
+    public class KidController : Controller
     {
-        public IActionResult Index(int id = 0)
-        {
-            return View();
-        }
-
-        public IActionResult Add()
+        public IActionResult Index()
         {
             return View();
         }
 
         public IActionResult List()
+        {
+            return View();
+        }
+
+        public IActionResult Add()
         {
             return View();
         }

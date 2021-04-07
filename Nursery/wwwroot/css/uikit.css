@@ -106,11 +106,6 @@ backdrop-filter: saturate(80%);
 .flex-9 {
   flex: 9; }
 
-.round {
-  -moz-border-radius: 1000px 1000px 1000px 1000px;
-  -webkit-border-radius: 1000px 1000px 1000px 1000px;
-  border-radius: 1000px 1000px 1000px 1000px; }
-
 .uk-slider-items .product {
   margin: auto; }
 
@@ -1418,8 +1413,6 @@ a.uk-link-reset,
   margin: 0;
   /* 2 */
   border: none;
-  /* 3 */
-  border-radius: 0;
   /* 4 */
   overflow: visible;
   /* 5 */
@@ -6383,7 +6376,7 @@ ul.uk-nav-sub {
   right: 0;
   bottom: 0;
   left: 0;
-  z-index: 1010;
+  z-index: 1021;
   /* 5 */
   background: #000;
   /* 6 */
@@ -6467,8 +6460,7 @@ ul.uk-nav-sub {
 /* Toolbar Icon (Close)
  ========================================================================== */
 .uk-lightbox-toolbar-icon {
-  padding: 5px;
-  color: rgba(255, 255, 255, 0.7); }
+  display: none; }
 
 /*
  * Hover
