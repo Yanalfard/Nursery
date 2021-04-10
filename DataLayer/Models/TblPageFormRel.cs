@@ -10,7 +10,7 @@ namespace DataLayer.Models
         public int PageId { get; set; }
         public int FormId { get; set; }
         public int IndexNo { get; set; }
-        public bool IsDeleted { get; set; }
+        public bool? IsDeleted { get; set; }
 
         [ForeignKey(nameof(FormId))]
         [InverseProperty(nameof(TblForm.TblPageFormRel))]

@@ -11,6 +11,6 @@ namespace DataLayer.Models
         public string Name { get; set; }
         [Required]
         [StringLength(150)]
-        public string NickName { get; set; }
+        public string Nickname { get; set; }
     }
 }

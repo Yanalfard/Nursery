@@ -13,8 +13,8 @@ namespace DataLayer.Models
         [Column(TypeName = "datetime")]
         public DateTime ShiftStart { get; set; }
         [Column(TypeName = "datetime")]
-        public DateTime SiftEnd { get; set; }
-        public bool IsDeleted { get; set; }
+        public DateTime ShiftEnd { get; set; }
+        public bool? IsDeleted { get; set; }
 
         [ForeignKey(nameof(RoleId))]
         [InverseProperty(nameof(TblRole.TblUserRoleRel))]
