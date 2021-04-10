@@ -8,8 +8,8 @@ namespace DataLayer.Models
     {
         public TblField()
         {
+            TblFieldRegexRel = new HashSet<TblFieldRegexRel>();
             TblFormFieldRel = new HashSet<TblFormFieldRel>();
-            TblRegex = new HashSet<TblRegex>();
         }
 
         [Key]
@@ -19,18 +19,18 @@ namespace DataLayer.Models
         public string Type { get; set; }
         [Required]
         [StringLength(150)]
-        public string Lable { get; set; }
+        public string Label { get; set; }
         [StringLength(500)]
         public string Tooltip { get; set; }
         public string Options { get; set; }
         public bool? IsRequired { get; set; }
+        public bool? IsDeleted { get; set; }
         [StringLength(150)]
-        public string PlcaeHolder { get; set; }
-        public bool IsDeleted { get; set; }
+        public string Placeholder { get; set; }
 
         [InverseProperty("Field")]
-        public virtual ICollection<TblFormFieldRel> TblFormFieldRel { get; set; }
+        public virtual ICollection<TblFieldRegexRel> TblFieldRegexRel { get; set; }
         [InverseProperty("Field")]
-        public virtual ICollection<TblRegex> TblRegex { get; set; }
+        public virtual ICollection<TblFormFieldRel> TblFormFieldRel { get; set; }
     }
 }

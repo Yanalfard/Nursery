@@ -9,7 +9,7 @@ namespace DataLayer.Models
         public int RolePageRelId { get; set; }
         public int RoleId { get; set; }
         public int PageId { get; set; }
-        public bool IsDeleted { get; set; }
+        public bool? IsDeleted { get; set; }
 
         [ForeignKey(nameof(PageId))]
         [InverseProperty(nameof(TblPage.TblRolePageRel))]

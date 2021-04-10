@@ -21,7 +21,7 @@ namespace DataLayer.Models
         public string ControllerName { get; set; }
         [StringLength(50)]
         public string ActionName { get; set; }
-        public bool IsDeleted { get; set; }
+        public bool? IsDeleted { get; set; }
 
         [InverseProperty("Page")]
         public virtual ICollection<TblPageFormRel> TblPageFormRel { get; set; }

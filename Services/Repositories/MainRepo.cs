@@ -79,10 +79,5 @@ namespace Services.Repositories
         {
             return _dbSet.Find(id);
         }
-
-        public virtual void Save()
-        {
-            _context.SaveChanges();
-        }
     }
 }

@@ -15,6 +15,7 @@ namespace DataLayer.Models
 
         public virtual DbSet<TblConfig> TblConfig { get; set; }
         public virtual DbSet<TblField> TblField { get; set; }
+        public virtual DbSet<TblFieldRegexRel> TblFieldRegexRel { get; set; }
         public virtual DbSet<TblForm> TblForm { get; set; }
         public virtual DbSet<TblFormFieldRel> TblFormFieldRel { get; set; }
         public virtual DbSet<TblKid> TblKid { get; set; }
@@ -40,18 +41,39 @@ namespace DataLayer.Models
         {
             modelBuilder.Entity<TblField>(entity =>
             {
+                entity.Property(e => e.IsDeleted).HasDefaultValueSql("((0))");
+
                 entity.Property(e => e.IsRequired).HasDefaultValueSql("((0))");
+            });
+
+            modelBuilder.Entity<TblFieldRegexRel>(entity =>
+            {
+                entity.HasOne(d => d.Field)
+                    .WithMany(p => p.TblFieldRegexRel)
+                    .HasForeignKey(d => d.FieldId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_TblFieldRegexRel_TblField");
+
+                entity.HasOne(d => d.Regex)
+                    .WithMany(p => p.TblFieldRegexRel)
+                    .HasForeignKey(d => d.RegexId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_TblFieldRegexRel_TblRegex");
             });
 
             modelBuilder.Entity<TblForm>(entity =>
             {
                 entity.Property(e => e.DateCreated).HasDefaultValueSql("(getdate())");
+
+                entity.Property(e => e.IsDeleted).HasDefaultValueSql("((0))");
             });
 
             modelBuilder.Entity<TblFormFieldRel>(entity =>
             {
                 entity.HasKey(e => e.FormFieldId)
                     .HasName("PK_TblFormFieldId");
+
+                entity.Property(e => e.IsDeleted).HasDefaultValueSql("((0))");
 
                 entity.HasOne(d => d.Field)
                     .WithMany(p => p.TblFormFieldRel)
@@ -66,8 +88,15 @@ namespace DataLayer.Models
                     .HasConstraintName("FK_TblFormFieldId_TblForm");
             });
 
+            modelBuilder.Entity<TblPage>(entity =>
+            {
+                entity.Property(e => e.IsDeleted).HasDefaultValueSql("((0))");
+            });
+
             modelBuilder.Entity<TblPageFormRel>(entity =>
             {
+                entity.Property(e => e.IsDeleted).HasDefaultValueSql("((0))");
+
                 entity.HasOne(d => d.Form)
                     .WithMany(p => p.TblPageFormRel)
                     .HasForeignKey(d => d.FormId)
@@ -83,20 +112,20 @@ namespace DataLayer.Models
 
             modelBuilder.Entity<TblRegex>(entity =>
             {
-                entity.HasOne(d => d.Field)
-                    .WithMany(p => p.TblRegex)
-                    .HasForeignKey(d => d.FieldId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_TblRegex_TblField");
+                entity.Property(e => e.IsDeleted).HasDefaultValueSql("((0))");
             });
 
             modelBuilder.Entity<TblRole>(entity =>
             {
+                entity.Property(e => e.IsDeleted).HasDefaultValueSql("((0))");
+
                 entity.Property(e => e.Name).IsFixedLength();
             });
 
             modelBuilder.Entity<TblRolePageRel>(entity =>
             {
+                entity.Property(e => e.IsDeleted).HasDefaultValueSql("((0))");
+
                 entity.HasOne(d => d.Page)
                     .WithMany(p => p.TblRolePageRel)
                     .HasForeignKey(d => d.PageId)
@@ -108,6 +137,11 @@ namespace DataLayer.Models
                     .HasForeignKey(d => d.RoleId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_TblRolePageRel_TblRole");
+            });
+
+            modelBuilder.Entity<TblUser>(entity =>
+            {
+                entity.Property(e => e.IsDeleted).HasDefaultValueSql("((0))");
             });
 
             modelBuilder.Entity<TblUserLog>(entity =>
@@ -123,6 +157,8 @@ namespace DataLayer.Models
 
             modelBuilder.Entity<TblUserRoleRel>(entity =>
             {
+                entity.Property(e => e.IsDeleted).HasDefaultValueSql("((0))");
+
                 entity.HasOne(d => d.Role)
                     .WithMany(p => p.TblUserRoleRel)
                     .HasForeignKey(d => d.RoleId)
@@ -141,6 +177,8 @@ namespace DataLayer.Models
                 entity.Property(e => e.DateCreated).HasDefaultValueSql("(getdate())");
 
                 entity.Property(e => e.IsAccepted).HasDefaultValueSql("((0))");
+
+                entity.Property(e => e.IsDeleted).HasDefaultValueSql("((0))");
 
                 entity.HasOne(d => d.FormField)
                     .WithMany(p => p.TblValue)

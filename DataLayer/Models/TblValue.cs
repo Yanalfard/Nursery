@@ -16,7 +16,7 @@ namespace DataLayer.Models
         [Column(TypeName = "datetime")]
         public DateTime? DateCreated { get; set; }
         public bool? IsAccepted { get; set; }
-        public bool IsDeleted { get; set; }
+        public bool? IsDeleted { get; set; }
 
         [ForeignKey(nameof(FormFieldId))]
         [InverseProperty(nameof(TblFormFieldRel.TblValue))]
