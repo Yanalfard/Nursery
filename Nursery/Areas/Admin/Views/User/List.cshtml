@@ -17,19 +17,10 @@
             <h2 class="card-title">
                 لیست کاربر ها
             </h2>
-            @* هادی گفت تو Onchange ها فرم رو شوت کن :)  *@
-            @*<button type="button" uk-toggle="#Modal" class="btn btn-secondary uk-margin-auto-right">
-            <span>جستجو</span>
-            <span uk-icon="search"></span>
-        </button>*@
-            <button type="button" uk-toggle="#Modal" class="btn btn-secondary uk-margin-auto-right">
-                <span>اضافه</span>
-                <span class="tiny" uk-icon="file"></span>
-            </button>
-            <button type="button" onclick="location = '/Admin/User/AddUser'" class="btn btn-primary uk-margin-small-right">
+            <a href="/Admin/User/Add" class="btn btn-primary uk-margin-auto-right">
                 <span>اضافه</span>
                 <span class="tiny" uk-icon="plus-square"></span>
-            </button>
+            </a>
         </div>
     </div>
     <div class="form-search" uk-sticky="offset: 140;cls-active: sticked uk-box-shadow-medium">
@@ -47,11 +38,6 @@
                 <span class="text-danger"></span>
             </div>
         </div>
-        @* هادی گفت *@
-        @*<button class="btn btn-text">
-                <span>جستجو</span>
-                <span uk-icon="search"></span>
-            </button>*@
     </div>
 
     <div class="form-body scrollh-container uk-padding-remove">
@@ -76,265 +62,31 @@
                     <td>1400/01/01</td>
                     <td>ادمین</td>
                     <td class="actions">
-                        <a class="btn-link" uk-icon="trash-outline"></a>
-                        <a class="btn-link" uk-icon="create-outline"></a>
+                        <a href="" class="btn-icon round text-4" uk-icon="icon:ellipsis-h;ratio:.72"></a>
+                        <div class="dropdown" uk-drop="mode: click;offset:4">
+                            <ul class="dropdown-list">
+                                <li>
+                                    <a href="/Admin/User" class="rowr">
+                                        <span class="new">مشاهده</span>
+                                        <span class="small" uk-icon="eye"></span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="/Admin/User/Edit" class="rowr">
+                                        <span class="new">ویرایش</span>
+                                        <span class="small" uk-icon="pen-square"></span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="" class="rowr btn-danger">
+                                        <span>حذف</span>
+                                        <span class="small" uk-icon="trash"></span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
                     </td>
                 </tr>
-                <tr>
-                    <td>2</td>
-                    <td>ینال احمد زاده</td>
-                    <td><bdi>0903 984 57 75</bdi></td>
-                    <td>1379/10/17</td>
-                    <td>1400/01/01</td>
-                    <td>مدیر</td>
-                    <td class="actions">
-                        <a class="btn-link" uk-icon="trash-outline"></a>
-                        <a class="btn-link" uk-icon="create-outline"></a>
-                    </td>
-                </tr>
-                <tr>
-                    <td>2</td>
-                    <td>ینال احمد زاده</td>
-                    <td><bdi>0903 984 57 75</bdi></td>
-                    <td>1379/10/17</td>
-                    <td>1400/01/01</td>
-                    <td>مدیر</td>
-                    <td class="actions">
-                        <a class="btn-link" uk-icon="trash-outline"></a>
-                        <a class="btn-link" uk-icon="create-outline"></a>
-                    </td>
-                </tr>
-
-                <!-- #region name -->
-                <tr>
-                    <td>2</td>
-                    <td>ینال احمد زاده</td>
-                    <td><bdi>0903 984 57 75</bdi></td>
-                    <td>1379/10/17</td>
-                    <td>1400/01/01</td>
-                    <td>مدیر</td>
-                    <td class="actions">
-                        <a class="btn-link" uk-icon="trash-outline"></a>
-                        <a class="btn-link" uk-icon="create-outline"></a>
-                    </td>
-                </tr>
-                <tr>
-                    <td>2</td>
-                    <td>ینال احمد زاده</td>
-                    <td><bdi>0903 984 57 75</bdi></td>
-                    <td>1379/10/17</td>
-                    <td>1400/01/01</td>
-                    <td>مدیر</td>
-                    <td class="actions">
-                        <a class="btn-link" uk-icon="trash-outline"></a>
-                        <a class="btn-link" uk-icon="create-outline"></a>
-                    </td>
-                </tr>
-                <tr>
-                    <td>2</td>
-                    <td>ینال احمد زاده</td>
-                    <td><bdi>0903 984 57 75</bdi></td>
-                    <td>1379/10/17</td>
-                    <td>1400/01/01</td>
-                    <td>مدیر</td>
-                    <td class="actions">
-                        <a class="btn-link" uk-icon="trash-outline"></a>
-                        <a class="btn-link" uk-icon="create-outline"></a>
-                    </td>
-                </tr>
-                <tr>
-                    <td>2</td>
-                    <td>ینال احمد زاده</td>
-                    <td><bdi>0903 984 57 75</bdi></td>
-                    <td>1379/10/17</td>
-                    <td>1400/01/01</td>
-                    <td>مدیر</td>
-                    <td class="actions">
-                        <a class="btn-link" uk-icon="trash-outline"></a>
-                        <a class="btn-link" uk-icon="create-outline"></a>
-                    </td>
-                </tr>
-                <tr>
-                    <td>2</td>
-                    <td>ینال احمد زاده</td>
-                    <td><bdi>0903 984 57 75</bdi></td>
-                    <td>1379/10/17</td>
-                    <td>1400/01/01</td>
-                    <td>مدیر</td>
-                    <td class="actions">
-                        <a class="btn-link" uk-icon="trash-outline"></a>
-                        <a class="btn-link" uk-icon="create-outline"></a>
-                    </td>
-                </tr>
-                <tr>
-                    <td>2</td>
-                    <td>ینال احمد زاده</td>
-                    <td><bdi>0903 984 57 75</bdi></td>
-                    <td>1379/10/17</td>
-                    <td>1400/01/01</td>
-                    <td>مدیر</td>
-                    <td class="actions">
-                        <a class="btn-link" uk-icon="trash-outline"></a>
-                        <a class="btn-link" uk-icon="create-outline"></a>
-                    </td>
-                </tr>
-                <tr>
-                    <td>2</td>
-                    <td>ینال احمد زاده</td>
-                    <td><bdi>0903 984 57 75</bdi></td>
-                    <td>1379/10/17</td>
-                    <td>1400/01/01</td>
-                    <td>مدیر</td>
-                    <td class="actions">
-                        <a class="btn-link" uk-icon="trash-outline"></a>
-                        <a class="btn-link" uk-icon="create-outline"></a>
-                    </td>
-                </tr>
-                <tr>
-                    <td>2</td>
-                    <td>ینال احمد زاده</td>
-                    <td><bdi>0903 984 57 75</bdi></td>
-                    <td>1379/10/17</td>
-                    <td>1400/01/01</td>
-                    <td>مدیر</td>
-                    <td class="actions">
-                        <a class="btn-link" uk-icon="trash-outline"></a>
-                        <a class="btn-link" uk-icon="create-outline"></a>
-                    </td>
-                </tr>
-                <tr>
-                    <td>2</td>
-                    <td>ینال احمد زاده</td>
-                    <td><bdi>0903 984 57 75</bdi></td>
-                    <td>1379/10/17</td>
-                    <td>1400/01/01</td>
-                    <td>مدیر</td>
-                    <td class="actions">
-                        <a class="btn-link" uk-icon="trash-outline"></a>
-                        <a class="btn-link" uk-icon="create-outline"></a>
-                    </td>
-                </tr>
-                <tr>
-                    <td>2</td>
-                    <td>ینال احمد زاده</td>
-                    <td><bdi>0903 984 57 75</bdi></td>
-                    <td>1379/10/17</td>
-                    <td>1400/01/01</td>
-                    <td>مدیر</td>
-                    <td class="actions">
-                        <a class="btn-link" uk-icon="trash-outline"></a>
-                        <a class="btn-link" uk-icon="create-outline"></a>
-                    </td>
-                </tr>
-                <tr>
-                    <td>2</td>
-                    <td>ینال احمد زاده</td>
-                    <td><bdi>0903 984 57 75</bdi></td>
-                    <td>1379/10/17</td>
-                    <td>1400/01/01</td>
-                    <td>مدیر</td>
-                    <td class="actions">
-                        <a class="btn-link" uk-icon="trash-outline"></a>
-                        <a class="btn-link" uk-icon="create-outline"></a>
-                    </td>
-                </tr>
-                <tr>
-                    <td>2</td>
-                    <td>ینال احمد زاده</td>
-                    <td><bdi>0903 984 57 75</bdi></td>
-                    <td>1379/10/17</td>
-                    <td>1400/01/01</td>
-                    <td>مدیر</td>
-                    <td class="actions">
-                        <a class="btn-link" uk-icon="trash-outline"></a>
-                        <a class="btn-link" uk-icon="create-outline"></a>
-                    </td>
-                </tr>
-                <tr>
-                    <td>2</td>
-                    <td>ینال احمد زاده</td>
-                    <td><bdi>0903 984 57 75</bdi></td>
-                    <td>1379/10/17</td>
-                    <td>1400/01/01</td>
-                    <td>مدیر</td>
-                    <td class="actions">
-                        <a class="btn-link" uk-icon="trash-outline"></a>
-                        <a class="btn-link" uk-icon="create-outline"></a>
-                    </td>
-                </tr>
-                <tr>
-                    <td>2</td>
-                    <td>ینال احمد زاده</td>
-                    <td><bdi>0903 984 57 75</bdi></td>
-                    <td>1379/10/17</td>
-                    <td>1400/01/01</td>
-                    <td>مدیر</td>
-                    <td class="actions">
-                        <a class="btn-link" uk-icon="trash-outline"></a>
-                        <a class="btn-link" uk-icon="create-outline"></a>
-                    </td>
-                </tr>
-                <tr>
-                    <td>2</td>
-                    <td>ینال احمد زاده</td>
-                    <td><bdi>0903 984 57 75</bdi></td>
-                    <td>1379/10/17</td>
-                    <td>1400/01/01</td>
-                    <td>مدیر</td>
-                    <td class="actions">
-                        <a class="btn-link" uk-icon="trash-outline"></a>
-                        <a class="btn-link" uk-icon="create-outline"></a>
-                    </td>
-                </tr>
-                <tr>
-                    <td>2</td>
-                    <td>ینال احمد زاده</td>
-                    <td><bdi>0903 984 57 75</bdi></td>
-                    <td>1379/10/17</td>
-                    <td>1400/01/01</td>
-                    <td>مدیر</td>
-                    <td class="actions">
-                        <a class="btn-link" uk-icon="trash-outline"></a>
-                        <a class="btn-link" uk-icon="create-outline"></a>
-                    </td>
-                </tr>
-                <tr>
-                    <td>2</td>
-                    <td>ینال احمد زاده</td>
-                    <td><bdi>0903 984 57 75</bdi></td>
-                    <td>1379/10/17</td>
-                    <td>1400/01/01</td>
-                    <td>مدیر</td>
-                    <td class="actions">
-                        <a class="btn-link" uk-icon="trash-outline"></a>
-                        <a class="btn-link" uk-icon="create-outline"></a>
-                    </td>
-                </tr>
-                <tr>
-                    <td>2</td>
-                    <td>ینال احمد زاده</td>
-                    <td><bdi>0903 984 57 75</bdi></td>
-                    <td>1379/10/17</td>
-                    <td>1400/01/01</td>
-                    <td>مدیر</td>
-                    <td class="actions">
-                        <a class="btn-link" uk-icon="trash-outline"></a>
-                        <a class="btn-link" uk-icon="create-outline"></a>
-                    </td>
-                </tr>
-                <tr>
-                    <td>2</td>
-                    <td>ینال احمد زاده</td>
-                    <td><bdi>0903 984 57 75</bdi></td>
-                    <td>1379/10/17</td>
-                    <td>1400/01/01</td>
-                    <td>مدیر</td>
-                    <td class="actions">
-                        <a class="btn-link" uk-icon="trash"></a>
-                    </td>
-                </tr>
-                <!-- #endregion -->
-
             </tbody>
         </table>
     </div>

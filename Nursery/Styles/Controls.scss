@@ -747,6 +747,7 @@ $background-highlight: #eee;
 .tbl {
     direction: rtl;
     border-spacing: 0;
+    width: 100%;
 
     .dropdown {
         .rowr {
@@ -759,8 +760,7 @@ $background-highlight: #eee;
     }
 
     .actions {
-        @include row;
-        grid-gap: 12px;
+        width: 48px !important;
 
         * {
             margin: auto 0;

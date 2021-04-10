@@ -1,12 +1,12 @@
 ﻿@{
-    ViewData["Title"] = "کاربر جدید";
+    ViewData["Title"] = "ویرایش کودک";
     Layout = "~/Areas/Admin/Views/_AdminLayout.cshtml";
 }
 
 <form class="form">
     <div class="form-header">
         <h3>
-            کاربر جدید
+            ویرایش
         </h3>
     </div>
     <div class="form-body">
@@ -26,26 +26,15 @@
             </div>
 
             <div class="fg-col ">
-                <label class="fg-label" for="tel">شماره تلفن</label>
+                <label class="fg-label" for="tel">نام مستعار</label>
                 <input class="entry" id="tel" type="tel">
                 <span class="text-danger"></span>
             </div>
 
-            <div class="fg-col ">
-                <label class="fg-label" for="password">گذرواژه</label>
-                <input class="entry" id="password" type="text">
-                <span class="text-danger"></span>
-            </div>
-
-            <div class="fg-col ">
-                <label class="fg-label" for="identification">کد ملی</label>
-                <input class="entry" id="identification" type="text">
-                <span class="text-danger"></span>
-            </div>
         </div>
 
     </div>
     <div class="form-footer">
-        <button class="btn btn-primary"><span>اضافه</span></button>
+        <button class="btn btn-primary"><span>ویرایش</span></button>
     </div>
 </form>
