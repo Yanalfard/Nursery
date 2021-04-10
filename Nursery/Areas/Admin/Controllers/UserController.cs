@@ -9,20 +9,20 @@ namespace Nursery.Areas.Admin.Controllers
     [Area("Admin")]
     public class UserController : Controller
     {
-        public IActionResult Index()
+        public IActionResult Index(int id = 0)
         {
             return View();
         }
 
-        public IActionResult AddUser()
+        public IActionResult Add()
         {
             return View();
         }
 
-        public IActionResult ListUser()
+        public IActionResult List()
         {
             return View();
         }
- 
+
     }
 }

@@ -9,7 +9,7 @@ button, .btn, a, a:hover .js-upload, input[type=file] {
 
 .btn {
     display: flex;
-    min-height: 27px;
+    min-height: 26px;
     @include border-def-radius;
     border: 0;
     padding: 4px 15px;
@@ -65,7 +65,7 @@ button, .btn, a, a:hover .js-upload, input[type=file] {
 //-
 
 a.btn {
-    line-height: 27px;
+    line-height: 26px;
 }
 
 a.btn.btn-primary:hover {
@@ -116,37 +116,37 @@ a.btn.btn-primary:hover {
 //-
 
 .btn-success {
-    background-color: $green-background;
-    color: $green;
+    background-color: $green-background !important;
+    color: $green !important;
 }
 
 .btn-success:hover {
-    background-color: darken( $green-background, 4%);
-    color: darken( $green, 4%);
+    background-color: darken( $green-background, 4%) !important;
+    color: darken( $green, 4%) !important;
 }
 
 //-
 
 .btn-warning {
-    background-color: $yellow-background;
-    color: $yellow;
+    background-color: $yellow-background !important;
+    color: $yellow !important;
 }
 
 .btn-warning:hover {
-    background-color: darken( $yellow-background, 4%);
-    color: lighten($yellow, 4%);
+    background-color: darken( $yellow-background, 4%) !important;
+    color: lighten($yellow, 4%) !important;
 }
 
 //-
 
 .btn-danger {
-    background-color: $red-background;
-    color: $red;
+    background-color: $red-background !important;
+    color: $red !important;
 }
 
 .btn-danger:hover {
-    background-color: darken( $red-background, 4%);
-    color: darken( $red, 4%);
+    background-color: darken( $red-background, 4%) !important;
+    color: darken( $red, 4%) !important;
 }
 
 //-
@@ -221,14 +221,15 @@ a.btn.btn-primary:hover {
 
 input:not(input[type=checkbox]):not(input[type=radio]) {
     font-size: 13px;
-    min-height: 27px;
+    min-height: 26px;
 }
 
 /*#region Form */
 
 .entry, .entry-invis {
-    background: transparent;
-    padding: 4px 11px;
+    background: #fff;
+    padding: 2px 8px;
+    font-size: 14px;
     direction: rtl;
     @include component-border;
     @include border-def-radius;
@@ -255,14 +256,14 @@ input:not(input[type=checkbox]):not(input[type=radio]) {
     cursor: not-allowed;
 }
 
-$title-fontsize: 20px;
+$title-fontsize: 18px;
 
 .fg-col {
     margin-bottom: 24px;
     @include column;
 
     .fg-label {
-        font-size: 16px;
+        font-size: 15px;
         color: $Text;
         margin-bottom: 8px;
     }
@@ -292,6 +293,20 @@ $title-fontsize: 20px;
         border: dashed 1px #aaa;
         height: 32px;
         @include border-def-radius;
+    }
+
+    .dl-label {
+        color: $text-3;
+        font-size: 13px;
+    }
+
+    .dl-data {
+        margin-top: 4px;
+        margin-bottom: 0;
+        margin-left: 0;
+        margin-right: 0;
+        color: $Text;
+        font-size: 17px;
     }
 }
 
@@ -686,42 +701,6 @@ $content-padding: 16px;
     background: $Background;
 }
 
-.dropdown {
-    background: #fff;
-    padding: 0;
-    @include shadow-medium;
-    @include border-def-radius;
-    border: 1px #dfdfdf solid;
-
-    .dropdown-list {
-        @include column;
-        margin-bottom: 0;
-
-        li {
-            @include trans(.2s);
-
-            a {
-                padding: 10px 12px;
-                color: lighten($Text,12%);
-                height: 100%;
-            }
-
-            a, span {
-                white-space: nowrap !important;
-            }
-        }
-
-        li:hover {
-            background-color: transparentize(#000,0.94);
-        }
-
-        li:active {
-            background-color: transparentize(#000,0.86);
-            @include trans(0s);
-        }
-    }
-}
-
 $between-card-margin: 20px;
 
 $card-padding: 16px;
@@ -757,8 +736,6 @@ $card-padding: 16px;
 
 /*#region tbl */
 
-
-
 $background-odd: #f9f9f9;
 $background-highlight: #eee;
 
@@ -770,6 +747,16 @@ $background-highlight: #eee;
 .tbl {
     direction: rtl;
     border-spacing: 0;
+
+    .dropdown {
+        .rowr {
+            justify-content: flex-end;
+
+            span:last-child {
+                margin-left: 8px;
+            }
+        }
+    }
 
     .actions {
         @include row;
@@ -846,6 +833,22 @@ $background-highlight: #eee;
 
 .text-6 {
     color: $text-6
+}
+
+@for $var from 3 to 51 {
+    .grid-#{($var * 10)} {
+        @include grid(#{$var * 10}px);
+        direction: rtl;
+
+        * {
+            direction: ltr;
+            text-align: right;
+        }
+
+        .fg-col {
+            margin-bottom: 0;
+        }
+    }
 }
 
 .footer {
@@ -1063,4 +1066,44 @@ $background-highlight: #eee;
     min-height: 35px;
     @include border-radius(5px,5px,5px,5px);
     pointer-events: none;
+}
+
+.round {
+    @include border-circle;
+}
+
+.dropdown {
+    background: #fff;
+    padding: 0;
+    @include shadow-medium;
+    @include border-def-radius;
+    border: 1px #dfdfdf solid;
+
+    .dropdown-list {
+        @include column;
+        margin-bottom: 0;
+
+        li {
+            @include trans(.2s);
+
+            a {
+                padding: 10px 12px;
+                color: lighten($Text,12%);
+                height: 100%;
+            }
+
+            a, span {
+                white-space: nowrap !important;
+            }
+        }
+
+        li:hover {
+            background-color: transparentize(#000,0.94);
+        }
+
+        li:active {
+            background-color: transparentize(#000,0.86);
+            @include trans(0s);
+        }
+    }
 }

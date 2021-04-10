@@ -16,7 +16,7 @@ namespace Nursery.Controllers
         {
             List<DRegexVm> validations = new List<DRegexVm>() {
                 new DRegexVm
-                (0,"NO","REGEX FAILED"),
+                (0,"REGEX NAME","NO","REGEX FAILED"),
             };
 
             List<DFieldVm> fields = new List<DFieldVm>()

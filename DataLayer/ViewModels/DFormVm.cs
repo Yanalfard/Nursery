@@ -25,6 +25,11 @@ namespace DataLayer.ViewModels
         /// </summary>
         public List<DFieldVm> Fields { get; set; }
 
+        public DFormVm()
+        {
+
+        }
+
         public DFormVm(int formId, string name, string body, DateTime dateCreated, List<DFieldVm> fields, bool isDeleted = false)
         {
             FormId = formId;

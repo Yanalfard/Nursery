@@ -21,10 +21,6 @@
     }
 }
 
-.round {
-    @include border-circle;
-}
-
 .uk-slider-items .product {
     margin: auto;
 }
@@ -104,6 +100,8 @@ html {
         background: lighten($color,8%);
     }
 }
+
+
 /*
  * Remove the margin in all browsers.
  */
@@ -112,6 +110,25 @@ body {
     background: $Background;
     overflow: hidden !important;
     min-height: 100vh;
+    /*ScrollBar*/
+    /* width */
+    ::-webkit-scrollbar {
+        width: 14px;
+    }
+
+    $color: #e5e5e5;
+    /* Track */
+    ::-webkit-scrollbar-track {
+        background: lighten($color,4%);
+    }
+    /* Handle */
+    ::-webkit-scrollbar-thumb {
+        background: $color;
+    }
+    /* Handle on hover */
+    ::-webkit-scrollbar-thumb:hover {
+        background: darken($color,6%);
+    }
 }
 
 /*#region Space */
@@ -1452,8 +1469,6 @@ a.uk-link-reset,
     margin: 0;
     /* 2 */
     border: none;
-    /* 3 */
-    border-radius: 0;
     /* 4 */
     overflow: visible;
     /* 5 */
@@ -5006,7 +5021,7 @@ select.uk-form-width-xsmall {
  ========================================================================== */
 /* Hover */
 .uk-sortable-handle:hover {
-    cursor: move;
+    cursor: grab;
 }
 /* ========================================================================
    Component: Countdown
@@ -6688,7 +6703,7 @@ ul.uk-nav-sub {
     right: 0;
     bottom: 0;
     left: 0;
-    z-index: 1010;
+    z-index: 1021;
     /* 5 */
     background: #000;
     /* 6 */
@@ -6775,8 +6790,7 @@ ul.uk-nav-sub {
 /* Toolbar Icon (Close)
  ========================================================================== */
 .uk-lightbox-toolbar-icon {
-    padding: 5px;
-    color: rgba(255, 255, 255, 0.7);
+    display:none;
 }
 /*
  * Hover
@@ -8994,7 +9008,7 @@ iframe.uk-cover {
  */
 .uk-drag,
 .uk-drag * {
-    cursor: move;
+    cursor: grabbing;
 }
 /* 2 */
 .uk-drag iframe {
