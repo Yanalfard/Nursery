@@ -43,9 +43,9 @@ namespace Nursery.Areas.Admin.Controllers
             dform.Fields.ForEach(dfield =>
             {
                 TblField field = new TblField();
-                field.Lable = dfield.Label;
+                field.Label = dfield.Label;
                 field.Options = dfield.Options;
-                field.PlcaeHolder = dfield.Placeholder;
+                field.Placeholder = dfield.Placeholder;
                 field.Tooltip = dfield.Tooltip;
                 field.Type = nameof(dfield.Type).ToLower();
                 field.IsDeleted = false;

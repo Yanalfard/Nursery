@@ -43,7 +43,7 @@ namespace DataLayer.ViewModels
         /// <summary>
         /// Don't show the field if IsDeleted is true
         /// </summary>
-        public bool IsDeleted { get; set; }
+        public bool? IsDeleted { get; set; }
 
         /// <summary>
         /// Static Validation Rules
@@ -73,11 +73,11 @@ namespace DataLayer.ViewModels
         {
             FormId = formId;
             FieldId = tblField.FieldId;
-            Label = tblField.Lable;
+            Label = tblField.Label;
             Type = (DFieldType)int.Parse(tblField.Type);
             IsRequired = tblField.IsRequired.Value;
             Options = tblField.Options;
-            Placeholder = tblField.PlcaeHolder;
+            Placeholder = tblField.Placeholder;
             Tooltip = tblField.Tooltip;
             IsDeleted = tblField.IsDeleted;
             Validations = validations;
