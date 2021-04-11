@@ -39,6 +39,7 @@
 
   <ItemGroup>
     <Folder Include="wwwroot\dyn\img\" />
+    <Folder Include="wwwroot\Images\User\" />
   </ItemGroup>
 
   <ItemGroup>

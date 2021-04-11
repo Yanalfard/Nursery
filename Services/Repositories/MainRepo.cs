@@ -11,8 +11,8 @@ namespace Services.Repositories
 {
     public class MainRepo<TEntity> : IMainRepo<TEntity> where TEntity : class
     {
-        private NurseryContext _context;
-        private DbSet<TEntity> _dbSet;
+        private readonly NurseryContext _context;
+        private readonly DbSet<TEntity> _dbSet;
 
         public MainRepo(NurseryContext context)
         {
@@ -61,8 +61,7 @@ namespace Services.Repositories
             }
         }
 
-        public virtual IEnumerable<TEntity> Get(Expression<Func<TEntity, bool>> where = null,
-            Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null, string includes = null)
+        public virtual IEnumerable<TEntity> Get(Expression<Func<TEntity, bool>> where = null, Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null, string includes = null)
         {
             IQueryable<TEntity> query = _dbSet;
             if (where != null)
@@ -71,8 +70,16 @@ namespace Services.Repositories
                 query = orderBy(query);
             if (includes != null)
                 foreach (string i in includes.Split(','))
-                    query = query.Include(i);
+                    query = query.Include(i.Trim());
             return query.ToList();
+        }
+
+        public virtual bool Any(Expression<Func<TEntity, bool>> where = null)
+        {
+            IQueryable<TEntity> query = _dbSet;
+            if (where != null)
+                return query.Any(where);
+            return false;
         }
 
         public virtual TEntity GetById(object id)

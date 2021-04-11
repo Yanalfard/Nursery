@@ -18,5 +18,8 @@ namespace Services.Repositories
 
         IEnumerable<TEntity> Get(Expression<Func<TEntity, bool>> where = null,
             Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null, string includes = null);
+
+        bool Any(Expression<Func<TEntity, bool>> where = null);
+
     }
 }
