@@ -1,8 +1,6 @@
 ﻿import { TblField } from "./model/db/tblField";
 import { TblForm } from "./model/db/tblForm";
 import { TblRegex } from "./model/db/tblRegex";
-import { TblValue } from "./model/db/tblValue";
-import { Form } from "./model/form";
 import { InputType } from "./model/inputType";
 import { Tool, Option, Regex, Select, OptionType } from "./model/tool";
 
@@ -10,36 +8,6 @@ import { Tool, Option, Regex, Select, OptionType } from "./model/tool";
 const toolbox = document.getElementById('toolbox');
 let toolboxHTML = toolbox.innerHTML;
 const btnFinish = document.getElementById('btn-finish');
-
-
-//#region Initialize Regex Select Options
-window.addEventListener('load', () => {
-
-    const regexSelectElements = document.querySelectorAll('[regex-select]');
-    fetch('/Admin/Form/GetSelectOptions').then((json) => {
-        json.json().then((options: TblRegex[]) => {
-            regexSelectElements.forEach((selectElement: HTMLSelectElement) => {
-                selectElement.innerHTML = '';
-                const initElement = document.createElement('option') as HTMLOptionElement;
-                initElement.text = 'افزودن گزینه اصلاح...'
-                selectElement.options.add(initElement);
-                //-
-                options.forEach((option: any) => {
-                    const optionElement = document.createElement('option') as HTMLOptionElement;
-                    optionElement.value = JSON.stringify(option);
-                    optionElement.text = option.name;
-                    selectElement.options.add(optionElement);
-                });
-
-                toolbox.style.opacity = '1';
-                toolboxHTML = toolbox.innerHTML;
-
-            });
-        });
-    }).catch(() => { window.location.reload() });
-});
-//#endregion
-
 
 btnFinish.addEventListener('click', () => {
     let temp: Tool[] = [];
@@ -71,6 +39,8 @@ btnFinish.addEventListener('click', () => {
 
         body.Fields.push(field);
     });
+
+    console.log(body);
 
     fetch('/Admin/Form/Create', {
         method: 'post',

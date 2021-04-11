@@ -73,7 +73,6 @@ for (let gauge of gauges) {
     options.thickness = options.thickness ? options.thickness : 3;
 
     const circumference = Number.parseInt((options.size - (2 * options.thickness)) * Math.PI);
-    console.log(options);
     const offset = Number.parseInt(circumference - options.percent / 100 * circumference);
 
     const svg = `

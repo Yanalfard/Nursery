@@ -1,5 +1,5 @@
 ﻿requirejs.config({
-    baseUrl: '/js',
+    baseUrl: '/js/FormMaker',
     paths: {
         main: 'main',
         builder: 'builder',
@@ -10,5 +10,7 @@
         tblForm: 'model/db/tblForm',
         tblRegex: 'model/db/tblRegex',
         tblValue: 'model/db/tblValue',
+        tool: 'model/tool',
+        timeline: '/js/Timeline/timeline',
     }
 });

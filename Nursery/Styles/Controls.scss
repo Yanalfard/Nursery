@@ -1107,3 +1107,72 @@ $background-highlight: #eee;
         }
     }
 }
+
+.timeline {
+    $annotation-width: 128px;
+    $block-width: 52px;
+    $block-height: 28px;
+    @include column;
+    border: $border-def;
+
+    .timeline-header {
+        @include row-reverse;
+        border-bottom: $border-def;
+
+        .timeline-empty {
+            width: $annotation-width;
+            height: $block-height;
+            border-left: $border-def;
+        }
+
+        .timeline-timestamps {
+            @include row-reverse;
+            height: $block-height;
+
+            .timeline-timestamp {
+                width: $block-width;
+                height: $block-height;
+                line-height: $block-height;
+                border-left: $border-def;
+                counter-increment: test;
+                align-content: center;
+                justify-content: center;
+                text-align: center;
+            }
+        }
+    }
+
+    .timeline-body {
+        @include column;
+
+        .timeline-row {
+            @include row-reverse;
+            border-bottom: $border-def;
+
+            .timeline-annotation {
+                width: $annotation-width;
+                height: $block-height;
+                border-left: $border-def;
+            }
+
+            .timeline-blocks {
+                @include row-reverse;
+                height: $block-height;
+
+                .timeline-block {
+                    width: $block-width;
+                    height: $block-height;
+                    border-left: $border-def;
+                }
+
+                .timeline-block:last-child {
+                    border-left: 0;
+                }
+            }
+        }
+
+        .timeline-row:last-child {
+            border-bottom: 0;
+        }
+    }
+}

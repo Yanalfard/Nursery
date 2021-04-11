@@ -13,6 +13,7 @@ namespace Nursery.Areas.Admin.Controllers
     {
         public IActionResult Index()
         {
+            ViewData["Options"] = options.ToList();
             return View();
         }
 
