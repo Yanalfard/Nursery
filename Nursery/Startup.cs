@@ -40,15 +40,17 @@ namespace Nursery
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
-
+            #region  404 error
+            //app.UseStatusCodePagesWithReExecute("/404.html");
+            #endregion
             app.UseMvcWithDefaultRoute();
-            app.UseHttpsRedirection();
+            //app.UseSession();
+            app.UseAuthentication();
             app.UseStaticFiles();
-
+            app.UseHttpsRedirection();
             app.UseRouting();
-
             app.UseAuthorization();
-
+            app.UseMvc();
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
