@@ -15,7 +15,7 @@ namespace DataLayer.Models
         public int FormFieldId { get; set; }
         public int FormId { get; set; }
         public int FieldId { get; set; }
-        public bool IsDeleted { get; set; }
+        public bool? IsDeleted { get; set; }
 
         [ForeignKey(nameof(FieldId))]
         [InverseProperty(nameof(TblField.TblFormFieldRel))]

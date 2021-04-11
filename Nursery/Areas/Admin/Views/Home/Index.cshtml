@@ -6,10 +6,132 @@
 
 <div class="col margin-between gap-between-card">
 
+    <div class="card col gap-3">
+        <h3>
+            باتن ها
+        </h3>
+        <div class="row gap-3">
+            <button class="btn btn-dashed"><span>Button</span><span uk-icon="skull"></span></button>
+            <button class="btn btn-icon"><span>Button</span><span uk-icon="skull"></span></button>
+            <button class="btn btn-link"><span>Button</span><span uk-icon="skull"></span></button>
+            <button class="btn btn-secondary"><span>Button</span><span uk-icon="skull"></span></button>
+            <button class="btn btn-primary"><span>Button</span><span uk-icon="skull"></span></button>
+            <button class="btn btn-text"><span>Button</span><span uk-icon="skull"></span></button>
+            <button class="btn btn-success"><span>Button</span><span uk-icon="skull"></span></button>
+            <button class="btn btn-warning"><span>Button</span><span uk-icon="skull"></span></button>
+            <button class="btn btn-danger"><span>Button</span><span uk-icon="skull"></span></button>
+        </div>
+
+        <div class="row gap-3">
+            <button class="btn-icon btn-icon"><span uk-icon="skull"></span></button>
+            <button class="btn-icon btn-text"><span uk-icon="skull"></span></button>
+            <button class="btn-icon btn-success"><span uk-icon="skull"></span></button>
+            <button class="btn-icon btn-warning"><span uk-icon="skull"></span></button>
+            <button class="btn-icon btn-danger"><span uk-icon="skull"></span></button>
+        </div>
+
+        <div class="row gap-3">
+            <button class="btn-icon round btn-icon" onclick="notify('hello','')"><span uk-icon="skull"></span></button>
+            <button class="btn-icon round btn-text" onclick="notify('hello','primary')"><span uk-icon="skull"></span></button>
+            <button class="btn-icon round btn-success" onclick="notify('ساکسس','success')"><span uk-icon="skull"></span></button>
+            <button class="btn-icon round btn-warning" onclick="notify('وارنینگ','warning')"><span uk-icon="skull"></span></button>
+            <button class="btn-icon round btn-danger" onclick="notify('دنجر','danger')"><span uk-icon="skull"></span></button>
+        </div>
+    </div>
+
     <div class="card col">
         <h3>
-            داشبرد
+            مودال ها
         </h3>
+
+        <div class="row gap-3">
+            <button uk-toggle="#modal" class="btn btn-primary"><span>MODAL</span></button>
+            <button uk-toggle="#form" class="btn btn-primary"><span>FORM</span></button>
+        </div>
+    </div>
+
+    <!-- This is the modal -->
+    <div id="modal" uk-modal>
+        <div class="uk-modal-dialog uk-modal-body">
+            <h2 class="uk-modal-title">مودال</h2>
+            <p>
+                Laoreet ac, aliquam sit amet justo nunc tempor, metus vel placerat suscipit, orci nisl iaculis eros, a tincidunt nisi odio eget lorem nulla condimentum tempor mattis ut vitae feugiat augue cras ut metus a risus iaculis scelerisque eu ac ante fusce non varius purus aenean nec magna felis fusce vestibulum.
+            </p>
+            <div class="rowr">
+                <button class="btn btn-primary uk-modal-close" dir="rtl">
+                    <span>
+                        بستن
+                    </span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- This is the modal -->
+    <div id="form" uk-modal>
+        <div class="uk-modal-dialog form">
+            <div class="form-header">
+                <h3>فرم در مدال</h3>
+            </div>
+            <div class="form-body">
+                <div class="fg-col">
+                    <label class="fg-label">نام کاربری</label>
+                    <input class="entry" type="text" />
+                    <span class="text-danger">این یک تت می باشد</span>
+                </div>
+                <div class="fg-col">
+                    <label class="fg-label">گذرواژ</label>
+                    <input class="entry" type="password" />
+                    <span class="text-danger">این هم یک تست می باشد</span>
+                </div>
+            </div>
+            <div class="form-footer">
+                <div class="actions">
+                    <button class="btn btn-primary">این یک تست می باشد</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="card col">
+        <h3>
+            گیج ها
+        </h3>
+
+        <div class="row gap-3">
+
+            <div gauge="percent:32;size:240;thickness:12">
+                <div class="uk-margin-auto col">
+                    <label>
+                        30
+                    </label>
+                    <span>
+                        این یک تست می باشد
+                    </span>
+                </div>
+            </div>
+            <div gauge="percent:64;size:120;thickness:6"></div>
+            <div gauge="percent:72;size:60;thickness:4"></div>
+
+            <div gauge="percent:72;size:20;thickness:4"></div>
+
+
+        </div>
+
+    </div>
+
+
+    <div class="card col">
+        <h3>
+            آپلود
+        </h3>
+
+        <div class="row">
+            <label class="profile-image" style="background-image:url('/st/png/blue.png')" preview="">
+                <input type="file" accept="image/png,image/jpg,image/jpeg,image/gif" value="" />
+            </label>
+        </div>
+
     </div>
 
     <div class="col-at-xs rowr-at-m gap-between-card uk-child-width-1-1-at-xs uk-child-width-1-2">
@@ -76,3 +198,5 @@
     </div>
 
 </div>
+
+

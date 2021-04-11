@@ -12,6 +12,7 @@ namespace DataLayer.Models
         public DateTime? DateCreated { get; set; }
         public string Text { get; set; }
         public int? UserId { get; set; }
+        public int? Type { get; set; }
 
         [ForeignKey(nameof(UserId))]
         [InverseProperty(nameof(TblUser.TblUserLog))]

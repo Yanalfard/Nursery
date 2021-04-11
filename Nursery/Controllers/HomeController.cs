@@ -16,17 +16,24 @@ namespace Nursery.Controllers
         {
             List<DRegexVm> validations = new List<DRegexVm>() {
                 new DRegexVm
-                (0,"NO","REGEX FAILED"),
+                (0,"REGEX NAME","NO","REGEX FAILED"),
             };
 
             List<DFieldVm> fields = new List<DFieldVm>()
             {
                 new DFieldVm
-                (1,0,"USERNAME",DFieldType.Text,true,"OPTION1,OPTION2,OPTION3","Enter your username","THIS IS A TOOLTIP",validations)
+                (1,0,"USERNAME",DFieldType.Text,true,"OPTION1,OPTION2,OPTION3","Enter your username","THIS IS A TOOLTIP",validations),
+                new DFieldVm
+                (1,0,"PASSWORD",DFieldType.Combo,true,"MOZ,Khiar,Holo,Badimjan","Enter your username","THIS IS A TOOLTIP",validations),
+                new DFieldVm
+                (1,0,"USERNAME",DFieldType.Range,true,"OPTION1,OPTION2,OPTION3","Enter your username","THIS IS A TOOLTIP",validations)
             };
 
             DFormVm formVm = new DFormVm
                 (0, "FORM TITLE", "FORM SUBTITLE", DateTime.Now, fields);
+
+
+
 
             //List<TblRegex> validations = new List<TblRegex> {
             //    new TblRegex() {

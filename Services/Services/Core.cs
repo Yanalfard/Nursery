@@ -37,6 +37,8 @@ namespace Services.Services
         public MainRepo<TblUserLog> UserLog => _userLog ??= new MainRepo<TblUserLog>(_context);
         public MainRepo<TblUserRoleRel> UserRoleRel => _userRoleRel ??= new MainRepo<TblUserRoleRel>(_context);
         public MainRepo<TblValue> Value => _value ??= new MainRepo<TblValue>(_context);
+        public virtual void Save() => _context.SaveChanges();
+
 
         public void Dispose()
         {

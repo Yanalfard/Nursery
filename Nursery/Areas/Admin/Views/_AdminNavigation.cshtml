@@ -1,6 +1,6 @@
 ﻿<ul class="navigation">
     <li>
-        <a>
+        <a href="/Admin/Home">
             <span uk-icon="tachometer-alt"></span>
             <label>داشبورد</label>
         </a>
@@ -13,13 +13,13 @@
             </a>
             <ul>
                 <li>
-                    <a>
+                    <a href="/Admin/User/List">
                         <span uk-icon="table"></span>
                         <label>لیست کاربران</label>
                     </a>
                 </li>
                 <li>
-                    <a>
+                    <a href="/Admin/User/Add">
                         <span uk-icon="plus-square"></span>
                         <label>اضافه کردن</label>
                     </a>
@@ -27,20 +27,55 @@
             </ul>
         </div>
     </li>
+    <li>
+        <div accordion>
+            <a accordion-trigger>
+                <span uk-icon="child"></span>
+                <label>کودکان</label>
+            </a>
+            <ul>
+                <li>
+                    <a href="/Admin/Kid/List">
+                        <span uk-icon="table"></span>
+                        <label>لیست کودکان</label>
+                    </a>
+                </li>
+                <li>
+                    <a href="/Admin/Kid/List">
+                        <span uk-icon="plus-square"></span>
+                        <label>اضافه کردن</label>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </li>
+    <li>
+        <div accordion>
+            <a accordion-trigger>
+                <span uk-icon="copy"></span>
+                <label>بخش ها</label>
+            </a>
+            <ul>
+                <li>
+                    <a href="/Admin/Page/List">
+                        <span uk-icon="table"></span>
+                        <label>لیست بخش ها</label>
+                    </a>
+                </li>
+                <li>
+                    <a href="/Admin/Page/Add">
+                        <span uk-icon="plus-square"></span>
+                        <label>اضافه کردن</label>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </li>
+    <li>
+        <a href="/Admin/Home/Config">
+            <span uk-icon="cog"></span>
+            <label>تنظیمات</label>
+        </a>
+    </li>
 </ul>
 
-<script>
-    var accordions = document.querySelectorAll('[accordion]')
-    var navi = document.querySelector('.m-aside')
-
-    for (let acc of accordions) {
-
-        const trigger = acc.querySelector('[accordion-trigger]');
-        let ul = acc.querySelector('ul');
-        let closed = true;
-        trigger.addEventListener('click', () => {
-            ul.classList.toggle('open');
-        });
-        navi.addEventListener("mouseleave", () => { ul.classList.remove('open') })
-    }
-</script>

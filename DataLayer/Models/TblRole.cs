@@ -20,7 +20,7 @@ namespace DataLayer.Models
         [Required]
         [StringLength(50)]
         public string Title { get; set; }
-        public bool IsDeleted { get; set; }
+        public bool? IsDeleted { get; set; }
 
         [InverseProperty("Role")]
         public virtual ICollection<TblRolePageRel> TblRolePageRel { get; set; }

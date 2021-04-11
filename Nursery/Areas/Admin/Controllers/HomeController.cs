@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using DataLayer.ViewModels;
+using Microsoft.AspNetCore.Mvc;
 using Nursery.Utilities;
 using Services.Services;
 using System;
@@ -21,5 +22,6 @@ namespace Nursery.Areas.Admin.Controllers
         {
             return View();
         }
+
     }
 }

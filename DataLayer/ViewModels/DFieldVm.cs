@@ -50,6 +50,11 @@ namespace DataLayer.ViewModels
         /// </summary>
         public List<DRegexVm> Validations { get; set; }
 
+        public DFieldVm()
+        {
+
+        }
+
         public DFieldVm(int fieldId, int formId, string label, DFieldType type, bool isRequired, string options, string placeholder, string tooltip, List<DRegexVm> validations, bool isDeleted = false)
         {
             FieldId = fieldId;

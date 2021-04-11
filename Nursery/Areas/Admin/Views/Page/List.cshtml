@@ -1,0 +1,95 @@
+﻿@{
+    ViewData["Title"] = "لیست بخش ها";
+    Layout = "~/Areas/Admin/Views/_AdminLayout.cshtml";
+}
+
+<!-- This is the modal -->
+<div id="Modal" uk-modal>
+    <div class="uk-modal-dialog uk-modal-body">
+        <h2 class="uk-modal-title">این یک مودال می باشد</h2>
+    </div>
+</div>
+
+<div class="form">
+    <div class="form-header" uk-sticky="offset: 72;cls-active: sticked">
+        <div class="rowr">
+            <h2 class="card-title">
+                لیست بخش ها
+            </h2>
+            <a href="/Admin/Kid/Add" class="btn btn-primary uk-margin-auto-right">
+                <span>اضافه</span>
+                <span class="tiny" uk-icon="plus-square"></span>
+            </a>
+        </div>
+    </div>
+    <div class="form-search" uk-sticky="offset: 140;cls-active: sticked uk-box-shadow-medium">
+        <div class="controls-grid">
+            <input class="entry" type="number" placeholder="کد">
+            <input class="entry" type="text" placeholder="نام">
+            <div class="col">
+                <label class="fg-label row text-3">
+                    حذف شده
+                    <input class="uk-checkbox" type="checkbox">
+                </label>
+                <span class="text-danger"></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="form-body scrollh-container uk-padding-remove">
+        <table class="tbl tbl-striped" dir="rtl">
+            <thead>
+                <tr>
+                    <th>کد</th>
+                    <th>نام</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>1</td>
+                    <td>شیرخوارگاه</td>
+                    <td class="actions">
+                        <a href="" class="btn-icon round text-4" uk-icon="icon:ellipsis-h;ratio:.72"></a>
+                        <div class="dropdown" uk-drop="mode: click;offset:4">
+                            <ul class="dropdown-list">
+                                <li>
+                                    <a href="/Admin/Page/" class="rowr">
+                                        <span class="new">مشاهده</span>
+                                        <span class="small" uk-icon="eye"></span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="" class="rowr">
+                                        <span class="new">ویرایش</span>
+                                        <span class="small" uk-icon="pen-square"></span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="" class="rowr btn-danger">
+                                        <span>حذف</span>
+                                        <span class="small" uk-icon="trash"></span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="form-footer">
+        <div class="uk-margin-auto-right">
+            <ul class="uk-pagination uk-margin-remove uk-margin-auto-right">
+                <li><a href="#"><span uk-pagination-previous></span></a></li>
+                <li><a href="#">1</a></li>
+                <li class="uk-disabled"><span>...</span></li>
+                <li><a href="#">5</a></li>
+                <li><a href="#">6</a></li>
+                <li class="uk-active"><span>7</span></li>
+                <li><a href="#">8</a></li>
+                <li><a href="#"><span uk-pagination-next></span></a></li>
+            </ul>
+        </div>
+    </div>
+</div>

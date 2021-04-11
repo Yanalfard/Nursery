@@ -106,11 +106,6 @@ backdrop-filter: saturate(80%);
 .flex-9 {
   flex: 9; }
 
-.round {
-  -moz-border-radius: 1000px 1000px 1000px 1000px;
-  -webkit-border-radius: 1000px 1000px 1000px 1000px;
-  border-radius: 1000px 1000px 1000px 1000px; }
-
 .uk-slider-items .product {
   margin: auto; }
 
@@ -169,11 +164,11 @@ html {
   html ::-webkit-scrollbar {
     width: 14px; }
   html ::-webkit-scrollbar-track {
-    background: #eee; }
+    background: #545468; }
   html ::-webkit-scrollbar-thumb {
-    background: #ddd; }
+    background: #66667f; }
   html ::-webkit-scrollbar-thumb:hover {
-    background: #c9c9c9; }
+    background: #7a7a94; }
 
 /*
  * Remove the margin in all browsers.
@@ -182,7 +177,20 @@ body {
   margin: 0;
   background: #F8F8FB;
   overflow: hidden !important;
-  min-height: 100vh; }
+  min-height: 100vh;
+  /*ScrollBar*/
+  /* width */
+  /* Track */
+  /* Handle */
+  /* Handle on hover */ }
+  body ::-webkit-scrollbar {
+    width: 14px; }
+  body ::-webkit-scrollbar-track {
+    background: #efefef; }
+  body ::-webkit-scrollbar-thumb {
+    background: #e5e5e5; }
+  body ::-webkit-scrollbar-thumb:hover {
+    background: #d6d6d6; }
 
 /*#region Space */
 /* Phone landscape and bigger */
@@ -322,9 +330,9 @@ body {
   -moz-box-shadow: rgba(0, 0, 0, 0.12) 0 6px 16px;
   -webkit-box-shadow: rgba(0, 0, 0, 0.12) 0 6px 16px;
   box-shadow: rgba(0, 0, 0, 0.12) 0 6px 16px;
-  -moz-border-radius: 2px 2px 2px 2px;
-  -webkit-border-radius: 2px 2px 2px 2px;
-  border-radius: 2px 2px 2px 2px; }
+  -moz-border-radius: 2.5px 2.5px 2.5px 2.5px;
+  -webkit-border-radius: 2.5px 2.5px 2.5px 2.5px;
+  border-radius: 2.5px 2.5px 2.5px 2.5px; }
 
 /* clears the ‘X’ from Internet Explorer */
 input[type=search]::-ms-clear {
@@ -1405,8 +1413,6 @@ a.uk-link-reset,
   margin: 0;
   /* 2 */
   border: none;
-  /* 3 */
-  border-radius: 0;
   /* 4 */
   overflow: visible;
   /* 5 */
@@ -1990,9 +1996,9 @@ select.uk-form-width-xsmall {
   height: 20px;
   width: 20px;
   padding: 2px;
-  -moz-border-radius: 2px 2px 2px 2px;
-  -webkit-border-radius: 2px 2px 2px 2px;
-  border-radius: 2px 2px 2px 2px;
+  -moz-border-radius: 2.5px 2.5px 2.5px 2.5px;
+  -webkit-border-radius: 2.5px 2.5px 2.5px 2.5px;
+  border-radius: 2.5px 2.5px 2.5px 2.5px;
   margin-left: 8px;
   margin-top: auto;
   margin-bottom: auto;
@@ -4072,9 +4078,9 @@ select.uk-form-width-xsmall {
   -moz-box-shadow: rgba(0, 0, 0, 0.12) 0 6px 16px;
   -webkit-box-shadow: rgba(0, 0, 0, 0.12) 0 6px 16px;
   box-shadow: rgba(0, 0, 0, 0.12) 0 6px 16px;
-  -moz-border-radius: 2px 2px 2px 2px;
-  -webkit-border-radius: 2px 2px 2px 2px;
-  border-radius: 2px 2px 2px 2px; }
+  -moz-border-radius: 2.5px 2.5px 2.5px 2.5px;
+  -webkit-border-radius: 2.5px 2.5px 2.5px 2.5px;
+  border-radius: 2.5px 2.5px 2.5px 2.5px; }
 
 .uk-modal-header {
   display: flow-root;
@@ -4629,15 +4635,18 @@ select.uk-form-width-xsmall {
 ========================================================================== */
 .uk-notification-message {
   position: relative;
-  padding: 15px;
-  background: #f8f8f8;
-  color: #666;
+  padding: 12px;
+  background: #242738;
+  color: #ccc;
   font-size: 1.25rem;
   line-height: 1.4;
   cursor: pointer;
-  -moz-border-radius: 16px 16px 16px 16px;
-  -webkit-border-radius: 16px 16px 16px 16px;
-  border-radius: 16px 16px 16px 16px; }
+  -moz-border-radius: 2.5px 2.5px 2.5px 2.5px;
+  -webkit-border-radius: 2.5px 2.5px 2.5px 2.5px;
+  border-radius: 2.5px 2.5px 2.5px 2.5px;
+  -moz-box-shadow: rgba(0, 0, 0, 0.12) 0 0px 12px;
+  -webkit-box-shadow: rgba(0, 0, 0, 0.12) 0 0px 12px;
+  box-shadow: rgba(0, 0, 0, 0.12) 0 0px 12px; }
 
 * + .uk-notification-message {
   margin-top: 10px; }
@@ -4646,13 +4655,14 @@ select.uk-form-width-xsmall {
  * Adopts `uk-close`
  ========================================================================== */
 .uk-notification-close {
-  display: none;
-  position: absolute;
-  top: 20px;
-  left: 15px; }
-
-.uk-notification-message:hover .uk-notification-close {
-  display: block; }
+  display: flex;
+  margin-right: auto;
+  /**/
+  display: none; }
+  .uk-notification-close svg {
+    margin: auto;
+    width: 14px;
+    height: 14px; }
 
 /* Style modifiers
  ========================================================================== */
@@ -4660,25 +4670,37 @@ select.uk-form-width-xsmall {
  * Primary
  */
 .uk-notification-message-primary {
-  color: #1890FF; }
+  background-color: #242738;
+  border-right: 3px solid #375774; }
+  .uk-notification-message-primary * {
+    color: #375774; }
 
 /*
  * Success
  */
 .uk-notification-message-success {
-  color: #32d296; }
+  background-color: #1b550a;
+  border-right: 3px solid #22c02b; }
+  .uk-notification-message-success * {
+    color: #22c02b; }
 
 /*
  * Warning
  */
 .uk-notification-message-warning {
-  color: #faa05a; }
+  background-color: #4a2408;
+  border-right: 3px solid #be8414; }
+  .uk-notification-message-warning * {
+    color: #be8414; }
 
 /*
  * Danger
  */
 .uk-notification-message-danger {
-  color: #f0506e; }
+  background-color: #36090d;
+  border-right: 3px solid #c33645; }
+  .uk-notification-message-danger * {
+    color: #c33645; }
 
 /* ========================================================================
    Component: Tooltip
@@ -4761,7 +4783,7 @@ select.uk-form-width-xsmall {
  ========================================================================== */
 /* Hover */
 .uk-sortable-handle:hover {
-  cursor: move; }
+  cursor: grab; }
 
 /* ========================================================================
    Component: Countdown
@@ -6354,7 +6376,7 @@ ul.uk-nav-sub {
   right: 0;
   bottom: 0;
   left: 0;
-  z-index: 1010;
+  z-index: 1021;
   /* 5 */
   background: #000;
   /* 6 */
@@ -6438,8 +6460,7 @@ ul.uk-nav-sub {
 /* Toolbar Icon (Close)
  ========================================================================== */
 .uk-lightbox-toolbar-icon {
-  padding: 5px;
-  color: rgba(255, 255, 255, 0.7); }
+  display: none; }
 
 /*
  * Hover
@@ -8204,7 +8225,7 @@ iframe.uk-cover {
  */
 .uk-drag,
 .uk-drag * {
-  cursor: move; }
+  cursor: grabbing; }
 
 /* 2 */
 .uk-drag iframe {

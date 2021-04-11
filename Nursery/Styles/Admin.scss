@@ -63,7 +63,7 @@
 }
 
 .counter-green {
-    background-color: $green-background ;
+    background-color: $green-background;
     color: $green;
     fill: $green;
     border: solid 1px $green-light;
@@ -81,4 +81,282 @@
     color: #333;
     fill: #333;
     border: 0;
+}
+
+// FORM BUILDER
+
+.form-builder {
+    $toolbox-width: 424px;
+    width: 100%;
+
+    @include row;
+
+    #toolbox {
+        opacity: 0;
+    }
+
+    .toolbox, .toolbox-placeholder {
+        flex: 1fr;
+        width: $toolbox-width;
+        grid-area: toolbox;
+        margin-left: -16px;
+        margin-bottom: -17px;
+        margin-top: -17px;
+        margin-right: 16px;
+        height: calc(100vh - 72px);
+        position: fixed;
+        z-index: 180;
+        overflow-x: hidden;
+
+        .form-header {
+            @include shadow-mild;
+        }
+
+        .form-body {
+            overflow-y: auto !important;
+            padding-bottom: 61px + 16px;
+
+            .tool-actions {
+                button {
+                    display: none;
+                }
+            }
+        }
+    }
+
+    .toolbox-placeholder {
+        position: relative;
+        z-index: 179;
+    }
+
+    .prototype {
+        margin-left: auto;
+        margin-right: auto;
+        max-width: 512px;
+        flex: 1;
+        grid-area: form;
+        @include column;
+
+        .form-body {
+            padding: 12px;
+            height: auto;
+            flex: auto;
+
+
+            .toolbox {
+                @include shadow-mild;
+            }
+        }
+    }
+}
+
+$cell-height: 28px;
+$cell-background: #fafafa;
+
+.cell-label {
+    line-height: $cell-height;
+    padding-right: 7px;
+    vertical-align: central;
+}
+
+.cell-border-none {
+    border: 0;
+}
+
+.cell-btn {
+    height: $cell-height;
+    width: $cell-height;
+    cursor: pointer;
+    margin: 0;
+    @include trans(.2);
+
+    svg {
+        width: 12px;
+        height: 12px;
+        fill: #888;
+    }
+}
+
+.cell-btn:hover {
+    background-color: #f3f3f3;
+}
+
+.cell-border-bottom {
+    border-bottom: $border-def-color 1px solid !important;
+}
+
+.cell-border-right {
+    border-right: $border-def-color 1px solid !important;
+}
+
+.cell-border-top {
+    border-top: $border-def-color 1px solid !important;
+}
+
+.cell-border-left {
+    border-left: $border-def-color 1px solid !important;
+}
+
+
+.tool {
+    display: block;
+    background-color: $cell-background;
+    @include border-def-radius;
+    border: $border-def-color 1px solid;
+    @include column;
+
+    .tool-actions {
+        background-color: #fafafa;
+        @include trans(.2s);
+        border-bottom: $border-def-color 1px solid;
+        cursor: grab;
+        @include row-reverse;
+        grid-gap: 0;
+
+        .name {
+            color: $text-4;
+            flex: auto;
+            padding: 0 6px;
+            cursor: grab;
+            line-height: 28px;
+        }
+
+        .name:active {
+            cursor: grabbing;
+        }
+    }
+
+    .tool-options {
+        @include column;
+
+        * {
+            font-size: 12px !important;
+        }
+
+        [option] {
+            @include row-reverse;
+            border-bottom: $border-def-color 1px solid;
+            height: $cell-height;
+
+            .option-name {
+                width: 80px;
+                line-height: $cell-height;
+                display: table-column;
+                border-left: $border-def-color 1px solid;
+                padding-right: 7px;
+                vertical-align: central;
+                margin: auto;
+            }
+
+            *:nth-child(2) {
+                height: $cell-height;
+                flex: auto;
+            }
+        }
+
+        [regex-list] {
+            @include column;
+
+            .cell-select {
+                border-bottom: $border-def-color 1px solid;
+                height: $cell-height;
+            }
+
+            .regex-list {
+
+                .regex-item {
+                    @include row-reverse;
+                    border-bottom: $border-def-color 1px solid;
+
+                    .cell-label {
+                    }
+
+                    .cell-btn {
+                        margin-right: auto;
+                        border: 0;
+                        border-right: $border-def-color 1px solid;
+                    }
+                }
+            }
+        }
+
+        [select] {
+            .select-adder {
+                grid-gap: 0;
+                @include row-reverse;
+            }
+
+            .select-list {
+                .select-item {
+                    @include row-reverse;
+                    border-bottom: $border-def-color 1px solid;
+
+                    .cell-label {
+                        flex: auto;
+                    }
+                }
+            }
+        }
+        /*#region Controls */
+        .cell-entry:focus,
+        .cell-checkbox-group:focus,
+        .cell-select:focus,
+        .cell-entry:hover,
+        .cell-select:hover,
+        .cell-checkbox-group:hover {
+            background-color: darken($cell-background,2%);
+        }
+
+        .cell-entry {
+            background-color: $cell-background;
+            padding: 0 6px;
+            font-size: 11px !important;
+            border: 0;
+            outline: none;
+            direction: rtl;
+        }
+
+        .cell-checkbox-group {
+            display: grid;
+            grid-template-columns: 1fr 24px;
+            background-color: $cell-background;
+
+            input {
+                width: 12px;
+                height: 12px;
+                margin: auto 6px;
+            }
+
+            span {
+                line-height: $cell-height;
+            }
+        }
+
+        .cell-select {
+            border: 0;
+            outline: 0;
+            @include border-radius(0,0,0,0);
+            height: $cell-height;
+            background-color: $cell-background;
+            direction: rtl;
+        }
+        /*#endregion */
+    }
+
+    .tool-content {
+        padding: 10px;
+
+        * {
+            pointer-events: none;
+        }
+    }
+}
+
+.tool-grabbed {
+    @include shadow-mild;
+    transform: rotate(-4deg);
+    cursor: grabbing !important;
+}
+
+.tool:active {
 }

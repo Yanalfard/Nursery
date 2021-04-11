@@ -1,0 +1,51 @@
+﻿@{
+    ViewData["Title"] = "ویرایش کاربر";
+    Layout = "~/Areas/Admin/Views/_AdminLayout.cshtml";
+}
+
+<form class="form">
+    <div class="form-header">
+        <h3>
+            ویرایش
+        </h3>
+    </div>
+    <div class="form-body">
+
+        <div class="fg-col uk-margin-auto-left">
+            <label class="profile-image" style="background-image:url('/st/png/blue.png')" preview="">
+                <input type="file" accept="image/png,image/jpg,image/jpeg,image/gif" value="" />
+            </label>
+        </div>
+
+        <div class="grid-400">
+
+            <div class="fg-col ">
+                <label class="fg-label" for="name">نام و نام خانوادگی</label>
+                <input class="entry" id="name" type="text">
+                <span class="text-danger"></span>
+            </div>
+
+            <div class="fg-col ">
+                <label class="fg-label" for="tel">شماره تلفن</label>
+                <input class="entry" id="tel" type="tel">
+                <span class="text-danger"></span>
+            </div>
+
+            <div class="fg-col ">
+                <label class="fg-label" for="password">گذرواژه</label>
+                <input class="entry" id="password" type="text">
+                <span class="text-danger"></span>
+            </div>
+
+            <div class="fg-col ">
+                <label class="fg-label" for="identification">کد ملی</label>
+                <input class="entry" id="identification" type="text">
+                <span class="text-danger"></span>
+            </div>
+        </div>
+
+    </div>
+    <div class="form-footer">
+        <button class="btn btn-primary"><span>ویرایش</span></button>
+    </div>
+</form>

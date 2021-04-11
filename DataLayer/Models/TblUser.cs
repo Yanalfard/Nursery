@@ -27,7 +27,7 @@ namespace DataLayer.Models
         public string IdentificationNo { get; set; }
         [StringLength(500)]
         public string ImageUrl { get; set; }
-        public bool IsDeleted { get; set; }
+        public bool? IsDeleted { get; set; }
 
         [InverseProperty("User")]
         public virtual ICollection<TblUserLog> TblUserLog { get; set; }
