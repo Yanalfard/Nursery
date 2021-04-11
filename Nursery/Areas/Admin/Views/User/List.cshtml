@@ -1,4 +1,4 @@
-﻿
+﻿@model IEnumerable<TblUser>
 @{
     ViewData["Title"] = "لیست کاربر ها";
     Layout = "~/Areas/Admin/Views/_AdminLayout.cshtml";
@@ -23,6 +23,36 @@
             </a>
         </div>
     </div>
+    @if (Context.Request.Query["addUser"].ToString() == "true")
+    {
+        <div class="uk-alert uk-alert-success" id="addUser">
+            <p class="help-block">پیام شما ثبت شد</p>
+        </div>
+        <script>
+            var delay = 4000;
+            setTimeout(function () { $("#addUser").css("display", "none"); }, delay);
+        </script>
+
+        @*@if (User.Identity.IsAuthenticated)
+            {
+                @if (User.Claims.Last().Value == "user")
+                {
+                    <div class="uk-alert uk-alert-success" id="addUser">
+                        <p class="help-block">پیام شما ثبت شد و بعد از بررسی در تالار گفتوگو قرار خواهد گرفت</p>
+                    </div>
+                }
+                else if (User.Claims.Last().Value == "employee" || User.Claims.Last().Value == "admin")
+                {
+                    <div class="uk-alert uk-alert-success" id="addUser">
+                        <p class="help-block">پیام شما ثبت شد</p>
+                    </div>
+                }
+                <script>
+                    var delay = 4000;
+                    setTimeout(function () { $("#addUser").css("display", "none"); }, delay);
+                </script>
+            }*@
+    }
     <div class="form-search" uk-sticky="offset: 140;cls-active: sticked uk-box-shadow-medium">
         <div class="controls-grid">
             <input class="entry" type="text" placeholder="نام">
@@ -54,39 +84,43 @@
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td>1</td>
-                    <td>صدرا محمدی</td>
-                    <td><bdi>0935 593 29 30</bdi></td>
-                    <td>1381/02/02</td>
-                    <td>1400/01/01</td>
-                    <td>ادمین</td>
-                    <td class="actions">
-                        <a href="" class="btn-icon round text-4" uk-icon="icon:ellipsis-h;ratio:.72"></a>
-                        <div class="dropdown" uk-drop="mode: click;offset:4">
-                            <ul class="dropdown-list">
-                                <li>
-                                    <a href="/Admin/User" class="rowr">
-                                        <span class="new">مشاهده</span>
-                                        <span class="small" uk-icon="eye"></span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="/Admin/User/Edit" class="rowr">
-                                        <span class="new">ویرایش</span>
-                                        <span class="small" uk-icon="pen-square"></span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="" class="rowr btn-danger">
-                                        <span>حذف</span>
-                                        <span class="small" uk-icon="trash"></span>
-                                    </a>
-                                </li>
-                            </ul>
-                        </div>
-                    </td>
-                </tr>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@(Model.ToList().IndexOf(item)+1)</td>
+                        <td>@item.Name</td>
+                        <td><bdi>@item.TellNo</bdi></td>
+                        <td>@item.DateCreated.DateToShamsi()</td>
+                        <td>@item.TblUserLog.SingleOrDefault()</td>
+                        <td>ادمین</td>
+                        <td class="actions">
+                            <a href="" class="btn-icon round text-4" uk-icon="icon:ellipsis-h;ratio:.72"></a>
+                            <div class="dropdown" uk-drop="mode: click;offset:4">
+                                <ul class="dropdown-list">
+                                    <li>
+                                        <a href="/Admin/User" class="rowr">
+                                            <span class="new">مشاهده</span>
+                                            <span class="small" uk-icon="eye"></span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="/Admin/User/Edit" class="rowr">
+                                            <span class="new">ویرایش</span>
+                                            <span class="small" uk-icon="pen-square"></span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="" class="rowr btn-danger">
+                                            <span>حذف</span>
+                                            <span class="small" uk-icon="trash"></span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </td>
+                    </tr>
+                }
+
             </tbody>
         </table>
     </div>

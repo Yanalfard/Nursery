@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -28,6 +29,7 @@ namespace DataLayer.Models
         [StringLength(500)]
         public string ImageUrl { get; set; }
         public bool? IsDeleted { get; set; }
+        public DateTime DateCreated { get; set; }
 
         [InverseProperty("User")]
         public virtual ICollection<TblUserLog> TblUserLog { get; set; }
