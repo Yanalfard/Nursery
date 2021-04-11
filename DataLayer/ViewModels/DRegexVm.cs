@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DataLayer.Models;
+using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -20,7 +21,7 @@ namespace DataLayer.ViewModels
         /// A familiar name for the regex Rule
         /// </summary>
         public string Name { get; set; }
-        public bool IsDeleted { get; set; }
+        public bool? IsDeleted { get; set; }
 
         public DRegexVm()
         {
@@ -35,5 +36,15 @@ namespace DataLayer.ViewModels
             IsDeleted = isDeleted;
             Name = name;
         }
+
+        public DRegexVm(TblRegex tblRegex)
+        {
+            RegexId = tblRegex.RegexId;
+            Regex = tblRegex.Regex;
+            ValidationMessage = tblRegex.ValidationMessage;
+            IsDeleted = tblRegex.IsDeleted;
+            Name = tblRegex.Name;
+        }
+
     }
 }

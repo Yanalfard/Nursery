@@ -39,6 +39,7 @@ namespace Nursery.Areas.Admin.Controllers
             form.IsDeleted = false;
 
             //form -> db
+            // formid
 
             dform.Fields.ForEach(dfield =>
             {
@@ -54,9 +55,18 @@ namespace Nursery.Areas.Admin.Controllers
 
                 dfield.Validations.ForEach(dvalidation =>
                 {
-                    
 
-                    //
+                    TblRegex regex = new TblRegex();
+                    regex.Name = dvalidation.Name;
+                    regex.IsDeleted = false;
+                    regex.Regex = dvalidation.Regex;
+                    regex.ValidationMessage = dvalidation.ValidationMessage;
+
+                    TblFieldRegexRel rel = new TblFieldRegexRel();
+                    rel.FieldId = field.FieldId;
+                    rel.RegexId = regex.RegexId;
+
+                    //regexFieldRel -> db
 
                 });
 
