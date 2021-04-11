@@ -677,15 +677,14 @@ input:not(input[type=checkbox]):not(input[type=radio]) {
 
 .tbl {
   direction: rtl;
-  border-spacing: 0; }
+  border-spacing: 0;
+  width: 100%; }
   .tbl .dropdown .rowr {
     justify-content: flex-end; }
     .tbl .dropdown .rowr span:last-child {
       margin-left: 8px; }
   .tbl .actions {
-    display: flex;
-    flex-direction: row;
-    grid-gap: 12px; }
+    width: 48px !important; }
     .tbl .actions * {
       margin: auto 0; }
   .tbl td:first-child, .tbl th:first-child {

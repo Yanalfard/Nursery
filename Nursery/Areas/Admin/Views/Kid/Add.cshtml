@@ -1,25 +1,13 @@
 ﻿@{
-    ViewData["Title"] = "کاربر جدید";
+    ViewData["Title"] = "کودک جدید";
     Layout = "~/Areas/Admin/Views/_AdminLayout.cshtml";
-
-    bool isEditing = false;
-
 }
 
 <form class="form">
     <div class="form-header">
-        @if (isEditing)
-        {
-            <h3>
-                ویرایش
-            </h3>
-        }
-        else
-        {
-            <h3>
-                کودک جدید
-            </h3>
-        }
+        <h3>
+            کودک جدید
+        </h3>
     </div>
     <div class="form-body">
 
@@ -47,13 +35,6 @@
 
     </div>
     <div class="form-footer">
-        @if (isEditing)
-        {
-            <button class="btn btn-primary"><span>ویرایش</span></button>
-        }
-        else
-        {
-            <button class="btn btn-primary"><span>اضافه</span></button>
-        }
+        <button class="btn btn-primary"><span>اضافه</span></button>
     </div>
 </form>

@@ -18,7 +18,7 @@ namespace DataLayer.ViewModels
         /// The date the form was created
         /// </summary>
         public DateTime DateCreated { get; set; }
-        public bool IsDeleted { get; set; }
+        public bool? IsDeleted { get; set; }
 
         /// <summary>
         /// The Forms, field hierarchy -with their regex validations attached

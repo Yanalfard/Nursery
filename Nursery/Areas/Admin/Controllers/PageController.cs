@@ -7,9 +7,14 @@ using System.Threading.Tasks;
 namespace Nursery.Areas.Admin.Controllers
 {
     [Area("Admin")]
-    public class UserController : Controller
+    public class PageController : Controller
     {
-        public IActionResult Index(int id = 0)
+        public IActionResult Index()
+        {
+            return View();
+        }
+
+        public IActionResult List()
         {
             return View();
         }
@@ -20,11 +25,6 @@ namespace Nursery.Areas.Admin.Controllers
         }
 
         public IActionResult Edit()
-        {
-            return View();
-        }
-
-        public IActionResult List()
         {
             return View();
         }
