@@ -23,16 +23,26 @@
             </a>
         </div>
     </div>
-    @if (Context.Request.Query["addUser"].ToString() == "true")
+    @if (Context.Request.Query["editUser"].ToString() == "true")
     {
-        <div class="uk-alert uk-alert-success" id="addUser">
-            <p class="help-block">پیام شما ثبت شد</p>
+        <div class="uk-alert uk-alert-success addUser">
+            <p class="help-block">کاربر مورد نظر ویرایش شد</p>
         </div>
         <script>
             var delay = 4000;
-            setTimeout(function () { $("#addUser").css("display", "none"); }, delay);
+            setTimeout(function () { $(".addUser").css("display", "none"); }, delay);
         </script>
+    }
 
+    @if (Context.Request.Query["addUser"].ToString() == "true")
+    {
+        <div class="uk-alert uk-alert-success addUser">
+            <p class="help-block">کاربر جدید اضافه شد</p>
+        </div>
+        <script>
+            var delay = 4000;
+            setTimeout(function () { $(".addUser").css("display", "none"); }, delay);
+        </script>
         @*@if (User.Identity.IsAuthenticated)
             {
                 @if (User.Claims.Last().Value == "user")
@@ -104,7 +114,7 @@
                                         </a>
                                     </li>
                                     <li>
-                                        <a href="/Admin/User/Edit" class="rowr">
+                                        <a href="/Admin/User/Edit/@item.UserId" class="rowr">
                                             <span class="new">ویرایش</span>
                                             <span class="small" uk-icon="pen-square"></span>
                                         </a>
@@ -140,3 +150,10 @@
         </div>
     </div>
 </div>
+
+@section Scripts{
+
+    <script>
+
+    </script>
+}

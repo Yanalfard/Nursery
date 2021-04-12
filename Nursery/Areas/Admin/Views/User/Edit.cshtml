@@ -1,9 +1,12 @@
-﻿@{
+﻿@model EditUserVm
+@{
     ViewData["Title"] = "ویرایش کاربر";
     Layout = "~/Areas/Admin/Views/_AdminLayout.cshtml";
 }
 
-<form class="form">
+<form class="form" asp-action="Edit" method="post" enctype="multipart/form-data">
+    <input type="hidden" name="ImageUrl" asp-for="ImageUrl" />
+    <input type="hidden" name="UserId" asp-for="UserId" />
     <div class="form-header">
         <h3>
             ویرایش
@@ -12,35 +15,28 @@
     <div class="form-body">
 
         <div class="fg-col uk-margin-auto-left">
-            <label class="profile-image" style="background-image:url('/st/png/blue.png')" preview="">
-                <input type="file" accept="image/png,image/jpg,image/jpeg,image/gif" value="" />
+            <label class="profile-image" style="background-image:url('/Images/User/@Model.ImageUrl')" preview="">
+                <input type="file" accept="image/png,image/jpg,image/jpeg,image/gif" id="ImageUrl" asp-for="ImageUrl" />
             </label>
         </div>
 
         <div class="grid-400">
-
             <div class="fg-col ">
                 <label class="fg-label" for="name">نام و نام خانوادگی</label>
-                <input class="entry" id="name" type="text">
-                <span class="text-danger"></span>
+                <input class="entry" id="Name" type="text" asp-for="Name">
+                <span class="text-danger" asp-validation-for="Name"></span>
             </div>
 
             <div class="fg-col ">
                 <label class="fg-label" for="tel">شماره تلفن</label>
-                <input class="entry" id="tel" type="tel">
-                <span class="text-danger"></span>
+                <input class="entry" id="TellNo" type="tel" asp-for="TellNo">
+                <span class="text-danger" asp-validation-for="TellNo"></span>
             </div>
 
-            <div class="fg-col ">
-                <label class="fg-label" for="password">گذرواژه</label>
-                <input class="entry" id="password" type="text">
-                <span class="text-danger"></span>
-            </div>
-
-            <div class="fg-col ">
+            <div class="fg-col">
                 <label class="fg-label" for="identification">کد ملی</label>
-                <input class="entry" id="identification" type="text">
-                <span class="text-danger"></span>
+                <input class="entry" id="IdentificationNo" type="text" asp-for="IdentificationNo">
+                <span class="text-danger" asp-validation-for="IdentificationNo"></span>
             </div>
         </div>
 

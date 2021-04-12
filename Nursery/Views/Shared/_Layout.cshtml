@@ -115,6 +115,16 @@
         </label>
     </footer>
 
+    <!-- #region addJquery -->
+
+    <script src="~/Jquery/jquery-3.4.1.min.js"></script>
+    <script src="~/Validate/jquery.validate.min.js"></script>
+    <script src="~/Validate/jquery.validate.unobtrusive.min.js"></script>
+    <script src="~/Validate/jquery.validate.unobtrusive.js"></script>
+    <script src="~/Validate/jquery.unobtrusive-ajax.min.js"></script>
+
+    <!-- #endregion -->
+
 
     <script src="~/js/uikit.min.js"></script>
     <script src="~/js/uikit-icons.js"></script>
@@ -127,5 +137,16 @@
 
     @RenderSection("Scripts", required: false)
 
+
+    <script>
+        function LoadingRun(form) {
+            if (!$(form).valid()) return;
+            $("#overlay").fadeIn(300);
+        }
+        function LoadingEnd(form) {
+            $("#overlay").fadeOut(300);
+            $(form)[0].reset();
+        }
+    </script>
 </body>
 </html>

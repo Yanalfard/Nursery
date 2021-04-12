@@ -43,6 +43,20 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Include="wwwroot\Jquery\docs.min.js" />
+    <None Include="wwwroot\Jquery\Home.js" />
+    <None Include="wwwroot\Jquery\jquery-3.4.1.js" />
+    <None Include="wwwroot\Jquery\jquery-3.4.1.min.js" />
+    <None Include="wwwroot\Jquery\modal.js" />
+    <None Include="wwwroot\Jquery\popper.min.js" />
+    <None Include="wwwroot\Validate\jquery.unobtrusive-ajax.js" />
+    <None Include="wwwroot\Validate\jquery.unobtrusive-ajax.min.js" />
+    <None Include="wwwroot\Validate\jquery.validate.min.js" />
+    <None Include="wwwroot\Validate\jquery.validate.unobtrusive.js" />
+    <None Include="wwwroot\Validate\jquery.validate.unobtrusive.min.js" />
+  </ItemGroup>
+
+  <ItemGroup>
     <TypeScriptCompile Include="Scripts\FormMaker\builder.ts" />
   </ItemGroup>
 
