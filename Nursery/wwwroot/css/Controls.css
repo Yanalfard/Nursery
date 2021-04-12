@@ -162,6 +162,7 @@ a.btn.btn-primary:hover {
   color: #19b3ac !important; }
 
 .btn-warning {
+  border: 0;
   background-color: #FFF4DE !important;
   color: #FFA800 !important; }
 
@@ -170,6 +171,7 @@ a.btn.btn-primary:hover {
   color: #ffaf14 !important; }
 
 .btn-danger {
+  border: 0;
   background-color: #FFE2E5 !important;
   color: #F64E60 !important; }
 
@@ -360,7 +362,10 @@ input:not(input[type=checkbox]):not(input[type=radio]) {
         direction: ltr; }
       .form-search .controls-grid .entry {
         min-width: 160px;
-        direction: rtl; }
+        direction: rtl;
+        -moz-border-radius: 0 !important;
+        -webkit-border-radius: 0 !important;
+        border-radius: 0 !important; }
       .form-search .controls-grid > * {
         border-left: 1px #e5e5e5 solid !important;
         border-bottom: 1px #e5e5e5 solid; }
@@ -1581,3 +1586,72 @@ input:not(input[type=checkbox]):not(input[type=radio]) {
           border-left: 0; }
     .timeline .timeline-body .timeline-row:last-child {
       border-bottom: 0; }
+
+.popconfirm {
+  background-color: #fff;
+  border: 1px solid #e5e5e5;
+  -moz-box-shadow: rgba(0, 0, 0, 0.12) 0 6px 16px;
+  -webkit-box-shadow: rgba(0, 0, 0, 0.12) 0 6px 16px;
+  box-shadow: rgba(0, 0, 0, 0.12) 0 6px 16px;
+  -moz-border-radius: 2.5px 2.5px 2.5px 2.5px;
+  -webkit-border-radius: 2.5px 2.5px 2.5px 2.5px;
+  border-radius: 2.5px 2.5px 2.5px 2.5px;
+  padding: 0;
+  border: 0;
+  position: absolute;
+  z-index: 1000;
+  min-width: 256px;
+  -moz-box-shadow: 0 4px 24px 6px rgba(0, 0, 0, 0.08);
+  -webkit-box-shadow: 0 4px 24px 6px rgba(0, 0, 0, 0.08);
+  box-shadow: 0 4px 24px 6px rgba(0, 0, 0, 0.08); }
+  .popconfirm .popconfirm-header {
+    padding: 12px;
+    padding-bottom: 12px;
+    color: #333;
+    font-size: 15px; }
+  .popconfirm .popconfirm-body {
+    padding: 0px 12px;
+    padding-bottom: 12px;
+    direction: rtl; }
+    .popconfirm .popconfirm-body .popconfirm-description {
+      margin: 0;
+      padding: 0;
+      display: inline;
+      font-size: 14px;
+      color: #666; }
+  .popconfirm .popconfirm-footer {
+    display: flex;
+    flex-direction: row-reverse;
+    padding: 12px; }
+    .popconfirm .popconfirm-footer .popconfirm-btn {
+      -moz-border-radius: 2.5px 2.5px 2.5px 2.5px;
+      -webkit-border-radius: 2.5px 2.5px 2.5px 2.5px;
+      border-radius: 2.5px 2.5px 2.5px 2.5px;
+      min-width: 64px;
+      outline: 0;
+      font-size: 13px;
+      text-align: center;
+      padding: 1px 4px;
+      height: 28px;
+      -moz-transition: all ease 0.2s;
+      -o-transition: all ease 0.2s;
+      -webkit-transition: all ease 0.2s;
+      transition: all ease 0.2s; }
+    .popconfirm .popconfirm-footer *:first-child {
+      margin-left: 12px; }
+
+.popconfirm:before {
+  z-index: 999;
+  content: ' ';
+  display: block;
+  width: 20px;
+  height: 20px;
+  left: 16px;
+  top: -10px;
+  transform-origin: center;
+  transform: rotate(45deg);
+  background-color: white;
+  position: absolute;
+  -moz-border-radius: 2.5px 2.5px 2.5px 2.5px;
+  -webkit-border-radius: 2.5px 2.5px 2.5px 2.5px;
+  border-radius: 2.5px 2.5px 2.5px 2.5px; }

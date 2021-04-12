@@ -8,6 +8,8 @@ function sanitizeAttribute(attribute) {
     if (attribute.startsWith('}')) attribute = attribute.substring(0, attribute.length - 2);
 
     const keyValues = attribute.split(';');
+    if (keyValues.length === 1)
+        return undefined;
 
     let obj = {};
 

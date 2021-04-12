@@ -128,6 +128,7 @@ a.btn.btn-primary:hover {
 //-
 
 .btn-warning {
+    border: 0;
     background-color: $yellow-background !important;
     color: $yellow !important;
 }
@@ -140,6 +141,7 @@ a.btn.btn-primary:hover {
 //-
 
 .btn-danger {
+    border: 0;
     background-color: $red-background !important;
     color: $red !important;
 }
@@ -354,6 +356,9 @@ $title-fontsize: 18px;
             .entry {
                 min-width: 160px;
                 direction: rtl;
+                -moz-border-radius: 0 !important;
+                -webkit-border-radius: 0 !important;
+                border-radius: 0 !important;
             }
 
             > * {
@@ -1175,4 +1180,74 @@ $background-highlight: #eee;
             border-bottom: 0;
         }
     }
+}
+
+.popconfirm {
+    @include mat;
+    padding: 0;
+    border: 0;
+    $padding: 12px;
+    position: absolute;
+    z-index: 1000;
+    min-width: 256px;
+    $color: transparentize(#000,.92);
+    -moz-box-shadow: 0 4px 24px 6px $color;
+    -webkit-box-shadow: 0 4px 24px 6px $color;
+    box-shadow: 0 4px 24px 6px $color;
+
+    .popconfirm-header {
+        padding: $padding;
+        padding-bottom: $padding;
+        color: $text-2;
+        font-size: 15px;
+    }
+
+    .popconfirm-body {
+        padding: 0px $padding;
+        padding-bottom: 12px;
+        direction: rtl;
+
+        .popconfirm-description {
+            margin: 0;
+            padding: 0;
+            display: inline;
+            font-size: 14px;
+            color: $text-3;
+        }
+    }
+
+    .popconfirm-footer {
+        @include row-reverse;
+        padding: $padding;
+
+        .popconfirm-btn {
+            @include border-def-radius;
+            min-width: 64px;
+            outline: 0;
+            font-size: 13px;
+            text-align: center;
+            padding: 1px 4px;
+            height: 28px;
+            @include trans(.2s);
+        }
+
+        *:first-child {
+            margin-left: 12px;
+        }
+    }
+}
+
+.popconfirm:before {
+    z-index: 999;
+    content: ' ';
+    display: block;
+    width: 20px;
+    height: 20px;
+    left: 16px;
+    top: -10px;
+    transform-origin: center;
+    transform: rotate(45deg);
+    background-color: white;
+    position: absolute;
+    @include border-def-radius;
 }

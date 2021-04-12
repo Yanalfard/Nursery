@@ -12,5 +12,6 @@
         tblValue: 'model/db/tblValue',
         tool: 'model/tool',
         timeline: '/js/Timeline/timeline',
+        confirm: '/js/Confirm/confirm',
     }
 });
