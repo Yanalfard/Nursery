@@ -112,7 +112,6 @@ define(["require", "exports"], function (require, exports) {
         if (url) {
             fetch(url).then(function (j) {
                 j.json().then(function (data) {
-                    console.log(data);
                     data.forEach(function (i) {
                         timeline.addRow(i.role.name, i.role);
                     });

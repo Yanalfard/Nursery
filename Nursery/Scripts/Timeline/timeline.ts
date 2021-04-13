@@ -149,8 +149,6 @@ timelineComponents.forEach(comp => {
     if (url) {
         fetch(url).then(j => {
             j.json().then((data: dataModel[]) => {
-                console.log(data);
-
                 data.forEach(i => {
                     timeline.addRow(i.role.name, i.role);
                 })

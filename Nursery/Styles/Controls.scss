@@ -116,6 +116,7 @@ a.btn.btn-primary:hover {
 //-
 
 .btn-success {
+    border: 0;
     background-color: $green-background !important;
     color: $green !important;
 }
@@ -1195,6 +1196,11 @@ $background-highlight: #eee;
     -webkit-box-shadow: 0 4px 24px 6px $color;
     box-shadow: 0 4px 24px 6px $color;
 
+    * {
+        position: relative;
+        z-index: 1001;
+    }
+
     .popconfirm-header {
         padding: $padding;
         padding-bottom: $padding;
@@ -1237,17 +1243,15 @@ $background-highlight: #eee;
     }
 }
 
-.popconfirm:before {
+.popconfirm-arrow {
     z-index: 999;
+    position: absolute;
     content: ' ';
     display: block;
     width: 20px;
     height: 20px;
-    left: 16px;
-    top: -10px;
     transform-origin: center;
     transform: rotate(45deg);
     background-color: white;
-    position: absolute;
     @include border-def-radius;
 }
