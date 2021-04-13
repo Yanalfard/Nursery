@@ -68,7 +68,7 @@
     </div>
 
     <div class="card col">
-        <h3>drop</h3>
+        <h3>popconfirm</h3>
 
         <style>
             .grid {
@@ -78,18 +78,22 @@
             }
         </style>
 
+        <button class="btn btn-primary" popconfirm="direction:tl">
+            <span>HELLO</span>
+        </button>
+
         <div class="row">
             <div class="grid uk-margin-auto">
                 <span></span>
-                <button class="btn-icon btn-danger" popconfirm="direction:tl">tl</button>
-                <button class="btn-icon btn-danger" popconfirm="direction:tc">tc</button>
-                <button class="btn-icon btn-danger" popconfirm="direction:tr">tr</button>
+                <button class="btn-icon btn-danger" popconfirm="description:Hola chika;direction:tl;type:danger">tl</button>
+                <button class="btn-icon btn-danger" popconfirm="direction:tc;type:warning">tc</button>
+                <button class="btn-icon btn-danger" popconfirm="direction:tr;type:success">tr</button>
                 <span></span>
-                <button class="btn-icon btn-danger" popconfirm="direction:lt">lt</button>
+                <button class="btn-icon btn-danger" popconfirm="direction:lt;type:default" popok="console.log('TEHLH')">lt</button>
                 <span></span>
                 <span></span>
                 <span></span>
-                <button class="btn-icon btn-danger" popconfirm="direction:rt">rt</button>
+                <button class="btn-icon btn-danger" popconfirm="okText:سلاممم;direction:rt">rt</button>
                 <button class="btn-icon btn-danger" popconfirm="direction:lc">lc</button>
                 <span></span>
                 <span></span>

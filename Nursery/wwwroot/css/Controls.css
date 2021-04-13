@@ -154,6 +154,7 @@ a.btn.btn-primary:hover {
   transition: background-color ease .2s; }
 
 .btn-success {
+  border: 0;
   background-color: #C9F7F5 !important;
   color: #1BC5BD !important; }
 
@@ -1604,6 +1605,9 @@ input:not(input[type=checkbox]):not(input[type=radio]) {
   -moz-box-shadow: 0 4px 24px 6px rgba(0, 0, 0, 0.08);
   -webkit-box-shadow: 0 4px 24px 6px rgba(0, 0, 0, 0.08);
   box-shadow: 0 4px 24px 6px rgba(0, 0, 0, 0.08); }
+  .popconfirm * {
+    position: relative;
+    z-index: 1001; }
   .popconfirm .popconfirm-header {
     padding: 12px;
     padding-bottom: 12px;
@@ -1640,18 +1644,16 @@ input:not(input[type=checkbox]):not(input[type=radio]) {
     .popconfirm .popconfirm-footer *:first-child {
       margin-left: 12px; }
 
-.popconfirm:before {
+.popconfirm-arrow {
   z-index: 999;
+  position: absolute;
   content: ' ';
   display: block;
   width: 20px;
   height: 20px;
-  left: 16px;
-  top: -10px;
   transform-origin: center;
   transform: rotate(45deg);
   background-color: white;
-  position: absolute;
   -moz-border-radius: 2.5px 2.5px 2.5px 2.5px;
   -webkit-border-radius: 2.5px 2.5px 2.5px 2.5px;
   border-radius: 2.5px 2.5px 2.5px 2.5px; }

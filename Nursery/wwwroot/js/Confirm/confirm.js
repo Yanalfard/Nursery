@@ -34,83 +34,52 @@ define(["require", "exports"], function (require, exports) {
             this.settings.title = (settings === null || settings === void 0 ? void 0 : settings.title) || this.settings.title;
             this.settings.description = (settings === null || settings === void 0 ? void 0 : settings.description) || this.settings.description;
             this.settings.okText = (settings === null || settings === void 0 ? void 0 : settings.okText) || this.settings.okText;
-            this.settings.direction = (settings === null || settings === void 0 ? void 0 : settings.direction) || this.settings.direction;
             this.settings.cancelText = (settings === null || settings === void 0 ? void 0 : settings.cancelText) || this.settings.cancelText;
+            this.settings.direction = (settings === null || settings === void 0 ? void 0 : settings.direction) || this.settings.direction || Direction.tc;
+            this.settings.type = (settings === null || settings === void 0 ? void 0 : settings.type) || this.settings.type || ConfirmType["default"];
             this.cancelEval = cancelEval;
             this.okEval = okEval;
             this.parent = parent;
-            var template = "<div class=\"popconfirm\">\n                <div class=\"popconfirm-header\">\n                    " + this.settings.title + "\n                </div>\n                <div class=\"popconfirm-body\">\n                    <p class=\"popconfirm-description\">\n                        " + this.settings.description + "\n                    </p>\n                </div>\n                <div class=\"popconfirm-footer\">\n                    <button btnOk class=\"popconfirm-btn popconfirm-ok btn-primary\">" + this.settings.okText + "</button>\n                    <button btnCancel class=\"popconfirm-btn popconfirm-cancel btn-secondary\">" + this.settings.cancelText + "</button>\n                </div>\n            </div>";
+            var template = "<div class=\"popconfirm\">\n                <div class=\"popconfirm-arrow\"></div>\n                <div class=\"popconfirm-header\">\n                    " + this.settings.title + "\n                </div>\n                <div class=\"popconfirm-body\">\n                    <p class=\"popconfirm-description\">\n                        " + this.settings.description + "\n                    </p>\n                </div>\n                <div class=\"popconfirm-footer\">\n                    <button btnOk class=\"popconfirm-btn popconfirm-ok btn-primary\">" + this.settings.okText + "</button>\n                    <button btnCancel class=\"popconfirm-btn popconfirm-cancel btn-secondary\">" + this.settings.cancelText + "</button>\n                </div>\n            </div>";
             this.element = new DOMParser().parseFromString(template, 'text/html').querySelector('.popconfirm');
             this.btnOk = this.element.querySelector('[btnOk]');
             this.btnCancel = this.element.querySelector('[btnCancel]');
+            this.arrow = this.element.querySelector('.popconfirm-arrow');
+            this.btnOk.innerText = this.settings.okText;
+            this.btnCancel.innerText = this.settings.cancelText;
             this.btnOk.addEventListener('click', function () { _this.ok(); });
             this.btnCancel.addEventListener('click', function () { _this.cancel(); });
-            var offet = 16;
-            var left = 0;
-            var top = 0;
-            document.body.appendChild(this.element);
-            var calculateDeltas = function () {
-                switch (Direction[_this.settings.direction.toString()]) {
-                    case Direction.bl:
-                        top = parent.offsetTop + parent.offsetHeight + offet;
-                        left = parent.offsetLeft;
-                        break;
-                    case Direction.br:
-                        top = parent.offsetTop + parent.offsetHeight + offet;
-                        left = parent.offsetLeft - (_this.element.offsetWidth - parent.offsetWidth);
-                        break;
-                    case Direction.lb:
-                        top = (parent.offsetTop + parent.offsetHeight) - _this.element.offsetHeight;
-                        left = parent.offsetLeft - _this.element.offsetWidth - offet;
-                        break;
-                    case Direction.lt:
-                        top = parent.offsetTop;
-                        left = parent.offsetLeft - _this.element.offsetWidth - offet;
-                        break;
-                    case Direction.tl:
-                        top = parent.offsetTop - _this.element.offsetHeight - offet;
-                        left = parent.offsetLeft;
-                        break;
-                    case Direction.tr:
-                        top = parent.offsetTop - _this.element.offsetHeight - offet;
-                        left = parent.offsetLeft - (_this.element.offsetWidth - parent.offsetWidth);
-                        break;
-                    case Direction.rt:
-                        top = parent.offsetTop;
-                        left = parent.offsetLeft + parent.offsetWidth + offet;
-                        break;
-                    case Direction.rb:
-                        top = (parent.offsetTop + parent.offsetHeight) - _this.element.offsetHeight;
-                        left = parent.offsetLeft + parent.offsetWidth + offet;
-                        break;
-                    case Direction.rc:
-                        top = (parent.offsetTop + (parent.offsetHeight / 2)) - (_this.element.offsetHeight / 2);
-                        left = parent.offsetLeft + parent.offsetWidth + offet;
-                        break;
-                    case Direction.tc:
-                        top = parent.offsetTop - _this.element.offsetHeight - offet;
-                        left = parent.offsetLeft + (parent.offsetWidth / 2) - (_this.element.offsetWidth / 2);
-                        break;
-                    case Direction.bc:
-                        top = parent.offsetTop + parent.offsetHeight + offet;
-                        left = parent.offsetLeft + (parent.offsetWidth / 2) - (_this.element.offsetWidth / 2);
-                        break;
-                    case Direction.lc:
-                        top = (parent.offsetTop + (parent.offsetHeight / 2)) - (_this.element.offsetHeight / 2);
-                        left = parent.offsetLeft - _this.element.offsetWidth - offet;
-                        break;
-                    default:
-                        top = parent.offsetTop + _this.element.offsetHeight + offet;
-                        left = parent.offsetLeft;
-                        break;
-                }
-                _this.element.style.left = left + 'px';
-                _this.element.style.top = top + 'px';
-            };
+            this.settings.type = ConfirmType[this.settings.type] || ConfirmType["default"];
+            this.btnOk.classList.remove('btn-primary');
+            switch (this.settings.type) {
+                case ConfirmType.danger:
+                    this.btnOk.classList.add('btn-danger');
+                    break;
+                case ConfirmType["default"]:
+                    this.btnOk.classList.add('btn-primary');
+                    break;
+                case ConfirmType.success:
+                    this.btnOk.classList.add('btn-success');
+                    break;
+                case ConfirmType.warning:
+                    this.btnOk.classList.add('btn-warning');
+                    break;
+                default:
+                    this.btnOk.classList.add('btn-primary');
+                    break;
+            }
             window.addEventListener('scroll', function () {
-                calculateDeltas();
+                if (_this.element.style.display == 'block') {
+                    _this.cancel();
+                }
             });
-            calculateDeltas();
+            window.addEventListener('resize', function () {
+                if (_this.element.style.display == 'block') {
+                    _this.cancel();
+                }
+            });
+            document.body.appendChild(this.element);
+            this.calculateDeltas();
             window.addEventListener('click', function (e) {
                 if (!e.path.includes(_this.element) && !e.path.includes(_this.parent)) {
                     _this.hide();
@@ -121,21 +90,123 @@ define(["require", "exports"], function (require, exports) {
                 else
                     _this.show();
             });
+            this.element.style.display = 'none';
             this.hide();
         }
+        // Calculate where the element should be positioned relative to its parent
+        // Calculate where the arrow should be relative to the element
+        Confirm.prototype.calculateDeltas = function () {
+            var left = 0;
+            var top = 0;
+            var parent = this.parent;
+            var offet = 16;
+            //- arrow
+            var atop = '';
+            var abottom = '';
+            var aleft = '';
+            var aright = '';
+            switch (Direction[this.settings.direction.toString()]) {
+                case Direction.bl:
+                    top = parent.offsetTop + parent.offsetHeight + offet;
+                    left = parent.offsetLeft;
+                    atop = -10;
+                    aleft = 16;
+                    break;
+                case Direction.br:
+                    top = parent.offsetTop + parent.offsetHeight + offet;
+                    left = parent.offsetLeft - (this.element.offsetWidth - parent.offsetWidth);
+                    atop = -10;
+                    aright = 16;
+                    break;
+                case Direction.lb:
+                    top = (parent.offsetTop + parent.offsetHeight) - this.element.offsetHeight;
+                    left = parent.offsetLeft - this.element.offsetWidth - offet;
+                    aright = -10;
+                    abottom = 16;
+                    break;
+                case Direction.lt:
+                    top = parent.offsetTop;
+                    left = parent.offsetLeft - this.element.offsetWidth - offet;
+                    aright = -10;
+                    atop = 16;
+                    break;
+                case Direction.tl:
+                    top = parent.offsetTop - this.element.offsetHeight - offet;
+                    left = parent.offsetLeft;
+                    abottom = -10;
+                    aleft = 16;
+                    break;
+                case Direction.tr:
+                    top = parent.offsetTop - this.element.offsetHeight - offet;
+                    left = parent.offsetLeft - (this.element.offsetWidth - parent.offsetWidth);
+                    abottom = -10;
+                    aright = 16;
+                    break;
+                case Direction.rt:
+                    top = parent.offsetTop;
+                    left = parent.offsetLeft + parent.offsetWidth + offet;
+                    aleft = -10;
+                    atop = 16;
+                    break;
+                case Direction.rb:
+                    top = (parent.offsetTop + parent.offsetHeight) - this.element.offsetHeight;
+                    left = parent.offsetLeft + parent.offsetWidth + offet;
+                    aleft = -10;
+                    abottom = 16;
+                    break;
+                case Direction.rc:
+                    top = (parent.offsetTop + (parent.offsetHeight / 2)) - (this.element.offsetHeight / 2);
+                    left = parent.offsetLeft + parent.offsetWidth + offet;
+                    aleft = -10;
+                    atop = abottom = (this.element.offsetHeight - this.arrow.offsetHeight) / 2;
+                    break;
+                case Direction.lc:
+                    top = (parent.offsetTop + (parent.offsetHeight / 2)) - (this.element.offsetHeight / 2);
+                    left = parent.offsetLeft - this.element.offsetWidth - offet;
+                    aright = -10;
+                    atop = abottom = (this.element.offsetHeight - this.arrow.offsetHeight) / 2;
+                    break;
+                case Direction.tc:
+                    top = parent.offsetTop - this.element.offsetHeight - offet;
+                    left = parent.offsetLeft + (parent.offsetWidth / 2) - (this.element.offsetWidth / 2);
+                    abottom = -10;
+                    aleft = aright = (this.element.offsetWidth - this.arrow.offsetHeight) / 2;
+                    break;
+                case Direction.bc:
+                    top = parent.offsetTop + parent.offsetHeight + offet;
+                    left = parent.offsetLeft + (parent.offsetWidth / 2) - (this.element.offsetWidth / 2);
+                    atop = -10;
+                    aleft = aright = (this.element.offsetWidth - this.arrow.offsetHeight) / 2;
+                    break;
+                default:
+                    top = parent.offsetTop - this.element.offsetHeight - offet;
+                    left = parent.offsetLeft + (parent.offsetWidth / 2) - (this.element.offsetWidth / 2);
+                    abottom = -10;
+                    aleft = aright = (this.element.offsetWidth - this.arrow.offsetHeight) / 2;
+                    break;
+            }
+            this.element.style.left = left + 'px';
+            this.element.style.top = top + 'px';
+            this.arrow.style.left = aleft + 'px';
+            this.arrow.style.right = aright + 'px';
+            this.arrow.style.top = atop + 'px';
+            this.arrow.style.bottom = abottom + 'px';
+        };
         Confirm.prototype.show = function () {
             this.element.style.display = 'block';
             this.element.style.transition = 'all ease 0.3s';
+            this.element.style.transitionProperty = 'opacity';
             this.element.style.opacity = '1';
-            // TODO Calculate deltas when shown!!!
+            this.calculateDeltas();
         };
         Confirm.prototype.hide = function () {
             var _this = this;
-            this.element.style.transition = 'all ease 0.3s';
+            this.element.style.transition = 'all ease 0.2s ';
+            this.element.style.transitionProperty = 'opacity';
             this.element.style.opacity = '0';
             setTimeout(function () {
                 _this.element.style.display = 'none';
-            }, 300);
+            }, 200);
         };
         Confirm.prototype.cancel = function () {
             var _this = this;
@@ -172,7 +243,7 @@ define(["require", "exports"], function (require, exports) {
     var ConfirmType;
     (function (ConfirmType) {
         ConfirmType[ConfirmType["default"] = 0] = "default";
-        ConfirmType[ConfirmType["info"] = 1] = "info";
+        ConfirmType[ConfirmType["success"] = 1] = "success";
         ConfirmType[ConfirmType["warning"] = 2] = "warning";
         ConfirmType[ConfirmType["danger"] = 3] = "danger";
     })(ConfirmType = exports.ConfirmType || (exports.ConfirmType = {}));
@@ -202,6 +273,13 @@ define(["require", "exports"], function (require, exports) {
             obj[split[0]] = split[1];
         }
         return obj;
+    }
+    function isElementInViewport(element) {
+        var rect = element.getBoundingClientRect();
+        return rect.top >= 0 &&
+            rect.left >= 0 &&
+            rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) &&
+            rect.right <= (window.innerWidth || document.documentElement.clientWidth);
     }
 });
 //# sourceMappingURL=confirm.js.map

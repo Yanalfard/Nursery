@@ -33,6 +33,7 @@ export class Confirm {
     element: HTMLElement;
     btnOk: HTMLButtonElement;
     btnCancel: HTMLButtonElement;
+    private arrow: HTMLElement;
 
     constructor(parent: HTMLElement, okEval: string, cancelEval?: string, settings?: ConfirmSettings) {
 
@@ -40,8 +41,9 @@ export class Confirm {
         this.settings.title = settings?.title || this.settings.title;
         this.settings.description = settings?.description || this.settings.description;
         this.settings.okText = settings?.okText || this.settings.okText;
-        this.settings.direction = settings?.direction || this.settings.direction;
         this.settings.cancelText = settings?.cancelText || this.settings.cancelText;
+        this.settings.direction = settings?.direction || this.settings.direction || Direction.tc as any;
+        this.settings.type = settings?.type || this.settings.type || ConfirmType.default;
 
         this.cancelEval = cancelEval;
         this.okEval = okEval;
@@ -50,6 +52,7 @@ export class Confirm {
 
         let template =
             `<div class="popconfirm">
+                <div class="popconfirm-arrow"></div>
                 <div class="popconfirm-header">
                     ${this.settings.title}
                 </div>
@@ -67,92 +70,49 @@ export class Confirm {
         this.element = new DOMParser().parseFromString(template, 'text/html').querySelector('.popconfirm');
         this.btnOk = this.element.querySelector('[btnOk]');
         this.btnCancel = this.element.querySelector('[btnCancel]');
+        this.arrow = this.element.querySelector('.popconfirm-arrow');
+
+        this.btnOk.innerText = this.settings.okText;
+        this.btnCancel.innerText = this.settings.cancelText;
 
         this.btnOk.addEventListener('click', () => { this.ok() });
         this.btnCancel.addEventListener('click', () => { this.cancel() });
 
-        const offet = 16;
+        this.settings.type = ConfirmType[this.settings.type] as any || ConfirmType.default;
 
-        let left: number = 0;
-        let top: number = 0;
-
-        document.body.appendChild(this.element);
-
-        let calculateDeltas = () => {
-            switch (Direction[this.settings.direction.toString()]) {
-                case Direction.bl:
-                    top = parent.offsetTop + parent.offsetHeight + offet;
-                    left = parent.offsetLeft;
-
-                    break;
-                case Direction.br:
-                    top = parent.offsetTop + parent.offsetHeight + offet;
-                    left = parent.offsetLeft - (this.element.offsetWidth - parent.offsetWidth);
-
-                    break;
-                case Direction.lb:
-                    top = (parent.offsetTop + parent.offsetHeight) - this.element.offsetHeight
-                    left = parent.offsetLeft - this.element.offsetWidth - offet;
-
-                    break;
-                case Direction.lt:
-                    top = parent.offsetTop;
-                    left = parent.offsetLeft - this.element.offsetWidth - offet;
-
-                    break;
-                case Direction.tl:
-                    top = parent.offsetTop - this.element.offsetHeight - offet;
-                    left = parent.offsetLeft;
-                    break;
-                case Direction.tr:
-                    top = parent.offsetTop - this.element.offsetHeight - offet;
-                    left = parent.offsetLeft - (this.element.offsetWidth - parent.offsetWidth);
-
-                    break;
-                case Direction.rt:
-                    top = parent.offsetTop;
-                    left = parent.offsetLeft + parent.offsetWidth + offet;
-
-                    break;
-                case Direction.rb:
-                    top = (parent.offsetTop + parent.offsetHeight) - this.element.offsetHeight;
-                    left = parent.offsetLeft + parent.offsetWidth + offet;
-
-                    break;
-                case Direction.rc:
-                    top = (parent.offsetTop + (parent.offsetHeight / 2)) - (this.element.offsetHeight / 2);
-                    left = parent.offsetLeft + parent.offsetWidth + offet;
-
-                    break;
-                case Direction.tc:
-                    top = parent.offsetTop - this.element.offsetHeight - offet;
-                    left = parent.offsetLeft + (parent.offsetWidth / 2) - (this.element.offsetWidth / 2);
-
-                    break;
-                case Direction.bc:
-                    top = parent.offsetTop + parent.offsetHeight + offet;
-                    left = parent.offsetLeft + (parent.offsetWidth / 2) - (this.element.offsetWidth / 2);
-
-                    break;
-                case Direction.lc:
-                    top = (parent.offsetTop + (parent.offsetHeight / 2)) - (this.element.offsetHeight / 2);
-                    left = parent.offsetLeft - this.element.offsetWidth - offet;
-
-                    break;
-                default:
-                    top = parent.offsetTop + this.element.offsetHeight + offet;
-                    left = parent.offsetLeft;
-
-                    break;
-            }
-            this.element.style.left = left + 'px';
-            this.element.style.top = top + 'px';
+        this.btnOk.classList.remove('btn-primary');
+        switch (this.settings.type) {
+            case ConfirmType.danger:
+                this.btnOk.classList.add('btn-danger');
+                break;
+            case ConfirmType.default:
+                this.btnOk.classList.add('btn-primary');
+                break;
+            case ConfirmType.success:
+                this.btnOk.classList.add('btn-success');
+                break;
+            case ConfirmType.warning:
+                this.btnOk.classList.add('btn-warning');
+                break;
+            default:
+                this.btnOk.classList.add('btn-primary');
+                break;
         }
 
         window.addEventListener('scroll', () => {
-            calculateDeltas();
+            if (this.element.style.display == 'block') {
+                this.cancel();
+            }
         });
-        calculateDeltas();
+        window.addEventListener('resize', () => {
+            if (this.element.style.display == 'block') {
+                this.cancel();
+            }
+        });
+
+        document.body.appendChild(this.element);
+
+        this.calculateDeltas();
 
         window.addEventListener('click', (e: any) => {
             if (!e.path.includes(this.element) && !e.path.includes(this.parent)) {
@@ -165,22 +125,127 @@ export class Confirm {
                 this.show();
         });
 
+        this.element.style.display = 'none';
         this.hide();
+    }
+
+    // Calculate where the element should be positioned relative to its parent
+    // Calculate where the arrow should be relative to the element
+    calculateDeltas() {
+        let left: number = 0;
+        let top: number = 0;
+        let parent = this.parent;
+        const offet = 16;
+        //- arrow
+        let atop: number | string = '';
+        let abottom: number | string = '';
+        let aleft: number | string = '';
+        let aright: number | string = '';
+
+        switch (Direction[this.settings.direction.toString()]) {
+            case Direction.bl:
+                top = parent.offsetTop + parent.offsetHeight + offet;
+                left = parent.offsetLeft;
+                atop = -10;
+                aleft = 16;
+                break;
+            case Direction.br:
+                top = parent.offsetTop + parent.offsetHeight + offet;
+                left = parent.offsetLeft - (this.element.offsetWidth - parent.offsetWidth);
+                atop = -10;
+                aright = 16;
+                break;
+            case Direction.lb:
+                top = (parent.offsetTop + parent.offsetHeight) - this.element.offsetHeight
+                left = parent.offsetLeft - this.element.offsetWidth - offet;
+                aright = -10;
+                abottom = 16;
+                break;
+            case Direction.lt:
+                top = parent.offsetTop;
+                left = parent.offsetLeft - this.element.offsetWidth - offet;
+                aright = -10;
+                atop = 16;
+                break;
+            case Direction.tl:
+                top = parent.offsetTop - this.element.offsetHeight - offet;
+                left = parent.offsetLeft;
+                abottom = -10;
+                aleft = 16;
+                break;
+            case Direction.tr:
+                top = parent.offsetTop - this.element.offsetHeight - offet;
+                left = parent.offsetLeft - (this.element.offsetWidth - parent.offsetWidth);
+                abottom = -10;
+                aright = 16;
+                break;
+            case Direction.rt:
+                top = parent.offsetTop;
+                left = parent.offsetLeft + parent.offsetWidth + offet;
+                aleft = -10;
+                atop = 16;
+                break;
+            case Direction.rb:
+                top = (parent.offsetTop + parent.offsetHeight) - this.element.offsetHeight;
+                left = parent.offsetLeft + parent.offsetWidth + offet;
+                aleft = -10;
+                abottom = 16;
+                break;
+            case Direction.rc:
+                top = (parent.offsetTop + (parent.offsetHeight / 2)) - (this.element.offsetHeight / 2);
+                left = parent.offsetLeft + parent.offsetWidth + offet;
+                aleft = -10;
+                atop = abottom = (this.element.offsetHeight - this.arrow.offsetHeight) / 2;
+                break;
+            case Direction.lc:
+                top = (parent.offsetTop + (parent.offsetHeight / 2)) - (this.element.offsetHeight / 2);
+                left = parent.offsetLeft - this.element.offsetWidth - offet;
+                aright = -10;
+                atop = abottom = (this.element.offsetHeight - this.arrow.offsetHeight) / 2;
+                break;
+            case Direction.tc:
+                top = parent.offsetTop - this.element.offsetHeight - offet;
+                left = parent.offsetLeft + (parent.offsetWidth / 2) - (this.element.offsetWidth / 2);
+                abottom = -10;
+                aleft = aright = (this.element.offsetWidth - this.arrow.offsetHeight) / 2;
+                break;
+            case Direction.bc:
+                top = parent.offsetTop + parent.offsetHeight + offet;
+                left = parent.offsetLeft + (parent.offsetWidth / 2) - (this.element.offsetWidth / 2);
+                atop = -10;
+                aleft = aright = (this.element.offsetWidth - this.arrow.offsetHeight) / 2;
+                break;
+            default:
+                top = parent.offsetTop - this.element.offsetHeight - offet;
+                left = parent.offsetLeft + (parent.offsetWidth / 2) - (this.element.offsetWidth / 2);
+                abottom = -10;
+                aleft = aright = (this.element.offsetWidth - this.arrow.offsetHeight) / 2;
+                break;
+        }
+        this.element.style.left = left + 'px';
+        this.element.style.top = top + 'px';
+
+        this.arrow.style.left = aleft + 'px';
+        this.arrow.style.right = aright + 'px';
+        this.arrow.style.top = atop + 'px';
+        this.arrow.style.bottom = abottom + 'px';
     }
 
     show() {
         this.element.style.display = 'block';
         this.element.style.transition = 'all ease 0.3s';
+        this.element.style.transitionProperty = 'opacity';
         this.element.style.opacity = '1';
-        // TODO Calculate deltas when shown!!!
+        this.calculateDeltas();
     }
 
     hide() {
-        this.element.style.transition = 'all ease 0.3s';
+        this.element.style.transition = 'all ease 0.2s ';
+        this.element.style.transitionProperty = 'opacity';
         this.element.style.opacity = '0';
         setTimeout(() => {
             this.element.style.display = 'none';
-        }, 300);
+        }, 200);
     }
 
     cancel() {
@@ -204,7 +269,7 @@ export enum Direction {
 }
 
 export enum ConfirmType {
-    default, info, warning, danger
+    default, success, warning, danger
 }
 
 const confirmables = document.querySelectorAll(`[${attributeKey}]`);
@@ -213,7 +278,6 @@ confirmables.forEach(parent => {
     const cancel = parent.getAttribute('popcancel') || undefined;
 
     let settings = sanitizeAttribute(parent.getAttribute(attributeKey)) as ConfirmSettings;
-
     let conf = new Confirm(parent as HTMLElement, ok, cancel, settings);
 })
 
@@ -241,4 +305,12 @@ function sanitizeAttribute(attribute) {
     }
 
     return obj;
+}
+
+function isElementInViewport(element: HTMLElement) {
+    const rect = element.getBoundingClientRect();
+    return rect.top >= 0 &&
+        rect.left >= 0 &&
+        rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) &&
+        rect.right <= (window.innerWidth || document.documentElement.clientWidth);
 }
