@@ -15,6 +15,7 @@ namespace Services.Services
         private MainRepo<TblForm> _form;
         private MainRepo<TblFormFieldRel> _formFieldRel;
         private MainRepo<TblPage> _page;
+        private MainRepo<TblKid> _kid;
         private MainRepo<TblPageFormRel> _pageFormRel;
         private MainRepo<TblRegex> _regex;
         private MainRepo<TblRole> _role;
@@ -29,6 +30,7 @@ namespace Services.Services
         public MainRepo<TblForm> Form => _form ??= new MainRepo<TblForm>(_context);
         public MainRepo<TblFormFieldRel> FormFieldRel => _formFieldRel ??= new MainRepo<TblFormFieldRel>(_context);
         public MainRepo<TblPage> Page => _page ??= new MainRepo<TblPage>(_context);
+        public MainRepo<TblKid> Kid => _kid ??= new MainRepo<TblKid>(_context);
         public MainRepo<TblPageFormRel> PageFormRel => _pageFormRel ??= new MainRepo<TblPageFormRel>(_context);
         public MainRepo<TblRegex> Regex => _regex ??= new MainRepo<TblRegex>(_context);
         public MainRepo<TblRole> Role => _role ??= new MainRepo<TblRole>(_context);

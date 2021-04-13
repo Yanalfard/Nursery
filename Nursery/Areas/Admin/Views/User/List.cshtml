@@ -1,8 +1,6 @@
 ﻿@model IEnumerable<TblUser>
-@{
-    ViewData["Title"] = "لیست کاربر ها";
-    Layout = "~/Areas/Admin/Views/_AdminLayout.cshtml";
-}
+@{ ViewData["Title"] = "لیست کاربر ها";
+    Layout = "~/Areas/Admin/Views/_AdminLayout.cshtml"; }
 
 <!-- This is the modal -->
 <div id="Modal" uk-modal>
@@ -30,25 +28,25 @@
     </div>
     @if (Context.Request.Query["editUser"].ToString() == "true")
     {
-        <div class="uk-alert uk-alert-success addUser">
-            <p class="help-block">کاربر مورد نظر ویرایش شد</p>
-        </div>
-        <script>
-            var delay = 4000;
-            setTimeout(function () { $(".addUser").css("display", "none"); }, delay);
-        </script>
-    }
+<div class="uk-alert uk-alert-success addUser">
+    <p class="help-block">کاربر مورد نظر ویرایش شد</p>
+</div>
+                <script>
+                    var delay = 4000;
+                    setTimeout(function () { $(".addUser").css("display", "none"); }, delay);
+                </script>
+}
 
     @if (Context.Request.Query["addUser"].ToString() == "true")
     {
-        <div class="uk-alert uk-alert-success addUser">
-            <p class="help-block">کاربر جدید اضافه شد</p>
-        </div>
-        <script>
-            var delay = 4000;
-            setTimeout(function () { $(".addUser").css("display", "none"); }, delay);
-        </script>
-    }
+<div class="uk-alert uk-alert-success addUser">
+    <p class="help-block">کاربر جدید اضافه شد</p>
+</div>
+                <script>
+                    var delay = 4000;
+                    setTimeout(function () { $(".addUser").css("display", "none"); }, delay);
+                </script>
+}
     <div class="form-search" uk-sticky="offset: 140;cls-active: sticked uk-box-shadow-medium;bottom:true">
         <form id="formSearchUser" action="/Admin/User/List" class="controls-grid">
             <input class="entry" type="hidden" id="pageId" name="pageId" value="@ViewBag.PageShow">
@@ -81,40 +79,40 @@
             <tbody>
                 @foreach (var item in Model)
                 {
-                    <tr>
-                        <td>@(Model.ToList().IndexOf(item)+1)</td>
-                        <td>@item.Name</td>
-                        <td><bdi>@item.TellNo</bdi></td>
-                        <td>@item.DateCreated.DateToShamsi()</td>
-                        <td>@item.TblUserLog.SingleOrDefault()</td>
-                        @*<td>ادمین</td>*@
-                        <td class="actions">
-                            <a href="" class="btn-icon round text-4" uk-icon="icon:ellipsis-h;ratio:.72"></a>
-                            <div class="dropdown" uk-drop="mode: click;offset:4">
-                                <ul class="dropdown-list">
-                                    <li>
-                                        <a href="/Admin/User" class="rowr">
-                                            <span class="new">مشاهده</span>
-                                            <span class="small" uk-icon="eye"></span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="/Admin/User/Edit/@item.UserId" class="rowr">
-                                            <span class="new">ویرایش</span>
-                                            <span class="small" uk-icon="pen-square"></span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="" class="rowr btn-danger">
-                                            <span>حذف</span>
-                                            <span class="small" uk-icon="trash"></span>
-                                        </a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </td>
-                    </tr>
-                }
+    <tr id="userId_@item.UserId">
+        <td>@(Model.ToList().IndexOf(item)+1)</td>
+        <td>@item.Name</td>
+        <td><bdi>@item.TellNo</bdi></td>
+        <td>@item.DateCreated.DateToShamsi()</td>
+        <td>@item.TblUserLog.SingleOrDefault()</td>
+        @*<td>ادمین</td>*@
+        <td class="actions">
+            <a href="" class="btn-icon round text-4" uk-icon="icon:ellipsis-h;ratio:.72"></a>
+            <div class="dropdown" uk-drop="mode: click;offset:4">
+                <ul class="dropdown-list">
+                    <li>
+                        <a href="/Admin/User" class="rowr">
+                            <span class="new">مشاهده</span>
+                            <span class="small" uk-icon="eye"></span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/Admin/User/Edit/@item.UserId" class="rowr">
+                            <span class="new">ویرایش</span>
+                            <span class="small" uk-icon="pen-square"></span>
+                        </a>
+                    </li>
+                    <li>
+                        <a class="rowr btn-danger" popconfirm="description:آیا از حذف کاربر اطمینان دارید؟;direction:rt;type:danger;title:هشدار;okText:حذف;" popok="deleteUser(@item.UserId)">
+                            <span>حذف</span>
+                            <span class="small" uk-icon="trash"></span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </td>
+    </tr>
+}
 
             </tbody>
         </table>
@@ -123,45 +121,42 @@
         @*<button class="btn btn-primary">اضافه</button>*@
         <div class="uk-margin-auto-right">
             <ul class="uk-pagination uk-margin-remove uk-margin-auto-right">
-                @{
-                    int pageCount = ViewBag.PageCount;
+                @{ int pageCount = ViewBag.PageCount;
                     int pageShow = ViewBag.PageShow;
                     int minPage = pageShow <= 1 ? pageShow : pageShow - 2;
                     int maxPage = pageShow <= 1 ? pageShow + 4 : pageShow + 2;
-                    int notpage = 0;
-                }
+                    int notpage = 0; }
                 @if (pageShow > 1)
                 {
-                    <li><a  onclick="showOtherPage(@(pageShow==0?1:pageShow-1))"><span uk-pagination-previous></span></a></li>
-                }
+    <li><a onclick="showOtherPage(@(pageShow==0?1:pageShow-1))"><span uk-pagination-previous></span></a></li>
+}
                 @if (pageShow > 3)
                 {
-                    <li><a onclick="showOtherPage(1)">1</a></li>
-                }
+    <li><a onclick="showOtherPage(1)">1</a></li>
+}
                 @for (int i = 1; i <= pageCount; i++)
                 {
-                    @if (i >= minPage && i <= maxPage)
-                    {
-                        <li><a onclick="showOtherPage(@(i))" class="@(pageShow==i?"uk-active":"")">@i</a></li>
-                        notpage = 0;
-                    }
-                    else
-                    {
-                        if (notpage == 0)
-                        {
-                            <li class="uk-disabled"><span>...</span></li>
-                            notpage++;
-                        }
-                    }
-                }
+    @if (i >= minPage && i <= maxPage)
+    {
+<li><a onclick="showOtherPage(@(i))" class="@(pageShow==i?"uk-active":"")">@i</a></li>
+ notpage = 0;
+}
+else
+{
+if (notpage == 0)
+{
+<li class="uk-disabled"><span>...</span></li>
+notpage++;
+}
+}}
                 @if (pageShow <= pageCount - 3)
                 {
-                    <li><a onclick="showOtherPage(@(pageCount))">@pageCount</a></li>
-                }
+    <li><a onclick="showOtherPage(@(pageCount))">@pageCount</a></li>
+}
                 @if (pageShow < pageCount)
                 {
-                    <li><a onclick="showOtherPage(@(pageShow==0?2:pageShow+1))"><span uk-pagination-next></span></a></li>
-                }
+    <li><a onclick="showOtherPage(@(pageShow==0?2:pageShow+1))"><span uk-pagination-next></span></a></li>
+}
 
             </ul>
         </div>
@@ -175,5 +170,25 @@
             $('#pageId').val(id);
             document.getElementById('formSearchUser').submit();
         }
+
+
+        function deleteUser(id) {
+            $.get('/Admin/User/Delete/' + id, function (result) {
+                if (result == "true") {
+                    $('#userId_' + id).addClass('text-danger');
+                    $("#userId_" + id).hide('slow');
+                }
+            });
+        }
+    </script>
+
+
+
+    <script>
+        require(['config'], function () {
+            require(['confirm'], function () {
+
+            })
+        });
     </script>
 }

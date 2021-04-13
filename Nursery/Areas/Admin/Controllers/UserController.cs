@@ -21,9 +21,9 @@ namespace Nursery.Areas.Admin.Controllers
             return View();
         }
 
-        public IActionResult Add()
+        public async Task<IActionResult> Add()
         {
-            return View();
+            return await Task.FromResult(View());
         }
         [HttpPost]
         public async Task<IActionResult> Add(AddUserVm user, IFormFile imageUrl)
@@ -137,7 +137,7 @@ namespace Nursery.Areas.Admin.Controllers
             }
             return await Task.FromResult(View(user));
         }
-        public async Task<IActionResult> List(int pageId = 0, string name = null, string tell = null, string identificationNo = null, string checkedDelete = null)
+        public async Task<IActionResult> List(int pageId = 1, string name = null, string tell = null, string identificationNo = null, string checkedDelete = null)
         {
             ViewBag.name = name;
             ViewBag.tell = tell;
@@ -167,28 +167,7 @@ namespace Nursery.Areas.Admin.Controllers
             ViewBag.PageShow = pageId;
             return await Task.FromResult(PartialView(list.Skip(skip).Take(take)));
         }
-        public async Task<IActionResult> ListUser(int pageId = 0, string name = null, string tell = null, string identificationNo = null)
-        {
-            List<TblUser> list = _db.User.Get(i => i.IsDeleted == false, j => j.OrderByDescending(k => k.UserId)).ToList();
-            if (name != null)
-            {
-                list = list.Where(i => i.Name.Contains(name)).ToList();
-            }
-            else if (tell != null)
-            {
-                list = list.Where(i => i.TellNo.Contains(tell)).ToList();
-            }
-            else if (identificationNo != null)
-            {
-                list = list.Where(i => i.IdentificationNo.Contains(identificationNo)).ToList();
-            }
-            //Pagging
-            int take = 3;
-            int skip = (pageId - 1) * take;
-            ViewBag.PageCount = list.Count() / take;
-            return await Task.FromResult(PartialView(list.Skip(skip).Take(take)));
-        }
-
+    
         public IActionResult ChangePassword()
         {
             return View();
@@ -204,5 +183,19 @@ namespace Nursery.Areas.Admin.Controllers
             return View();
         }
 
+
+        public async Task<string> Delete(int id)
+        {
+            TblUser selectedUser = _db.User.GetById(id);
+            if (selectedUser != null)
+            {
+                selectedUser.IsDeleted = true;
+                _db.User.Update(selectedUser);
+                _db.Save();
+                return await Task.FromResult("true");
+            }
+            return await Task.FromResult("false");
+
+        }
     }
 }
