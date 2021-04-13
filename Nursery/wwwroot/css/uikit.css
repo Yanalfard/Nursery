@@ -1788,6 +1788,11 @@ button.uk-icon:not(:disabled) {
   transition: 0.2s ease-in-out;
   transition-property: color, background-color, border; }
 
+.uk-select {
+  direction: rtl !important; }
+  .uk-select option {
+    direction: rtl !important; }
+
 /*
  * Single-line
  * 1. Allow any element to look like an `input` or `select` element
@@ -1796,7 +1801,11 @@ button.uk-icon:not(:disabled) {
  */
 .uk-input,
 .uk-select:not([multiple]):not([size]) {
-  height: 40px;
+  height: 32px;
+  -moz-border-radius: 2.5px 2.5px 2.5px 2.5px;
+  -webkit-border-radius: 2.5px 2.5px 2.5px 2.5px;
+  border-radius: 2.5px 2.5px 2.5px 2.5px;
+  border-color: #e5e5e5 1px solid;
   vertical-align: middle;
   /* 1 */
   display: inline-block; }

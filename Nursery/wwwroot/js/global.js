@@ -8,6 +8,8 @@ function sanitizeAttribute(attribute) {
     if (attribute.startsWith('}')) attribute = attribute.substring(0, attribute.length - 2);
 
     const keyValues = attribute.split(';');
+    if (keyValues.length === 1)
+        return undefined;
 
     let obj = {};
 
@@ -73,7 +75,6 @@ for (let gauge of gauges) {
     options.thickness = options.thickness ? options.thickness : 3;
 
     const circumference = Number.parseInt((options.size - (2 * options.thickness)) * Math.PI);
-    console.log(options);
     const offset = Number.parseInt(circumference - options.percent / 100 * circumference);
 
     const svg = `

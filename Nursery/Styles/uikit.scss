@@ -1854,6 +1854,13 @@ button.uk-icon:not(:disabled) {
     transition: 0.2s ease-in-out;
     transition-property: color, background-color, border;
 }
+.uk-select {
+    direction: rtl !important;
+
+    option {
+        direction: rtl !important;
+    }
+}
 /*
  * Single-line
  * 1. Allow any element to look like an `input` or `select` element
@@ -1862,7 +1869,9 @@ button.uk-icon:not(:disabled) {
  */
 .uk-input,
 .uk-select:not([multiple]):not([size]) {
-    height: 40px;
+    height: 32px;
+    @include border-def-radius;
+    border-color: $border-def;
     vertical-align: middle;
     /* 1 */
     display: inline-block;
@@ -6790,7 +6799,7 @@ ul.uk-nav-sub {
 /* Toolbar Icon (Close)
  ========================================================================== */
 .uk-lightbox-toolbar-icon {
-    display:none;
+    display: none;
 }
 /*
  * Hover

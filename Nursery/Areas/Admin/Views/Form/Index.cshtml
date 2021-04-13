@@ -1,6 +1,9 @@
-﻿@{
+﻿@using DataLayer.ViewModels
+@{
     ViewData["Title"] = "کانفیگ وبسایت";
     Layout = "~/Areas/Admin/Views/_AdminLayout.cshtml";
+
+    var options = (ViewData["Options"] as List<DRegexVm>);
 }
 
 <div class="form-builder">
@@ -41,7 +44,11 @@
                         </div>
                         <div regex-list>
                             <select regex-select class="cell-select">
-                                <option>قوانین ولیدیشن</option>
+                                <option>افزودن گزینه اصلاح...</option>
+                                @foreach (var item in options)
+                                {
+                                    <option value="@Json.Serialize(item)">@item.Name</option>
+                                }
                             </select>
                             <div class="regex-list"></div>
                         </div>
@@ -80,7 +87,11 @@
                         </div>
                         <div regex-list>
                             <select regex-select class="cell-select">
-                                <option>قوانین ولیدیشن</option>
+                                <option>افزودن گزینه اصلاح...</option>
+                                @foreach (var item in options)
+                                {
+                                    <option value="@Json.Serialize(item)">@item.Name</option>
+                                }
                             </select>
                             <div class="regex-list"></div>
                         </div>
@@ -218,7 +229,11 @@
                         </div>
                         <div regex-list>
                             <select regex-select class="cell-select">
-                                <option>قوانین ولیدیشن</option>
+                                <option>افزودن گزینه اصلاح...</option>
+                                @foreach (var item in options)
+                                {
+                                    <option value="@Json.Serialize(item)">@item.Name</option>
+                                }
                             </select>
                             <div class="regex-list"></div>
                         </div>
@@ -335,7 +350,11 @@
                         </div>
                         <div regex-list>
                             <select regex-select class="cell-select">
-                                <option>قوانین ولیدیشن</option>
+                                <option>افزودن گزینه اصلاح...</option>
+                                @foreach (var item in options)
+                                {
+                                    <option value="@Json.Serialize(item)">@item.Name</option>
+                                }
                             </select>
                             <div class="regex-list"></div>
                         </div>

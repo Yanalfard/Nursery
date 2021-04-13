@@ -142,5 +142,20 @@ namespace Nursery.Areas.Admin.Controllers
             return await Task.FromResult(View(_db.User.Get(i => i.IsDeleted == false, j => j.OrderByDescending(k => k.UserId))));
         }
 
+        public IActionResult ChangePassword()
+        {
+            return View();
+        }
+
+        public IActionResult AddRole()
+        {
+            return View();
+        }
+
+        public IActionResult EditRole()
+        {
+            return View();
+        }
+
     }
 }

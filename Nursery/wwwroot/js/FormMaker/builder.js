@@ -5,30 +5,6 @@ define(["require", "exports", "./model/db/tblField", "./model/db/tblForm", "./mo
     var toolbox = document.getElementById('toolbox');
     var toolboxHTML = toolbox.innerHTML;
     var btnFinish = document.getElementById('btn-finish');
-    //#region Initialize Regex Select Options
-    window.addEventListener('load', function () {
-        var regexSelectElements = document.querySelectorAll('[regex-select]');
-        fetch('/Admin/Form/GetSelectOptions').then(function (json) {
-            json.json().then(function (options) {
-                regexSelectElements.forEach(function (selectElement) {
-                    selectElement.innerHTML = '';
-                    var initElement = document.createElement('option');
-                    initElement.text = 'افزودن گزینه اصلاح...';
-                    selectElement.options.add(initElement);
-                    //-
-                    options.forEach(function (option) {
-                        var optionElement = document.createElement('option');
-                        optionElement.value = JSON.stringify(option);
-                        optionElement.text = option.name;
-                        selectElement.options.add(optionElement);
-                    });
-                    toolbox.style.opacity = '1';
-                    toolboxHTML = toolbox.innerHTML;
-                });
-            });
-        })["catch"](function () { window.location.reload(); });
-    });
-    //#endregion
     btnFinish.addEventListener('click', function () {
         var temp = [];
         componentList.forEach(function (tool) {
@@ -56,6 +32,7 @@ define(["require", "exports", "./model/db/tblField", "./model/db/tblForm", "./mo
             field.Validations = f.regexs.map(function (i) { return i.tblRegex; });
             body.Fields.push(field);
         });
+        console.log(body);
         fetch('/Admin/Form/Create', {
             method: 'post',
             mode: 'cors',

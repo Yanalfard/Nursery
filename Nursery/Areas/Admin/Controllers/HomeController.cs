@@ -1,4 +1,5 @@
-﻿using DataLayer.ViewModels;
+﻿using DataLayer.Models;
+using DataLayer.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Nursery.Utilities;
 using Services.Services;
@@ -13,9 +14,25 @@ namespace Nursery.Areas.Admin.Controllers
     public class HomeController : Controller
     {
         private Core db = new Core();
+
+        TimelineVm[] times =
+        {
+            new TimelineVm(),
+            new TimelineVm(),
+            new TimelineVm(),
+            new TimelineVm(),
+            new TimelineVm()
+        };
+
         public IActionResult Index()
         {
             return View();
+        }
+
+        [Obsolete]
+        public IActionResult TimelineData()
+        {
+            return Ok(times);
         }
 
         public IActionResult Config()
