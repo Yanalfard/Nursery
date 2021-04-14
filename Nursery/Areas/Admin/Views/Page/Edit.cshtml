@@ -1,1 +1,28 @@
-﻿
+﻿@{
+    ViewData["Title"] = "ویرایش بخش";
+    Layout = "~/Areas/Admin/Views/_AdminLayout.cshtml";
+}
+
+<form class="form">
+    <div class="form-header">
+        <h3>
+            ویرایش بخش
+        </h3>
+    </div>
+    <div class="form-body">
+
+        <div class="grid-400">
+
+            <div class="fg-col ">
+                <label class="fg-label" for="name">نام بخش</label>
+                <input class="entry" id="name" type="text">
+                <span class="text-danger"></span>
+            </div>
+
+        </div>
+
+    </div>
+    <div class="form-footer">
+        <button class="btn btn-primary"><span>ویرایش</span></button>
+    </div>
+</form>

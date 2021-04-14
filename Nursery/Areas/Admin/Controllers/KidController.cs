@@ -18,6 +18,8 @@ namespace Nursery.Areas.Admin.Controllers
         private Core _db = new Core();
         public IActionResult Index()
         {
+           var a = _db.Kid.Get((i) => i.KidId == 0);
+
             return View();
         }
 
