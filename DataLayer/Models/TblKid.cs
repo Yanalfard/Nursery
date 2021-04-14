@@ -12,5 +12,6 @@ namespace DataLayer.Models
         [Required]
         [StringLength(150)]
         public string Nickname { get; set; }
+        public bool? IsDeleted { get; set; }
     }
 }
