@@ -1,6 +1,5 @@
-﻿
-@{
-    ViewData["Title"] = "لیست کودکان";
+﻿@{
+    ViewData["Title"] = "لیست شیفت ها";
     Layout = "~/Areas/Admin/Views/_AdminLayout.cshtml";
 }
 
@@ -15,9 +14,9 @@
     <div class="form-header" uk-sticky="offset: 72;cls-active: sticked;bottom: true">
         <div class="rowr">
             <h2 class="card-title">
-                لیست کودکان
+                لیست شیفت ها
             </h2>
-            <a href="/Admin/Kid/Add" class="btn btn-primary uk-margin-auto-right">
+            <a href="/Admin/Role/Add" class="btn btn-primary uk-margin-auto-right">
                 <span>اضافه</span>
                 <span class="tiny" uk-icon="plus-square"></span>
             </a>
@@ -27,7 +26,7 @@
         <div class="controls-grid">
             <input class="entry" type="number" placeholder="کد">
             <input class="entry" type="text" placeholder="نام">
-            <input class="entry" type="text" placeholder="نام مستعار">
+            <input class="entry" type="text" placeholder="تیتر">
             <div class="col">
                 <label class="fg-label row text-3">
                     حذف شده
@@ -44,27 +43,27 @@
                 <tr>
                     <th>کد</th>
                     <th>نام</th>
-                    <th>نام مستعار</th>
+                    <th>تیتر</th>
                     <th></th>
                 </tr>
             </thead>
             <tbody>
                 <tr>
                     <td>1</td>
-                    <td>صدرا محمدی</td>
-                    <td>سدریک</td>
+                    <td>شیفت شب</td>
+                    <td>ROLE1</td>
                     <td class="actions">
                         <a href="" class="btn-icon round text-4" uk-icon="icon:ellipsis-h;ratio:.72"></a>
                         <div class="dropdown" uk-drop="mode: click;offset:4">
                             <ul class="dropdown-list">
                                 <li>
-                                    <a href="" class="rowr">
+                                    <a href="/Admin/Role" class="rowr">
                                         <span class="new">مشاهده</span>
                                         <span class="small" uk-icon="eye"></span>
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="" class="rowr">
+                                    <a href="/Admin/Role/Edit" class="rowr">
                                         <span class="new">ویرایش</span>
                                         <span class="small" uk-icon="pen-square"></span>
                                     </a>
