@@ -50,10 +50,17 @@
         </script>
     }
 <div class="form-search" uk-sticky="offset: 139;cls-active: sticked uk-box-shadow-medium;bottom:true">
-    <form id="formSearchUser" action="/Admin/Kid/List" class="controls-grid">
+    <form id="formSearchKid" action="/Admin/Kid/List" class="controls-grid">
         <input class="entry" type="hidden" id="pageId" name="pageId" value="@ViewBag.PageShow">
         <input class="entry" type="text" id="name" name="name" placeholder="نام" value="@ViewBag.name">
-        <input class="entry" type="tel" id="tell" name="nickname" placeholder="نام مستعار" value="@ViewBag.nickname">
+        <input class="entry" type="text" id="nickname" name="nickname" placeholder="نام مستعار" value="@ViewBag.nickname">
+        <div class="col">
+            <label class="fg-label row text-3">
+                حذف شده
+                <input class="uk-checkbox" id="checkedDelete" name="checkedDelete" type="checkbox" @(((bool)ViewBag.checkedDelete == true) ? "checked" : "")>
+            </label>
+            <span class="text-danger"></span>
+        </div>
     </form>
 </div>
 
@@ -70,7 +77,7 @@
             <tbody>
                 @foreach (var item in Model)
                 {
-                    <tr>
+                    <tr id="kidId_@item.KidId">
                         <td>@(Model.ToList().IndexOf(item)+1)</td>
                         <td>@item.Name</td>
                         <td>@item.Nickname</td>
@@ -85,7 +92,7 @@
                                         </a>
                                     </li>
                                     <li>
-                                        <a class="rowr btn-danger" popconfirm="description:آیا از حذف کاربر اطمینان دارید؟;direction:rt;type:danger;title:هشدار;okText:حذف;" popok="deleteUser(@item.KidId)">
+                                        <a class="rowr btn-danger" popconfirm="description:آیا از حذف کاربر اطمینان دارید؟;direction:rt;type:danger;title:هشدار;okText:حذف;" popok="deleteKid(@item.KidId)">
                                             <span>حذف</span>
                                             <span class="small" uk-icon="trash"></span>
                                         </a>
@@ -150,7 +157,15 @@
     <script>
         function showOtherPage(id) {
             $('#pageId').val(id);
-            document.getElementById('formSearchUser').submit();
+            document.getElementById('formSearchKid').submit();
+        }
+        function deleteKid(id) {
+            $.get('/Admin/Kid/Delete/' + id, function (result) {
+                if (result == "true") {
+                    $('#kidId_' + id).addClass('text-danger');
+                    $("#kidId_" + id).hide('slow');
+                }
+            });
         }
     </script>
 

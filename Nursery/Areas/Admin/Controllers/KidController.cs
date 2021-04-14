@@ -23,10 +23,11 @@ namespace Nursery.Areas.Admin.Controllers
             return View();
         }
 
-        public async Task<IActionResult> List(int pageId = 1, string name = null, string nickname = null)
+        public async Task<IActionResult> List(int pageId = 1, string name = null, string nickname = null, string checkedDelete = null)
         {
             ViewBag.name = name;
             ViewBag.nickname = nickname;
+            ViewBag.checkedDelete = checkedDelete == "on" ? true : false;
             List<TblKid> list = _db.Kid.Get(orderBy: j => j.OrderByDescending(k => k.KidId)).ToList();
             if (name != null)
             {
@@ -36,6 +37,7 @@ namespace Nursery.Areas.Admin.Controllers
             {
                 list = list.Where(i => i.Nickname.Contains(nickname)).ToList();
             }
+            list = list.Where(i => i.IsDeleted == ViewBag.checkedDelete).ToList();
             //Pagging
             int take = 10;
             int skip = (pageId - 1) * take;
@@ -91,6 +93,18 @@ namespace Nursery.Areas.Admin.Controllers
             }
             return await Task.FromResult(View(kid));
         }
+        public async Task<string> Delete(int id)
+        {
+            TblKid selectedKid = _db.Kid.GetById(id);
+            if (selectedKid != null)
+            {
+                selectedKid.IsDeleted = true;
+                _db.Kid.Update(selectedKid);
+                _db.Save();
+                return await Task.FromResult("true");
+            }
+            return await Task.FromResult("false");
 
+        }
     }
 }

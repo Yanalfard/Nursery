@@ -16,9 +16,10 @@ namespace Nursery.Areas.Admin.Controllers
     public class UserController : Controller
     {
         private Core _db = new Core();
-        public IActionResult Index(int id = 0)
+        public async Task<IActionResult> Index(int id = 0)
         {
-            return View();
+
+            return await Task.FromResult(View(_db.User.GetById(id)));
         }
 
         public async Task<IActionResult> Add()
@@ -143,7 +144,7 @@ namespace Nursery.Areas.Admin.Controllers
             ViewBag.tell = tell;
             ViewBag.identificationNo = identificationNo;
             ViewBag.checkedDelete = checkedDelete == "on" ? true : false;
-            List<TblUser> list = _db.User.Get(i => i.IsDeleted == false, j => j.OrderByDescending(k => k.UserId)).ToList();
+            List<TblUser> list = _db.User.Get(orderBy: j => j.OrderByDescending(k => k.UserId)).ToList();
             if (name != null)
             {
                 list = list.Where(i => i.Name.Contains(name)).ToList();
@@ -156,10 +157,8 @@ namespace Nursery.Areas.Admin.Controllers
             {
                 list = list.Where(i => i.IdentificationNo.Contains(identificationNo)).ToList();
             }
-            if (checkedDelete != null)
-            {
-                list = list.Where(i => i.IsDeleted == ViewBag.checkedDelete).ToList();
-            }
+
+            list = list.Where(i => i.IsDeleted == ViewBag.checkedDelete).ToList();
             //Pagging
             int take = 10;
             int skip = (pageId - 1) * take;
@@ -167,7 +166,7 @@ namespace Nursery.Areas.Admin.Controllers
             ViewBag.PageShow = pageId;
             return await Task.FromResult(PartialView(list.Skip(skip).Take(take)));
         }
-    
+
         public IActionResult ChangePassword()
         {
             return View();
