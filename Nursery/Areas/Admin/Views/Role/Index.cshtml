@@ -1,1 +1,129 @@
-﻿
+﻿@{
+    ViewData["Title"] = "کاربر";
+    Layout = "~/Areas/Admin/Views/_AdminLayout.cshtml";
+}
+
+<div class="col gap-between-card">
+    <!-- #region Profile -->
+    <div class="form">
+        <div class="form-body">
+            <div class="grid-160">
+                <div class="fg-col">
+                    <label class="dl-label">نام</label>
+                    <p class="dl-data">شیفت شب </p>
+                </div>
+                <div class="fg-col">
+                    <label class="dl-label">تیتر</label>
+                    <p class="dl-data">ROLE1</p>
+                </div>
+            </div>
+        </div>
+        <div class="form-footer">
+            <a href="/Admin/User/Edit" class="btn btn-primary">
+                <span>ویرایش</span>
+                <span uk-icon="pen-square"></span>
+            </a>
+            <button class="btn btn-danger" popconfirm="direction:bc">
+                <span>حذف</span>
+                <span uk-icon="trash"></span>
+            </button>
+        </div>
+    </div>
+
+    <!-- #endregion -->
+    <!-- #region Roles -->
+    <div class="form">
+        <div class="form-header" uk-sticky="offset: 72;cls-active: sticked;bottom: true;bottom: true">
+            <div class="rowr">
+                <h2 class="card-title">
+                    دسترسی ها
+                </h2>
+                <a href="/Admin/User/AddRole" class="btn btn-primary uk-margin-auto-right">
+                    <span>اضافه</span>
+                    <span class="tiny" uk-icon="plus-square"></span>
+                </a>
+            </div>
+        </div>
+        <div class="form-search" uk-sticky="offset: 139;cls-active: sticked uk-box-shadow-medium;bottom:true;bottom: true">
+            <div class="controls-grid">
+                <input class="entry" type="number" placeholder="کد">
+                <input class="entry" type="text" placeholder="نام بخش">
+                <div class="col">
+                    <label class="fg-label row text-3">
+                        حذف شده
+                        <input class="uk-checkbox" type="checkbox">
+                    </label>
+                    <span class="text-danger"></span>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-body scrollh-container uk-padding-remove">
+            <table class="tbl tbl-striped" dir="rtl">
+                <thead>
+                    <tr>
+                        <th>کد</th>
+                        <th>نام بخش</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>1</td>
+                        <td>شیرخوارگاه</td>
+                        <td class="actions">
+                            <a href="" class="btn-icon round text-4" uk-icon="icon:ellipsis-h;ratio:.72"></a>
+                            <div class="dropdown" uk-drop="mode: click;offset:4">
+                                <ul class="dropdown-list">
+                                    <li>
+                                        <a href="/Admin/User/EditRole" class="rowr">
+                                            <span class="new">مشاهده بخش</span>
+                                            <span class="small" uk-icon="eye"></span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a class="rowr btn-danger" 
+                                           popconfirm="title:hello;description:ola" 
+                                           popok="alert('oi')">
+                                            <span>حذف</span>
+                                            <span class="small" uk-icon="trash"></span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="form-footer">
+            <div class="uk-margin-auto-right">
+                <ul class="uk-pagination uk-margin-remove uk-margin-auto-right">
+                    <li><a href="#"><span uk-pagination-previous></span></a></li>
+                    <li><a href="#">1</a></li>
+                    <li class="uk-disabled"><span>...</span></li>
+                    <li><a href="#">5</a></li>
+                    <li><a href="#">6</a></li>
+                    <li class="uk-active"><span>7</span></li>
+                    <li><a href="#">8</a></li>
+                    <li><a href="#"><span uk-pagination-next></span></a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- #endregion -->
+</div>
+
+@section Scripts{
+
+    <script>
+        require(['config'], function () {
+            require(['confirm'], function () {
+
+            })
+        });
+    </script>
+
+}

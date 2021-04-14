@@ -1600,14 +1600,15 @@ input:not(input[type=checkbox]):not(input[type=radio]) {
   padding: 0;
   border: 0;
   position: absolute;
-  z-index: 1000;
+  z-index: 1040;
   min-width: 256px;
+  max-width: 300px;
   -moz-box-shadow: 0 4px 24px 6px rgba(0, 0, 0, 0.08);
   -webkit-box-shadow: 0 4px 24px 6px rgba(0, 0, 0, 0.08);
   box-shadow: 0 4px 24px 6px rgba(0, 0, 0, 0.08); }
   .popconfirm * {
     position: relative;
-    z-index: 1001; }
+    z-index: 1040; }
   .popconfirm .popconfirm-header {
     padding: 12px;
     padding-bottom: 12px;
@@ -1645,12 +1646,12 @@ input:not(input[type=checkbox]):not(input[type=radio]) {
       margin-left: 12px; }
 
 .popconfirm-arrow {
-  z-index: 999;
+  z-index: 1038;
   position: absolute;
   content: ' ';
   display: block;
-  width: 20px;
-  height: 20px;
+  width: 22px;
+  height: 22px;
   transform-origin: center;
   transform: rotate(45deg);
   background-color: white;
