@@ -6,6 +6,7 @@ export class ConfirmSettings {
     type: ConfirmType = ConfirmType.default;
     okText: string = 'بله';
     cancelText: string = 'خیر';
+    floating: boolean = false;
     direction: Direction = Direction.tc;
 
     constructor(
@@ -14,6 +15,7 @@ export class ConfirmSettings {
         type: ConfirmType = ConfirmType.default,
         okText: string = 'بله',
         cancelText: string = 'خیر',
+        floating: boolean = false,
         direction: Direction = Direction.tc) {
         this.title = title;
         this.description = description;
@@ -21,6 +23,7 @@ export class ConfirmSettings {
         this.okText = okText;
         this.cancelText = cancelText;
         this.direction = direction;
+        this.floating = floating;
     }
 }
 
@@ -41,6 +44,7 @@ export class Confirm {
         this.settings.title = settings?.title || this.settings.title;
         this.settings.description = settings?.description || this.settings.description;
         this.settings.okText = settings?.okText || this.settings.okText;
+        this.settings.floating = settings?.floating || this.settings.floating;
         this.settings.cancelText = settings?.cancelText || this.settings.cancelText;
         this.settings.direction = settings?.direction || this.settings.direction || Direction.tc as any;
         this.settings.type = settings?.type || this.settings.type || ConfirmType.default;
@@ -143,83 +147,85 @@ export class Confirm {
         let aright: number | string = '';
 
         const rect = parent.getBoundingClientRect();
+        const ptop = (this.settings.floating) ? rect.top : parent.offsetTop;
+        const pleft = (this.settings.floating) ? rect.left : parent.offsetLeft;
 
         switch (Direction[this.settings.direction.toString()]) {
             case Direction.bl:
-                top = rect.top + parent.offsetHeight + offet;
-                left = rect.left;
+                top = ptop + parent.offsetHeight + offet;
+                left = pleft;
                 atop = -10;
                 aleft = 16;
                 break;
             case Direction.br:
-                top = rect.top + parent.offsetHeight + offet;
-                left = rect.left - (this.element.offsetWidth - parent.offsetWidth);
+                top = ptop + parent.offsetHeight + offet;
+                left = pleft - (this.element.offsetWidth - parent.offsetWidth);
                 atop = -10;
                 aright = 16;
                 break;
             case Direction.lb:
-                top = (rect.top + parent.offsetHeight) - this.element.offsetHeight
-                left = rect.left - this.element.offsetWidth - offet;
+                top = (ptop + parent.offsetHeight) - this.element.offsetHeight
+                left = pleft - this.element.offsetWidth - offet;
                 aright = -10;
                 abottom = 16;
                 break;
             case Direction.lt:
-                top = rect.top;
-                left = rect.left - this.element.offsetWidth - offet;
+                top = ptop;
+                left = pleft - this.element.offsetWidth - offet;
                 aright = -10;
                 atop = 16;
                 break;
             case Direction.tl:
-                top = rect.top - this.element.offsetHeight - offet;
-                left = rect.left;
+                top = ptop - this.element.offsetHeight - offet;
+                left = pleft;
                 abottom = -10;
                 aleft = 16;
                 break;
             case Direction.tr:
-                top = rect.top - this.element.offsetHeight - offet;
-                left = rect.left - (this.element.offsetWidth - parent.offsetWidth);
+                top = ptop - this.element.offsetHeight - offet;
+                left = pleft - (this.element.offsetWidth - parent.offsetWidth);
                 abottom = -10;
                 aright = 16;
                 break;
             case Direction.rt:
-                top = rect.top;
-                left = rect.left + parent.offsetWidth + offet;
+                top = ptop;
+                left = pleft + parent.offsetWidth + offet;
                 aleft = -10;
                 atop = 16;
                 break;
             case Direction.rb:
-                top = (rect.top + parent.offsetHeight) - this.element.offsetHeight;
-                left = rect.left + parent.offsetWidth + offet;
+                top = (ptop + parent.offsetHeight) - this.element.offsetHeight;
+                left = pleft + parent.offsetWidth + offet;
                 aleft = -10;
                 abottom = 16;
                 break;
             case Direction.rc:
-                top = (rect.top + (parent.offsetHeight / 2)) - (this.element.offsetHeight / 2);
-                left = rect.left + parent.offsetWidth + offet;
+                top = (ptop + (parent.offsetHeight / 2)) - (this.element.offsetHeight / 2);
+                left = pleft + parent.offsetWidth + offet;
                 aleft = -10;
                 atop = abottom = (this.element.offsetHeight - this.arrow.offsetHeight) / 2;
                 break;
             case Direction.lc:
-                top = (rect.top + (parent.offsetHeight / 2)) - (this.element.offsetHeight / 2);
-                left = rect.left - this.element.offsetWidth - offet;
+                top = (ptop + (parent.offsetHeight / 2)) - (this.element.offsetHeight / 2);
+                left = pleft - this.element.offsetWidth - offet;
                 aright = -10;
                 atop = abottom = (this.element.offsetHeight - this.arrow.offsetHeight) / 2;
                 break;
             case Direction.tc:
-                top = rect.top - this.element.offsetHeight - offet;
-                left = rect.left + (parent.offsetWidth / 2) - (this.element.offsetWidth / 2);
+                top = ptop - this.element.offsetHeight - offet;
+                left = pleft + (parent.offsetWidth / 2) - (this.element.offsetWidth / 2);
                 abottom = -10;
                 aleft = aright = (this.element.offsetWidth - this.arrow.offsetHeight) / 2;
                 break;
             case Direction.bc:
-                top = rect.top + parent.offsetHeight + offet;
-                left = rect.left + (parent.offsetWidth / 2) - (this.element.offsetWidth / 2);
+                top = ptop + parent.offsetHeight + offet;
+                left = pleft + (parent.offsetWidth / 2) - (this.element.offsetWidth / 2);
                 atop = -10;
                 aleft = aright = (this.element.offsetWidth - this.arrow.offsetHeight) / 2;
                 break;
             default:
-                top = rect.top - this.element.offsetHeight - offet;
-                left = rect.left + (parent.offsetWidth / 2) - (this.element.offsetWidth / 2);
+                top = ptop - this.element.offsetHeight - offet;
+                left = pleft + (parent.offsetWidth / 2) - (this.element.offsetWidth / 2);
                 abottom = -10;
                 aleft = aright = (this.element.offsetWidth - this.arrow.offsetHeight) / 2;
                 break;
@@ -304,6 +310,7 @@ function sanitizeAttribute(attribute) {
     for (let item of keyValues) {
 
         const split = item.split(':');
+        split[1] = (split[1] == 'true') ? true : (split[1] == 'false') ? false : split[1];
         obj[split[0]] = split[1];
     }
 

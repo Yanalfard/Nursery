@@ -1197,6 +1197,7 @@ $background-highlight: #eee;
     -moz-box-shadow: 0 4px 24px 6px $color;
     -webkit-box-shadow: 0 4px 24px 6px $color;
     box-shadow: 0 4px 24px 6px $color;
+
     * {
         position: relative;
         z-index: 1040;
@@ -1255,4 +1256,25 @@ $background-highlight: #eee;
     transform: rotate(45deg);
     background-color: white;
     @include border-def-radius;
+}
+
+.justify-center {
+    -webkit-justify-content: center;
+    justify-content: center;
+}
+
+.align-items-center {
+    -webkit-align-items: center;
+    align-items: center;
+}
+
+.align-content-center {
+    -ms-align-content: center;
+    -webkit-align-content: center;
+    align-content: center;
+}
+
+.place-center {
+    display: grid;
+    place-items: center;
 }

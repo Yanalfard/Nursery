@@ -49,20 +49,20 @@
             setTimeout(function () { $(".addKid").css("display", "none"); }, delay);
         </script>
     }
-<div class="form-search" uk-sticky="offset: 139;cls-active: sticked uk-box-shadow-medium;bottom:true">
-    <form id="formSearchKid" action="/Admin/Kid/List" class="controls-grid">
-        <input class="entry" type="hidden" id="pageId" name="pageId" value="@ViewBag.PageShow">
-        <input class="entry" type="text" id="name" name="name" placeholder="نام" value="@ViewBag.name">
-        <input class="entry" type="text" id="nickname" name="nickname" placeholder="نام مستعار" value="@ViewBag.nickname">
-        <div class="col">
-            <label class="fg-label row text-3">
-                حذف شده
-                <input class="uk-checkbox" id="checkedDelete" name="checkedDelete" type="checkbox" @(((bool)ViewBag.checkedDelete == true) ? "checked" : "")>
-            </label>
-            <span class="text-danger"></span>
-        </div>
-    </form>
-</div>
+    <div class="form-search" uk-sticky="offset: 139;cls-active: sticked uk-box-shadow-medium;bottom:true">
+        <form id="formSearchKid" action="/Admin/Kid/List" class="controls-grid">
+            <input class="entry" type="hidden" id="pageId" name="pageId" value="@ViewBag.PageShow">
+            <input class="entry" type="text" id="name" name="name" placeholder="نام" value="@ViewBag.name">
+            <input class="entry" type="text" id="nickname" name="nickname" placeholder="نام مستعار" value="@ViewBag.nickname">
+            <div class="col">
+                <label class="fg-label row text-3">
+                    حذف شده
+                    <input class="uk-checkbox" id="checkedDelete" name="checkedDelete" type="checkbox" @(((bool)ViewBag.checkedDelete == true) ? "checked" : "")>
+                </label>
+                <span class="text-danger"></span>
+            </div>
+        </form>
+    </div>
 
     <div class="form-body scrollh-container uk-padding-remove">
         <table class="tbl tbl-striped" dir="rtl">
@@ -92,7 +92,7 @@
                                         </a>
                                     </li>
                                     <li>
-                                        <a class="rowr btn-danger" popconfirm="description:آیا از حذف کاربر اطمینان دارید؟;direction:rt;type:danger;title:هشدار;okText:حذف;" popok="deleteKid(@item.KidId)">
+                                        <a class="rowr btn-danger" popconfirm="floating:true;description:آیا از حذف کاربر اطمینان دارید؟;direction:rt;type:danger;title:هشدار;okText:حذف;" popok="deleteKid(@item.KidId)">
                                             <span>حذف</span>
                                             <span class="small" uk-icon="trash"></span>
                                         </a>

@@ -38,6 +38,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Areas\Admin\Views\Shared\" />
     <Folder Include="wwwroot\dyn\img\" />
     <Folder Include="wwwroot\Images\User\" />
   </ItemGroup>

@@ -4,18 +4,20 @@ define(["require", "exports"], function (require, exports) {
     exports.ConfirmType = exports.Direction = exports.Confirm = exports.ConfirmSettings = void 0;
     var attributeKey = 'popconfirm';
     var ConfirmSettings = /** @class */ (function () {
-        function ConfirmSettings(title, description, type, okText, cancelText, direction) {
+        function ConfirmSettings(title, description, type, okText, cancelText, floating, direction) {
             if (title === void 0) { title = 'تایید'; }
             if (description === void 0) { description = 'آیا مطمئن هستید؟'; }
             if (type === void 0) { type = ConfirmType["default"]; }
             if (okText === void 0) { okText = 'بله'; }
             if (cancelText === void 0) { cancelText = 'خیر'; }
+            if (floating === void 0) { floating = false; }
             if (direction === void 0) { direction = Direction.tc; }
             this.title = 'تایید';
             this.description = 'آیا مطمئن هستید؟';
             this.type = ConfirmType["default"];
             this.okText = 'بله';
             this.cancelText = 'خیر';
+            this.floating = false;
             this.direction = Direction.tc;
             this.title = title;
             this.description = description;
@@ -23,6 +25,7 @@ define(["require", "exports"], function (require, exports) {
             this.okText = okText;
             this.cancelText = cancelText;
             this.direction = direction;
+            this.floating = floating;
         }
         return ConfirmSettings;
     }());
@@ -34,6 +37,7 @@ define(["require", "exports"], function (require, exports) {
             this.settings.title = (settings === null || settings === void 0 ? void 0 : settings.title) || this.settings.title;
             this.settings.description = (settings === null || settings === void 0 ? void 0 : settings.description) || this.settings.description;
             this.settings.okText = (settings === null || settings === void 0 ? void 0 : settings.okText) || this.settings.okText;
+            this.settings.floating = (settings === null || settings === void 0 ? void 0 : settings.floating) || this.settings.floating;
             this.settings.cancelText = (settings === null || settings === void 0 ? void 0 : settings.cancelText) || this.settings.cancelText;
             this.settings.direction = (settings === null || settings === void 0 ? void 0 : settings.direction) || this.settings.direction || Direction.tc;
             this.settings.type = (settings === null || settings === void 0 ? void 0 : settings.type) || this.settings.type || ConfirmType["default"];
@@ -106,82 +110,84 @@ define(["require", "exports"], function (require, exports) {
             var aleft = '';
             var aright = '';
             var rect = parent.getBoundingClientRect();
+            var ptop = (this.settings.floating) ? rect.top : parent.offsetTop;
+            var pleft = (this.settings.floating) ? rect.left : parent.offsetLeft;
             switch (Direction[this.settings.direction.toString()]) {
                 case Direction.bl:
-                    top = rect.top + parent.offsetHeight + offet;
-                    left = rect.left;
+                    top = ptop + parent.offsetHeight + offet;
+                    left = pleft;
                     atop = -10;
                     aleft = 16;
                     break;
                 case Direction.br:
-                    top = rect.top + parent.offsetHeight + offet;
-                    left = rect.left - (this.element.offsetWidth - parent.offsetWidth);
+                    top = ptop + parent.offsetHeight + offet;
+                    left = pleft - (this.element.offsetWidth - parent.offsetWidth);
                     atop = -10;
                     aright = 16;
                     break;
                 case Direction.lb:
-                    top = (rect.top + parent.offsetHeight) - this.element.offsetHeight;
-                    left = rect.left - this.element.offsetWidth - offet;
+                    top = (ptop + parent.offsetHeight) - this.element.offsetHeight;
+                    left = pleft - this.element.offsetWidth - offet;
                     aright = -10;
                     abottom = 16;
                     break;
                 case Direction.lt:
-                    top = rect.top;
-                    left = rect.left - this.element.offsetWidth - offet;
+                    top = ptop;
+                    left = pleft - this.element.offsetWidth - offet;
                     aright = -10;
                     atop = 16;
                     break;
                 case Direction.tl:
-                    top = rect.top - this.element.offsetHeight - offet;
-                    left = rect.left;
+                    top = ptop - this.element.offsetHeight - offet;
+                    left = pleft;
                     abottom = -10;
                     aleft = 16;
                     break;
                 case Direction.tr:
-                    top = rect.top - this.element.offsetHeight - offet;
-                    left = rect.left - (this.element.offsetWidth - parent.offsetWidth);
+                    top = ptop - this.element.offsetHeight - offet;
+                    left = pleft - (this.element.offsetWidth - parent.offsetWidth);
                     abottom = -10;
                     aright = 16;
                     break;
                 case Direction.rt:
-                    top = rect.top;
-                    left = rect.left + parent.offsetWidth + offet;
+                    top = ptop;
+                    left = pleft + parent.offsetWidth + offet;
                     aleft = -10;
                     atop = 16;
                     break;
                 case Direction.rb:
-                    top = (rect.top + parent.offsetHeight) - this.element.offsetHeight;
-                    left = rect.left + parent.offsetWidth + offet;
+                    top = (ptop + parent.offsetHeight) - this.element.offsetHeight;
+                    left = pleft + parent.offsetWidth + offet;
                     aleft = -10;
                     abottom = 16;
                     break;
                 case Direction.rc:
-                    top = (rect.top + (parent.offsetHeight / 2)) - (this.element.offsetHeight / 2);
-                    left = rect.left + parent.offsetWidth + offet;
+                    top = (ptop + (parent.offsetHeight / 2)) - (this.element.offsetHeight / 2);
+                    left = pleft + parent.offsetWidth + offet;
                     aleft = -10;
                     atop = abottom = (this.element.offsetHeight - this.arrow.offsetHeight) / 2;
                     break;
                 case Direction.lc:
-                    top = (rect.top + (parent.offsetHeight / 2)) - (this.element.offsetHeight / 2);
-                    left = rect.left - this.element.offsetWidth - offet;
+                    top = (ptop + (parent.offsetHeight / 2)) - (this.element.offsetHeight / 2);
+                    left = pleft - this.element.offsetWidth - offet;
                     aright = -10;
                     atop = abottom = (this.element.offsetHeight - this.arrow.offsetHeight) / 2;
                     break;
                 case Direction.tc:
-                    top = rect.top - this.element.offsetHeight - offet;
-                    left = rect.left + (parent.offsetWidth / 2) - (this.element.offsetWidth / 2);
+                    top = ptop - this.element.offsetHeight - offet;
+                    left = pleft + (parent.offsetWidth / 2) - (this.element.offsetWidth / 2);
                     abottom = -10;
                     aleft = aright = (this.element.offsetWidth - this.arrow.offsetHeight) / 2;
                     break;
                 case Direction.bc:
-                    top = rect.top + parent.offsetHeight + offet;
-                    left = rect.left + (parent.offsetWidth / 2) - (this.element.offsetWidth / 2);
+                    top = ptop + parent.offsetHeight + offet;
+                    left = pleft + (parent.offsetWidth / 2) - (this.element.offsetWidth / 2);
                     atop = -10;
                     aleft = aright = (this.element.offsetWidth - this.arrow.offsetHeight) / 2;
                     break;
                 default:
-                    top = rect.top - this.element.offsetHeight - offet;
-                    left = rect.left + (parent.offsetWidth / 2) - (this.element.offsetWidth / 2);
+                    top = ptop - this.element.offsetHeight - offet;
+                    left = pleft + (parent.offsetWidth / 2) - (this.element.offsetWidth / 2);
                     abottom = -10;
                     aleft = aright = (this.element.offsetWidth - this.arrow.offsetHeight) / 2;
                     break;
@@ -271,6 +277,7 @@ define(["require", "exports"], function (require, exports) {
         for (var _i = 0, keyValues_1 = keyValues; _i < keyValues_1.length; _i++) {
             var item = keyValues_1[_i];
             var split = item.split(':');
+            split[1] = (split[1] == 'true') ? true : (split[1] == 'false') ? false : split[1];
             obj[split[0]] = split[1];
         }
         return obj;
