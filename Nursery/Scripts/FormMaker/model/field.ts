@@ -263,12 +263,15 @@ export class Field {
         }
 
         for (const validationRule of this.data.Validations) {
+            if (!validationRule.Regex) continue;
+            if (!validationRule.Regex.test) continue;
             if (!validationRule.Regex.test(this.getVal().Value)) {
                 if (this.lblError) this.lblError.innerText = validationRule.ValidationMessage;
                 return false;
             }
         }
 
+        //- pass
         if (this.lblError) this.lblError.innerText = '';
         return true;
     }

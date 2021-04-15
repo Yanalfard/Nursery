@@ -11,7 +11,7 @@
         <div class="form-body">
             <div class="fg-col ">
                 <label class="fg-label" for="IdentificationNo">کد ملی</label>
-                <input class="entry" asp-for="IdentificationNo" type="number" placeholder="کد ملی"maxlength="10">
+                <input class="entry" asp-for="IdentificationNo" type="number" placeholder="کد ملی" maxlength="10">
                 <span class="text-danger" asp-validation-for="IdentificationNo"></span>
             </div>
             <div class="fg-col">
@@ -21,7 +21,9 @@
             </div>
         </div>
         <div class="form-footer uk-margin-auto-top">
-            <button class="btn btn-primary">ورود</button>
+            <button class="btn btn-primary">
+                <span>ورود</span>
+            </button>
         </div>
     </form>
 </div>

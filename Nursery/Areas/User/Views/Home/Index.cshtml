@@ -4,34 +4,80 @@
     Layout = "~/Areas/User/Views/_UserLayout.cshtml";
 }
 
-<div class="card col">
-    <h2>
-        داشبرد
-    </h2>
+<div class="gap-between-card col">
+    <div class="card">
+        <!-- #region User -->
+        <div class="icon-list-item">
+            <img src="~/st/png/blue.png" class="round" width="42" height="42" alt="" />
+            <div class="col">
+                <label>صدرا محمدی</label>
+                <span>برنامه نویس</span>
+            </div>
+            <div class="row gap-3 uk-margin-auto-right">
+                <a href="/User/Home/Profile" class="btn-icon small"
+                   uk-tooltip="پروفایل" uk-icon="user"></a>
+                <a href="" class="btn-icon btn-danger small"
+                   uk-tooltip="خروج از حساب" uk-icon="sign-out-alt"></a>
+            </div>
+        </div>
+        <!-- #endregion -->
+    </div>
+
+    <div class="col-at-xs row-at-m gap-between-card uk-child-width-1-1-at-xs uk-child-width-1-2">
+        <div class="card col uk-margin-remove-bottom">
+            <h4 class="card-title">
+                اعلان های شما
+            </h4>
+            <div class="col">
+                <div class="col uk-align-center uk-margin-auto uk-margin-top">
+                    <img src="~/st/svg/Empty.svg" class="uk-margin-auto" alt="" width="80" />
+                    <h6 class="text-3 uk-margin-small-top">اعلانی وجود ندارد</h6>
+                </div>
+            </div>
+        </div>
+        <!-- #region Roles -->
+        <div class="form">
+            <div class="form-header">
+                <div class="rowr">
+                    <h2 class="card-title">
+                        شیفت ها
+                    </h2>
+                </div>
+            </div>
+            <div class="form-body scrollh-container uk-padding-remove">
+                <table class="tbl tbl-striped" dir="rtl">
+                    <thead>
+                        <tr>
+                            <th>ردیف</th>
+                            <th>بخش</th>
+                            <th>از زمان</th>
+                            <th>تا زمان</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>1</td>
+                            <td>بخش شیرخوارگاه</td>
+                            <td>12:45</td>
+                            <td>16:20</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- #endregion -->
+    </div>
 </div>
 
-<div class="col-at-xs row-at-m gap-card uk-child-width-1-1-at-xs uk-child-width-1-2">
-    <div class="card col uk-margin-remove-bottom">
-        <h3>
-            داشبرد
-        </h3>
-    </div>
-    <div class="card col uk-margin-remove-bottom">
-        <h3>
-            داشبرد
-        </h3>
-    </div>
-</div>
 <div class="headline uk-margin-top">
     <h3>
-        فرم های شما
+        فرم های امروز
     </h3>
     <hr />
 </div>
 
 <div class="forms">
-    <partial name="_FormBlock" />
-    <partial name="_FormBlock" />
     <partial name="_FormBlock" />
     <partial name="_FormBlock" />
     <partial name="_FormBlock" />

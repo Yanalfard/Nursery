@@ -163,12 +163,17 @@ define(["require", "exports", "./db/tblValue", "./inputType"], function (require
             }
             for (var _i = 0, _a = this.data.Validations; _i < _a.length; _i++) {
                 var validationRule = _a[_i];
+                if (!validationRule.Regex)
+                    continue;
+                if (!validationRule.Regex.test)
+                    continue;
                 if (!validationRule.Regex.test(this.getVal().Value)) {
                     if (this.lblError)
                         this.lblError.innerText = validationRule.ValidationMessage;
                     return false;
                 }
             }
+            //- pass
             if (this.lblError)
                 this.lblError.innerText = '';
             return true;

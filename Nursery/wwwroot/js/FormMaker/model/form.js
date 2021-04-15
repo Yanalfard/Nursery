@@ -4,6 +4,7 @@ define(["require", "exports", "./field"], function (require, exports, field_1) {
     exports.Form = void 0;
     var Form = /** @class */ (function () {
         function Form(tblForm) {
+            var _this = this;
             this.Fields = [];
             this.data = tblForm;
             this.element = document.createElement('form');
@@ -24,7 +25,7 @@ define(["require", "exports", "./field"], function (require, exports, field_1) {
             this.submit.classList.add('btn');
             this.submit.classList.add('btn-primary');
             this.submit.innerHTML = '<span>ثبت</span>';
-            this.submit.addEventListener('click', function (e) { e.preventDefault(); return null; });
+            this.submit.addEventListener('click', function (e) { _this.submitClick(e); });
             this.footer.appendChild(this.submit);
             this.element.appendChild(this.header);
             this.element.appendChild(this.body);
@@ -46,6 +47,13 @@ define(["require", "exports", "./field"], function (require, exports, field_1) {
                     ans = false;
             }
             return ans;
+        };
+        Form.prototype.submitClick = function (e) {
+            //e.preventDefault(); return null;
+            e.preventDefault();
+            if (!this.validate())
+                return null;
+            this.element.submit();
         };
         return Form;
     }());

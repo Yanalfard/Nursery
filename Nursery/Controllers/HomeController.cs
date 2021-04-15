@@ -33,8 +33,6 @@ namespace Nursery.Controllers
                 (0, "FORM TITLE", "FORM SUBTITLE", DateTime.Now, fields);
 
 
-
-
             //List<TblRegex> validations = new List<TblRegex> {
             //    new TblRegex() {
             //        FieldId = 1 ,IsDeleted = false ,
@@ -68,22 +66,5 @@ namespace Nursery.Controllers
         {
             return View();
         }
-
-        public IActionResult Add()
-        {
-            return View();
-        }
-
-        public IActionResult List()
-        {
-            return View();
-        }
-
-        public IActionResult Config()
-        {
-            return View();
-        }
-
-
     }
 }

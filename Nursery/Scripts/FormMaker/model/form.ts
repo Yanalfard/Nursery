@@ -34,7 +34,7 @@ export class Form {
         this.submit.classList.add('btn');
         this.submit.classList.add('btn-primary');
         this.submit.innerHTML = '<span>ثبت</span>';
-        this.submit.addEventListener('click', (e) => { e.preventDefault(); return null; });
+        this.submit.addEventListener('click', (e) => { this.submitClick(e) });
         this.footer.appendChild(this.submit);
 
         this.element.appendChild(this.header);
@@ -60,4 +60,13 @@ export class Form {
 
         return ans;
     }
+
+    submitClick(e): void {
+        //e.preventDefault(); return null;
+        e.preventDefault();
+        if (!this.validate()) return null;
+
+        this.element.submit();
+    }
+
 }

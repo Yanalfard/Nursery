@@ -1,0 +1,20 @@
+﻿@{
+    ViewData["Title"] = "نام فرم";
+    Layout = "~/Areas/User/Views/_UserLayout.cshtml";
+
+    var formModel = ViewData["Data"];
+}
+
+<dform model="@formModel" action="User/Page/SubmitForm"></dform>
+
+@section Scripts{
+
+    <script>
+        require(['config'], function () {
+            require(['main'], function () {
+
+            })
+        });
+    </script>
+
+}

@@ -1,32 +1,13 @@
 ﻿@{
-    ViewData["Title"] = "This is a Title";
-    ViewData["Description"] = "This is a Description";
-    ViewData["Keywords"] = "This is a Keyword";
+    ViewData["Title"] = "Hub";
     Layout = "~/Views/Shared/_Layout.cshtml";
-
-    var formModel = ViewData["Data"];
 }
 
-
-<dform model="@formModel"
-       submit="" onError="" onSubmit="">
-
-    <dform-content>
-
-    </dform-content>
-    <dform-controls>
-
-    </dform-controls>
-</dform>
-
-@section Scripts{
-
-    <script>
-        require(['config'], function () {
-            require(['main'], function () {
-
-            })
-        });
-    </script>
-
-}
+<div class="col gap-3">
+    <a href="/User" class="btn btn-primary">
+        <span>User</span>
+    </a>
+    <a href="/Admin" class="btn btn-dashed">
+        <span>Admin</span>
+    </a>
+</div>
