@@ -1,6 +1,12 @@
 ﻿@import '_colors.scss';
 @import '_layout.scss';
 
+@media print {
+    body {
+        border: 16px solid black;
+    }
+}
+
 button, .btn, a, a:hover .js-upload, input[type=file] {
     cursor: pointer;
     outline: none;
@@ -678,7 +684,7 @@ $content-padding: 16px;
     }
 }
 
-.m-aside:hover {
+.m-aside:hover, .m-aside:focus {
     width: $aside-width + 150px;
 
     .navigation {
@@ -716,7 +722,7 @@ $content-padding: 16px;
     $aside-width: 72px;
     $header-height: 72px;
     $content-padding: 16px;
-
+    
     .m-top {
 
         .m-logo {
@@ -829,116 +835,28 @@ $content-padding: 16px;
     }
 
     .m-aside {
-        margin-right: -1 * $aside-width;
-        height: 100%;
-        width: $aside-width;
-        background-color: #373B53;
-        top: $header-height;
-        right: 0;
-        z-index: 1020;
-        position: fixed;
-        @include subtle-glow(transparentize(#373B53,.32));
-        @include trans(.32s);
-        -moz-transition-property: width;
-        -o-transition-property: width;
-        -webkit-transition-property: width;
-        transition-property: width;
-        overflow-x: hidden;
+        width: $aside-width + 150px;
+        margin-right:-222px;
 
         .navigation {
-            $item-height: $aside-width;
-            margin: 0;
-            max-height: calc(100vh - #{$nav-bottom-height});
-            overflow: auto !important;
-
             li {
-                @include column;
-                height: auto;
-                cursor: pointer !important;
-                overflow-x: hidden;
+                cursor: pointer;
 
                 a {
-                    @include row-reverse;
-                    @include trans(.2s);
-                    height: $item-height;
-                    cursor: pointer;
-
                     .uk-icon {
-                        color: #fff;
-                        margin: auto;
-                        margin-right: 24px !important;
-                        min-height: 24px;
-                        min-width: 24px;
+                        margin: auto auto auto 8px;
+                        cursor: pointer;
                     }
 
                     label {
-                        width: 0;
-                        margin: auto 0;
-                        margin-right: 100px;
-                        font-size: 14px;
-                        opacity: 0;
-                        //
-                        color: #fff;
-                        white-space: nowrap;
-                        @include trans(.3s);
-                        pointer-events: none;
-                    }
-                }
-
-                a:hover {
-                    background-color: transparentize(#fff,.85);
-                }
-            }
-
-            [accordion] {
-                position: relative;
-                background-color: #2F3246;
-
-                ul {
-                    display: flex;
-                    margin: 0;
-                    overflow: hidden;
-                    @include trans(.48s);
-                    @include column;
-                    max-height: 0;
-                    -moz-transition-timing-function: ease-out;
-                    -o-transition-timing-function: ease-out;
-                    -webkit-transition-timing-function: ease-out;
-                    transition-timing-function: ease-out;
-
-                    * {
-                        @include trans(.2s);
-                        opacity: 0;
-                    }
-
-                    a {
-                        padding-right: 20px;
-                    }
-                }
-
-                ul.open {
-                    max-height: 200px;
-                    background-color: transparentize(#000,.92);
-
-                    * {
+                        cursor: pointer;
+                        width: $aside-width + 150px;
+                        height: auto;
+                        margin: auto 0px auto auto;
                         opacity: 1;
                     }
                 }
             }
-
-            [accordion-trigger]:before {
-                content: " ";
-                position: absolute;
-                right: 0;
-                top: 0;
-                bottom: 0;
-                background-color: #fff;
-                width: 3px;
-            }
-        }
-
-        ::-webkit-scrollbar {
-            display: none;
         }
     }
 

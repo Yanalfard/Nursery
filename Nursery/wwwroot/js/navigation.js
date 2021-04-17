@@ -13,9 +13,17 @@ for (let acc of accordions) {
     navi.addEventListener("mouseleave", () => { ul.classList.remove('open') })
 }
 
+// btn hamburger clicked
 btnHamburger.addEventListener('click', () => {
-    navi.style.transition = 'all ease 0.3s';
-    navi.style.marginRight = navi.style.marginRight == '0px' ? '-72px' : '0px';
+    navi.style.transition = 'all ease 0.4s';
+    if (navi.style.marginRight == '0px') {
+        // hide
+        navi.style.marginRight = '-222px'
+    }
+    else {
+        // show
+        navi.style.marginRight = '0px';
+    }
 });
 
 window.addEventListener('resize', () => {
@@ -28,7 +36,7 @@ window.addEventListener('click', (e) => {
     if (window.innerWidth < 512) {
         if (!e.path.includes(navi) && !e.path.includes(btnHamburger)) {
             if (navi.style.marginRight == '0px') {
-                navi.style.marginRight = '-72px';
+                navi.style.marginRight = '-222px';
             }
         }
     }
