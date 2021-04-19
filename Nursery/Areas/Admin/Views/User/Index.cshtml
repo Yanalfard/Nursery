@@ -1,8 +1,6 @@
 ﻿@model TblUser
-@{
-    ViewData["Title"] = "کاربر";
-    Layout = "~/Areas/Admin/Views/_AdminLayout.cshtml";
-}
+@{ ViewData["Title"] = "کاربر";
+                Layout = "~/Areas/Admin/Views/_AdminLayout.cshtml"; }
 
 <div class="col gap-between-card">
     <!-- #region Profile -->
@@ -11,16 +9,14 @@
             <div class="fg-col" uk-lightbox>
                 @if (Model.ImageUrl != null)
                 {
-                    <a class="uk-margin-auto-left" href="~/Images/User/@Model.ImageUrl">
-                        <img class="profile-image" src="~/Images/User/@Model.ImageUrl" width="128" height="128" />
-                    </a>
-                }
+    <a class="uk-margin-auto-left" href="~/Images/User/@Model.ImageUrl">
+        <img class="profile-image" src="~/Images/User/@Model.ImageUrl" width="128" height="128" />
+    </a> }
                 else
                 {
-                    <a class="uk-margin-auto-left" href="~/st/png/blue.png">
-                        <img class="profile-image" src="~/st/png/blue.png" width="128" height="128" />
-                    </a>
-                }
+    <a class="uk-margin-auto-left" href="~/st/png/blue.png">
+        <img class="profile-image" src="~/st/png/blue.png" width="128" height="128" />
+    </a>}
             </div>
             <div class="grid-160">
                 <div class="fg-col">
@@ -42,7 +38,7 @@
                 <span>ویرایش</span>
                 <span uk-icon="pen-square"></span>
             </a>
-            <a href="/Admin/User/ChangePassword" class="btn btn-secondary">
+            <a href="/Admin/User/ChangePassword/@Model.UserId" class="btn btn-secondary">
                 <span>تغییر رمز</span>
                 <span uk-icon="lock"></span>
             </a>
@@ -112,7 +108,7 @@
                                         </a>
                                     </li>
                                     <li>
-                                        <a href="" class="rowr btn-danger" >
+                                        <a href="" class="rowr btn-danger">
                                             <span>حذف</span>
                                             <span class="small" uk-icon="trash"></span>
                                         </a>
@@ -235,7 +231,12 @@
 
     <!-- #endregion -->
 </div>
-
+@if (Context.Request.Query["changePassword"].ToString() == "true")
+{
+<script>
+    notify('رمز کاربر مورد نظر تغیر یافت', 'success');
+</script>
+}
 @section Scripts{
 
     <script>

@@ -167,11 +167,23 @@ namespace Nursery.Areas.Admin.Controllers
             return await Task.FromResult(PartialView(list.Skip(skip).Take(take)));
         }
 
-        public IActionResult ChangePassword()
+        public async Task<IActionResult> ChangePassword(int id)
         {
-            return View();
+            return await Task.FromResult(View(new ChangePasswordVm() { UserId = id }));
         }
-
+        [HttpPost]
+        public async Task<IActionResult> ChangePassword(ChangePasswordVm change)
+        {
+            if (ModelState.IsValid)
+            {
+                TblUser selectedUserById = _db.User.GetById(change.UserId);
+                selectedUserById.Password = PasswordHelper.EncodePasswordMd5(change.Password);
+                _db.User.Update(selectedUserById);
+                _db.Save();
+                return await Task.FromResult(Redirect("/Admin/User/List?id=" + change.UserId + "&addUser=true"));
+            }
+            return await Task.FromResult(View(change));
+        }
         public IActionResult AddRole()
         {
             return View();

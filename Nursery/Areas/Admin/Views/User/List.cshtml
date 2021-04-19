@@ -10,6 +10,7 @@
 </div>
 
 <div class="form">
+
     <div class="form-header" uk-sticky="offset: 72;cls-active: sticked;bottom: true">
         <div class="rowr">
             <h2 class="card-title">
@@ -26,27 +27,7 @@
 
         </div>
     </div>
-    @if (Context.Request.Query["editUser"].ToString() == "true")
-    {
-<div class="uk-alert uk-alert-success addUser">
-    <p class="help-block">کاربر مورد نظر ویرایش شد</p>
-</div>
-                <script>
-                    var delay = 4000;
-                    setTimeout(function () { $(".addUser").css("display", "none"); }, delay);
-                </script>
-}
 
-    @if (Context.Request.Query["addUser"].ToString() == "true")
-    {
-<div class="uk-alert uk-alert-success addUser">
-    <p class="help-block">کاربر جدید اضافه شد</p>
-</div>
-                <script>
-                    var delay = 4000;
-                    setTimeout(function () { $(".addUser").css("display", "none"); }, delay);
-                </script>
-}
     <div class="form-search" uk-sticky="offset: 140;cls-active: sticked uk-box-shadow-medium;bottom:true">
         <form id="formSearchUser" action="/Admin/User/List" class="controls-grid">
             <input class="entry" type="hidden" id="pageId" name="pageId" value="@ViewBag.PageShow">
@@ -162,6 +143,24 @@ notpage++;
         </div>
     </div>
 </div>
+
+
+
+@if (Context.Request.Query["editUser"].ToString() == "true")
+{
+<script>
+    notify('کاربر مورد نظر ویرایش شد', 'success');
+</script>}
+
+@if (Context.Request.Query["addUser"].ToString() == "true")
+{
+<script>
+    notify('کاربر جدید اضافه شد', 'success');
+</script>}
+
+
+
+
 
 @section Scripts{
 
