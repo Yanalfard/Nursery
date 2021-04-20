@@ -16,9 +16,9 @@ namespace Nursery.Areas.Admin.Controllers
     public class UserController : Controller
     {
         private Core _db = new Core();
-        public async Task<IActionResult> Index(int id = 0)
+        public async Task<IActionResult> Index(int id = 0, string name = null)
         {
-
+            ViewData["name"] = name;
             return await Task.FromResult(View(_db.User.GetById(id)));
         }
 
@@ -167,8 +167,9 @@ namespace Nursery.Areas.Admin.Controllers
             return await Task.FromResult(PartialView(list.Skip(skip).Take(take)));
         }
 
-        public async Task<IActionResult> ChangePassword(int id)
+        public async Task<IActionResult> ChangePassword(int id, string name = null)
         {
+            ViewData["name"] = name;
             return await Task.FromResult(View(new ChangePasswordVm() { UserId = id }));
         }
         [HttpPost]
@@ -180,7 +181,7 @@ namespace Nursery.Areas.Admin.Controllers
                 selectedUserById.Password = PasswordHelper.EncodePasswordMd5(change.Password);
                 _db.User.Update(selectedUserById);
                 _db.Save();
-                return await Task.FromResult(Redirect("/Admin/User/List?id=" + change.UserId + "&addUser=true"));
+                return await Task.FromResult(Redirect("/Admin/User/Index?id=" + change.UserId + "&changePassword=true"));
             }
             return await Task.FromResult(View(change));
         }

@@ -1,4 +1,5 @@
-﻿@{
+﻿@model IEnumerable<TblRole>
+@{
     ViewData["Title"] = "لیست شیفت ها";
     Layout = "~/Areas/Admin/Views/_AdminLayout.cshtml";
 }
@@ -11,30 +12,30 @@
 </div>
 
 <div class="form">
+
     <div class="form-header" uk-sticky="offset: 72;cls-active: sticked;bottom: true">
         <div class="rowr">
             <h2 class="card-title">
                 لیست شیفت ها
             </h2>
-            <a href="/Admin/Role/Add" class="btn btn-primary uk-margin-auto-right">
+            <a onclick="showOtherPage(1)" class="btn btn-secondary uk-margin-auto-right">
+                <span>جستوجو</span>
+                <span class="tiny" uk-icon="search"></span>
+            </a>
+            <a href="/Admin/Role/Add" class="btn btn-primary uk-margin-small-right">
                 <span>اضافه</span>
                 <span class="tiny" uk-icon="plus-square"></span>
             </a>
+
         </div>
     </div>
-    <div class="form-search" uk-sticky="offset: 139;cls-active: sticked uk-box-shadow-medium;bottom:true">
-        <div class="controls-grid">
-            <input class="entry" type="number" placeholder="کد">
-            <input class="entry" type="text" placeholder="نام">
-            <input class="entry" type="text" placeholder="تیتر">
-            <div class="col">
-                <label class="fg-label row text-3">
-                    حذف شده
-                    <input class="uk-checkbox" type="checkbox">
-                </label>
-                <span class="text-danger"></span>
-            </div>
-        </div>
+
+    <div class="form-search" uk-sticky="offset: 140;cls-active: sticked uk-box-shadow-medium;bottom:true">
+        <form id="formSearchUser" action="/Admin/Role/List" class="controls-grid">
+            <input class="entry" type="hidden" id="pageId" name="pageId" value="@ViewBag.PageShow">
+            <input class="entry" type="text" id="name" name="name" placeholder="نام" value="@ViewBag.name">
+            <input class="entry" type="text" id="titles" name="titles" placeholder="تیتر " value="@ViewBag.titles">
+        </form>
     </div>
 
     <div class="form-body scrollh-container uk-padding-remove">
@@ -43,57 +44,123 @@
                 <tr>
                     <th>کد</th>
                     <th>نام</th>
-                    <th>تیتر</th>
-                    <th></th>
+                    <th>تیتر </th>
+                    <th>عملیات</th>
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td>1</td>
-                    <td>شیفت شب</td>
-                    <td>ROLE1</td>
-                    <td class="actions">
-                        <a href="" class="btn-icon round text-4" uk-icon="icon:ellipsis-h;ratio:.72"></a>
-                        <div class="dropdown" uk-drop="mode: click;offset:4">
-                            <ul class="dropdown-list">
-                                <li>
-                                    <a href="/Admin/Role" class="rowr">
-                                        <span class="new">مشاهده</span>
-                                        <span class="small" uk-icon="eye"></span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="/Admin/Role/Edit" class="rowr">
-                                        <span class="new">ویرایش</span>
-                                        <span class="small" uk-icon="pen-square"></span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="" class="rowr btn-danger">
-                                        <span>حذف</span>
-                                        <span class="small" uk-icon="trash"></span>
-                                    </a>
-                                </li>
-                            </ul>
-                        </div>
-                    </td>
-                </tr>
+                @foreach (var item in Model)
+                {
+                    <tr id="roleId_@item.RoleId">
+                        <td>@(Model.ToList().IndexOf(item)+1)</td>
+                        <td>@item.Name</td>
+                        <td><bdi>@item.Title</bdi></td>
+                        <td class="actions">
+                            <a href="" class="btn-icon round text-4" uk-icon="icon:ellipsis-h;ratio:.72"></a>
+                            <div class="dropdown" uk-drop="mode: click;offset:4">
+                                <ul class="dropdown-list">
+                                    <li>
+                                        <a asp-area="Admin"
+                                           asp-controller="Role"
+                                           asp-action="Index"
+                                           asp-route-id="@item.RoleId"
+                                           asp-route-name="@item.Name.Trim()"
+                                           class="rowr">
+                                            <span class="new">مشاهده</span>
+                                            <span class="small" uk-icon="eye"></span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="/Admin/Role/Edit/@item.RoleId" class="rowr">
+                                            <span class="new">ویرایش</span>
+                                            <span class="small" uk-icon="pen-square"></span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </td>
+                    </tr>
+                }
+
             </tbody>
         </table>
     </div>
-
     <div class="form-footer">
+        @*<button class="btn btn-primary">اضافه</button>*@
         <div class="uk-margin-auto-right">
             <ul class="uk-pagination uk-margin-remove uk-margin-auto-right">
-                <li><a href="#"><span uk-pagination-previous></span></a></li>
-                <li><a href="#">1</a></li>
-                <li class="uk-disabled"><span>...</span></li>
-                <li><a href="#">5</a></li>
-                <li><a href="#">6</a></li>
-                <li class="uk-active"><span>7</span></li>
-                <li><a href="#">8</a></li>
-                <li><a href="#"><span uk-pagination-next></span></a></li>
+                @{ int pageCount = ViewBag.PageCount;
+                    int pageShow = ViewBag.PageShow;
+                    int minPage = pageShow <= 1 ? pageShow : pageShow - 2;
+                    int maxPage = pageShow <= 1 ? pageShow + 4 : pageShow + 2;
+                    int notpage = 0; }
+                @if (pageShow > 1)
+                {
+                    <li><a onclick="showOtherPage(@(pageShow==0?1:pageShow-1))"><span uk-pagination-previous></span></a></li>
+                }
+                @if (pageShow > 3)
+                {
+                    <li><a onclick="showOtherPage(1)">1</a></li>
+                }
+                @for (int i = 1; i <= pageCount; i++)
+                {
+                    @if (i >= minPage && i <= maxPage)
+                    {
+                        <li><a onclick="showOtherPage(@(i))" class="@(pageShow==i?"uk-active":"")">@i</a></li>
+                        notpage = 0;
+                    }
+                    else
+                    {
+                        if (notpage == 0)
+                        {
+                            <li class="uk-disabled"><span>...</span></li>
+                            notpage++;
+                        }
+                    }}
+                @if (pageShow <= pageCount - 3)
+                {
+                    <li><a onclick="showOtherPage(@(pageCount))">@pageCount</a></li>
+                }
+                @if (pageShow < pageCount)
+                {
+                    <li><a onclick="showOtherPage(@(pageShow==0?2:pageShow+1))"><span uk-pagination-next></span></a></li>
+                }
+
             </ul>
         </div>
     </div>
 </div>
+
+
+
+
+
+@section Scripts{
+    @if (Context.Request.Query["addRole"].ToString() == "true")
+    {
+        <script>notify('شیفت مورد نظر اضافه شد', 'success');</script>
+    }
+    @if (Context.Request.Query["editRole"].ToString() == "true")
+    {
+        <script>notify('شیفت مورد نظر ویرایش شد', 'success');</script>
+    }
+
+
+    <script>
+        function showOtherPage(id) {
+            $('#pageId').val(id);
+            document.getElementById('formSearchUser').submit();
+        }
+
+    </script>
+
+
+
+    <script>
+        require(['config'], function () {
+            require(['confirm'], function () {
+
+            })
+        });
+    </script>
+}

@@ -13,6 +13,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Content Remove="wwwroot\404.html" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Remove="Scripts\FormMaker\builder.ts" />
   </ItemGroup>
 
@@ -44,6 +48,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Include="wwwroot\404.html" />
     <None Include="wwwroot\Jquery\docs.min.js" />
     <None Include="wwwroot\Jquery\Home.js" />
     <None Include="wwwroot\Jquery\jquery-3.4.1.js" />

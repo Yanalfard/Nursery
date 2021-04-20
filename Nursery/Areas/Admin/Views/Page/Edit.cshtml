@@ -1,9 +1,13 @@
-﻿@{
+﻿@model AddPageVm
+
+@{
     ViewData["Title"] = "ویرایش بخش";
     Layout = "~/Areas/Admin/Views/_AdminLayout.cshtml";
 }
 
-<form class="form">
+<form class="form" asp-action="Edit" method="post">
+
+    <input type="hidden" asp-for="PageId" />
     <div class="form-header">
         <h3>
             ویرایش بخش
@@ -14,9 +18,9 @@
         <div class="grid-400">
 
             <div class="fg-col ">
-                <label class="fg-label" for="name">نام بخش</label>
-                <input class="entry" id="name" type="text">
-                <span class="text-danger"></span>
+                <label class="fg-label" for="Name">نام</label>
+                <input class="entry" asp-for="Name" type="text">
+                <span class="text-danger" asp-validation-for="Name"></span>
             </div>
 
         </div>

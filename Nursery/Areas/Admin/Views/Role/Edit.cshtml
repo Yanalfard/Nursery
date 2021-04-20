@@ -1,12 +1,14 @@
-﻿@{
+﻿@model AddRoleVm
+@{
     ViewData["Title"] = "ویرایش شیفت";
     Layout = "~/Areas/Admin/Views/_AdminLayout.cshtml";
 }
 
-<form class="form">
+<form class="form" asp-action="Add" method="post">
+    <input type="hidden" asp-for="RoleId" />
     <div class="form-header">
         <h3>
-            ویرایش شیفت
+            شیفت جدید
         </h3>
     </div>
     <div class="form-body">
@@ -14,15 +16,16 @@
         <div class="grid-400">
 
             <div class="fg-col ">
-                <label class="fg-label" for="name">نام</label>
-                <input class="entry" id="name" type="text">
-                <span class="text-danger"></span>
+
+                <label class="fg-label" for="Name">نام</label>
+                <input class="entry" asp-for="Name" type="text">
+                <span class="text-danger" asp-validation-for="Name"></span>
             </div>
 
-            <div class="fg-col ">
-                <label class="fg-label" for="tel">تیتر</label>
-                <input class="entry" id="tel" type="tel">
-                <span class="text-danger"></span>
+            <div class="fg-col">
+                <label class="fg-label" for="Title">تیتر</label>
+                <input class="entry" asp-for="Title" type="text">
+                <span class="text-danger" asp-validation-for="Title"></span>
             </div>
 
         </div>

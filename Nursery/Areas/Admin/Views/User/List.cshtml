@@ -72,7 +72,13 @@
             <div class="dropdown" uk-drop="mode: click;offset:4">
                 <ul class="dropdown-list">
                     <li>
-                        <a href="/Admin/User/Index/@item.UserId" class="rowr">
+                        <a
+                           asp-area="Admin"
+                           asp-controller="User"
+                           asp-action="Index"
+                           asp-route-id="@item.UserId"
+                           asp-route-name="@item.Name"
+                           class="rowr">
                             <span class="new">مشاهده</span>
                             <span class="small" uk-icon="eye"></span>
                         </a>
@@ -146,24 +152,26 @@ notpage++;
 
 
 
-@if (Context.Request.Query["editUser"].ToString() == "true")
-{
-<script>
-    notify('کاربر مورد نظر ویرایش شد', 'success');
-</script>}
-
-@if (Context.Request.Query["addUser"].ToString() == "true")
-{
-<script>
-    notify('کاربر جدید اضافه شد', 'success');
-</script>}
-
 
 
 
 
 @section Scripts{
 
+
+    @if (Context.Request.Query["editUser"].ToString() == "true")
+    {
+<script>
+    notify('کاربر مورد نظر ویرایش شد', 'success');
+</script>
+}
+
+    @if (Context.Request.Query["addUser"].ToString() == "true")
+    {
+<script>
+    notify('کاربر جدید اضافه شد', 'success');
+</script>
+}
     <script>
         function showOtherPage(id) {
             $('#pageId').val(id);
@@ -174,7 +182,7 @@ notpage++;
         function deleteUser(id) {
             $.get('/Admin/User/Delete/' + id, function (result) {
                 if (result == "true") {
-                    $('#userId_' + id).addClass('text-danger');
+                    $('#userId_' + id).addClass('uk-text-danger');
                     $("#userId_" + id).hide('slow');
                 }
             });

@@ -1,5 +1,6 @@
-﻿@{
-    ViewData["Title"] = "کاربر";
+﻿@model TblRole
+@{
+    ViewData["Title"] = "کاربر" + ViewData["name"];
     Layout = "~/Areas/Admin/Views/_AdminLayout.cshtml";
 }
 
@@ -11,23 +12,23 @@
             <div class="grid-160">
                 <div class="fg-col">
                     <label class="dl-label">نام</label>
-                    <p class="dl-data">شیفت شب </p>
+                    <p class="dl-data">@Model.Name </p>
                 </div>
                 <div class="fg-col">
                     <label class="dl-label">تیتر</label>
-                    <p class="dl-data">ROLE1</p>
+                    <p class="dl-data">@Model.Title</p>
                 </div>
             </div>
         </div>
         <div class="form-footer">
-            <a href="/Admin/User/Edit" class="btn btn-primary">
+            <a href="/Admin/Role/Edit/@Model.RoleId" class="btn btn-primary">
                 <span>ویرایش</span>
                 <span uk-icon="pen-square"></span>
             </a>
-            <button class="btn btn-danger" popconfirm="direction:bc">
+            @*<button class="btn btn-danger" popconfirm="direction:bc">
                 <span>حذف</span>
                 <span uk-icon="trash"></span>
-            </button>
+            </button>*@
         </div>
     </div>
 

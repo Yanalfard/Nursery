@@ -5,18 +5,13 @@ using System.Text;
 
 namespace DataLayer.ViewModels
 {
-    public class AddKidVm
+    public class AddPageVm
     {
-        public int KidId { get; set; }
+        public int PageId { get; set; }
         [Display(Name = "نام")]
         [Required(ErrorMessage = "لطفا {0} را وارد کنید")]
         [MaxLength(100, ErrorMessage = "تعداد کاراکتر بیشتر است")]
         [StringLength(100)]
         public string Name { get; set; }
-        [Display(Name = "نام مستعار")]
-        [Required(ErrorMessage = "لطفا {0} را وارد کنید")]
-        [MaxLength(100, ErrorMessage = "تعداد کاراکتر بیشتر است")]
-        [StringLength(100)]
-        public string Nickname { get; set; }
     }
 }

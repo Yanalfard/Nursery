@@ -1,32 +1,143 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using DataLayer.Models;
+using DataLayer.ViewModels;
+using Microsoft.AspNetCore.Mvc;
+using Services.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-
 namespace Nursery.Areas.Admin.Controllers
 {
     [Area("Admin")]
     public class PageController : Controller
     {
-        public IActionResult Index()
+        private Core _db = new Core();
+        public async Task<IActionResult> Index(int id = 0, string name = null)
         {
-            return View();
+            try
+            {
+                ViewData["name"] = name;
+                return await Task.FromResult(View(_db.Page.GetById(id)));
+            }
+            catch
+            {
+                return await Task.FromResult(Redirect("404.html"));
+            }
         }
 
-        public IActionResult List()
+        public async Task<IActionResult> List(int pageId = 1, string name = null)
         {
-            return View();
+            try
+            {
+                ViewBag.name = name;
+                List<TblPage> list = _db.Page.Get(orderBy: j => j.OrderByDescending(k => k.PageId)).ToList();
+                if (name != null)
+                {
+                    list = list.Where(i => i.Name.Contains(name)).ToList();
+                }
+                //Pagging
+                int take = 10;
+                int skip = (pageId - 1) * take;
+                ViewBag.PageCount = Convert.ToInt32(Math.Ceiling((double)list.Count() / take));
+                ViewBag.PageShow = pageId;
+                return await Task.FromResult(View(list.Skip(skip).Take(take)));
+            }
+            catch
+            {
+                return await Task.FromResult(Redirect("404.html"));
+            }
+
         }
 
-        public IActionResult Add()
+        public async Task<IActionResult> Add()
         {
-            return View();
-        }
+            try
+            {
+                return await Task.FromResult(View());
+            }
+            catch
+            {
+                return await Task.FromResult(Redirect("404.html"));
+            }
 
-        public IActionResult Edit()
+        }
+        [HttpPost]
+        public async Task<IActionResult> AddAsync(AddPageVm role)
         {
-            return View();
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    if (_db.Page.Any(i => i.Name == role.Name.Trim()))
+                    {
+                        ModelState.AddModelError("Name", "نام بخش تکراری می باشد");
+                    }
+                    else
+                    {
+                        TblPage addPage = new TblPage()
+                        {
+                            Name = role.Name.Trim(),
+                        };
+                        _db.Page.Add(addPage);
+                        _db.Save();
+                        return await Task.FromResult(Redirect("/Admin/Page/List?addPage=true"));
+                    }
+                }
+                return await Task.FromResult(View(role));
+            }
+            catch
+            {
+                return await Task.FromResult(Redirect("404.html"));
+            }
+        }
+        public async Task<IActionResult> Edit(int id)
+        {
+            try
+            {
+                TblPage selectedRole = _db.Page.GetById(id);
+                AddPageVm edit = new AddPageVm()
+                {
+                    Name = selectedRole.Name.Trim(),
+                    PageId = selectedRole.PageId,
+                };
+                return await Task.FromResult(View(edit));
+            }
+            catch
+            {
+                return await Task.FromResult(Redirect("404.html"));
+            }
+
+        }
+        [HttpPost]
+        public async Task<IActionResult> EditAsync(AddPageVm role)
+        {
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    if (_db.Page.Any(i => i.Name == role.Name && i.PageId != role.PageId))
+                    {
+                        ModelState.AddModelError("Name", "نام شیفت تکراری می باشد");
+                    }
+                    else
+                    {
+                        TblPage selectedPage = _db.Page.GetById(role.PageId);
+                        if (selectedPage != null)
+                        {
+                            selectedPage.Name = role.Name.Trim();
+                            _db.Page.Update(selectedPage);
+                            _db.Save();
+                            return await Task.FromResult(Redirect("/Admin/Page/List?editPage=true"));
+                        }
+                    }
+                }
+                return await Task.FromResult(View(role));
+            }
+            catch
+            {
+                return await Task.FromResult(Redirect("404.html"));
+            }
+
         }
 
     }
