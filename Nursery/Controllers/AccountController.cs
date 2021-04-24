@@ -44,13 +44,11 @@ namespace Nursery.Controllers
                         TblUser user = db.User.Get().FirstOrDefault(i => i.TellNo == login.IdentificationNo);
                         var claims = new List<Claim>()
                     {
-                              new Claim(ClaimTypes.NameIdentifier,user.UserId.ToString()),
-                        new Claim(ClaimTypes.Name,user.Name)
-                        //new Claim(ClaimTypes.NameIdentifier,user.IdentificationNo.ToString()),
-                        //new Claim(ClaimTypes.Name,user.TellNo),
-                        ////new Claim(ClaimTypes.Role,db.Role.GetById(user.RoleId).Name.Trim()),
-                        //new Claim(ClaimTypes.Role,db.UserRoleRel.GetById(user.UserId).Role.Name.Trim()),
-                        //new Claim(ClaimTypes.Role,db.RolePageRel.GetById(user.UserId).Role.Name.Trim()),
+                        new Claim(ClaimTypes.NameIdentifier,user.IdentificationNo.ToString()),
+                        new Claim(ClaimTypes.Name,user.TellNo),
+                        //new Claim(ClaimTypes.Role,db.Role.GetById(user.RoleId).Name.Trim()),
+                        new Claim(ClaimTypes.Role,db.UserRoleRel.GetById(user.UserId).Role.Name.Trim()),
+                        new Claim(ClaimTypes.Role,db.RolePageRel.GetById(user.UserId).Role.Name.Trim()),
                     };
                         var identity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
                         var principal = new ClaimsPrincipal(identity);
