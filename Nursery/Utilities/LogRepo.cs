@@ -5,12 +5,18 @@ using System.Threading.Tasks;
 
 namespace Nursery.Utilities
 {
-    public class LogRepo
+    public static class LogRepo
     {
-        public string UserLogin(string username, string ip)
+        public static string UserLogin(string username, string ip)
         {
             return
                 $"User: {username} logged in IP: {ip}";
+        }
+
+        public static string DeleteUserRole(string username, string userRoleId, string identificationNo)
+        {
+            return
+                $"User: {username} Deleted UserRole: {userRoleId} From Identification :{identificationNo}";
         }
     }
 }

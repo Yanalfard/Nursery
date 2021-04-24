@@ -58,25 +58,15 @@ else
                 <h2 class="card-title">
                     شیفت ها
                 </h2>
-                <a href="/Admin/User/AddRole" class="btn btn-primary uk-margin-auto-right">
+                <a asp-area="admin"
+                   asp-controller="User"
+                   asp-action="AddRole"
+                   asp-route-id="@Model.UserId"
+                   asp-route-name="@Model.Name"
+                   class="btn btn-primary uk-margin-auto-right">
                     <span>اضافه</span>
                     <span class="tiny" uk-icon="plus-square"></span>
                 </a>
-            </div>
-        </div>
-        <div class="form-search" uk-sticky="offset: 139;cls-active: sticked uk-box-shadow-medium;bottom:true;bottom: true">
-            <div class="controls-grid">
-                <input class="entry" type="number" placeholder="کد">
-                <input class="entry" type="text" placeholder="نام">
-                <input class="entry" type="text" placeholder="از زمان">
-                <input class="entry" type="text" placeholder="تا زمان">
-                <div class="col">
-                    <label class="fg-label row text-3">
-                        حذف شده
-                        <input class="uk-checkbox" type="checkbox">
-                    </label>
-                    <span class="text-danger"></span>
-                </div>
             </div>
         </div>
 
@@ -92,50 +82,137 @@ else
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td>1</td>
-                        <td>دسترسی به بخش شیرخوارگاه</td>
-                        <td>12:45</td>
-                        <td>16:20</td>
-                        <td class="actions">
-                            <a href="" class="btn-icon round text-4" uk-icon="icon:ellipsis-h;ratio:.72"></a>
-                            <div class="dropdown" uk-drop="mode: click;offset:4">
-                                <ul class="dropdown-list">
-                                    <li>
-                                        <a href="/Admin/User/EditRole" class="rowr">
-                                            <span class="new">ویرایش</span>
-                                            <span class="small" uk-icon="pen-square"></span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="" class="rowr btn-danger">
-                                            <span>حذف</span>
-                                            <span class="small" uk-icon="trash"></span>
-                                        </a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </td>
-                    </tr>
+                    @if (Model.TblUserRoleRel.Any())
+                    {
+
+
+        @foreach (var item in Model.TblUserRoleRel.Where(i => i.IsDeleted == false))
+        {
+<tr id="userRoleIdId_@item.UserRoleId">
+    <td>@(Model.TblUserRoleRel.Where(i => i.IsDeleted == false).ToList().IndexOf(item)+1)</td>
+    <td>دسترسی به بخش   @item.Role.Name </td>
+    <td>@item.ShiftStart.TimeOfDay</td>
+    <td>@item.ShiftEnd.TimeOfDay</td>
+    <td class="actions">
+        <a href="" class="btn-icon round text-4" uk-icon="icon:ellipsis-h;ratio:.72"></a>
+        <div class="dropdown" uk-drop="mode: click;offset:4">
+            <ul class="dropdown-list">
+                <li>
+                    <a asp-area="admin"
+                       asp-controller="User"
+                       asp-action="EditRole"
+                       asp-route-id="@item.UserRoleId"
+                       asp-route-name="@item.Role.Name"
+                       class="rowr">
+                        <span class="new">ویرایش</span>
+                        <span class="small" uk-icon="pen-square"></span>
+                    </a>
+                </li>
+                <li>
+                    <a class="rowr btn-danger" popconfirm="description:آیا از حذف  اطمینان دارید؟;direction:rb;type:danger;title:هشدار;okText:حذف;" popok="deleteUserRoleId(@item.UserRoleId)">
+                        <span>حذف</span>
+                        <span class="small" uk-icon="trash"></span>
+                    </a>
+
+
+                </li>
+            </ul>
+        </div>
+    </td>
+</tr>}}
+
+
+
                 </tbody>
             </table>
         </div>
 
-        <div class="form-footer">
-            <div class="uk-margin-auto-right">
-                <ul class="uk-pagination uk-margin-remove uk-margin-auto-right">
-                    <li><a href="#"><span uk-pagination-previous></span></a></li>
-                    <li><a href="#">1</a></li>
-                    <li class="uk-disabled"><span>...</span></li>
-                    <li><a href="#">5</a></li>
-                    <li><a href="#">6</a></li>
-                    <li class="uk-active"><span>7</span></li>
-                    <li><a href="#">8</a></li>
-                    <li><a href="#"><span uk-pagination-next></span></a></li>
-                </ul>
-            </div>
-        </div>
+
     </div>
+    @*<div class="form">
+            <div class="form-header" uk-sticky="offset: 72;cls-active: sticked;bottom: true;bottom: true">
+                <div class="rowr">
+                    <h2 class="card-title">
+                        شیفت ها
+                    </h2>
+                    <a href="/Admin/User/AddRole" class="btn btn-primary uk-margin-auto-right">
+                        <span>اضافه</span>
+                        <span class="tiny" uk-icon="plus-square"></span>
+                    </a>
+                </div>
+            </div>
+            <div class="form-search" uk-sticky="offset: 139;cls-active: sticked uk-box-shadow-medium;bottom:true;bottom: true">
+                <div class="controls-grid">
+                    <input class="entry" type="number" placeholder="کد">
+                    <input class="entry" type="text" placeholder="نام">
+                    <input class="entry" type="text" placeholder="از زمان">
+                    <input class="entry" type="text" placeholder="تا زمان">
+                    <div class="col">
+                        <label class="fg-label row text-3">
+                            حذف شده
+                            <input class="uk-checkbox" type="checkbox">
+                        </label>
+                        <span class="text-danger"></span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-body scrollh-container uk-padding-remove">
+                <table class="tbl tbl-striped" dir="rtl">
+                    <thead>
+                        <tr>
+                            <th>کد</th>
+                            <th>نام</th>
+                            <th>از زمان</th>
+                            <th>تا زمان</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>1</td>
+                            <td>دسترسی به بخش شیرخوارگاه</td>
+                            <td>12:45</td>
+                            <td>16:20</td>
+                            <td class="actions">
+                                <a href="" class="btn-icon round text-4" uk-icon="icon:ellipsis-h;ratio:.72"></a>
+                                <div class="dropdown" uk-drop="mode: click;offset:4">
+                                    <ul class="dropdown-list">
+                                        <li>
+                                            <a href="/Admin/User/EditRole" class="rowr">
+                                                <span class="new">ویرایش</span>
+                                                <span class="small" uk-icon="pen-square"></span>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="" class="rowr btn-danger">
+                                                <span>حذف</span>
+                                                <span class="small" uk-icon="trash"></span>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="form-footer">
+                <div class="uk-margin-auto-right">
+                    <ul class="uk-pagination uk-margin-remove uk-margin-auto-right">
+                        <li><a href="#"><span uk-pagination-previous></span></a></li>
+                        <li><a href="#">1</a></li>
+                        <li class="uk-disabled"><span>...</span></li>
+                        <li><a href="#">5</a></li>
+                        <li><a href="#">6</a></li>
+                        <li class="uk-active"><span>7</span></li>
+                        <li><a href="#">8</a></li>
+                        <li><a href="#"><span uk-pagination-next></span></a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>*@
 
     <!-- #endregion -->
     <!-- #region Activity Log -->
@@ -144,87 +221,50 @@ else
             <h1 class="title" dir="rtl">
                 فعالیت ها
             </h1>
-            <h3 class="subtitle" dir="rtl">
-                3 مورد فعالیت در یک هفته گذشته
-            </h3>
+            @*<h3 class="subtitle" dir="rtl">
+                    3 مورد فعالیت در یک هفته گذشته
+                </h3>*@
         </div>
         <div class="body card-padding">
             <div class="line"></div>
-            <div class="item">
-                <span class="time">08:42</span>
-                <i class="badge"></i>
-                <p class="text">
-                    به نظر می‌رسد و قلم‌ها و اندازه‌بندی‌ها چگونه در نظر گرفته شده‌است. از آنجایی
-                </p>
-            </div>
-            <div class="item purple">
-                <span class="time">08:42</span>
-                <i class="badge"></i>
-                <p class="text">
-                    به نظر می‌رسد و قلم‌ها و اندازه‌بندی‌ها چگونه در نظر گرفته شده‌است. از آنجایی
-                </p>
-            </div>
-            <div class="item">
-                <span class="time">08:42</span>
-                <i class="badge"></i>
-                <p class="text">
-                    به نظر می‌رسد و قلم‌ها و اندازه‌بندی‌ها چگونه در نظر گرفته شده‌است. از آنجایی
-                </p>
-            </div>
-            <div class="item">
-                <span class="time">08:42</span>
-                <i class="badge"></i>
-                <p class="text">
-                    به نظر می‌رسد و قلم‌ها و اندازه‌بندی‌ها چگونه در نظر گرفته شده‌است. از آنجایی
-                </p>
-            </div>
-            <div class="item green">
-                <span class="time">08:42</span>
-                <i class="badge"></i>
-                <p class="text">
-                    به نظر می‌رسد و قلم‌ها و اندازه‌بندی‌ها چگونه در نظر گرفته شده‌است. از آنجایی
-                </p>
-            </div>
 
-            <div class="item red">
-                <span class="time">08:42</span>
-                <i class="badge"></i>
-                <p class="text">
-                    به نظر می‌رسد و قلم‌ها و اندازه‌بندی‌ها چگونه در نظر گرفته شده‌است. از آنجایی
-                </p>
-            </div>
+            @{ string colorByType(int type)
+                {
+                    switch (type)
+                    {
+                        case 1:
+                            return "green";
+                        case 2:
+                            return "red";
+                        case 3:
+                            return "yellow";
+                        case 4:
+                            return "purple";
+                        case 5:
+                            return "blue";
+                        case 6:
+                            return "gray";
+                        default:
+                            return "gray";
+                    }
+                } }
 
-            <div class="item blue">
-                <span class="time">08:42</span>
-                <i class="badge"></i>
-                <p class="text">
-                    به نظر می‌رسد و قلم‌ها و اندازه‌بندی‌ها چگونه در نظر گرفته شده‌است. از آنجایی
-                </p>
-            </div>
 
-            <div class="item yellow">
-                <span class="time">08:42</span>
-                <i class="badge"></i>
-                <p class="text">
-                    به نظر می‌رسد و قلم‌ها و اندازه‌بندی‌ها چگونه در نظر گرفته شده‌است. از آنجایی
-                </p>
-            </div>
+            @if (Model.TblUserLog.Any())
+            {
 
-            <div class="item yellow">
-                <span class="time">08:42</span>
-                <i class="badge"></i>
-                <p class="text">
-                    به نظر می‌رسد و قلم‌ها و اندازه‌بندی‌ها چگونه در نظر گرفته شده‌است. از آنجایی
-                </p>
-            </div>
 
-            <div class="item yellow">
-                <span class="time">08:42</span>
-                <i class="badge"></i>
-                <p class="text">
-                    به نظر می‌رسد و قلم‌ها و اندازه‌بندی‌ها چگونه در نظر گرفته شده‌است. از آنجایی
-                </p>
-            </div>
+
+
+@foreach (var item in Model.TblUserLog)
+{
+<div class="item @(colorByType(Convert.ToInt32(item.Type)))">
+    <span class="time">@item.DateCreated.Value.AllToShamsi()</span>
+    <i class="badge"></i>
+    <p class="text">
+        @item.Text
+    </p>
+</div>          }}
 
         </div>
     </div>
@@ -237,8 +277,7 @@ else
     {
 <script>
     notify('رمز کاربر مورد نظر تغیر یافت', 'success');
-</script>
-}
+</script>}
     <script>
 
         function deleteUser(id) {
@@ -247,6 +286,14 @@ else
                     window.location.href = "/Admin/User/List";
                     //$('#userId_' + id).addClass('text-danger');
                     //$("#userId_" + id).hide('slow');
+                }
+            });
+        }
+        function deleteUserRoleId(id) {
+            $.get('/Admin/User/DeleteUserRoleId/' + id, function (result) {
+                if (result == "true") {
+                    $('#userRoleIdId_' + id).addClass('uk-text-danger');
+                    $("#userRoleIdId_" + id).hide('slow');
                 }
             });
         }

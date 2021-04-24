@@ -1,9 +1,12 @@
-﻿@{
+﻿@model TblUserRoleRel
+@{
     ViewData["Title"] = "تایین شیفت";
     Layout = "~/Areas/Admin/Views/_AdminLayout.cshtml";
 }
 
-<form class="form">
+<form class="form" method="post" asp-action="AddRole">
+    <input type="hidden" asp-for="UserId" />
+    <input type="hidden" name="name" value="@ViewBag.name" />
     <div class="form-header">
         <h3>
             تایین شیفت
@@ -12,26 +15,31 @@
     <div class="form-body">
 
         <div class="grid-400">
+            @{
+                List<TblRole> listRole = ViewBag.UserRoleRel as List<TblRole>;
+
+            }
 
             <div class="fg-col ">
                 <label class="fg-label" for="name">شیفت</label>
-                <select class="uk-select">
-                    <option>شیفت شب</option>
-                    <option>شیفت صبح</option>
-                    <option>شیرخوارگاه</option>
+                <select class="uk-select" asp-for="RoleId">
+                    @foreach (var item in listRole)
+                    {
+                        <option value="@item.RoleId">@item.Name</option>
+                    }
                 </select>
                 <span class="text-danger"></span>
             </div>
 
             <div class="fg-col ">
                 <label class="fg-label" for="tel">از زمان</label>
-                <input class="entry" type="time">
+                <input class="entry" type="time" asp-for="ShiftStart" required>
                 <span class="text-danger"></span>
             </div>
 
             <div class="fg-col ">
                 <label class="fg-label" for="tel">تا زمان</label>
-                <input class="entry" type="time">
+                <input class="entry" type="time" asp-for="ShiftEnd" required>
                 <span class="text-danger"></span>
             </div>
 

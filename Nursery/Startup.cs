@@ -66,7 +66,7 @@ namespace Nursery
             app.UseStatusCodePagesWithReExecute("/404.html");
             #endregion
             app.UseMvcWithDefaultRoute();
-            //app.UseSession();
+            app.UseSession();
             app.UseAuthentication();
             app.UseStaticFiles();
             app.UseHttpsRedirection();

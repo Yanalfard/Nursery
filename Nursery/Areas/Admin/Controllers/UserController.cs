@@ -16,6 +16,13 @@ namespace Nursery.Areas.Admin.Controllers
     public class UserController : Controller
     {
         private Core _db = new Core();
+
+        TblUser SelectUser()
+        {
+            int userId = Convert.ToInt32(User.Claims.First().Value);
+            TblUser selectUser = _db.User.GetById(userId);
+            return selectUser;
+        }
         public async Task<IActionResult> Index(int id = 0, string name = null)
         {
             ViewData["name"] = name;
@@ -140,6 +147,7 @@ namespace Nursery.Areas.Admin.Controllers
         }
         public async Task<IActionResult> List(int pageId = 1, string name = null, string tell = null, string identificationNo = null, string checkedDelete = null)
         {
+           // var userId = Convert.ToInt32(User.Claims.First().Value);
             ViewBag.name = name;
             ViewBag.tell = tell;
             ViewBag.identificationNo = identificationNo;
@@ -185,15 +193,9 @@ namespace Nursery.Areas.Admin.Controllers
             }
             return await Task.FromResult(View(change));
         }
-        public IActionResult AddRole()
-        {
-            return View();
-        }
 
-        public IActionResult EditRole()
-        {
-            return View();
-        }
+
+
 
 
         public async Task<string> Delete(int id)
@@ -208,6 +210,73 @@ namespace Nursery.Areas.Admin.Controllers
             }
             return await Task.FromResult("false");
 
+        }
+
+        public async Task<string> DeleteUserRoleId(int id)
+        {
+            TblUserRoleRel selectedUser = _db.UserRoleRel.GetById(id);
+            if (selectedUser != null)
+            {
+                selectedUser.IsDeleted = true;
+                _db.UserRoleRel.Update(selectedUser);
+                _db.UserLog.Add(new TblUserLog()
+                {
+                    Text = LogRepo.DeleteUserRole("", selectedUser.UserRoleId.ToString(), selectedUser.User.IdentificationNo),
+                    UserId = SelectUser().UserId,
+                    Type=2,
+                    DateCreated=DateTime.Now
+                });
+                _db.Save();
+                return await Task.FromResult("true");
+            }
+            return await Task.FromResult("false");
+
+        }
+
+
+        public async Task<IActionResult> AddRole(int id, string name = null)
+        {
+            ViewBag.name = name;
+            ViewBag.UserRoleRel = _db.Role.Get(orderBy: i => i.OrderByDescending(k => k.RoleId)).ToList();
+            return await Task.FromResult(View(new TblUserRoleRel()
+            {
+                UserId = id
+            }));
+        }
+        [HttpPost]
+        public async Task<IActionResult> AddRole(TblUserRoleRel addRole, string name = null)
+        {
+            ViewBag.name = name;
+            if (ModelState.IsValid)
+            {
+                _db.UserRoleRel.Add(addRole);
+                _db.Save();
+                return await Task.FromResult(Redirect("/Admin/User/Index/" + addRole.UserId + "?name=" + name));
+
+            }
+            ViewBag.UserRoleRel = _db.Role.Get(orderBy: i => i.OrderByDescending(k => k.RoleId)).ToList();
+            return await Task.FromResult(View());
+        }
+
+
+        public async Task<IActionResult> EditRole(int id, string name = null)
+        {
+            ViewBag.name = name;
+            ViewBag.UserRoleRel = _db.Role.Get(orderBy: i => i.OrderByDescending(k => k.RoleId)).ToList();
+            return await Task.FromResult(View(_db.UserRoleRel.GetById(id)));
+        }
+        [HttpPost]
+        public async Task<IActionResult> EditRole(TblUserRoleRel addRole, string name = null)
+        {
+            ViewBag.name = name;
+            if (ModelState.IsValid)
+            {
+                _db.UserRoleRel.Update(addRole);
+                _db.Save();
+                return await Task.FromResult(Redirect("/Admin/User/Index/" + addRole.UserId + "?name=" + name));
+            }
+            ViewBag.UserRoleRel = _db.Role.Get(orderBy: i => i.OrderByDescending(k => k.RoleId)).ToList();
+            return await Task.FromResult(View());
         }
     }
 }
