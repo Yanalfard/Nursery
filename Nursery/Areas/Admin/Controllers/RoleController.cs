@@ -1,6 +1,7 @@
 ﻿using DataLayer.Models;
 using DataLayer.ViewModels;
 using Microsoft.AspNetCore.Mvc;
+using Nursery.Utilities;
 using Services.Services;
 using System;
 using System.Collections.Generic;
@@ -13,6 +14,12 @@ namespace Nursery.Areas.Admin.Controllers
     public class RoleController : Controller
     {
         private Core _db = new Core();
+        TblUser SelectUser()
+        {
+            int userId = Convert.ToInt32(User.Claims.First().Value);
+            TblUser selectUser = _db.User.GetById(userId);
+            return selectUser;
+        }
         public async Task<IActionResult> Index(int id = 0, string name = null)
         {
             try
@@ -87,6 +94,16 @@ namespace Nursery.Areas.Admin.Controllers
                         };
                         _db.Role.Add(addRole);
                         _db.Save();
+                        #region Add Log
+                        _db.UserLog.Add(new TblUserLog()
+                        {
+                            Text = LogRepo.AddRole(SelectUser().IdentificationNo, addRole.Name.ToString()),
+                            UserId = SelectUser().UserId,
+                            Type = 1,
+                            DateCreated = DateTime.Now
+                        });
+                        _db.Save();
+                        #endregion
                         return await Task.FromResult(Redirect("/Admin/Role/List?addRole=true"));
                     }
                 }
@@ -97,6 +114,7 @@ namespace Nursery.Areas.Admin.Controllers
                 return await Task.FromResult(Redirect("404.html"));
             }
         }
+
         public async Task<IActionResult> Edit(int id)
         {
             try
@@ -123,7 +141,7 @@ namespace Nursery.Areas.Admin.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    if (_db.Role.Any(i => i.Name == role.Name.Trim() && i.RoleId != role.RoleId))
+                    if (_db.Role.Any(i => i.RoleId != role.RoleId && i.Name == role.Name.Trim()))
                     {
                         ModelState.AddModelError("Name", "نام شیفت تکراری می باشد");
                     }
@@ -136,6 +154,16 @@ namespace Nursery.Areas.Admin.Controllers
                             selectedRole.Title = role.Title.Trim();
                             _db.Role.Update(selectedRole);
                             _db.Save();
+                            #region Add Log
+                            _db.UserLog.Add(new TblUserLog()
+                            {
+                                Text = LogRepo.EditRole(SelectUser().IdentificationNo, selectedRole.Name.ToString()),
+                                UserId = SelectUser().UserId,
+                                Type = 3,
+                                DateCreated = DateTime.Now
+                            });
+                            _db.Save();
+                            #endregion
                             return await Task.FromResult(Redirect("/Admin/Role/List?editRole=true"));
                         }
                     }
@@ -147,6 +175,77 @@ namespace Nursery.Areas.Admin.Controllers
                 return await Task.FromResult(Redirect("404.html"));
             }
 
+        }
+
+
+        public async Task<IActionResult> AddPage(int id, string name = null)
+        {
+            ViewBag.name = name;
+            ViewBag.RolePageRel = _db.Page.Get(i => i.IsDeleted == false, orderBy: i => i.OrderByDescending(k => k.PageId)).ToList();
+            return await Task.FromResult(View(new TblRolePageRel()
+            {
+                RoleId = id
+            }));
+        }
+        [HttpPost]
+        public async Task<IActionResult> AddPageAsync(TblRolePageRel addPage, string name = null)
+        {
+            ViewBag.name = name;
+            if (ModelState.IsValid)
+            {
+                _db.RolePageRel.Add(addPage);
+                _db.Save();
+                #region Add Log
+                TblRole selectedRoleEdit = _db.Role.GetById(addPage.RoleId);
+                TblPage selectedPageEdit = _db.Page.GetById(addPage.PageId);
+                _db.UserLog.Add(new TblUserLog()
+                {
+                    Text = LogRepo.AddRolePageRel(SelectUser().IdentificationNo, selectedRoleEdit.Name.ToString(), selectedPageEdit.Name.ToString()),
+                    UserId = SelectUser().UserId,
+                    Type = 1,
+                    DateCreated = DateTime.Now
+                });
+                _db.Save();
+                #endregion
+                return await Task.FromResult(Redirect("/Admin/Role/Index/" + addPage.RoleId + "?name=" + name));
+
+            }
+            ViewBag.RolePageRel = _db.Page.Get(i => i.IsDeleted == false, orderBy: i => i.OrderByDescending(k => k.PageId)).ToList();
+            return await Task.FromResult(View());
+        }
+
+
+        public async Task<IActionResult> EditPage(int id, string name = null)
+        {
+            ViewBag.name = name;
+            ViewBag.RolePageRel = _db.Page.Get(i => i.IsDeleted == false, orderBy: i => i.OrderByDescending(k => k.PageId)).ToList();
+            return await Task.FromResult(View(_db.RolePageRel.GetById(id)));
+        }
+        [HttpPost]
+        public async Task<IActionResult> EditPageAsync(TblRolePageRel editPage, string name = null)
+        {
+            ViewBag.name = name;
+            if (ModelState.IsValid)
+            {
+                _db.RolePageRel.Update(editPage);
+                _db.Save();
+                #region Add Log
+                TblRole selectedRoleEdit = _db.Role.GetById(editPage.RoleId);
+                TblPage selectedPageEdit = _db.Page.GetById(editPage.PageId);
+                _db.UserLog.Add(new TblUserLog()
+                {
+                    Text = LogRepo.EditRolePageRel(SelectUser().IdentificationNo, selectedRoleEdit.Name.ToString(), selectedPageEdit.Name.ToString()),
+                    UserId = SelectUser().UserId,
+                    Type = 3,
+                    DateCreated = DateTime.Now
+                });
+                _db.Save();
+                #endregion
+                return await Task.FromResult(Redirect("/Admin/Role/Index/" + editPage.RoleId + "?name=" + name));
+
+            }
+            ViewBag.RolePageRel = _db.Page.Get(i => i.IsDeleted == false, orderBy: i => i.OrderByDescending(k => k.PageId)).ToList();
+            return await Task.FromResult(View());
         }
     }
 }

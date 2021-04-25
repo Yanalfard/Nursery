@@ -65,15 +65,23 @@
         <td>@item.Name</td>
         <td><bdi>@item.TellNo</bdi></td>
         <td>@item.DateCreated.DateToShamsi()</td>
-        <td>@item.TblUserLog.SingleOrDefault()</td>
+        <td>
+
+            @foreach (var j in item.TblUserLog.OrderByDescending(i=>i.DateCreated))
+            {
+@j.DateCreated.Value.AllToShamsi()
+    break;
+                }
+
+
+        </td>
         @*<td>ادمین</td>*@
         <td class="actions">
             <a href="" class="btn-icon round text-4" uk-icon="icon:ellipsis-h;ratio:.72"></a>
             <div class="dropdown" uk-drop="mode: click;offset:4">
                 <ul class="dropdown-list">
                     <li>
-                        <a
-                           asp-area="Admin"
+                        <a asp-area="Admin"
                            asp-controller="User"
                            asp-action="Index"
                            asp-route-id="@item.UserId"
@@ -98,8 +106,7 @@
                 </ul>
             </div>
         </td>
-    </tr>
-}
+    </tr>}
 
             </tbody>
         </table>
@@ -115,35 +122,29 @@
                     int notpage = 0; }
                 @if (pageShow > 1)
                 {
-    <li><a onclick="showOtherPage(@(pageShow==0?1:pageShow-1))"><span uk-pagination-previous></span></a></li>
-}
+    <li><a onclick="showOtherPage(@(pageShow==0?1:pageShow-1))"><span uk-pagination-previous></span></a></li>}
                 @if (pageShow > 3)
                 {
-    <li><a onclick="showOtherPage(1)">1</a></li>
-}
+    <li><a onclick="showOtherPage(1)">1</a></li>}
                 @for (int i = 1; i <= pageCount; i++)
                 {
     @if (i >= minPage && i <= maxPage)
     {
-<li><a onclick="showOtherPage(@(i))" class="@(pageShow==i?"uk-active":"")">@i</a></li>
- notpage = 0;
-}
-else
-{
-if (notpage == 0)
-{
-<li class="uk-disabled"><span>...</span></li>
-notpage++;
-}
-}}
+<li><a onclick="showOtherPage(@(i))" class="@(pageShow==i?"uk-active":"")">@i</a></li> notpage = 0;
+                }
+                else
+                {
+                    if (notpage == 0)
+                    {
+<li class="uk-disabled"><span>...</span></li>notpage++;
+                    }
+                }}
                 @if (pageShow <= pageCount - 3)
                 {
-    <li><a onclick="showOtherPage(@(pageCount))">@pageCount</a></li>
-}
+    <li><a onclick="showOtherPage(@(pageCount))">@pageCount</a></li>}
                 @if (pageShow < pageCount)
                 {
-    <li><a onclick="showOtherPage(@(pageShow==0?2:pageShow+1))"><span uk-pagination-next></span></a></li>
-}
+    <li><a onclick="showOtherPage(@(pageShow==0?2:pageShow+1))"><span uk-pagination-next></span></a></li>}
 
             </ul>
         </div>
@@ -163,15 +164,13 @@ notpage++;
     {
 <script>
     notify('کاربر مورد نظر ویرایش شد', 'success');
-</script>
-}
+</script>}
 
     @if (Context.Request.Query["addUser"].ToString() == "true")
     {
 <script>
     notify('کاربر جدید اضافه شد', 'success');
-</script>
-}
+</script>}
     <script>
         function showOtherPage(id) {
             $('#pageId').val(id);

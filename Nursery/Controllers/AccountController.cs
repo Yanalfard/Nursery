@@ -9,6 +9,7 @@ using DataLayer.Models;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication;
+using Nursery.Utilities;
 
 namespace Nursery.Controllers
 {
@@ -23,6 +24,10 @@ namespace Nursery.Controllers
         [Route("Login")]
         public async Task<IActionResult> Login()
         {
+            //if (User.Identity.IsAuthenticated)
+            //{
+            //    return Redirect("/");
+            //}
             return await Task.FromResult(View());
         }
         [Route("Login")]
@@ -41,14 +46,16 @@ namespace Nursery.Controllers
                     string password = PasswordHelper.EncodePasswordMd5(login.Password);
                     if (db.User.Get().Any(i => i.IdentificationNo == login.IdentificationNo && i.Password == password))
                     {
-                        TblUser user = db.User.Get().FirstOrDefault(i => i.TellNo == login.IdentificationNo);
+                        TblUser user = db.User.Get().SingleOrDefault(i => i.IdentificationNo == login.IdentificationNo);
                         var claims = new List<Claim>()
                     {
-                        new Claim(ClaimTypes.NameIdentifier,user.IdentificationNo.ToString()),
-                        new Claim(ClaimTypes.Name,user.TellNo),
+                        //new Claim(ClaimTypes.NameIdentifier,user.UserId.ToString()),
+                        //new Claim(ClaimTypes.Name,user.IdentificationNo)
+                        new Claim(ClaimTypes.NameIdentifier,user.UserId.ToString()),
+                        new Claim(ClaimTypes.Name,user.IdentificationNo),
                         //new Claim(ClaimTypes.Role,db.Role.GetById(user.RoleId).Name.Trim()),
-                        new Claim(ClaimTypes.Role,db.UserRoleRel.GetById(user.UserId).Role.Name.Trim()),
-                        new Claim(ClaimTypes.Role,db.RolePageRel.GetById(user.UserId).Role.Name.Trim()),
+                        new Claim(ClaimTypes.Email,user.IdentificationNo.Trim()),
+
                     };
                         var identity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
                         var principal = new ClaimsPrincipal(identity);
@@ -59,6 +66,17 @@ namespace Nursery.Controllers
                         };
                         await HttpContext.SignInAsync(principal, properties);
                         ViewBag.IsSuccess = true;
+
+                        #region Add Log
+                        db.UserLog.Add(new TblUserLog()
+                        {
+                            Text = LogRepo.UserLogin(user.IdentificationNo),
+                            UserId = user.UserId,
+                            Type = 1,
+                            DateCreated = DateTime.Now
+                        });
+                        db.Save();
+                        #endregion
                         return Redirect(ReturnUrl);
                     }
                     else

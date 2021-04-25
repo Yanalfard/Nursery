@@ -162,7 +162,7 @@
         function deleteKid(id) {
             $.get('/Admin/Kid/Delete/' + id, function (result) {
                 if (result == "true") {
-                    $('#kidId_' + id).addClass('text-danger');
+                    $('#kidId_' + id).addClass('uk-text-danger');
                     $("#kidId_" + id).hide('slow');
                 }
             });

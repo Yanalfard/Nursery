@@ -23,13 +23,14 @@ namespace Nursery.Utilities
             if (context.HttpContext.User.Identity.IsAuthenticated)
             {
                 string userName = context.HttpContext.User.Identity.Name;
-                TblUser selectUser = db.User.Get().SingleOrDefault(i => i.TellNo == userName);
-                List<string> check = _permissionId.Split(',').ToList();
-                //string name = selectUser.Role.Name;
-                //if (!check.Contains(name))
-                //{
-                //    context.Result = new RedirectResult("/Login");
-                //}
+                TblUser selectUser = db.User.Get().SingleOrDefault(i => i.IdentificationNo == userName);
+               // List<string> check = _permissionId.Split(',').ToList();
+                string check = _permissionId;
+                bool name = selectUser.IsAdmin;
+                if (!name)
+                {
+                    context.Result = new RedirectResult("/Login");
+                }
             }
             else
             {

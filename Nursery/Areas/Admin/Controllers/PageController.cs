@@ -1,6 +1,7 @@
 ﻿using DataLayer.Models;
 using DataLayer.ViewModels;
 using Microsoft.AspNetCore.Mvc;
+using Nursery.Utilities;
 using Services.Services;
 using System;
 using System.Collections.Generic;
@@ -12,6 +13,12 @@ namespace Nursery.Areas.Admin.Controllers
     public class PageController : Controller
     {
         private Core _db = new Core();
+        TblUser SelectUser()
+        {
+            int userId = Convert.ToInt32(User.Claims.First().Value);
+            TblUser selectUser = _db.User.GetById(userId);
+            return selectUser;
+        }
         public async Task<IActionResult> Index(int id = 0, string name = null)
         {
             try
@@ -80,6 +87,16 @@ namespace Nursery.Areas.Admin.Controllers
                         };
                         _db.Page.Add(addPage);
                         _db.Save();
+                        #region Add Log
+                        _db.UserLog.Add(new TblUserLog()
+                        {
+                            Text = LogRepo.AddPage(SelectUser().IdentificationNo, role.Name),
+                            UserId = SelectUser().UserId,
+                            Type = 1,
+                            DateCreated = DateTime.Now
+                        });
+                        _db.Save();
+                        #endregion
                         return await Task.FromResult(Redirect("/Admin/Page/List?addPage=true"));
                     }
                 }
@@ -127,6 +144,16 @@ namespace Nursery.Areas.Admin.Controllers
                             selectedPage.Name = role.Name.Trim();
                             _db.Page.Update(selectedPage);
                             _db.Save();
+                            #region Add Log
+                            _db.UserLog.Add(new TblUserLog()
+                            {
+                                Text = LogRepo.EditPage(SelectUser().IdentificationNo, role.Name),
+                                UserId = SelectUser().UserId,
+                                Type = 3,
+                                DateCreated = DateTime.Now
+                            });
+                            _db.Save();
+                            #endregion
                             return await Task.FromResult(Redirect("/Admin/Page/List?editPage=true"));
                         }
                     }

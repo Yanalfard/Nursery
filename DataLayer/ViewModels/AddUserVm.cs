@@ -37,5 +37,6 @@ namespace DataLayer.ViewModels
         [StringLength(500)]
         public string ImageUrl { get; set; }
         public bool? IsDeleted { get; set; }
+        public bool IsAdmin { get; set; }
     }
 }

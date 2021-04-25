@@ -256,7 +256,7 @@ else
 
 
 
-@foreach (var item in Model.TblUserLog)
+@foreach (var item in Model.TblUserLog.OrderByDescending(i=>i.DateCreated))
 {
 <div class="item @(colorByType(Convert.ToInt32(item.Type)))">
     <span class="time">@item.DateCreated.Value.AllToShamsi()</span>

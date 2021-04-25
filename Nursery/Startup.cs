@@ -65,9 +65,9 @@ namespace Nursery
             #region  404 error
             app.UseStatusCodePagesWithReExecute("/404.html");
             #endregion
+            app.UseAuthentication();
             app.UseMvcWithDefaultRoute();
             app.UseSession();
-            app.UseAuthentication();
             app.UseStaticFiles();
             app.UseHttpsRedirection();
             app.UseRouting();

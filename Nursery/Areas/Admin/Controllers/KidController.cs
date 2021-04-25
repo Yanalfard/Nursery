@@ -16,6 +16,13 @@ namespace Nursery.Areas.Admin.Controllers
     public class KidController : Controller
     {
         private Core _db = new Core();
+
+        TblUser SelectUser()
+        {
+            int userId = Convert.ToInt32(User.Claims.First().Value);
+            TblUser selectUser = _db.User.GetById(userId);
+            return selectUser;
+        }
         public IActionResult Index()
         {
            var a = _db.Kid.Get((i) => i.KidId == 0);
@@ -60,10 +67,21 @@ namespace Nursery.Areas.Admin.Controllers
                 {
                     Name = kid.Name,
                     Nickname = kid.Nickname,
+                    IsDeleted=false,
 
                 };
                 _db.Kid.Add(addKid);
                 _db.Save();
+                #region Add Log
+                _db.UserLog.Add(new TblUserLog()
+                {
+                    Text = LogRepo.AddKid(SelectUser().IdentificationNo, addKid.Name.ToString(), addKid.Nickname.ToString()),
+                    UserId = SelectUser().UserId,
+                    Type = 1,
+                    DateCreated = DateTime.Now
+                });
+                _db.Save();
+                #endregion
                 return await Task.FromResult(Redirect("/Admin/Kid/List?addKid=true"));
             }
             return await Task.FromResult(View(kid));
@@ -89,6 +107,16 @@ namespace Nursery.Areas.Admin.Controllers
                 updateKid.Nickname = kid.Nickname;
                 _db.Kid.Update(updateKid);
                 _db.Save();
+                #region Add Log
+                _db.UserLog.Add(new TblUserLog()
+                {
+                    Text = LogRepo.EditKid(SelectUser().IdentificationNo, updateKid.Name.ToString(), updateKid.Nickname.ToString()),
+                    UserId = SelectUser().UserId,
+                    Type = 3,
+                    DateCreated = DateTime.Now
+                });
+                _db.Save();
+                #endregion
                 return await Task.FromResult(Redirect("/Admin/Kid/List?editKid=true"));
             }
             return await Task.FromResult(View(kid));
@@ -101,6 +129,16 @@ namespace Nursery.Areas.Admin.Controllers
                 selectedKid.IsDeleted = true;
                 _db.Kid.Update(selectedKid);
                 _db.Save();
+                #region Add Log
+                _db.UserLog.Add(new TblUserLog()
+                {
+                    Text = LogRepo.DeleteKid(SelectUser().IdentificationNo, selectedKid.Name.ToString(), selectedKid.Nickname.ToString()),
+                    UserId = SelectUser().UserId,
+                    Type = 2,
+                    DateCreated = DateTime.Now
+                });
+                _db.Save();
+                #endregion
                 return await Task.FromResult("true");
             }
             return await Task.FromResult("false");

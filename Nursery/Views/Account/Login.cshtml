@@ -19,6 +19,13 @@
                 <input class="entry" asp-for="Password" type="password">
                 <span class="text-danger" asp-validation-for="Password"></span>
             </div>
+            <div class="fg-col">
+                <label class="fg-label row text-3">
+                    مرا بخاطر بسپار
+                    <input class="uk-checkbox" asp-for="RememberMe" type="checkbox">
+                </label>
+                <span class="text-danger"></span>
+            </div>
         </div>
         <div class="form-footer uk-margin-auto-top">
             <button class="btn btn-primary">

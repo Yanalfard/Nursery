@@ -30,5 +30,7 @@ namespace DataLayer.ViewModels
         public string IdentificationNo { get; set; }
         [StringLength(500)]
         public string ImageUrl { get; set; }
+        public bool IsAdmin { get; set; }
+
     }
 }

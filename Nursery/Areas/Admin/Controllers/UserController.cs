@@ -8,11 +8,13 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace Nursery.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    [PermissionChecker("admin")]
     public class UserController : Controller
     {
         private Core _db = new Core();
@@ -55,6 +57,7 @@ namespace Nursery.Areas.Admin.Controllers
                     addUser.IsDeleted = false;
                     addUser.IdentificationNo = user.IdentificationNo;
                     addUser.DateCreated = DateTime.Now;
+                    addUser.IsAdmin = user.IsAdmin;
                     #region addImage
                     if (imageUrl != null && imageUrl.IsImage() && imageUrl.Length < 20485760)
                     {
@@ -75,6 +78,19 @@ namespace Nursery.Areas.Admin.Controllers
                     _db.User.Add(addUser);
                     _db.Save();
                     #endregion addToDataBase
+
+
+                    #region Add Log
+                    _db.UserLog.Add(new TblUserLog()
+                    {
+                        Text = LogRepo.AddUser(SelectUser().IdentificationNo, addUser.IdentificationNo.ToString()),
+                        UserId = SelectUser().UserId,
+                        Type = 1,
+                        DateCreated = DateTime.Now
+                    });
+                    _db.Save();
+                    #endregion
+
                     return await Task.FromResult(Redirect("/Admin/User/List?addUser=true"));
                 }
             }
@@ -112,6 +128,7 @@ namespace Nursery.Areas.Admin.Controllers
                     addUser.Name = user.Name;
                     addUser.TellNo = user.TellNo.Replace(" ", "");
                     addUser.IdentificationNo = user.IdentificationNo;
+                    addUser.IsAdmin = user.IsAdmin;
                     #region addImage
                     if (imageUrl != null && imageUrl.IsImage() && imageUrl.Length < 20485760)
                     {
@@ -140,6 +157,19 @@ namespace Nursery.Areas.Admin.Controllers
                     _db.User.Update(addUser);
                     _db.Save();
                     #endregion addToDataBase
+
+
+                    #region Add Log
+                    _db.UserLog.Add(new TblUserLog()
+                    {
+                        Text = LogRepo.EditUser(SelectUser().IdentificationNo, addUser.IdentificationNo.ToString()),
+                        UserId = SelectUser().UserId,
+                        Type = 3,
+                        DateCreated = DateTime.Now
+                    });
+                    _db.Save();
+                    #endregion
+
                     return await Task.FromResult(Redirect("/Admin/User/List?editUser=true"));
                 }
             }
@@ -147,7 +177,12 @@ namespace Nursery.Areas.Admin.Controllers
         }
         public async Task<IActionResult> List(int pageId = 1, string name = null, string tell = null, string identificationNo = null, string checkedDelete = null)
         {
-           // var userId = Convert.ToInt32(User.Claims.First().Value);
+            //var claimIdentity = this.User.Identity as ClaimsIdentity;
+            //IEnumerable<Claim> claims = claimIdentity.Claims;
+
+            //var userId = Convert.ToInt32(User.Claims.First().Value);
+            //var names = User.Identities.First().Name;
+            //var currentUserID = claimIdentity.FindFirst(ClaimTypes.Email).Value;
             ViewBag.name = name;
             ViewBag.tell = tell;
             ViewBag.identificationNo = identificationNo;
@@ -189,6 +224,16 @@ namespace Nursery.Areas.Admin.Controllers
                 selectedUserById.Password = PasswordHelper.EncodePasswordMd5(change.Password);
                 _db.User.Update(selectedUserById);
                 _db.Save();
+                #region Add Log
+                _db.UserLog.Add(new TblUserLog()
+                {
+                    Text = LogRepo.EditUserPassword(SelectUser().IdentificationNo, selectedUserById.IdentificationNo.ToString()),
+                    UserId = SelectUser().UserId,
+                    Type = 3,
+                    DateCreated = DateTime.Now
+                });
+                _db.Save();
+                #endregion
                 return await Task.FromResult(Redirect("/Admin/User/Index?id=" + change.UserId + "&changePassword=true"));
             }
             return await Task.FromResult(View(change));
@@ -206,6 +251,16 @@ namespace Nursery.Areas.Admin.Controllers
                 selectedUser.IsDeleted = true;
                 _db.User.Update(selectedUser);
                 _db.Save();
+                #region Add Log
+                _db.UserLog.Add(new TblUserLog()
+                {
+                    Text = LogRepo.DeleteUser(SelectUser().IdentificationNo, selectedUser.IdentificationNo.ToString()),
+                    UserId = SelectUser().UserId,
+                    Type = 2,
+                    DateCreated = DateTime.Now
+                });
+                _db.Save();
+                #endregion
                 return await Task.FromResult("true");
             }
             return await Task.FromResult("false");
@@ -221,10 +276,10 @@ namespace Nursery.Areas.Admin.Controllers
                 _db.UserRoleRel.Update(selectedUser);
                 _db.UserLog.Add(new TblUserLog()
                 {
-                    Text = LogRepo.DeleteUserRole("", selectedUser.UserRoleId.ToString(), selectedUser.User.IdentificationNo),
+                    Text = LogRepo.DeleteUserRole(SelectUser().IdentificationNo, selectedUser.UserRoleId.ToString(), selectedUser.User.IdentificationNo),
                     UserId = SelectUser().UserId,
-                    Type=2,
-                    DateCreated=DateTime.Now
+                    Type = 2,
+                    DateCreated = DateTime.Now
                 });
                 _db.Save();
                 return await Task.FromResult("true");
@@ -237,7 +292,7 @@ namespace Nursery.Areas.Admin.Controllers
         public async Task<IActionResult> AddRole(int id, string name = null)
         {
             ViewBag.name = name;
-            ViewBag.UserRoleRel = _db.Role.Get(orderBy: i => i.OrderByDescending(k => k.RoleId)).ToList();
+            ViewBag.UserRoleRel = _db.Role.Get(i => i.IsDeleted == false, orderBy: i => i.OrderByDescending(k => k.RoleId)).ToList();
             return await Task.FromResult(View(new TblUserRoleRel()
             {
                 UserId = id
@@ -251,10 +306,22 @@ namespace Nursery.Areas.Admin.Controllers
             {
                 _db.UserRoleRel.Add(addRole);
                 _db.Save();
+                #region Add Log
+                TblRole selectedRoleEdit = _db.Role.GetById(addRole.RoleId);
+                TblUser selectedUserEdit = _db.User.GetById(addRole.UserId);
+                _db.UserLog.Add(new TblUserLog()
+                {
+                    Text = LogRepo.AddUserRoleRel(SelectUser().IdentificationNo, selectedRoleEdit.Name.ToString(), selectedUserEdit.IdentificationNo.ToString()),
+                    UserId = SelectUser().UserId,
+                    Type = 1,
+                    DateCreated = DateTime.Now
+                });
+                _db.Save();
+                #endregion
                 return await Task.FromResult(Redirect("/Admin/User/Index/" + addRole.UserId + "?name=" + name));
 
             }
-            ViewBag.UserRoleRel = _db.Role.Get(orderBy: i => i.OrderByDescending(k => k.RoleId)).ToList();
+            ViewBag.UserRoleRel = _db.Role.Get(i => i.IsDeleted == false, orderBy: i => i.OrderByDescending(k => k.RoleId)).ToList();
             return await Task.FromResult(View());
         }
 
@@ -262,7 +329,7 @@ namespace Nursery.Areas.Admin.Controllers
         public async Task<IActionResult> EditRole(int id, string name = null)
         {
             ViewBag.name = name;
-            ViewBag.UserRoleRel = _db.Role.Get(orderBy: i => i.OrderByDescending(k => k.RoleId)).ToList();
+            ViewBag.UserRoleRel = _db.Role.Get(i => i.IsDeleted == false, orderBy: i => i.OrderByDescending(k => k.RoleId)).ToList();
             return await Task.FromResult(View(_db.UserRoleRel.GetById(id)));
         }
         [HttpPost]
@@ -273,9 +340,21 @@ namespace Nursery.Areas.Admin.Controllers
             {
                 _db.UserRoleRel.Update(addRole);
                 _db.Save();
+                #region Add Log
+                TblRole selectedRoleEdit = _db.Role.GetById(addRole.RoleId);
+                TblUser selectedUserEdit = _db.User.GetById(addRole.UserId);
+                _db.UserLog.Add(new TblUserLog()
+                {
+                    Text = LogRepo.EditUserRoleRel(SelectUser().IdentificationNo, selectedRoleEdit.Name.ToString(), selectedUserEdit.IdentificationNo.ToString()),
+                    UserId = SelectUser().UserId,
+                    Type = 3,
+                    DateCreated = DateTime.Now
+                });
+                _db.Save();
+                #endregion
                 return await Task.FromResult(Redirect("/Admin/User/Index/" + addRole.UserId + "?name=" + name));
             }
-            ViewBag.UserRoleRel = _db.Role.Get(orderBy: i => i.OrderByDescending(k => k.RoleId)).ToList();
+            ViewBag.UserRoleRel = _db.Role.Get(i => i.IsDeleted == false, orderBy: i => i.OrderByDescending(k => k.RoleId)).ToList();
             return await Task.FromResult(View());
         }
     }
