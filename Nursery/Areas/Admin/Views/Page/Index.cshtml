@@ -1,5 +1,6 @@
-﻿@{
-    ViewData["Title"] = "نام بخش";
+﻿@model TblPage
+@{
+    ViewData["Title"] = ViewData["name"];
     Layout = "~/Areas/Admin/Views/_AdminLayout.cshtml";
 }
 
@@ -9,23 +10,77 @@
             <div class="grid-160">
                 <div class="fg-col">
                     <label class="dl-label">نام بخش</label>
-                    <p class="dl-data">شیرخوارگاه</p>
+                    <p class="dl-data">@Model.Name</p>
                 </div>
             </div>
         </div>
         <div class="form-footer">
-            <a href="/" class="btn btn-primary">
+            <a  href="/Admin/Page/Edit/@Model.PageId" class="btn btn-primary">
                 <span>ویرایش</span>
                 <span uk-icon="pen-square"></span>
             </a>
-            <button class="btn btn-danger">
+            @*<button class="btn btn-danger">
                 <span>حذف</span>
                 <span uk-icon="trash"></span>
-            </button>
+            </button>*@
         </div>
     </div>
     <!-- FORMS -->
     <div class="form">
+        <div class="form-header" uk-sticky="offset: 72;cls-active: sticked;bottom: true">
+            <div class="rowr">
+                <h2 class="card-title">
+                    لیست فرم ها
+                </h2>
+                <a href="/Admin/Form" class="btn btn-primary uk-margin-auto-right">
+                    <span>اضافه</span>
+                    <span class="tiny" uk-icon="plus-square"></span>
+                </a>
+            </div>
+        </div>
+        <div class="form-body scrollh-container uk-padding-remove">
+            <table class="tbl tbl-striped" dir="rtl">
+                <thead>
+                    <tr>
+                        <th>کد</th>
+                        <th>نام</th>
+                        <th>توضیحات</th>
+                        <th>تاریخ</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>1</td>
+                        <td>فرم درخواست</td>
+                        <td><a href="#ModalDescription" uk-toggle>چند کلمه اول توضیحات...</a></td>
+                        <td>1400/01/01</td>
+                        <td class="actions">
+                            <a href="" class="btn-icon round text-4" uk-icon="icon:ellipsis-h;ratio:.72"></a>
+                            <div class="dropdown" uk-drop="mode: click;offset:4">
+                                <ul class="dropdown-list">
+                                    <li>
+                                        <a href="/Admin/Page/" class="rowr">
+                                            <span class="new">مشاهده</span>
+                                            <span class="small" uk-icon="eye"></span>
+                                        </a>
+                                    </li>
+                                    <!--فرم ها قابلیت ویرایش ندارن-->
+                                    <li>
+                                        <a href="" class="rowr btn-danger">
+                                            <span>حذف</span>
+                                            <span class="small" uk-icon="trash"></span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <!--<div class="form">
         <div class="form-header" uk-sticky="offset: 72;cls-active: sticked;bottom: true">
             <div class="rowr">
                 <h2 class="card-title">
@@ -79,9 +134,9 @@
                                             <span class="new">مشاهده</span>
                                             <span class="small" uk-icon="eye"></span>
                                         </a>
-                                    </li>
-                                    <!--فرم ها قابلیت ویرایش ندارن-->
-                                    <li>
+                                    </li>-->
+    <!--فرم ها قابلیت ویرایش ندارن-->
+    <!--<li>
                                         <a href="" class="rowr btn-danger">
                                             <span>حذف</span>
                                             <span class="small" uk-icon="trash"></span>
@@ -108,7 +163,7 @@
                 </ul>
             </div>
         </div>
-    </div>
+    </div>-->
 </div>
 
 <!-- Description Modal -->

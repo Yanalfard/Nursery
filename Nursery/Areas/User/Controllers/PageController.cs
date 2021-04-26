@@ -37,6 +37,8 @@ namespace Nursery.Areas.User.Controllers
             DFormVm formVm = new DFormVm
                 (0, "FORM TITLE", "FORM SUBTITLE", DateTime.Now, fields);
 
+            DFormVm form = new DFormVm();
+
 
             //List<TblRegex> validations = new List<TblRegex> {
             //    new TblRegex() {

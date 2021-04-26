@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 namespace Nursery.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    [PermissionChecker("admin")]
     public class RoleController : Controller
     {
         private Core _db = new Core();
@@ -246,6 +247,30 @@ namespace Nursery.Areas.Admin.Controllers
             }
             ViewBag.RolePageRel = _db.Page.Get(i => i.IsDeleted == false, orderBy: i => i.OrderByDescending(k => k.PageId)).ToList();
             return await Task.FromResult(View());
+        }
+
+
+        public async Task<string> DeleteRolePageRelId(int id)
+        {
+            TblRolePageRel selectedUser = _db.RolePageRel.GetById(id);
+            if (selectedUser != null)
+            {
+                selectedUser.IsDeleted = true;
+                _db.RolePageRel.Update(selectedUser);
+                TblRole selectedRoleEdit = _db.Role.GetById(selectedUser.RoleId);
+                TblPage selectedPageEdit = _db.Page.GetById(selectedUser.PageId);
+                _db.UserLog.Add(new TblUserLog()
+                {
+                    Text = LogRepo.DeleteRolePageRel(SelectUser().IdentificationNo, selectedRoleEdit.Name.ToString(), selectedPageEdit.Name.ToString()),
+                    UserId = SelectUser().UserId,
+                    Type = 2,
+                    DateCreated = DateTime.Now
+                });
+                _db.Save();
+                return await Task.FromResult("true");
+            }
+            return await Task.FromResult("false");
+
         }
     }
 }

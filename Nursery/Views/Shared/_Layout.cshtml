@@ -69,6 +69,15 @@
         </label>
     </footer>
 
+    <link href="~/css/Load.css" rel="stylesheet" />
+
+    <!-- #Loadinh -->
+    <div id="overlay">
+        <div class="cv-spinner">
+            <span class="spinner"></span>
+        </div>
+    </div>
+    <!-- Modal Reply -->
     <!-- #region addJquery -->
 
     <script src="~/Jquery/jquery-3.4.1.min.js"></script>
@@ -93,13 +102,11 @@
 
 
     <script>
-        function LoadingRun(form) {
-            if (!$(form).valid()) return;
+        function LoadingRun() {
             $("#overlay").fadeIn(300);
         }
-        function LoadingEnd(form) {
+        function LoadingEnd() {
             $("#overlay").fadeOut(300);
-            $(form)[0].reset();
         }
     </script>
 </body>

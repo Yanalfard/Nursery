@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 namespace Nursery.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    [PermissionChecker("admin")]
     public class PageController : Controller
     {
         private Core _db = new Core();

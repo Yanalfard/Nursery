@@ -91,5 +91,19 @@ namespace Nursery.Controllers
                 return await Task.FromResult(Redirect("404.html"));
             }
         }
+
+        [Route("LogOut")]
+        public async Task<IActionResult> LogOut()
+        {
+            try
+            {
+                await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+                return await Task.FromResult(Redirect("/"));
+            }
+            catch
+            {
+                return await Task.FromResult(Redirect("404.html"));
+            }
+        }
     }
 }

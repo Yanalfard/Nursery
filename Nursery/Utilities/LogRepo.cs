@@ -10,7 +10,7 @@ namespace Nursery.Utilities
         public static string UserLogin(string username)
         {
             return
-                $"User: {username} logged";
+                $"کاربر: {username} وارد شد";
         }
 
         public static string DeleteUserRole(string username, string userRoleId, string identificationNo)
@@ -44,20 +44,21 @@ namespace Nursery.Utilities
             return
                 $"User: {username} Edit Password User: {AdduserName}";
         }
-        public static string DeleteUser(string username, string AdduserName)
+        public static string DeleteUser(string usernameAdmin, string deleteUsername)
         {
             return
-                $"User: {username} Delete User: {AdduserName}";
+                $"کاربر: {usernameAdmin} کاربر : {deleteUsername} را حذف کرد";
         } 
-        public static string AddUserRoleRel(string username, string roleName,string roleusername)
+        public static string AddUserRoleRel(string usernameAdmin, string roleName,string roleusername)
         {
             return
-                 $"User: {username} Add Role : {roleName} in shift From Identification :{roleusername}";
+                $"کاربر :{usernameAdmin} شیفت{roleName} رو به کاربر {roleusername}  اضافه کرد";
+
         }
-        public static string EditUserRoleRel(string username, string roleName,string roleusername)
+        public static string EditUserRoleRel(string usernameAdmin, string roleName,string roleusername)
         {
             return
-                 $"User: {username} Edit Role : {roleName} in shift From Identification :{roleusername}";
+                 $"کاربر :{usernameAdmin} شیفت{roleName} رو به کاربر {roleusername}  ویرایش کرد";
         }
 
         public static string AddKid(string username, string createUser, string nickname)

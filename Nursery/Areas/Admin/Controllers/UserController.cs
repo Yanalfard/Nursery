@@ -27,8 +27,16 @@ namespace Nursery.Areas.Admin.Controllers
         }
         public async Task<IActionResult> Index(int id = 0, string name = null)
         {
-            ViewData["name"] = name;
-            return await Task.FromResult(View(_db.User.GetById(id)));
+            try
+            {
+                ViewData["name"] = name;
+                return await Task.FromResult(View(_db.User.GetById(id)));
+            }
+            catch
+            {
+                return await Task.FromResult(Redirect("404.html"));
+            }
+
         }
 
         public async Task<IActionResult> Add()

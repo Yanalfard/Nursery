@@ -64,7 +64,7 @@
                 <tbody>
                     @foreach (var item in Model.TblRolePageRel.Where(i => i.IsDeleted == false))
                     {
-                        <tr>
+                        <tr id="rolePageRelId_@item.RolePageRelId">
                             <td>@(Model.TblRolePageRel.Where(i => i.IsDeleted == false).ToList().IndexOf(item)+1)</td>
                             <td>@item.Page.Name</td>
                             <td class="actions">
@@ -83,9 +83,7 @@
                                             </a>
                                         </li>
                                         <li>
-                                            <a class="rowr btn-danger"
-                                               popconfirm="title:hello;description:ola"
-                                               popok="alert('oi')">
+                                            <a class="rowr btn-danger" popconfirm="description:آیا از حذف  اطمینان دارید؟;direction:rb;type:danger;title:هشدار;okText:حذف;" popok="deleteRolePageRelId(@item.RolePageRelId)">
                                                 <span>حذف</span>
                                                 <span class="small" uk-icon="trash"></span>
                                             </a>
@@ -195,5 +193,17 @@
             })
         });
     </script>
+
+    <script>
+        function deleteRolePageRelId(id) {
+            $.get('/Admin/Role/DeleteRolePageRelId/' + id, function (result) {
+                if (result == "true") {
+                    $('#rolePageRelId_' + id).addClass('uk-text-danger');
+                    $("#rolePageRelId_" + id).hide('slow');
+                }
+            });
+        }
+    </script>
+
 
 }

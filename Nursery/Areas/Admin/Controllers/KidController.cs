@@ -13,6 +13,7 @@ using System.Threading.Tasks;
 namespace Nursery.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    [PermissionChecker("admin")]
     public class KidController : Controller
     {
         private Core _db = new Core();

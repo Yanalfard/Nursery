@@ -24,6 +24,7 @@ namespace Services.Services
         private MainRepo<TblUserLog> _userLog;
         private MainRepo<TblUserRoleRel> _userRoleRel;
         private MainRepo<TblValue> _value;
+        private MainRepo<TblFieldRegexRel> _fieldRegexRel;
 
         public MainRepo<TblConfig> Config => _config ??= new MainRepo<TblConfig>(_context);
         public MainRepo<TblField> Field => _field ??= new MainRepo<TblField>(_context);
@@ -39,6 +40,7 @@ namespace Services.Services
         public MainRepo<TblUserLog> UserLog => _userLog ??= new MainRepo<TblUserLog>(_context);
         public MainRepo<TblUserRoleRel> UserRoleRel => _userRoleRel ??= new MainRepo<TblUserRoleRel>(_context);
         public MainRepo<TblValue> Value => _value ??= new MainRepo<TblValue>(_context);
+        public MainRepo<TblFieldRegexRel> FieldRegexRel => _fieldRegexRel ??= new MainRepo<TblFieldRegexRel>(_context);
         public virtual void Save() => _context.SaveChanges();
 
 
