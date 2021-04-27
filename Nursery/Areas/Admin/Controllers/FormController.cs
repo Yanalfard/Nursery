@@ -25,13 +25,14 @@ namespace Nursery.Areas.Admin.Controllers
 
         List<DRegexVm> options = new List<DRegexVm>();
 
-        public IActionResult Index()
+        public IActionResult Index(int? id = 0)
         {
             List<TblRegex> list = _db.Regex.Get(i => i.IsDeleted == false).ToList();
             foreach (var item in list)
                 options.Add(new DRegexVm(item));
 
             ViewData["Options"] = options.ToList();
+            ViewData["pageId"] = id;
             return View();
         }
 
@@ -44,7 +45,7 @@ namespace Nursery.Areas.Admin.Controllers
         //}
 
         [HttpPost]
-        public IActionResult Create([FromBody] DFormVm dform)
+        public IActionResult Create([FromBody] DFormVm dform,int pageId)
         {
             TblForm form = new TblForm();
             form.Name = dform.Name;

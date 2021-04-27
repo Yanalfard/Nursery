@@ -1,4 +1,4 @@
-﻿
+﻿@model TblUser
 @{
     ViewData["Title"] = "Index";
     Layout = "~/Areas/User/Views/_UserLayout.cshtml";
@@ -10,13 +10,13 @@
         <div class="icon-list-item">
             <img src="~/st/png/blue.png" class="round" width="42" height="42" alt="" />
             <div class="col">
-                <label>صدرا محمدی</label>
-                <span>برنامه نویس</span>
+                <label>@Model.Name</label>
+                <span>@Model.IdentificationNo</span>
             </div>
             <div class="row gap-3 uk-margin-auto-right">
                 <a href="/User/Home/Profile" class="btn-icon small"
                    uk-tooltip="پروفایل" uk-icon="user"></a>
-                <a href="" class="btn-icon btn-danger small"
+                <a href="/Logout" class="btn-icon btn-danger small"
                    uk-tooltip="خروج از حساب" uk-icon="sign-out-alt"></a>
             </div>
         </div>
@@ -55,12 +55,16 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>1</td>
-                            <td>بخش شیرخوارگاه</td>
-                            <td>12:45</td>
-                            <td>16:20</td>
-                        </tr>
+                        @foreach (var item in Model.TblUserRoleRel.Where(i => i.IsDeleted == false))
+                        {
+                            <tr>
+                                <td>@(Model.TblUserRoleRel.Where(i => i.IsDeleted == false).ToList().IndexOf(item)+1)</td>
+                                <td>@item.Role.Name</td>
+                                <td>@item.ShiftStart.TimeOfDay</td>
+                                <td>@item.ShiftEnd.TimeOfDay</td>
+                            </tr>
+                        }
+
                     </tbody>
                 </table>
             </div>
@@ -78,8 +82,18 @@
 </div>
 
 <div class="forms">
+    @foreach (var item in Model.TblUserRoleRel)
+    {
+        @foreach (var j in item.Role.TblRolePageRel)
+        {
+            @foreach (var k in j.Page.TblPageFormRel)
+            {
+                <partial name="_FormBlock" model="k.Form" />
+            }
+        }
+    }
+    @*<partial name="_FormBlock" />
     <partial name="_FormBlock" />
     <partial name="_FormBlock" />
-    <partial name="_FormBlock" />
-    <partial name="_FormBlock" />
+    <partial name="_FormBlock" />*@
 </div>
