@@ -575,15 +575,14 @@
     </aside>
     <div class="toolbox-placeholder" role="none"></div>
     <div class="prototype form">
-        <input type="hidden" name="pageId" id="pageId" value="@ViewData["pageId"]" />
         <div class="form-header col">
             <div class="fg-col uk-margin-small-bottom">
                 <label class="fg-label">نام فرم</label>
-                <input type="text" id="txtFormName" placeholder="فرم جدید..." class="entry" value="" />
+                <input type="text" id="txtFormName" placeholder="فرم جدید..." class="entry" value="" required />
             </div>
             <div class="fg-col">
                 <label class="fg-label">توضیحات</label>
-                <textarea class="entry" id="txtDecsription" placeholder="..."></textarea>
+                <textarea class="entry" id="txtDecsription" placeholder="..." required></textarea>
             </div>
         </div>
         <div class="form-body gap-3"
@@ -593,7 +592,8 @@
         </div>
         <div class="form-footer">
             <div class="actions">
-                <button id="btn-finish" class="btn btn-primary">
+                <button id="btn-finish" class="btn btn-primary" onclick="addForm()">
+
                     <span>تایید</span>
                 </button>
             </div>
@@ -603,6 +603,18 @@
 
 @section Scripts{
 
+
+
+    <script>
+        function addForm() {
+            var delay = 2000;
+            setTimeout(function () {
+                window.location.href = '/Admin/Page/Index/@ViewBag.pageId?name=@ViewBag.name';
+            }, delay);
+        }
+
+
+    </script>
     <script>
         require(['config'], function () {
             require(['builder'], function () {

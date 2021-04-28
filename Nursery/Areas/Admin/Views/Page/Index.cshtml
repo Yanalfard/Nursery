@@ -15,14 +15,14 @@
             </div>
         </div>
         <div class="form-footer">
-            <a  href="/Admin/Page/Edit/@Model.PageId" class="btn btn-primary">
+            <a href="/Admin/Page/Edit/@Model.PageId" class="btn btn-primary">
                 <span>ویرایش</span>
                 <span uk-icon="pen-square"></span>
             </a>
             @*<button class="btn btn-danger">
-                <span>حذف</span>
-                <span uk-icon="trash"></span>
-            </button>*@
+                    <span>حذف</span>
+                    <span uk-icon="trash"></span>
+                </button>*@
         </div>
     </div>
     <!-- FORMS -->
@@ -32,7 +32,11 @@
                 <h2 class="card-title">
                     لیست فرم ها
                 </h2>
-                <a href="/Admin/Form/Index/@Model.PageId" class="btn btn-primary uk-margin-auto-right">
+                <a asp-area="admin"
+                   asp-controller="Form"
+                   asp-action="Index"
+                   asp-route-id="@Model.PageId"
+                   asp-route-name="@Model.Name" class="btn btn-primary uk-margin-auto-right">
                     <span>اضافه</span>
                     <span class="tiny" uk-icon="plus-square"></span>
                 </a>
@@ -50,32 +54,59 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td>1</td>
-                        <td>فرم درخواست</td>
-                        <td><a href="#ModalDescription" uk-toggle>چند کلمه اول توضیحات...</a></td>
-                        <td>1400/01/01</td>
-                        <td class="actions">
-                            <a href="" class="btn-icon round text-4" uk-icon="icon:ellipsis-h;ratio:.72"></a>
-                            <div class="dropdown" uk-drop="mode: click;offset:4">
-                                <ul class="dropdown-list">
-                                    <li>
-                                        <a href="/Admin/Page/" class="rowr">
-                                            <span class="new">مشاهده</span>
-                                            <span class="small" uk-icon="eye"></span>
-                                        </a>
-                                    </li>
-                                    <!--فرم ها قابلیت ویرایش ندارن-->
-                                    <li>
-                                        <a href="" class="rowr btn-danger">
-                                            <span>حذف</span>
-                                            <span class="small" uk-icon="trash"></span>
-                                        </a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </td>
-                    </tr>
+
+                    @foreach (var item in Model.TblPageFormRel.Where(i => i.IsDeleted == false).OrderByDescending(i => i.FormId))
+                    {
+                        <tr id="pageFormRel_@item.PageFormRelId">
+                            <td>@(Model.TblPageFormRel.Where(i => i.IsDeleted == false).OrderByDescending(i => i.FormId).ToList().IndexOf(item)+1)</td>
+                            <td>@item.Form.Name</td>
+                            <td>
+                                <a href="#ModalDescription_@item.PageFormRelId"  class="btn-icon round text-4" uk-icon="icon:eye;ratio:.5" uk-toggle></a>
+
+                                <!-- Description Modal -->
+                                <div id="ModalDescription_@item.PageFormRelId" uk-modal>
+                                    <div class="uk-modal-dialog form">
+                                        <div class="form-header">
+                                            <h3>توضیحات</h3>
+                                        </div>
+                                        <div class="form-body">
+                                            <p>
+                                                @item.Form.Body
+                                            </p>
+                                        </div>
+                                        <div class="form-footer">
+                                            <div class="actions">
+                                                <button class="btn btn-primary uk-modal-close"><span>بستن</span></button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>@item.Form.DateCreated.Value.AllToShamsi()</td>
+                            <td class="actions">
+                                <a href="" class="btn-icon round text-4" uk-icon="icon:ellipsis-h;ratio:.72"></a>
+                                <div class="dropdown" uk-drop="mode: click;offset:4">
+
+                                    <ul class="dropdown-list">
+                                        <li>
+                                            <a href="/Admin/Page/" class="rowr">
+                                                <span class="new">مشاهده</span>
+                                                <span class="small" uk-icon="eye"></span>
+                                            </a>
+                                        </li>
+                                        <!--فرم ها قابلیت ویرایش ندارن-->
+                                        <li>
+                                            <a class="rowr btn-danger" popconfirm="description:آیا از حذف  اطمینان دارید؟;direction:rt;type:danger;title:هشدار;okText:حذف;" popok="deletePageFormRel(@item.PageFormRelId)">
+                                                <span>حذف</span>
+                                                <span class="small" uk-icon="trash"></span>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </td>
+                        </tr>
+                    }
+
                 </tbody>
             </table>
         </div>
@@ -166,21 +197,33 @@
     </div>-->
 </div>
 
-<!-- Description Modal -->
-<div id="ModalDescription" uk-modal>
-    <div class="uk-modal-dialog form">
-        <div class="form-header">
-            <h3>توضیحات</h3>
-        </div>
-        <div class="form-body">
-            <p>
-                Laoreet ac, aliquam sit amet justo nunc tempor, metus vel placerat suscipit, orci nisl iaculis eros, a tincidunt nisi odio eget lorem nulla condimentum tempor mattis ut vitae feugiat augue cras ut metus a risus iaculis scelerisque eu ac ante fusce non varius purus aenean nec magna felis fusce vestibulum.
-            </p>
-        </div>
-        <div class="form-footer">
-            <div class="actions">
-                <button class="btn btn-primary uk-modal-close"><span>بستن</span></button>
-            </div>
-        </div>
-    </div>
-</div>
+
+
+
+@section Scripts{
+
+
+
+    <script>
+
+
+        function deletePageFormRel(id) {
+            $.get('/Admin/Page/DeletePageFormRel/' + id, function (result) {
+                if (result == "true") {
+                    $('#pageFormRel_' + id).addClass('uk-text-danger');
+                    $("#pageFormRel_" + id).hide('slow');
+                }
+            });
+        }
+
+    </script>
+
+    <script>
+        require(['config'], function () {
+            require(['confirm'], function () {
+
+            })
+        });
+    </script>
+
+}

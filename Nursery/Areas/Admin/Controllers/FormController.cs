@@ -25,14 +25,17 @@ namespace Nursery.Areas.Admin.Controllers
 
         List<DRegexVm> options = new List<DRegexVm>();
 
-        public IActionResult Index(int? id = 0)
+        public IActionResult Index(int id, string name = null)
         {
             List<TblRegex> list = _db.Regex.Get(i => i.IsDeleted == false).ToList();
             foreach (var item in list)
                 options.Add(new DRegexVm(item));
 
             ViewData["Options"] = options.ToList();
-            ViewData["pageId"] = id;
+            HttpContext.Session.SetComplexData("pageId", id);
+            HttpContext.Session.SetComplexData("name", name);
+            ViewBag.name = name;
+            ViewBag.pageId = id;
             return View();
         }
 
@@ -45,8 +48,11 @@ namespace Nursery.Areas.Admin.Controllers
         //}
 
         [HttpPost]
-        public IActionResult Create([FromBody] DFormVm dform,int pageId)
+        public IActionResult Create([FromBody] DFormVm dform)
         {
+
+            int pageId = HttpContext.Session.GetComplexData<int>("pageId");
+            string name = HttpContext.Session.GetComplexData<string>("name");
             TblForm form = new TblForm();
             form.Name = dform.Name;
             form.Body = dform.Body;
@@ -56,6 +62,14 @@ namespace Nursery.Areas.Admin.Controllers
             //form -> db
             // formid
             _db.Form.Add(form);
+            _db.Save();
+
+
+            TblPageFormRel addPage = new TblPageFormRel();
+            addPage.PageId = pageId;
+            addPage.FormId = form.FormId;
+            addPage.IndexNo = 1;
+            _db.PageFormRel.Add(addPage);
             _db.Save();
             dform.Fields.ForEach(dfield =>
             {
@@ -105,7 +119,18 @@ namespace Nursery.Areas.Admin.Controllers
 
             });
 
+            _db.UserLog.Add(new TblUserLog()
+            {
+                Text = LogRepo.AddPageFormRel(SelectUser().IdentificationNo, form.Name.ToString(), name),
+                UserId = SelectUser().UserId,
+                Type = 1,
+                DateCreated = DateTime.Now
+            });
+            _db.Save();
             return Ok("LOL");
+
+           // return await Task.FromResult(Redirect("/Admin/Page/Index/" + pageId + "?name=" + name));
+
         }
 
     }

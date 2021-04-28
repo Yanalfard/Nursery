@@ -106,5 +106,17 @@ namespace Nursery.Utilities
             return
                 $"کاربر {username} بخش  {namePage}  برای شیفت  {nameRole}  حذف کرد    ";
         }
+
+        public static string AddPageFormRel(string username, string nameForm, string namePage)
+        {
+            return
+                $"کاربر {username} بخش {namePage} برای فرم {nameForm}    تعریف کرد    ";
+        }
+        public static string DeletePageFormRel(string username, string nameForm, string namePage)
+        {
+            return
+                $"کاربر {username} بخش {namePage} برای فرم {nameForm}    حذف  کرد    ";
+        }
+
     }
 }

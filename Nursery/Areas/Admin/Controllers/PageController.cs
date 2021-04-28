@@ -168,5 +168,27 @@ namespace Nursery.Areas.Admin.Controllers
 
         }
 
+
+        public async Task<string> DeletePageFormRel(int id)
+        {
+            TblPageFormRel selectedPage = _db.PageFormRel.GetById(id);
+            if (selectedPage != null)
+            {
+                selectedPage.IsDeleted = true;
+                _db.PageFormRel.Update(selectedPage);
+                _db.UserLog.Add(new TblUserLog()
+                {
+                    Text = LogRepo.DeletePageFormRel(SelectUser().IdentificationNo, selectedPage.Form.Name.ToString(), selectedPage.Page.Name),
+                    UserId = SelectUser().UserId,
+                    Type = 2,
+                    DateCreated = DateTime.Now
+                });
+                _db.Save();
+                return await Task.FromResult("true");
+            }
+            return await Task.FromResult("false");
+
+        }
+
     }
 }
