@@ -1,4 +1,5 @@
-﻿@{
+﻿@model TblUser
+@{
     ViewData["Title"] = "نام بخش";
     Layout = "~/Areas/User/Views/_UserLayout.cshtml";
 }
@@ -15,15 +16,15 @@
             <div class="grid-160">
                 <div class="fg-col">
                     <label class="dl-label">نام و نام خانوادگی</label>
-                    <p class="dl-data">صدرا محمدی </p>
+                    <p class="dl-data">@Model.Name </p>
                 </div>
                 <div class="fg-col">
                     <label class="dl-label">شماره تلفن</label>
-                    <p class="dl-data">09355932930</p>
+                    <p class="dl-data">@Model.TellNo</p>
                 </div>
                 <div class="fg-col">
                     <label class="dl-label">کد ملی</label>
-                    <p class="dl-data">136 319 95 95</p>
+                    <p class="dl-data">@Model.IdentificationNo</p>
                 </div>
             </div>
         </div>
@@ -33,9 +34,9 @@
                 <span uk-icon="lock"></span>
             </a>
             @*<a href="/Admin/User/ChangePassword" class="btn btn-secondary">
-                <span>تغییر شماره تلفن</span>
-                <span uk-icon="phone"></span>
-            </a>*@
+                    <span>تغییر شماره تلفن</span>
+                    <span uk-icon="phone"></span>
+                </a>*@
         </div>
     </div>
 
@@ -60,31 +61,45 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td>1</td>
-                        <td>دسترسی به بخش شیرخوارگاه</td>
-                        <td>12:45</td>
-                        <td>16:20</td>
-                    </tr>
+
+
+                    @foreach (var item in Model.TblUserRoleRel.Where(i => i.IsDeleted == false))
+                    {
+                        <tr id="userRoleIdId_@item.UserRoleId">
+                            <td>@(Model.TblUserRoleRel.Where(i => i.IsDeleted == false).ToList().IndexOf(item)+1)</td>
+                            <td>دسترسی به بخش   @item.Role.Name </td>
+                            <td>@item.ShiftStart.TimeOfDay</td>
+                            <td>@item.ShiftEnd.TimeOfDay</td>
+                        </tr>
+                    }
+
+
                 </tbody>
             </table>
         </div>
 
-        <div class="form-footer">
-            <div class="uk-margin-auto-right">
-                <ul class="uk-pagination uk-margin-remove uk-margin-auto-right">
-                    <li><a href="#"><span uk-pagination-previous></span></a></li>
-                    <li><a href="#">1</a></li>
-                    <li class="uk-disabled"><span>...</span></li>
-                    <li><a href="#">5</a></li>
-                    <li><a href="#">6</a></li>
-                    <li class="uk-active"><span>7</span></li>
-                    <li><a href="#">8</a></li>
-                    <li><a href="#"><span uk-pagination-next></span></a></li>
-                </ul>
-            </div>
-        </div>
+
     </div>
 
     <!-- #endregion -->
 </div>
+
+
+@section Scripts{
+
+
+    @if (Context.Request.Query["ResetPass"].ToString() == "true")
+    {
+        <script>notify('رمز شما تغیر یافت', 'success');</script>
+    }
+
+
+
+
+    <script>
+        require(['config'], function () {
+            require(['confirm'], function () {
+
+            })
+        });</script>
+}

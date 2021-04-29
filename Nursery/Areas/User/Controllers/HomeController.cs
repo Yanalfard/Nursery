@@ -1,4 +1,5 @@
 ﻿using DataLayer.Models;
+using DataLayer.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Services.Services;
 using System;
@@ -24,14 +25,41 @@ namespace Nursery.Areas.User.Controllers
             return await Task.FromResult(View(SelectUser()));
         }
 
-        public IActionResult Profile()
+        public async Task<IActionResult> Profile()
         {
-            return View();
+            return await Task.FromResult(View(SelectUser()));
         }
-
-        public IActionResult ChangePassword()
+        public async Task<IActionResult> ChangePassword()
         {
-            return View();
+            return await Task.FromResult(View());
+        }    
+        [HttpPost]
+        public async Task<IActionResult> ChangePassword(ResetChangePasswordVm change)
+        {
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    TblUser updateUser = _db.User.GetById(SelectUser().UserId);
+                    string pass = PasswordHelper.EncodePasswordMd5(change.OldPassword);
+                    if (pass != updateUser.Password)
+                    {
+                        ModelState.AddModelError("OldPassword", "رمز قدیمی اشتباه است");
+                    }
+                    else
+                    {
+                        updateUser.Password = PasswordHelper.EncodePasswordMd5(change.Password);
+                        _db.User.Update(updateUser);
+                        _db.Save();
+                        return await Task.FromResult(Redirect("/User/Home/Profile/Index?ResetPass=true"));
+                    }
+                }
+                return await Task.FromResult(View(change));
+            }
+            catch
+            {
+                return await Task.FromResult(Redirect("404.html"));
+            }
         }
     }
 }
