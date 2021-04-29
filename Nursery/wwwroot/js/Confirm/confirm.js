@@ -110,7 +110,7 @@ define(["require", "exports"], function (require, exports) {
             var aleft = '';
             var aright = '';
             var rect = parent.getBoundingClientRect();
-            var ptop = (this.settings.floating) ? rect.top : parent.offsetTop;
+            var ptop = (this.settings.floating) ? rect.top + window.scrollY : parent.offsetTop;
             var pleft = (this.settings.floating) ? rect.left : parent.offsetLeft;
             switch (Direction[this.settings.direction.toString()]) {
                 case Direction.bl:

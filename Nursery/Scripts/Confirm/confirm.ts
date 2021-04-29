@@ -147,7 +147,7 @@ export class Confirm {
         let aright: number | string = '';
 
         const rect = parent.getBoundingClientRect();
-        const ptop = (this.settings.floating) ? rect.top : parent.offsetTop;
+        const ptop = (this.settings.floating) ? rect.top + window.scrollY : parent.offsetTop;
         const pleft = (this.settings.floating) ? rect.left : parent.offsetLeft;
 
         switch (Direction[this.settings.direction.toString()]) {

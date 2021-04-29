@@ -6,7 +6,7 @@
 
 <div class="uk-child-width-1-2 row">
     <img src="~/st/png/blue.png" height="424" width="424" class="mat login-image uk-box-shadow-large" alt="" />
-    <form id="loginForm" asp-action="Login"  class="form col uk-box-shadow-large">
+    <form id="loginForm" asp-action="Login" class="form col uk-box-shadow-large">
         <div class="form-header"><h3>ورود</h3></div>
         <div class="form-body">
             <div class="fg-col ">
@@ -20,11 +20,12 @@
                 <span class="text-danger" asp-validation-for="Password"></span>
             </div>
             <div class="fg-col">
-                <label class="fg-label row text-3">
-                    مرا بخاطر بسپار
-                    <input class="uk-checkbox" asp-for="RememberMe" type="checkbox">
-                </label>
-                <span class="text-danger"></span>
+                <div class="rowr">
+                    <label class="fg-label row text-3">
+                        مرا بخاطر بسپار
+                        <input class="uk-checkbox" asp-for="RememberMe" type="checkbox">
+                    </label>
+                </div>
             </div>
         </div>
         <div class="form-footer uk-margin-auto-top">
