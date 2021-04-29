@@ -1,0 +1,36 @@
+﻿@{
+    ViewData["Title"] = "ویرایش فرم";
+    Layout = "~/Areas/Admin/Views/_AdminLayout.cshtml";
+}
+
+<form class="form" method="post">
+    <div class="form-header">
+        <h3>
+            ویرایش
+        </h3>
+    </div>
+    <div class="form-body">
+
+        <div class="grid-400">
+
+            <div class="fg-col ">
+                <label class="fg-label" for="name">نام</label>
+                <input class="entry" id="Name">
+                <span class="text-danger"></span>
+            </div>
+
+            <div class="collapsed"></div>
+
+            <div class="fg-col ">
+                <label class="fg-label" for="tel">توضیحات</label>
+                <textarea class="entry"></textarea>
+                <span class="text-danger"></span>
+            </div>
+
+        </div>
+
+    </div>
+    <div class="form-footer">
+        <button class="btn btn-primary"><span>ویرایش</span></button>
+    </div>
+</form>

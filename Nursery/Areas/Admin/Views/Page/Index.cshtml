@@ -34,9 +34,10 @@
                 </h2>
                 <a asp-area="admin"
                    asp-controller="Form"
-                   asp-action="Index"
+                   asp-action="Add"
                    asp-route-id="@Model.PageId"
-                   asp-route-name="@Model.Name" class="btn btn-primary uk-margin-auto-right">
+                   asp-route-name="@Model.Name"
+                   class="btn btn-primary uk-margin-auto-right">
                     <span>اضافه</span>
                     <span class="tiny" uk-icon="plus-square"></span>
                 </a>
@@ -61,7 +62,7 @@
                             <td>@(Model.TblPageFormRel.Where(i => i.IsDeleted == false).OrderByDescending(i => i.FormId).ToList().IndexOf(item)+1)</td>
                             <td>@item.Form.Name</td>
                             <td>
-                                <a href="#ModalDescription_@item.PageFormRelId"  class="btn-icon round text-4" uk-icon="icon:eye;ratio:.5" uk-toggle></a>
+                                <a href="#ModalDescription_@item.PageFormRelId" class="btn-icon round text-4" uk-icon="icon:eye;ratio:.5" uk-toggle></a>
 
                                 <!-- Description Modal -->
                                 <div id="ModalDescription_@item.PageFormRelId" uk-modal>
@@ -94,9 +95,14 @@
                                                 <span class="small" uk-icon="eye"></span>
                                             </a>
                                         </li>
-                                        <!--فرم ها قابلیت ویرایش ندارن-->
                                         <li>
-                                            <a class="rowr btn-danger" popconfirm="description:آیا از حذف  اطمینان دارید؟;direction:rt;type:danger;title:هشدار;okText:حذف;" popok="deletePageFormRel(@item.PageFormRelId)">
+                                            <a href="/Admin/Form/Edit" class="rowr">
+                                                <span>ویرایش</span>
+                                                <span class="small" uk-icon="pen-square"></span>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a class="rowr btn-danger" popconfirm="floating:true;description:آیا از حذف  اطمینان دارید؟;direction:rt;type:danger;title:هشدار;okText:حذف;" popok="deletePageFormRel(@item.PageFormRelId)">
                                                 <span>حذف</span>
                                                 <span class="small" uk-icon="trash"></span>
                                             </a>

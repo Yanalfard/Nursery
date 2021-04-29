@@ -1537,6 +1537,14 @@ input:not(input[type=checkbox]):not(input[type=radio]) {
     -webkit-border-radius: 1000px 1000px 1000px 1000px;
     border-radius: 1000px 1000px 1000px 1000px; }
 
+.btn .uk-icon {
+  display: flex;
+  -ms-align-content: center;
+  -webkit-align-content: center;
+  align-content: center;
+  -webkit-align-items: center;
+  align-items: center; }
+
 .uk-icon.tiny svg {
   width: 16px !important;
   height: 16px !important;

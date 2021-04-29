@@ -722,7 +722,7 @@ $content-padding: 16px;
     $aside-width: 72px;
     $header-height: 72px;
     $content-padding: 16px;
-    
+
     .m-top {
 
         .m-logo {
@@ -836,7 +836,7 @@ $content-padding: 16px;
 
     .m-aside {
         width: $aside-width + 150px;
-        margin-right:-222px;
+        margin-right: -222px;
 
         .navigation {
             li {
@@ -1172,6 +1172,17 @@ $background-highlight: #eee;
         margin: auto 0;
         margin-right: auto;
         @include border-circle;
+    }
+}
+
+.btn {
+    .uk-icon {
+        display: flex;
+        -ms-align-content: center;
+        -webkit-align-content: center;
+        align-content: center;
+        -webkit-align-items: center;
+        align-items: center;
     }
 }
 

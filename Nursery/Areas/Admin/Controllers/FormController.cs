@@ -1,6 +1,7 @@
 ﻿using DataLayer.Models;
 using DataLayer.ViewModels;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 using Nursery.Utilities;
 using Services.Services;
 using System;
@@ -25,7 +26,36 @@ namespace Nursery.Areas.Admin.Controllers
 
         List<DRegexVm> options = new List<DRegexVm>();
 
-        public IActionResult Index(int id, string name = null)
+        public IActionResult Index()
+        {
+            List<DRegexVm> validations = new List<DRegexVm>() {
+                new DRegexVm
+                (0,"REGEX NAME","NO","REGEX FAILED"),
+            };
+
+            List<DFieldVm> fields = new List<DFieldVm>()
+            {
+                new DFieldVm
+                (1,0,"USERNAME",DFieldType.Text,true,"OPTION1,OPTION2,OPTION3","Enter your username","THIS IS A TOOLTIP",validations),
+                new DFieldVm
+                (1,0,"PASSWORD",DFieldType.Combo,true,"MOZ,Khiar,Holo,Badimjan","Enter your username","THIS IS A TOOLTIP",validations),
+                new DFieldVm
+                (1,0,"USERNAME",DFieldType.Range,true,"OPTION1,OPTION2,OPTION3","Enter your username","THIS IS A TOOLTIP",validations)
+            };
+
+            DFormVm formVm = new DFormVm
+                (0, "FORM TITLE", "FORM SUBTITLE", DateTime.Now, fields);
+
+            DFormVm form = new DFormVm();
+
+            // MEHDIIIIIIIIIIIIIIIIIIII <- 
+            ViewData["Data"] = JsonConvert.SerializeObject(formVm);
+
+            return View();
+        }
+
+
+        public IActionResult Add(int id, string name = null)
         {
             List<TblRegex> list = _db.Regex.Get(i => i.IsDeleted == false).ToList();
             foreach (var item in list)
@@ -38,7 +68,6 @@ namespace Nursery.Areas.Admin.Controllers
             ViewBag.pageId = id;
             return View();
         }
-
 
 
         //[HttpGet]
@@ -129,9 +158,19 @@ namespace Nursery.Areas.Admin.Controllers
             _db.Save();
             return Ok("LOL");
 
-           // return await Task.FromResult(Redirect("/Admin/Page/Index/" + pageId + "?name=" + name));
+            // return await Task.FromResult(Redirect("/Admin/Page/Index/" + pageId + "?name=" + name));
 
         }
 
+
+        public IActionResult List()
+        {
+            return View();
+        }
+
+        public IActionResult Edit()
+        {
+            return View();
+        }
     }
 }
