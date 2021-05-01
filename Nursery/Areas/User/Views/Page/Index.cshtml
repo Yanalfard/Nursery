@@ -1,5 +1,6 @@
-﻿@{
-    ViewData["Title"] = "نام بخش";
+﻿@model TblPage
+@{
+    ViewData["Title"] = Model.Name;
     Layout = "~/Areas/User/Views/_UserLayout.cshtml";
 }
 
@@ -11,10 +12,9 @@
 </div>
 
 <div class="forms">
-    <partial name="_FormBlock" />
-    <partial name="_FormBlock" />
-    <partial name="_FormBlock" />
-    <partial name="_FormBlock" />
-    <partial name="_FormBlock" />
-    <partial name="_FormBlock" />
+    @foreach (var item in Model.TblPageFormRel)
+    {
+        <partial name="_FormBlock" model="item.Form"/>
+    }
+
 </div>

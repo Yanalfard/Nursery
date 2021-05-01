@@ -1,6 +1,9 @@
-﻿using DataLayer.ViewModels;
+﻿using DataLayer.Models;
+using DataLayer.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
+using Nursery.Utilities;
+using Services.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,16 +12,27 @@ using System.Threading.Tasks;
 namespace Nursery.Areas.User.Controllers
 {
     [Area("User")]
+    [PermissionChecker("user")]
     public class PageController : Controller
     {
+        private Core _db = new Core();
+
+        TblUser SelectUser()
+        {
+            int userId = Convert.ToInt32(User.Claims.First().Value);
+            TblUser selectUser = _db.User.GetById(userId);
+            return selectUser;
+        }
         [Route("/User/Page/{pageId}")] // یا نام پیج هرطور راحت هستید
         public IActionResult Index(int? pageId)
         {
-            return View();
+            return View(_db.Page.GetById(pageId));
         }
         [Route("/User/Page/Form/{formID}")]
         public IActionResult Form(int? formId)
         {
+            TblForm selectedForm = _db.Form.GetById(formId);
+
             List<DRegexVm> validations = new List<DRegexVm>() {
                 new DRegexVm
                 (0,"REGEX NAME","NO","REGEX FAILED"),

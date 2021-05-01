@@ -1,6 +1,7 @@
 ﻿@model TblUser
+@using System.Security.Claims
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = Model.Name;
     Layout = "~/Areas/User/Views/_UserLayout.cshtml";
 }
 
@@ -11,6 +12,8 @@
             <img src="~/st/png/blue.png" class="round" width="42" height="42" alt="" />
             <div class="col">
                 <label>@Model.Name</label>
+
+                @*@User.FindFirstValue("CodeMeli").ToString()*@
                 <span>@Model.IdentificationNo</span>
             </div>
             <div class="row gap-3 uk-margin-auto-right">
@@ -82,7 +85,7 @@
 </div>
 
 <div class="forms">
-    @foreach (var item in Model.TblUserRoleRel)
+    @foreach (var item in Model.TblUserRoleRel.Where(i => i.ShiftStart.TimeOfDay <= DateTime.Now.TimeOfDay && i.ShiftEnd.TimeOfDay >= DateTime.Now.TimeOfDay))
     {
         @foreach (var j in item.Role.TblRolePageRel)
         {
@@ -92,10 +95,8 @@
             }
         }
     }
-    @*<partial name="_FormBlock" />
-        <partial name="_FormBlock" />
-        <partial name="_FormBlock" />
-        <partial name="_FormBlock" />*@
+
+
 </div>
 
 

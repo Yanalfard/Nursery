@@ -1,6 +1,7 @@
 ﻿using DataLayer.Models;
 using DataLayer.ViewModels;
 using Microsoft.AspNetCore.Mvc;
+using Nursery.Utilities;
 using Services.Services;
 using System;
 using System.Collections.Generic;
@@ -10,6 +11,7 @@ using System.Threading.Tasks;
 namespace Nursery.Areas.User.Controllers
 {
     [Area("User")]
+    [PermissionChecker("user")]
     public class HomeController : Controller
     {
         private Core _db = new Core();

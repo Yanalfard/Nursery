@@ -55,8 +55,8 @@
 
 @section User{
     <div class="column">
-        <h6>نام و نام خانوادگی</h6>
-        <span>نام شیفت</span>
+        <h6>@User.Identity.Name</h6>
+        @*<span>نام شیفت</span>*@
     </div>
     <img src="~/st/png/C.png" height="48" width="48" alt="عکس کاربر" />
     <span uk-icon="chevron-down"></span>
@@ -70,7 +70,7 @@
                     </a>
                 </li>
                 <li>
-                    <a href="" class="rowr text-danger">
+                    <a href="/LogOut" class="rowr text-danger">
                         <span class="uk-margin-small-left" uk-icon="sign-out-alt"></span>
                         <span>خروج</span>
                     </a>

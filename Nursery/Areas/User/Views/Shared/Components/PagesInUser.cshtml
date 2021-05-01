@@ -1,0 +1,11 @@
+﻿@model IEnumerable<TblPage>
+
+@foreach (var item in Model)
+{
+    <li>
+        <a href="/User/Page/@item.PageId">
+            <span uk-icon="file"></span>
+            <label>@item.Name</label>
+        </a>
+    </li>
+}

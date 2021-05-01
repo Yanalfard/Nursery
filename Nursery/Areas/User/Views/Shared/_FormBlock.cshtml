@@ -1,12 +1,13 @@
-﻿<div class="form-card card">
+﻿@model TblForm
+<div class="form-card card">
     <h4 class="title">
-        نام فرم
+        @Model.Name
     </h4>
     <p class="body">
-        لورم ایپسوم یا طرح‌نما (به انگلیسی: Lorem ipsum) به متنی آزمایشی و بی‌معنی در صنعت چاپ، صفحه‌آرایی و طراحی گرافیک گفته می‌شود. طراح گرافیک از این متن به عنوان عنصری از ترکیب بندی برای پر کردن صفحه و ارایه اولیه شکل ظاهری و کلی طرح سفارش گرفته شده استفاده می نماید
+        @Model.Body
     </p>
     <div class="rowr">
-        <a href="/User/Page/Form/1" class="btn btn-dashed"><span>مشاهده</span></a>
-        <span class=" text-lesser uk-margin-auto-right uk-margin-auto-top">1399/12/22 16:20</span>
+        <a href="/User/Page/Form/@Model.FormId" class="btn btn-dashed"><span>مشاهده</span></a>
+        <span class=" text-lesser uk-margin-auto-right uk-margin-auto-top">@Model.DateCreated.Value.AllToShamsi()</span>
     </div>
 </div> 
