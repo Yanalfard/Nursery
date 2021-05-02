@@ -107,10 +107,8 @@ namespace Nursery.Areas.Admin.Controllers
                 field.Options = dfield.Options;
                 field.Placeholder = dfield.Placeholder;
                 field.Tooltip = dfield.Tooltip;
-                field.Type = nameof(dfield.Type).ToLower();
+                field.Type = dfield.Type.ToString();
                 field.IsDeleted = false;
-
-
 
                 //field -> db
                 _db.Field.Add(field);

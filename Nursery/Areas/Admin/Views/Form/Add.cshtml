@@ -592,8 +592,7 @@
         </div>
         <div class="form-footer">
             <div class="actions">
-                <button id="btn-finish" class="btn btn-primary" onclick="addForm()">
-
+                <button id="btn-finish" goto="/Admin/Page/Index/@ViewBag.pageId?name=@ViewBag.name" class="btn btn-primary">
                     <span>تایید</span>
                 </button>
             </div>
@@ -603,18 +602,6 @@
 
 @section Scripts{
 
-
-
-    <script>
-        function addForm() {
-            var delay = 2000;
-            setTimeout(function () {
-                window.location.href = '/Admin/Page/Index/@ViewBag.pageId?name=@ViewBag.name';
-            }, delay);
-        }
-
-
-    </script>
     <script>
         require(['config'], function () {
             require(['builder'], function () {

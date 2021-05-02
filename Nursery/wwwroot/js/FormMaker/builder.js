@@ -15,6 +15,17 @@ define(["require", "exports", "./model/db/tblField", "./model/db/tblForm", "./mo
         var body = new tblForm_1.TblForm();
         var formName = document.getElementById('txtFormName').value;
         var description = document.getElementById('txtDecsription').value;
+        //#region  validated 
+        if (!formName) {
+            alert('نام فرم را وارد کنید');
+            return;
+        }
+        if (!description) {
+            alert('توضیحات فرم را وارد کنید');
+            return;
+        }
+        //#endregion
+        eval('LoadingRun();');
         body.Name = formName;
         body.Body = description;
         componentList.forEach(function (f) {
@@ -32,7 +43,6 @@ define(["require", "exports", "./model/db/tblField", "./model/db/tblForm", "./mo
             field.Validations = f.regexs.map(function (i) { return i.tblRegex; });
             body.Fields.push(field);
         });
-        console.log(body);
         fetch('/Admin/Form/Create', {
             method: 'post',
             mode: 'cors',
@@ -43,7 +53,9 @@ define(["require", "exports", "./model/db/tblField", "./model/db/tblForm", "./mo
             },
             body: JSON.stringify(body)
         }).then(function (response) {
-            console.log(response);
+            window.location.href = btnFinish.getAttribute('goto');
+        })["catch"](function () {
+            eval('LoadingEnd();');
         });
     });
     toolbox.addEventListener('removed', function () {

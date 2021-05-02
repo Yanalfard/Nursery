@@ -10,6 +10,8 @@ let toolboxHTML = toolbox.innerHTML;
 const btnFinish = document.getElementById('btn-finish');
 
 btnFinish.addEventListener('click', () => {
+
+
     let temp: Tool[] = [];
     componentList.forEach((tool) => {
         let index = parseInt(tool.element.getAttribute('order'));
@@ -20,6 +22,23 @@ btnFinish.addEventListener('click', () => {
     let body = new TblForm();
     const formName = (document.getElementById('txtFormName') as HTMLInputElement).value;
     const description = (document.getElementById('txtDecsription') as HTMLTextAreaElement).value;
+
+    //#region  validated 
+
+    if (!formName) {
+        alert('نام فرم را وارد کنید');
+        return
+    }
+
+    if (!description) {
+        alert('توضیحات فرم را وارد کنید');
+        return
+    }
+
+    //#endregion
+
+    eval('LoadingRun();');
+
     body.Name = formName;
     body.Body = description;
 
@@ -40,8 +59,6 @@ btnFinish.addEventListener('click', () => {
         body.Fields.push(field);
     });
 
-    console.log(body);
-
     fetch('/Admin/Form/Create', {
         method: 'post',
         mode: 'cors',
@@ -52,7 +69,9 @@ btnFinish.addEventListener('click', () => {
         },
         body: JSON.stringify(body)
     }).then(response => {
-        console.log(response);
+        window.location.href = btnFinish.getAttribute('goto');
+    }).catch(() => {
+        eval('LoadingEnd();');
     })
 
 

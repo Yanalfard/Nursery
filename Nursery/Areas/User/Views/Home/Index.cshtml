@@ -87,9 +87,9 @@
 <div class="forms">
     @foreach (var item in Model.TblUserRoleRel.Where(i => i.ShiftStart.TimeOfDay <= DateTime.Now.TimeOfDay && i.ShiftEnd.TimeOfDay >= DateTime.Now.TimeOfDay))
     {
-        @foreach (var j in item.Role.TblRolePageRel)
+        @foreach (var j in item.Role.TblRolePageRel.Where(i => i.IsDeleted == false))
         {
-            @foreach (var k in j.Page.TblPageFormRel)
+            @foreach (var k in j.Page.TblPageFormRel.Where(i=>i.IsDeleted==false))
             {
                 <partial name="_FormBlock" model="k.Form" />
             }

@@ -1,0 +1,36 @@
+﻿{
+  "FormId": 1083,
+  "Name": "xcafgegf",
+  "Body": "dfqegewggd",
+  "DateCreated": "2021-05-02T15:54:34.52",
+  "IsDeleted": null,
+  "Fields": [
+    {
+      "FieldId": 1069,
+      "FormId": 1083,
+      "Label": "xsew",
+      "Type": 0,
+      "IsRequired": false,
+      "Options": "",
+      "Placeholder": "asee",
+      "Tooltip": null,
+      "IsDeleted": null,
+      "Validations": [
+        {
+          "RegexId": 1000,
+          "Regex": "[0-9]*4",
+          "ValidationMessage": "This was Wrong",
+          "Name": "Just numbers",
+          "IsDeleted": null
+        },
+        {
+          "RegexId": 1001,
+          "Regex": "[ha-ea-sd]",
+          "ValidationMessage": "Bye",
+          "Name": "Hello",
+          "IsDeleted": null
+        }
+      ]
+    }
+  ]
+}

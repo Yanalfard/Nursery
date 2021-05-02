@@ -33,53 +33,63 @@ namespace Nursery.Areas.User.Controllers
         {
             TblForm selectedForm = _db.Form.GetById(formId);
 
-            List<DRegexVm> validations = new List<DRegexVm>() {
-                new DRegexVm
-                (0,"REGEX NAME","NO","REGEX FAILED"),
-            };
-
-            List<DFieldVm> fields = new List<DFieldVm>()
+            List<TblFormFieldRel> listFild = _db.FormFieldRel.Get(i => i.FormId == selectedForm.FormId).ToList();
+            List<DFieldVm> fields = new List<DFieldVm>();
+            foreach (var item in listFild)
             {
-                new DFieldVm
-                (1,0,"USERNAME",DFieldType.Text,true,"OPTION1,OPTION2,OPTION3","Enter your username","THIS IS A TOOLTIP",validations),
-                new DFieldVm
-                (1,0,"PASSWORD",DFieldType.Combo,true,"MOZ,Khiar,Holo,Badimjan","Enter your username","THIS IS A TOOLTIP",validations),
-                new DFieldVm
-                (1,0,"USERNAME",DFieldType.Range,true,"OPTION1,OPTION2,OPTION3","Enter your username","THIS IS A TOOLTIP",validations)
-            };
+                List<TblRegex> listTblRegex = _db.Regex.Get(i => i.IsDeleted == false).ToList();
 
-            DFormVm formVm = new DFormVm
-                (0, "FORM TITLE", "FORM SUBTITLE", DateTime.Now, fields);
+                List<DRegexVm> validations = new List<DRegexVm>();
+                foreach (var j in listTblRegex)
+                {
+                    validations.Add(new DRegexVm()
+                    {
+                        Name = j.Name,
+                        Regex = j.Regex,
+                        RegexId = j.RegexId,
+                        ValidationMessage = j.ValidationMessage
+                    });
+                }
+                // convert string to enum
+
+                Enum.TryParse(item.Field.Type, out DFieldType myStatus);
+
+                fields.Add(new DFieldVm
+                {
+                    FieldId = item.FieldId,
+                    FormId = selectedForm.FormId,
+                    IsRequired = (bool)item.Field.IsRequired,
+                    Label = item.Field.Label,
+                    Options = item.Field.Options,
+                    Placeholder = item.Field.Placeholder,
+                    Tooltip = item.Field.Tooltip,
+                    Type = myStatus,
+                    Validations = validations,
+                });
+            }
+            //List<DFieldVm> fields = new List<DFieldVm>()
+            //{
+            //    new DFieldVm
+            //    (1,0,"USERNAME",DFieldType.Text,true,"OPTION1,OPTION2,OPTION3","Enter your username","THIS IS A TOOLTIP",validations),
+            //    new DFieldVm
+            //    (1,0,"PASSWORD",DFieldType.Combo,true,"MOZ,Khiar,Holo,Badimjan","Enter your username","THIS IS A TOOLTIP",validations),
+            //    new DFieldVm
+            //    (1,0,"USERNAME",DFieldType.Range,true,"OPTION1,OPTION2,OPTION3","Enter your username","THIS IS A TOOLTIP",validations)
+            //};
+
+            //DFormVm formVm = new DFormVm
+            //    (0, "FORM TITLE", "FORM SUBTITLE", DateTime.Now, fields);
 
             DFormVm form = new DFormVm();
+            form.FormId = selectedForm.FormId;
+            form.Body = selectedForm.Body;
+            form.DateCreated = (DateTime)selectedForm.DateCreated;
+            form.Name = selectedForm.Name;
+            form.Fields = fields;
 
-
-            //List<TblRegex> validations = new List<TblRegex> {
-            //    new TblRegex() {
-            //        FieldId = 1 ,IsDeleted = false ,
-            //        Regex = "" , RegexId = 1 , ValidationMessage = "REGEX FAILED"
-            //    },
-            //};
-
-            //List<TblField> fields = new List<TblField>()
-            //{
-            //    new TblField() {
-            //        FieldId = 1 , IsDeleted = false, IsRequired = true, Lable ="LABEL", Options="O<O<O<O", PlcaeHolder = "PLACEHOLDER" , Tooltip = "TOOLTIP"
-            //    , Type = Enum.GetName(typeof(DFieldType),DFieldType.Text)
-            //    }
-            //};
-
-            //TblForm formVm = new TblForm()
-            //{
-            //    Body = "FORM BODY",
-            //    DateCreated = DateTime.Now,
-            //    FormId = 1,
-            //    IsDeleted = false,
-            //    Name = "FORM TITLE"
-            //};
 
             // MEHDIIIIIIIIIIIIIIIIIIII <- 
-            ViewData["Data"] = JsonConvert.SerializeObject(formVm);
+            ViewData["Data"] = JsonConvert.SerializeObject(form);
 
             return View();
 
