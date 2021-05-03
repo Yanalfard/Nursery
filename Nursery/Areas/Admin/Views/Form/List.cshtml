@@ -1,4 +1,5 @@
-﻿@{
+﻿@model IEnumerable<TblForm>
+@{
     ViewData["Title"] = "لیست فرم ها";
     Layout = "~/Areas/Admin/Views/_AdminLayout.cshtml";
 }
@@ -15,13 +16,13 @@
     <div class="form-header" uk-sticky="offset: 72;cls-active: sticked;bottom: true">
         <div class="rowr">
             <h2 class="card-title">
-                لیست بخش ها
+                لیست فرم ها
             </h2>
             <a onclick="showOtherPage(1)" class="btn btn-secondary uk-margin-auto-right">
                 <span>جستوجو</span>
                 <span class="tiny" uk-icon="search"></span>
             </a>
-            <a href="/Admin/Page/Add" class="btn btn-primary uk-margin-small-right">
+            <a href="/Admin/Form/Add" class="btn btn-primary uk-margin-small-right">
                 <span>اضافه</span>
                 <span class="tiny" uk-icon="plus-square"></span>
             </a>
@@ -30,12 +31,22 @@
     </div>
 
     <div class="form-search" uk-sticky="offset: 140;cls-active: sticked uk-box-shadow-medium;bottom:true">
-        <form id="formSearchUser" action="/Admin/Page/List" class="controls-grid">
-            <input class="entry" type="number" name="id" placeholder="کد" value="">
-            <input class="entry" type="text" name="name" placeholder="نام" value="">
-            <input class="entry" type="text" name="description" placeholder="توضیحات" value="">
+        <form id="formSearchForm" action="/Admin/Form/List" class="controls-grid">
+            <input class="entry" type="hidden" id="pageId" name="pageId" value="@ViewBag.PageShow">
+            <input class="entry" type="number" name="id" placeholder="کد" value="@ViewBag.id">
+            <input class="entry" type="text" name="name" placeholder="نام" value="@ViewBag.name">
+            <input class="entry" type="text" name="description" placeholder="توضیحات" value="@ViewBag.description">
+            <div class="col">
+                <label class="fg-label row text-3">
+                    حذف شده
+                    <input class="uk-checkbox" id="checkedDelete" name="checkedDelete" type="checkbox" @(((bool)ViewBag.checkedDelete == true) ? "checked" : "")>
+                </label>
+                <span class="text-danger"></span>
+            </div>
         </form>
     </div>
+
+
 
     <div class="form-body scrollh-container uk-padding-remove">
         <table class="tbl tbl-striped" dir="rtl">
@@ -49,67 +60,157 @@
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td>1</td>
-                    <td>sdf</td>
-                    <td>
-                        <a href="#ModalDescription_desc" class="btn-icon round text-4" uk-icon="icon:eye;ratio:.5" uk-toggle></a>
+                @foreach (var item in Model)
+                {
+                    <tr id="formId_@item.FormId">
+                        <td>@item.FormId</td>
+                        <td>@item.Name</td>
+                        <td>
+                            <a href="#ModalDescription_desc_@item.FormId" class="btn-icon round text-4" uk-icon="icon:eye;ratio:.5" uk-toggle></a>
 
-                        <!-- Description Modal -->
-                        <div id="ModalDescription_desc" uk-modal>
-                            <div class="uk-modal-dialog form">
-                                <div class="form-header">
-                                    <h3>توضیحات</h3>
-                                </div>
-                                <div class="form-body">
-                                    <p>
-                                        desc
-                                    </p>
-                                </div>
-                                <div class="form-footer">
-                                    <div class="actions">
-                                        <button class="btn btn-primary uk-modal-close"><span>بستن</span></button>
+                            <!-- Description Modal -->
+                            <div id="ModalDescription_desc_@item.FormId" uk-modal>
+                                <div class="uk-modal-dialog form">
+                                    <div class="form-header">
+                                        <h3>توضیحات</h3>
+                                    </div>
+                                    <div class="form-body">
+                                        <p>
+                                            @item.Body
+                                        </p>
+                                    </div>
+                                    <div class="form-footer">
+                                        <div class="actions">
+                                            <button class="btn btn-primary uk-modal-close"><span>بستن</span></button>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                    </td>
-                    <td>@*@item.Form.DateCreated.Value.AllToShamsi()*@</td>
-                    <td class="actions">
-                        <a href="" class="btn-icon round text-4" uk-icon="icon:ellipsis-h;ratio:.72"></a>
-                        <div class="dropdown" uk-drop="mode: click;offset:4">
+                        </td>
+                        <td>@item.DateCreated.Value.AllToShamsi()</td>
+                        <td class="actions">
+                            <a href="" class="btn-icon round text-4" uk-icon="icon:ellipsis-h;ratio:.72"></a>
+                            <div class="dropdown" uk-drop="mode: click;offset:4">
 
-                            <ul class="dropdown-list">
-                                <li>
-                                    <a href="/Admin/Page/" class="rowr">
-                                        <span class="new">مشاهده</span>
-                                        <span class="small" uk-icon="eye"></span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="/Admin/Form/Edit" class="rowr" popconfirm="description:آیا از حذف  اطمینان دارید؟;direction:rt;type:danger;title:هشدار;okText:حذف;" popok="deletePageFormRel()">
-                                        <span>ویرایش</span>
-                                        <span class="small" uk-icon="pen-square"></span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a class="rowr btn-danger" popconfirm="floating:true;description:آیا از حذف  اطمینان دارید؟;direction:rt;type:danger;title:هشدار;okText:حذف;" popok="deletePageFormRel()">
-                                        <span>حذف</span>
-                                        <span class="small" uk-icon="trash"></span>
-                                    </a>
-                                </li>
-                            </ul>
-                        </div>
-                    </td>
-                </tr>
+                                <ul class="dropdown-list">
+                                    <li>
+                                        <a class="rowr"
+                                            asp-area="admin"
+                                               asp-controller="Form"
+                                               asp-action="Index"
+                                               asp-route-id="@item.FormId"
+                                               asp-route-name="@item.Name.Replace(" ","")">
+                                            <span class="new">مشاهده</span>
+                                            <span class="small" uk-icon="eye"></span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a  class="rowr"
+                                               asp-area="admin"
+                                               asp-controller="Form"
+                                               asp-action="Edit"
+                                               asp-route-id="@item.FormId"
+                                               asp-route-name="@item.Name.Replace(" ","")">
+                                            <span class="new">ویرایش</span>
+                                            <span class="small" uk-icon="pen-square"></span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a class="rowr btn-danger" popconfirm="floating:true;description:آیا از حذف کاربر اطمینان دارید؟;direction:rt;type:danger;title:هشدار;okText:حذف;" popok="deleteForm(@item.FormId)">
+                                            <span>حذف</span>
+                                            <span class="small" uk-icon="trash"></span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </td>
+                    </tr>
+                }
+
             </tbody>
         </table>
     </div>
     <div class="form-footer">
+        @*<button class="btn btn-primary">اضافه</button>*@
+        <div class="uk-margin-auto-right">
+            <ul class="uk-pagination uk-margin-remove uk-margin-auto-right">
+                @{ int pageCount = ViewBag.PageCount;
+                    int pageShow = ViewBag.PageShow;
+                    int minPage = pageShow <= 1 ? pageShow : pageShow - 2;
+                    int maxPage = pageShow <= 1 ? pageShow + 4 : pageShow + 2;
+                    int notpage = 0; }
+                @if (pageShow > 1)
+                {
+                    <li><a onclick="showOtherPage(@(pageShow==0?1:pageShow-1))"><span uk-pagination-previous></span></a></li>
+                }
+                @if (pageShow > 3)
+                {
+                    <li><a onclick="showOtherPage(1)">1</a></li>
+                }
+                @for (int i = 1; i <= pageCount; i++)
+                {
+                    @if (i >= minPage && i <= maxPage)
+                    {
+                        <li><a onclick="showOtherPage(@(i))" class="@(pageShow==i?"uk-active":"")">@i</a></li>
+                        notpage = 0;
+                    }
+                    else
+                    {
+                        if (notpage == 0)
+                        {
+                            <li class="uk-disabled"><span>...</span></li>
+                            notpage++;
+                        }
+                    }}
+                @if (pageShow <= pageCount - 3)
+                {
+                    <li><a onclick="showOtherPage(@(pageCount))">@pageCount</a></li>
+                }
+                @if (pageShow < pageCount)
+                {
+                    <li><a onclick="showOtherPage(@(pageShow==0?2:pageShow+1))"><span uk-pagination-next></span></a></li>
+                }
+
+            </ul>
+        </div>
     </div>
 </div>
 
+
 @section Scripts{
+
+
+    @if (Context.Request.Query["editForm"].ToString() == "true")
+    {
+        <script>
+            notify('فرم مورد نظر ویرایش شد', 'success');
+        </script>
+    }
+
+    @if (Context.Request.Query["addForm"].ToString() == "true")
+    {
+        <script>
+            notify('فرم جدید اضافه شد', 'success');
+        </script>
+    }
+    <script>
+        function showOtherPage(id) {
+            $('#pageId').val(id);
+            document.getElementById('formSearchForm').submit();
+        }
+
+
+        function deleteForm(id) {
+            $.get('/Admin/Form/Delete/' + id, function (result) {
+                if (result == "true") {
+                    $('#formId_' + id).addClass('uk-text-danger');
+                    $("#formId_" + id).hide('slow');
+                }
+            });
+        }
+    </script>
+
+
 
     <script>
         require(['config'], function () {
@@ -118,5 +219,4 @@
             })
         });
     </script>
-
 }

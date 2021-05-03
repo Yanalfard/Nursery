@@ -26,32 +26,17 @@ namespace Nursery.Areas.Admin.Controllers
 
         List<DRegexVm> options = new List<DRegexVm>();
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index(int id = 0, string name = null)
         {
-            List<DRegexVm> validations = new List<DRegexVm>() {
-                new DRegexVm
-                (0,"REGEX NAME","NO","REGEX FAILED"),
-            };
-
-            List<DFieldVm> fields = new List<DFieldVm>()
+            try
             {
-                new DFieldVm
-                (1,0,"USERNAME",DFieldType.Text,true,"OPTION1,OPTION2,OPTION3","Enter your username","THIS IS A TOOLTIP",validations),
-                new DFieldVm
-                (1,0,"PASSWORD",DFieldType.Combo,true,"MOZ,Khiar,Holo,Badimjan","Enter your username","THIS IS A TOOLTIP",validations),
-                new DFieldVm
-                (1,0,"USERNAME",DFieldType.Range,true,"OPTION1,OPTION2,OPTION3","Enter your username","THIS IS A TOOLTIP",validations)
-            };
-
-            DFormVm formVm = new DFormVm
-                (0, "FORM TITLE", "FORM SUBTITLE", DateTime.Now, fields);
-
-            DFormVm form = new DFormVm();
-
-            // MEHDIIIIIIIIIIIIIIIIIIII <- 
-            ViewData["Data"] = JsonConvert.SerializeObject(formVm);
-
-            return View();
+                ViewData["name"] = name;
+                return await Task.FromResult(View(_db.Form.GetById(id)));
+            }
+            catch
+            {
+                return await Task.FromResult(Redirect("404.html"));
+            }
         }
 
 
@@ -94,12 +79,15 @@ namespace Nursery.Areas.Admin.Controllers
             _db.Save();
 
 
-            TblPageFormRel addPage = new TblPageFormRel();
-            addPage.PageId = pageId;
-            addPage.FormId = form.FormId;
-            addPage.IndexNo = 1;
-            _db.PageFormRel.Add(addPage);
-            _db.Save();
+            if (pageId > 0)
+            {
+                TblPageFormRel addPage = new TblPageFormRel();
+                addPage.PageId = pageId;
+                addPage.FormId = form.FormId;
+                addPage.IndexNo = 1;
+                _db.PageFormRel.Add(addPage);
+                _db.Save();
+            }
             dform.Fields.ForEach(dfield =>
             {
                 TblField field = new TblField();
@@ -161,14 +149,172 @@ namespace Nursery.Areas.Admin.Controllers
         }
 
 
-        public IActionResult List()
+        public async Task<IActionResult> List(int pageId = 1, int id = 0, string description = null, string name = null, string checkedDelete = null)
         {
-            return View();
+            //var claimIdentity = this.User.Identity as ClaimsIdentity;
+            //IEnumerable<Claim> claims = claimIdentity.Claims;
+
+            //var userId = Convert.ToInt32(User.Claims.First().Value);
+            //var names = User.Identities.First().Name;
+            //var currentUserID = claimIdentity.FindFirst(ClaimTypes.Email).Value;
+            ViewBag.name = name;
+            ViewBag.id = id;
+            ViewBag.description = description;
+            ViewBag.checkedDelete = checkedDelete == "on" ? true : false;
+            List<TblForm> list = _db.Form.Get(orderBy: j => j.OrderByDescending(k => k.FormId)).ToList();
+            if (name != null)
+            {
+                list = list.Where(i => i.Name.Contains(name)).ToList();
+            }
+            if (description != null)
+            {
+                list = list.Where(i => i.Body.Contains(description)).ToList();
+            }
+            if (id != 0)
+            {
+                list = list.Where(i => i.FormId == id).ToList();
+            }
+            list = list.Where(i => i.IsDeleted == ViewBag.checkedDelete).ToList();
+            //Pagging
+            int take = 10;
+            int skip = (pageId - 1) * take;
+            ViewBag.PageCount = Convert.ToInt32(Math.Ceiling((double)list.Count() / take));
+            ViewBag.PageShow = pageId;
+            return await Task.FromResult(PartialView(list.Skip(skip).Take(take)));
         }
 
-        public IActionResult Edit()
+        public async Task<IActionResult> Edit(int id)
         {
-            return View();
+            return await Task.FromResult(View(_db.Form.GetById(id)));
+        }
+        [HttpPost]
+        public async Task<IActionResult> Edit(TblForm form)
+        {
+            if (ModelState.IsValid)
+            {
+                //TblForm selectedForm = _db.Form.GetById(id);
+                _db.Form.Update(form);
+                _db.Save();
+                return await Task.FromResult(Redirect("/Admin/Form/List?editForm=true"));
+            }
+            return await Task.FromResult(View(form));
+        }
+
+        public async Task<string> Delete(int id)
+        {
+            TblForm selectedForm = _db.Form.GetById(id);
+            if (selectedForm != null)
+            {
+                selectedForm.IsDeleted = true;
+                _db.Form.Update(selectedForm);
+                _db.Save();
+                #region Add Log
+                _db.UserLog.Add(new TblUserLog()
+                {
+                    Text = LogRepo.DeleteForm(SelectUser().IdentificationNo, selectedForm.Name),
+                    UserId = SelectUser().UserId,
+                    Type = 2,
+                    DateCreated = DateTime.Now
+                });
+                _db.Save();
+                #endregion
+                return await Task.FromResult("true");
+            }
+            return await Task.FromResult("false");
+        }
+        public async Task<IActionResult> AddPage(int id, string name = null)
+        {
+            ViewBag.name = name;
+            ViewBag.FormPageRel = _db.Page.Get(i => i.IsDeleted == false, orderBy: i => i.OrderByDescending(k => k.PageId)).ToList();
+            return await Task.FromResult(View(new TblPageFormRel()
+            {
+                FormId = id
+            }));
+        }
+        [HttpPost]
+        public async Task<IActionResult> AddPageAsync(TblPageFormRel addPage, string name = null)
+        {
+            ViewBag.name = name;
+            if (ModelState.IsValid)
+            {
+                _db.PageFormRel.Add(addPage);
+                _db.Save();
+                #region Add Log
+                TblForm selectedFormEdit = _db.Form.GetById(addPage.FormId);
+                TblPage selectedPageEdit = _db.Page.GetById(addPage.PageId);
+                _db.UserLog.Add(new TblUserLog()
+                {
+                    Text = LogRepo.AddFormPageRel(SelectUser().IdentificationNo, selectedFormEdit.Name.ToString(), selectedPageEdit.Name.ToString()),
+                    UserId = SelectUser().UserId,
+                    Type = 1,
+                    DateCreated = DateTime.Now
+                });
+                _db.Save();
+                #endregion
+                return await Task.FromResult(Redirect("/Admin/Form/Index/" + addPage.FormId + "?name=" + name));
+
+            }
+            ViewBag.FormPageRel = _db.Page.Get(i => i.IsDeleted == false, orderBy: i => i.OrderByDescending(k => k.PageId)).ToList();
+            return await Task.FromResult(View());
+        }
+
+
+        public async Task<IActionResult> EditPage(int id, string name = null)
+        {
+            ViewBag.name = name;
+            ViewBag.FormPageRel = _db.Page.Get(i => i.IsDeleted == false, orderBy: i => i.OrderByDescending(k => k.PageId)).ToList();
+            TblPageFormRel selectedForm = _db.PageFormRel.GetById(id);
+            return await Task.FromResult(View(selectedForm));
+        }
+        [HttpPost]
+        public async Task<IActionResult> EditPageAsync(TblPageFormRel editPage, string name = null)
+        {
+            ViewBag.name = name;
+            if (ModelState.IsValid)
+            {
+                _db.PageFormRel.Update(editPage);
+                _db.Save();
+                #region Add Log
+                TblForm selectedFormEdit = _db.Form.GetById(editPage.FormId);
+                TblPage selectedPageEdit = _db.Page.GetById(editPage.PageId);
+                _db.UserLog.Add(new TblUserLog()
+                {
+                    Text = LogRepo.EditFormPageRel(SelectUser().IdentificationNo, selectedFormEdit.Name.ToString(), selectedPageEdit.Name.ToString()),
+                    UserId = SelectUser().UserId,
+                    Type = 3,
+                    DateCreated = DateTime.Now
+                });
+                _db.Save();
+                #endregion
+                return await Task.FromResult(Redirect("/Admin/Form/Index/" + editPage.FormId + "?name=" + selectedFormEdit.Name));
+
+            }
+            ViewBag.FormPageRel = _db.Page.Get(i => i.IsDeleted == false, orderBy: i => i.OrderByDescending(k => k.PageId)).ToList();
+            return await Task.FromResult(View());
+        }
+
+
+        public async Task<string> DeleteFormPageRelId(int id)
+        {
+            TblPageFormRel selectedUser = _db.PageFormRel.GetById(id);
+            if (selectedUser != null)
+            {
+                selectedUser.IsDeleted = true;
+                _db.PageFormRel.Update(selectedUser);
+                TblForm selectedFormEdit = _db.Form.GetById(selectedUser.FormId);
+                TblPage selectedPageEdit = _db.Page.GetById(selectedUser.PageId);
+                _db.UserLog.Add(new TblUserLog()
+                {
+                    Text = LogRepo.DeleteFormPageRel(SelectUser().IdentificationNo, selectedFormEdit.Name.ToString(), selectedPageEdit.Name.ToString()),
+                    UserId = SelectUser().UserId,
+                    Type = 2,
+                    DateCreated = DateTime.Now
+                });
+                _db.Save();
+                return await Task.FromResult("true");
+            }
+            return await Task.FromResult("false");
+
         }
     }
 }

@@ -1,9 +1,13 @@
-﻿@{
+﻿@model TblForm
+@{
     ViewData["Title"] = "ویرایش فرم";
     Layout = "~/Areas/Admin/Views/_AdminLayout.cshtml";
 }
 
-<form class="form" method="post">
+<form class="form" method="post" asp-action="Edit">
+    <input type="hidden" asp-for="FormId" />
+    <input type="hidden" asp-for="IsDeleted" />
+    <input type="hidden" asp-for="DateCreated" />
     <div class="form-header">
         <h3>
             ویرایش
@@ -15,7 +19,7 @@
 
             <div class="fg-col ">
                 <label class="fg-label" for="name">نام</label>
-                <input class="entry" id="Name">
+                <input class="entry" asp-for="Name" value="@Model.Name" required>
                 <span class="text-danger"></span>
             </div>
 
@@ -23,7 +27,7 @@
 
             <div class="fg-col ">
                 <label class="fg-label" for="tel">توضیحات</label>
-                <textarea class="entry"></textarea>
+                <textarea class="entry"  asp-for="Body" value="@Model.Body" required></textarea>
                 <span class="text-danger"></span>
             </div>
 

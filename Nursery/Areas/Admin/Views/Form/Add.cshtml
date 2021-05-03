@@ -592,9 +592,19 @@
         </div>
         <div class="form-footer">
             <div class="actions">
-                <button id="btn-finish" goto="/Admin/Page/Index/@ViewBag.pageId?name=@ViewBag.name" class="btn btn-primary">
-                    <span>تایید</span>
-                </button>
+                @if (ViewBag.pageId > 0)
+                {
+                    <button id="btn-finish" goto="/Admin/Page/Index/@ViewBag.pageId?name=@ViewBag.name" class="btn btn-primary">
+                        <span>تایید</span>
+                    </button>
+                }
+                else
+                {
+                    <button id="btn-finish" goto="/Admin/Form/List?addForm=true" class="btn btn-primary">
+                        <span>تایید</span>
+                    </button>
+                }
+
             </div>
         </div>
     </div>

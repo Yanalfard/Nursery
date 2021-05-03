@@ -118,5 +118,40 @@ namespace Nursery.Utilities
                 $"کاربر {username} بخش {namePage} برای فرم {nameForm}    حذف  کرد    ";
         }
 
+
+        public static string AddFormPageRel(string username, string nameForm, string namePage)
+        {
+            return
+                $"کاربر {username} فرم{nameForm} را به بخش{namePage} اضافه کرد ";
+        }
+        public static string EditFormPageRel(string username, string nameForm, string namePage)
+        {
+            return
+               $"کاربر {username} فرم{nameForm} را از بخش{namePage} ویرایش کرد ";
+        }
+        public static string DeleteFormPageRel(string username, string nameForm, string namePage)
+        {
+            return
+               $"کاربر {username} فرم{nameForm} را از بخش{namePage} حدف کرد ";
+        }
+
+
+
+        public static string AddForm(string username, string formName)
+        {
+            return
+               $"کاربر: {username} فرم:  {formName} را ایجاد کرد";
+        }
+        public static string EditForm(string username, string formName)
+        {
+            return
+               $"کاربر: {username} فرم:  {formName} را ویرایش کرد";
+        }
+        public static string DeleteForm(string username, string formName)
+        {
+            return
+                $"کاربر: {username} فرم:  {formName} را حذف کرد";
+        }
+
     }
 }

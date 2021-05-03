@@ -1,5 +1,6 @@
 ﻿using DataLayer.Models;
 using DataLayer.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using Nursery.Utilities;
@@ -12,7 +13,7 @@ using System.Threading.Tasks;
 namespace Nursery.Areas.User.Controllers
 {
     [Area("User")]
-    [PermissionChecker("user")]
+    [Authorize]
     public class PageController : Controller
     {
         private Core _db = new Core();

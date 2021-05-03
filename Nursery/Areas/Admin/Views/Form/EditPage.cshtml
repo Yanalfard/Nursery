@@ -1,0 +1,41 @@
+﻿@model TblPageFormRel
+@{
+    ViewData["Title"] = "ویرایش بخش برای شیفت" + ViewBag.name;
+    Layout = "~/Areas/Admin/Views/_AdminLayout.cshtml";
+}
+
+<form class="form" asp-action="EditPage" method="post">
+
+    <input type="hidden" asp-for="PageFormRelId" />
+    <input type="hidden" asp-for="FormId" />
+    <input type="hidden" asp-for="IsDeleted" />
+    <div class="form-header">
+        <h3 dir="rtl">
+            ویرایش فرم برای بخش @ViewBag.name
+        </h3>
+    </div>
+    <div class="form-body">
+
+        <div class="grid-400">
+            @{
+                List<TblPage> listForm = ViewBag.FormPageRel as List<TblPage>;
+            }
+
+            <div class="fg-col ">
+                <label class="fg-label" for="name">شیفت</label>
+                <select class="uk-select" asp-for="PageId">
+                    @foreach (var item in listForm)
+                    {
+                        <option value="@item.PageId">@item.Name</option>
+                    }
+                </select>
+                <span class="text-danger"></span>
+            </div>
+
+        </div>
+
+    </div>
+    <div class="form-footer">
+        <button class="btn btn-primary"><span>ویرایش</span></button>
+    </div>
+</form>
