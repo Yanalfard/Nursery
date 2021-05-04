@@ -12,9 +12,9 @@
 </div>
 
 <div class="forms">
-    @foreach (var item in Model.TblPageFormRel)
+    @foreach (var item in Model.TblPageFormRel.Where(i => i.IsDeleted == false).Select(i=>i.Form).Where(i => i.IsDeleted == false))
     {
-        <partial name="_FormBlock" model="item.Form"/>
+        <partial name="_FormBlock" model="item" />
     }
 
 </div>

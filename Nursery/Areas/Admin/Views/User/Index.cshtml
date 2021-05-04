@@ -9,14 +9,14 @@
             <div class="fg-col" uk-lightbox>
                 @if (Model.ImageUrl != null)
                 {
-    <a class="uk-margin-auto-left" href="~/Images/User/@Model.ImageUrl">
-        <img class="profile-image" src="~/Images/User/@Model.ImageUrl" width="128" height="128" />
-    </a> }
-else
-{
-<a class="uk-margin-auto-left" href="~/st/png/blue.png">
-    <img class="profile-image" src="~/st/png/blue.png" width="128" height="128" />
-</a>}
+                    <a class="uk-margin-auto-left" href="~/Images/User/@Model.ImageUrl">
+                        <img class="profile-image" src="~/Images/User/@Model.ImageUrl" width="128" height="128" />
+                    </a> }
+                else
+                {
+                    <a class="uk-margin-auto-left" href="~/st/png/blue.png">
+                        <img class="profile-image" src="~/st/png/blue.png" width="128" height="128" />
+                    </a>}
             </div>
             <div class="grid-160">
                 <div class="fg-col">
@@ -86,40 +86,41 @@ else
                     {
 
 
-        @foreach (var item in Model.TblUserRoleRel.Where(i => i.IsDeleted == false))
-        {
-<tr id="userRoleIdId_@item.UserRoleId">
-    <td>@(Model.TblUserRoleRel.Where(i => i.IsDeleted == false).ToList().IndexOf(item)+1)</td>
-    <td>دسترسی به بخش   @item.Role.Name </td>
-    <td>@item.ShiftStart.TimeOfDay</td>
-    <td>@item.ShiftEnd.TimeOfDay</td>
-    <td class="actions">
-        <a href="" class="btn-icon round text-4" uk-icon="icon:ellipsis-h;ratio:.72"></a>
-        <div class="dropdown" uk-drop="mode: click;offset:4">
-            <ul class="dropdown-list">
-                <li>
-                    <a asp-area="admin"
-                       asp-controller="User"
-                       asp-action="EditRole"
-                       asp-route-id="@item.UserRoleId"
-                       asp-route-name="@item.Role.Name"
-                       class="rowr">
-                        <span class="new">ویرایش</span>
-                        <span class="small" uk-icon="pen-square"></span>
-                    </a>
-                </li>
-                <li>
-                    <a class="rowr btn-danger" popconfirm="floating:true;description:آیا از حذف  اطمینان دارید؟;direction:rb;type:danger;title:هشدار;okText:حذف;" popok="deleteUserRoleId(@item.UserRoleId)">
-                        <span>حذف</span>
-                        <span class="small" uk-icon="trash"></span>
-                    </a>
+                        @foreach (var item in Model.TblUserRoleRel.Where(i => i.IsDeleted == false))
+                        {
+                            <tr id="userRoleIdId_@item.UserRoleId">
+                                <td>@(Model.TblUserRoleRel.Where(i => i.IsDeleted == false).ToList().IndexOf(item)+1)</td>
+                                <td>دسترسی به شیفت   @item.Role.Name </td>
+                                <td>@item.ShiftStart.TimeOfDay</td>
+                                <td>@item.ShiftEnd.TimeOfDay</td>
+                                <td class="actions">
+                                    <a href="" class="btn-icon round text-4" uk-icon="icon:ellipsis-h;ratio:.72"></a>
+                                    <div class="dropdown" uk-drop="mode: click;offset:4">
+                                        <ul class="dropdown-list">
+                                            <li>
+                                                <a asp-area="admin"
+                                                   asp-controller="User"
+                                                   asp-action="EditRole"
+                                                   asp-route-id="@item.UserRoleId"
+                                                   asp-route-name="@item.Role.Name"
+                                                   class="rowr">
+                                                    <span class="new">ویرایش</span>
+                                                    <span class="small" uk-icon="pen-square"></span>
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a class="rowr btn-danger" popconfirm="floating:true;description:آیا از حذف  اطمینان دارید؟;direction:rb;type:danger;title:هشدار;okText:حذف;" popok="deleteUserRoleId(@item.UserRoleId)">
+                                                    <span>حذف</span>
+                                                    <span class="small" uk-icon="trash"></span>
+                                                </a>
 
 
-                </li>
-            </ul>
-        </div>
-    </td>
-</tr>}}
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </td>
+                            </tr>
+                        }}
 
 
 
@@ -256,15 +257,15 @@ else
 
 
 
-@foreach (var item in Model.TblUserLog.OrderByDescending(i=>i.DateCreated))
-{
-<div class="item @(colorByType(Convert.ToInt32(item.Type)))">
-    <span class="time">@item.DateCreated.Value.AllToShamsi()</span>
-    <i class="badge"></i>
-    <p class="text">
-        @item.Text
-    </p>
-</div>          }}
+                @foreach (var item in Model.TblUserLog.OrderByDescending(i => i.DateCreated))
+                {
+                    <div class="item @(colorByType(Convert.ToInt32(item.Type)))">
+                        <span class="time">@item.DateCreated.Value.AllToShamsi()</span>
+                        <i class="badge"></i>
+                        <p class="text">
+                            @item.Text
+                        </p>
+                    </div>}}
 
         </div>
     </div>
@@ -275,26 +276,44 @@ else
 @section Scripts{
     @if (Context.Request.Query["changePassword"].ToString() == "true")
     {
-<script>
-    notify('رمز کاربر مورد نظر تغیر یافت', 'success');
-</script>}
+        <script>
+            notify('رمز کاربر مورد نظر تغیر یافت', 'success');
+        </script>
+    }
+
+    @if (Context.Request.Query["addRoleInUser"].ToString() == "true")
+    {
+        <script>
+            notify('شیفت مورد نظر به کاربر اضافه شد', 'success');
+        </script>
+    }
+    @if (Context.Request.Query["editRoleInUser"].ToString() == "true")
+    {
+        <script>
+            notify('شیفت مورد برای این کاربر ویرایش شد', 'success');
+        </script>
+    }
     <script>
 
         function deleteUser(id) {
+            LoadingRun();
             $.get('/Admin/User/Delete/' + id, function (result) {
                 if (result == "true") {
                     window.location.href = "/Admin/User/List";
                     //$('#userId_' + id).addClass('text-danger');
                     //$("#userId_" + id).hide('slow');
                 }
+                LoadingEnd();
             });
         }
         function deleteUserRoleId(id) {
+            LoadingRun();
             $.get('/Admin/User/DeleteUserRoleId/' + id, function (result) {
                 if (result == "true") {
                     $('#userRoleIdId_' + id).addClass('uk-text-danger');
                     $("#userRoleIdId_" + id).hide('slow');
                 }
+                LoadingEnd();
             });
         }
     </script>

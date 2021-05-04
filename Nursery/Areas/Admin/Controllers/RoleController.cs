@@ -82,9 +82,9 @@ namespace Nursery.Areas.Admin.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    if (_db.Role.Any(i => i.Name == role.Name.Trim()))
+                    if (_db.Role.Any(i => i.Name == role.Name.Trim().ToLower() && i.IsDeleted == true))
                     {
-                        ModelState.AddModelError("Name", "نام شیفت تکراری می باشد");
+                        ModelState.AddModelError("Name", "نام بخش تکراری می باشد");
                     }
                     else
                     {
@@ -142,9 +142,9 @@ namespace Nursery.Areas.Admin.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    if (_db.Role.Any(i => i.RoleId != role.RoleId && i.Name == role.Name.Trim()))
+                    if (_db.Role.Any(i => i.RoleId != role.RoleId && i.Name == role.Name.Trim().ToLower() && i.IsDeleted == true))
                     {
-                        ModelState.AddModelError("Name", "نام شیفت تکراری می باشد");
+                        ModelState.AddModelError("Name", "نام بخش تکراری می باشد");
                     }
                     else
                     {
@@ -194,21 +194,28 @@ namespace Nursery.Areas.Admin.Controllers
             ViewBag.name = name;
             if (ModelState.IsValid)
             {
-                _db.RolePageRel.Add(addPage);
-                _db.Save();
-                #region Add Log
-                TblRole selectedRoleEdit = _db.Role.GetById(addPage.RoleId);
-                TblPage selectedPageEdit = _db.Page.GetById(addPage.PageId);
-                _db.UserLog.Add(new TblUserLog()
+                if (_db.RolePageRel.Any(i => i.RoleId == addPage.RoleId && i.PageId == addPage.PageId && i.IsDeleted == true))
                 {
-                    Text = LogRepo.AddRolePageRel(SelectUser().IdentificationNo, selectedRoleEdit.Name.ToString(), selectedPageEdit.Name.ToString()),
-                    UserId = SelectUser().UserId,
-                    Type = 1,
-                    DateCreated = DateTime.Now
-                });
-                _db.Save();
-                #endregion
-                return await Task.FromResult(Redirect("/Admin/Role/Index/" + addPage.RoleId + "?name=" + name));
+                    ModelState.AddModelError("PageId", "بخش مورد نظر به این شیفت اضافه شده است");
+                }
+                else
+                {
+                    _db.RolePageRel.Add(addPage);
+                    _db.Save();
+                    #region Add Log
+                    TblRole selectedRoleEdit = _db.Role.GetById(addPage.RoleId);
+                    TblPage selectedPageEdit = _db.Page.GetById(addPage.PageId);
+                    _db.UserLog.Add(new TblUserLog()
+                    {
+                        Text = LogRepo.AddRolePageRel(SelectUser().IdentificationNo, selectedRoleEdit.Name.ToString(), selectedPageEdit.Name.ToString()),
+                        UserId = SelectUser().UserId,
+                        Type = 1,
+                        DateCreated = DateTime.Now
+                    });
+                    _db.Save();
+                    #endregion
+                    return await Task.FromResult(Redirect("/Admin/Role/Index/" + addPage.RoleId + "?name=" + name));
+                }
 
             }
             ViewBag.RolePageRel = _db.Page.Get(i => i.IsDeleted == false, orderBy: i => i.OrderByDescending(k => k.PageId)).ToList();
@@ -228,22 +235,30 @@ namespace Nursery.Areas.Admin.Controllers
             ViewBag.name = name;
             if (ModelState.IsValid)
             {
-                _db.RolePageRel.Update(editPage);
-                _db.Save();
-                #region Add Log
-                TblRole selectedRoleEdit = _db.Role.GetById(editPage.RoleId);
-                TblPage selectedPageEdit = _db.Page.GetById(editPage.PageId);
-                _db.UserLog.Add(new TblUserLog()
+                if (_db.RolePageRel.Any(i => i.RolePageRelId != editPage.RolePageRelId && i.RoleId == editPage.RoleId && i.PageId == editPage.PageId && i.IsDeleted == true))
                 {
-                    Text = LogRepo.EditRolePageRel(SelectUser().IdentificationNo, selectedRoleEdit.Name.ToString(), selectedPageEdit.Name.ToString()),
-                    UserId = SelectUser().UserId,
-                    Type = 3,
-                    DateCreated = DateTime.Now
-                });
-                _db.Save();
-                #endregion
-                return await Task.FromResult(Redirect("/Admin/Role/Index/" + editPage.RoleId + "?name=" + name));
+                    ModelState.AddModelError("PageId", "بخش مورد نظر به این شیفت اضافه شده است");
+                }
+                else
+                {
 
+                    _db.RolePageRel.Update(editPage);
+                    _db.Save();
+                    #region Add Log
+                    TblRole selectedRoleEdit = _db.Role.GetById(editPage.RoleId);
+                    TblPage selectedPageEdit = _db.Page.GetById(editPage.PageId);
+                    _db.UserLog.Add(new TblUserLog()
+                    {
+                        Text = LogRepo.EditRolePageRel(SelectUser().IdentificationNo, selectedRoleEdit.Name.ToString(), selectedPageEdit.Name.ToString()),
+                        UserId = SelectUser().UserId,
+                        Type = 3,
+                        DateCreated = DateTime.Now
+                    });
+                    _db.Save();
+                    #endregion
+                    return await Task.FromResult(Redirect("/Admin/Role/Index/" + editPage.RoleId + "?name=" + name));
+
+                }
             }
             ViewBag.RolePageRel = _db.Page.Get(i => i.IsDeleted == false, orderBy: i => i.OrderByDescending(k => k.PageId)).ToList();
             return await Task.FromResult(View());

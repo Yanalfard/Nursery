@@ -33,7 +33,7 @@ namespace Nursery.Areas.User.Controllers
         public IActionResult Form(int? formId)
         {
             TblForm selectedForm = _db.Form.GetById(formId);
-
+            ViewBag.name = selectedForm.Name;
             List<TblFormFieldRel> listFild = _db.FormFieldRel.Get(i => i.FormId == selectedForm.FormId).ToList();
             List<DFieldVm> fields = new List<DFieldVm>();
             foreach (var item in listFild)

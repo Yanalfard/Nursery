@@ -90,19 +90,19 @@
 
                                     <ul class="dropdown-list">
                                         <li>
-                                            <a href="/Admin/Page/" class="rowr">
+                                            <a href="/User/Page/Form/@item.FormId" class="rowr">
                                                 <span class="new">مشاهده</span>
                                                 <span class="small" uk-icon="eye"></span>
                                             </a>
                                         </li>
                                         <li>
-                                            <a href="/Admin/Form/Edit" class="rowr">
+                                            <a href="/Admin/Form/Edit/@item.FormId" class="rowr">
                                                 <span>ویرایش</span>
                                                 <span class="small" uk-icon="pen-square"></span>
                                             </a>
                                         </li>
                                         <li>
-                                            <a class="rowr btn-danger" popconfirm="floating:true;description:آیا از حذف  اطمینان دارید؟;direction:rt;type:danger;title:هشدار;okText:حذف;" popok="deletePageFormRel(@item.PageFormRelId)">
+                                            <a class="rowr btn-danger" popconfirm="floating:true;description:آیا از حذف کاربر اطمینان دارید؟;direction:rt;type:danger;title:هشدار;okText:حذف;" popok="deletePageFormRel(@item.PageFormRelId)">
                                                 <span>حذف</span>
                                                 <span class="small" uk-icon="trash"></span>
                                             </a>
@@ -207,18 +207,32 @@
 
 
 @section Scripts{
+    @if (Context.Request.Query["editForm"].ToString() == "true")
+    {
+        <script>
+            notify('فرم مورد نظر ویرایش شد', 'success');
+        </script>
+    }
 
+    @if (Context.Request.Query["addForm"].ToString() == "true")
+    {
+        <script>
+            notify('فرم جدید اضافه شد', 'success');
+        </script>
+    }
 
 
     <script>
 
 
         function deletePageFormRel(id) {
+            LoadingRun();
             $.get('/Admin/Page/DeletePageFormRel/' + id, function (result) {
                 if (result == "true") {
                     $('#pageFormRel_' + id).addClass('uk-text-danger');
                     $("#pageFormRel_" + id).hide('slow');
                 }
+                LoadingEnd();
             });
         }
 

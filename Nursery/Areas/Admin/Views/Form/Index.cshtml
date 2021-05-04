@@ -21,7 +21,8 @@
                 <span>ویرایش</span>
                 <span uk-icon="pen-square"></span>
             </a>
-            <button class="btn btn-danger" popconfirm="direction:bc">
+
+            <button class="btn btn-danger" popconfirm="description:آیا از حذف فرم اطمینان دارید؟;direction:bc;type:danger;title:هشدار;okText:حذف;" popok="deleteForm(@Model.FormId)">
                 <span>حذف</span>
                 <span uk-icon="trash"></span>
             </button>
@@ -110,12 +111,24 @@
     </script>
 
     <script>
+
+        function deleteForm(id) {
+            LoadingRun();
+            $.get('/Admin/Form/Delete/' + id, function (result) {
+                if (result == "true") {
+                    window.location.href = "/Admin/Form/List";
+                }
+                LoadingEnd();
+            });
+        }
         function deleteFormPageRelId(id) {
+            LoadingRun();
             $.get('/Admin/Form/DeleteFormPageRelId/' + id, function (result) {
                 if (result == "true") {
                     $('#formPageRelId_' + id).addClass('uk-text-danger');
                     $("#formPageRelId_" + id).hide('slow');
                 }
+                LoadingEnd();
             });
         }
     </script>

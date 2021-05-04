@@ -48,11 +48,11 @@ namespace Nursery.Areas.Admin.Controllers
         {
             if (ModelState.IsValid)
             {
-                if (_db.User.Any(i => i.TellNo == user.TellNo))
+                if (_db.User.Any(i => i.TellNo == user.TellNo && i.IsDeleted == true))
                 {
                     ModelState.AddModelError("TellNo", "شماره تلفن تکراریست");
                 }
-                else if (_db.User.Any(i => i.IdentificationNo == user.IdentificationNo))
+                else if (_db.User.Any(i => i.IdentificationNo == user.IdentificationNo && i.IsDeleted == true))
                 {
                     ModelState.AddModelError("IdentificationNo", "کدملی تکراریست");
                 }
@@ -122,11 +122,11 @@ namespace Nursery.Areas.Admin.Controllers
         {
             if (ModelState.IsValid)
             {
-                if (_db.User.Any(i => i.UserId != user.UserId && i.TellNo == user.TellNo))
+                if (_db.User.Any(i => i.UserId != user.UserId && i.TellNo == user.TellNo && i.IsDeleted == true))
                 {
                     ModelState.AddModelError("TellNo", "شماره تلفن تکراریست");
                 }
-                else if (_db.User.Any(i => i.UserId != user.UserId && i.IdentificationNo == user.IdentificationNo))
+                else if (_db.User.Any(i => i.UserId != user.UserId && i.IdentificationNo == user.IdentificationNo && i.IsDeleted == true))
                 {
                     ModelState.AddModelError("IdentificationNo", "کدملی تکراریست");
                 }
@@ -312,25 +312,32 @@ namespace Nursery.Areas.Admin.Controllers
             ViewBag.name = name;
             if (ModelState.IsValid)
             {
-                _db.UserRoleRel.Add(addRole);
-                _db.Save();
-                #region Add Log
-                TblRole selectedRoleEdit = _db.Role.GetById(addRole.RoleId);
-                TblUser selectedUserEdit = _db.User.GetById(addRole.UserId);
-                _db.UserLog.Add(new TblUserLog()
+                if (_db.UserRoleRel.Any(i =>i.RoleId == addRole.RoleId && i.UserId == addRole.UserId && i.IsDeleted == true))
                 {
-                    Text = LogRepo.AddUserRoleRel(SelectUser().IdentificationNo, selectedRoleEdit.Name.ToString(), selectedUserEdit.IdentificationNo.ToString()),
-                    UserId = SelectUser().UserId,
-                    Type = 1,
-                    DateCreated = DateTime.Now
-                });
-                _db.Save();
-                #endregion
-                return await Task.FromResult(Redirect("/Admin/User/Index/" + addRole.UserId + "?name=" + name));
+                    ModelState.AddModelError("RoleId", "این شیفت به این کاربر  قبلا اضافه شده است");
+                }
+                else
+                {
+                    _db.UserRoleRel.Add(addRole);
+                    _db.Save();
+                    #region Add Log
+                    TblRole selectedRoleEdit = _db.Role.GetById(addRole.RoleId);
+                    TblUser selectedUserEdit = _db.User.GetById(addRole.UserId);
+                    _db.UserLog.Add(new TblUserLog()
+                    {
+                        Text = LogRepo.AddUserRoleRel(SelectUser().IdentificationNo, selectedRoleEdit.Name.ToString(), selectedUserEdit.IdentificationNo.ToString()),
+                        UserId = SelectUser().UserId,
+                        Type = 1,
+                        DateCreated = DateTime.Now
+                    });
+                    _db.Save();
+                    #endregion
+                    return await Task.FromResult(Redirect("/Admin/User/Index/" + addRole.UserId + "?name=" + name + "&addRoleInUser=true"));
 
+                }
             }
             ViewBag.UserRoleRel = _db.Role.Get(i => i.IsDeleted == false, orderBy: i => i.OrderByDescending(k => k.RoleId)).ToList();
-            return await Task.FromResult(View());
+            return await Task.FromResult(View(addRole));
         }
 
 
@@ -346,24 +353,33 @@ namespace Nursery.Areas.Admin.Controllers
             ViewBag.name = name;
             if (ModelState.IsValid)
             {
-                _db.UserRoleRel.Update(addRole);
-                _db.Save();
-                #region Add Log
-                TblRole selectedRoleEdit = _db.Role.GetById(addRole.RoleId);
-                TblUser selectedUserEdit = _db.User.GetById(addRole.UserId);
-                _db.UserLog.Add(new TblUserLog()
+                if (_db.UserRoleRel.Any(i => i.UserRoleId != addRole.UserRoleId && i.UserId == addRole.UserId && i.RoleId == addRole.RoleId))
                 {
-                    Text = LogRepo.EditUserRoleRel(SelectUser().IdentificationNo, selectedRoleEdit.Name.ToString(), selectedUserEdit.IdentificationNo.ToString()),
-                    UserId = SelectUser().UserId,
-                    Type = 3,
-                    DateCreated = DateTime.Now
-                });
-                _db.Save();
-                #endregion
-                return await Task.FromResult(Redirect("/Admin/User/Index/" + addRole.UserId + "?name=" + name));
+                    ModelState.AddModelError("RoleId", "این شیفت به این کاربر  قبلا اضافه شده است");
+                }
+                else
+                {
+
+                    _db.UserRoleRel.Update(addRole);
+                    _db.Save();
+                    #region Add Log
+                    TblRole selectedRoleEdit = _db.Role.GetById(addRole.RoleId);
+                    TblUser selectedUserEdit = _db.User.GetById(addRole.UserId);
+                    _db.UserLog.Add(new TblUserLog()
+                    {
+                        Text = LogRepo.EditUserRoleRel(SelectUser().IdentificationNo, selectedRoleEdit.Name.ToString(), selectedUserEdit.IdentificationNo.ToString()),
+                        UserId = SelectUser().UserId,
+                        Type = 3,
+                        DateCreated = DateTime.Now
+                    });
+                    _db.Save();
+                    #endregion
+                    return await Task.FromResult(Redirect("/Admin/User/Index/" + addRole.UserId + "?name=" + name + "&editRoleInUser=true"));
+
+                }
             }
             ViewBag.UserRoleRel = _db.Role.Get(i => i.IsDeleted == false, orderBy: i => i.OrderByDescending(k => k.RoleId)).ToList();
-            return await Task.FromResult(View());
+            return await Task.FromResult(View(addRole));
         }
     }
 }

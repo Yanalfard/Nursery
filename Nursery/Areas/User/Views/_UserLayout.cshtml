@@ -1,5 +1,7 @@
 ﻿@{
     Layout = "~/Views/Shared/_Layout.cshtml";
+    @using System.Security.Claims
+
 }
 
 @section Navigation{
@@ -58,7 +60,20 @@
         <h6>@User.Identity.Name</h6>
         @*<span>نام شیفت</span>*@
     </div>
-    <img src="~/st/png/C.png" height="48" width="48" alt="عکس کاربر" />
+    @{
+        var ImageUser = @User.FindFirstValue("ImageUser").ToString();
+
+
+    }
+
+    @if (ImageUser != null)
+    {
+        <img src="~/Images/User/@ImageUser" height="48" width="48" alt="عکس کاربر" />
+    }
+    else
+    {
+        <img src="~/st/png/C.png" height="48" width="48" alt="عکس کاربر" />
+    }
     <span uk-icon="chevron-down"></span>
     <div uk-drop="pos: bottom-justify; boundary: .user; boundary-align: true">
         <div class="dropdown">

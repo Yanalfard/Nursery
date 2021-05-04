@@ -1,6 +1,6 @@
 ﻿@model TblPageFormRel
 @{
-    ViewData["Title"] = "تایین بخش برای شیفت" + ViewBag.name;
+    ViewData["Title"] = " تعیین بخش برای فرم  " + ViewBag.name;
     Layout = "~/Areas/Admin/Views/_AdminLayout.cshtml";
 }
 
@@ -9,7 +9,7 @@
     <input type="hidden" name="name" value="@ViewBag.name" />
     <div class="form-header">
         <h3 dir="rtl">
-            تایین بخش برای شیفت @ViewBag.name
+            تعیین بخش برای فرم @ViewBag.name
         </h3>
     </div>
     <div class="form-body">
@@ -27,7 +27,7 @@
                         <option value="@item.PageId">@item.Name</option>
                     }
                 </select>
-                <span class="text-danger"></span>
+                <span class="text-danger" asp-validation-for="PageId"></span>
             </div>
 
 

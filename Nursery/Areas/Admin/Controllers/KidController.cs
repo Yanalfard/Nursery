@@ -26,7 +26,7 @@ namespace Nursery.Areas.Admin.Controllers
         }
         public IActionResult Index()
         {
-           var a = _db.Kid.Get((i) => i.KidId == 0);
+            var a = _db.Kid.Get((i) => i.KidId == 0);
 
             return View();
         }
@@ -64,26 +64,35 @@ namespace Nursery.Areas.Admin.Controllers
         {
             if (ModelState.IsValid)
             {
-                TblKid addKid = new TblKid()
+                if (_db.Kid.Any(i => i.Nickname == kid.Nickname && i.IsDeleted == true))
                 {
-                    Name = kid.Name,
-                    Nickname = kid.Nickname,
-                    IsDeleted=false,
 
-                };
-                _db.Kid.Add(addKid);
-                _db.Save();
-                #region Add Log
-                _db.UserLog.Add(new TblUserLog()
+                    ModelState.AddModelError("Nickname", "نام مستعار تکراریست");
+                }
+                else
                 {
-                    Text = LogRepo.AddKid(SelectUser().IdentificationNo, addKid.Name.ToString(), addKid.Nickname.ToString()),
-                    UserId = SelectUser().UserId,
-                    Type = 1,
-                    DateCreated = DateTime.Now
-                });
-                _db.Save();
-                #endregion
-                return await Task.FromResult(Redirect("/Admin/Kid/List?addKid=true"));
+                    TblKid addKid = new TblKid()
+                    {
+                        Name = kid.Name,
+                        Nickname = kid.Nickname,
+                        IsDeleted = false,
+
+                    };
+                    _db.Kid.Add(addKid);
+                    _db.Save();
+                    #region Add Log
+                    _db.UserLog.Add(new TblUserLog()
+                    {
+                        Text = LogRepo.AddKid(SelectUser().IdentificationNo, addKid.Name.ToString(), addKid.Nickname.ToString()),
+                        UserId = SelectUser().UserId,
+                        Type = 1,
+                        DateCreated = DateTime.Now
+                    });
+                    _db.Save();
+                    #endregion
+                    return await Task.FromResult(Redirect("/Admin/Kid/List?addKid=true"));
+                }
+
             }
             return await Task.FromResult(View(kid));
         }
@@ -103,22 +112,30 @@ namespace Nursery.Areas.Admin.Controllers
         {
             if (ModelState.IsValid)
             {
-                TblKid updateKid = _db.Kid.GetById(kid.KidId);
-                updateKid.Name = kid.Name;
-                updateKid.Nickname = kid.Nickname;
-                _db.Kid.Update(updateKid);
-                _db.Save();
-                #region Add Log
-                _db.UserLog.Add(new TblUserLog()
+                if (_db.Kid.Any(i => i.KidId != kid.KidId && i.Nickname == kid.Nickname && i.IsDeleted == true))
                 {
-                    Text = LogRepo.EditKid(SelectUser().IdentificationNo, updateKid.Name.ToString(), updateKid.Nickname.ToString()),
-                    UserId = SelectUser().UserId,
-                    Type = 3,
-                    DateCreated = DateTime.Now
-                });
-                _db.Save();
-                #endregion
-                return await Task.FromResult(Redirect("/Admin/Kid/List?editKid=true"));
+                    ModelState.AddModelError("Nickname", "نام مستعار تکراریست");
+
+                }
+                else
+                {
+                    TblKid updateKid = _db.Kid.GetById(kid.KidId);
+                    updateKid.Name = kid.Name;
+                    updateKid.Nickname = kid.Nickname;
+                    _db.Kid.Update(updateKid);
+                    _db.Save();
+                    #region Add Log
+                    _db.UserLog.Add(new TblUserLog()
+                    {
+                        Text = LogRepo.EditKid(SelectUser().IdentificationNo, updateKid.Name.ToString(), updateKid.Nickname.ToString()),
+                        UserId = SelectUser().UserId,
+                        Type = 3,
+                        DateCreated = DateTime.Now
+                    });
+                    _db.Save();
+                    #endregion
+                    return await Task.FromResult(Redirect("/Admin/Kid/List?editKid=true"));
+                }
             }
             return await Task.FromResult(View(kid));
         }

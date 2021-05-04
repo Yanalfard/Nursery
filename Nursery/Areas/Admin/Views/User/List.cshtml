@@ -60,53 +60,54 @@
             <tbody>
                 @foreach (var item in Model)
                 {
-    <tr id="userId_@item.UserId">
-        <td>@(Model.ToList().IndexOf(item)+1)</td>
-        <td>@item.Name</td>
-        <td><bdi>@item.TellNo</bdi></td>
-        <td>@item.DateCreated.DateToShamsi()</td>
-        <td>
+                    <tr id="userId_@item.UserId">
+                        <td>@(Model.ToList().IndexOf(item)+1)</td>
+                        <td>@item.Name</td>
+                        <td><bdi>@item.TellNo</bdi></td>
+                        <td>@item.DateCreated.DateToShamsi()</td>
+                        <td>
 
-            @foreach (var j in item.TblUserLog.OrderByDescending(i=>i.DateCreated))
-            {
-@j.DateCreated.Value.AllToShamsi()
-    break;
-                }
+                            @foreach (var j in item.TblUserLog.OrderByDescending(i => i.DateCreated))
+                            {
+                                @j.DateCreated.Value.AllToShamsi()
+                                break;
+                            }
 
 
-        </td>
-        @*<td>ادمین</td>*@
-        <td class="actions">
-            <a href="" class="btn-icon round text-4" uk-icon="icon:ellipsis-h;ratio:.72"></a>
-            <div class="dropdown" uk-drop="mode: click;offset:4">
-                <ul class="dropdown-list">
-                    <li>
-                        <a asp-area="Admin"
-                           asp-controller="User"
-                           asp-action="Index"
-                           asp-route-id="@item.UserId"
-                           asp-route-name="@item.Name"
-                           class="rowr">
-                            <span class="new">مشاهده</span>
-                            <span class="small" uk-icon="eye"></span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="/Admin/User/Edit/@item.UserId" class="rowr">
-                            <span class="new">ویرایش</span>
-                            <span class="small" uk-icon="pen-square"></span>
-                        </a>
-                    </li>
-                    <li>
-                        <a class="rowr btn-danger" popconfirm="floating:true;description:آیا از حذف کاربر اطمینان دارید؟;direction:rt;type:danger;title:هشدار;okText:حذف;" popok="deleteUser(@item.UserId)">
-                            <span>حذف</span>
-                            <span class="small" uk-icon="trash"></span>
-                        </a>
-                    </li>
-                </ul>
-            </div>
-        </td>
-    </tr>}
+                        </td>
+                        @*<td>ادمین</td>*@
+                        <td class="actions">
+                            <a href="" class="btn-icon round text-4" uk-icon="icon:ellipsis-h;ratio:.72"></a>
+                            <div class="dropdown" uk-drop="mode: click;offset:4">
+                                <ul class="dropdown-list">
+                                    <li>
+                                        <a asp-area="Admin"
+                                           asp-controller="User"
+                                           asp-action="Index"
+                                           asp-route-id="@item.UserId"
+                                           asp-route-name="@item.Name"
+                                           class="rowr">
+                                            <span class="new">مشاهده</span>
+                                            <span class="small" uk-icon="eye"></span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="/Admin/User/Edit/@item.UserId" class="rowr">
+                                            <span class="new">ویرایش</span>
+                                            <span class="small" uk-icon="pen-square"></span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a class="rowr btn-danger" popconfirm="floating:true;description:آیا از حذف کاربر اطمینان دارید؟;direction:rt;type:danger;title:هشدار;okText:حذف;" popok="deleteUser(@item.UserId)">
+                                            <span>حذف</span>
+                                            <span class="small" uk-icon="trash"></span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </td>
+                    </tr>
+}
 
             </tbody>
         </table>
@@ -122,29 +123,35 @@
                     int notpage = 0; }
                 @if (pageShow > 1)
                 {
-    <li><a onclick="showOtherPage(@(pageShow==0?1:pageShow-1))"><span uk-pagination-previous></span></a></li>}
+                    <li><a onclick="showOtherPage(@(pageShow==0?1:pageShow-1))"><span uk-pagination-previous></span></a></li>
+}
                 @if (pageShow > 3)
                 {
-    <li><a onclick="showOtherPage(1)">1</a></li>}
+                    <li><a onclick="showOtherPage(1)">1</a></li>
+}
                 @for (int i = 1; i <= pageCount; i++)
                 {
-    @if (i >= minPage && i <= maxPage)
-    {
-<li><a onclick="showOtherPage(@(i))" class="@(pageShow==i?"uk-active":"")">@i</a></li> notpage = 0;
-                }
-                else
-                {
-                    if (notpage == 0)
+                    @if (i >= minPage && i <= maxPage)
                     {
-<li class="uk-disabled"><span>...</span></li>notpage++;
+                        <li><a onclick="showOtherPage(@(i))" class="@(pageShow==i?"uk-active":"")">@i</a></li>
+ notpage = 0;
                     }
-                }}
+                    else
+                    {
+                        if (notpage == 0)
+                        {
+                            <li class="uk-disabled"><span>...</span></li>
+notpage++;
+                        }
+                    }}
                 @if (pageShow <= pageCount - 3)
                 {
-    <li><a onclick="showOtherPage(@(pageCount))">@pageCount</a></li>}
+                    <li><a onclick="showOtherPage(@(pageCount))">@pageCount</a></li>
+}
                 @if (pageShow < pageCount)
                 {
-    <li><a onclick="showOtherPage(@(pageShow==0?2:pageShow+1))"><span uk-pagination-next></span></a></li>}
+                    <li><a onclick="showOtherPage(@(pageShow==0?2:pageShow+1))"><span uk-pagination-next></span></a></li>
+}
 
             </ul>
         </div>
@@ -162,15 +169,17 @@
 
     @if (Context.Request.Query["editUser"].ToString() == "true")
     {
-<script>
-    notify('کاربر مورد نظر ویرایش شد', 'success');
-</script>}
+        <script>
+            notify('کاربر مورد نظر ویرایش شد', 'success');
+        </script>
+}
 
     @if (Context.Request.Query["addUser"].ToString() == "true")
     {
-<script>
-    notify('کاربر جدید اضافه شد', 'success');
-</script>}
+        <script>
+            notify('کاربر جدید اضافه شد', 'success');
+        </script>
+}
     <script>
         function showOtherPage(id) {
             $('#pageId').val(id);
@@ -179,11 +188,13 @@
 
 
         function deleteUser(id) {
+            LoadingRun();
             $.get('/Admin/User/Delete/' + id, function (result) {
                 if (result == "true") {
                     $('#userId_' + id).addClass('uk-text-danger');
                     $("#userId_" + id).hide('slow');
                 }
+                LoadingEnd();
             });
         }
     </script>

@@ -237,21 +237,29 @@ namespace Nursery.Areas.Admin.Controllers
             ViewBag.name = name;
             if (ModelState.IsValid)
             {
-                _db.PageFormRel.Add(addPage);
-                _db.Save();
-                #region Add Log
-                TblForm selectedFormEdit = _db.Form.GetById(addPage.FormId);
-                TblPage selectedPageEdit = _db.Page.GetById(addPage.PageId);
-                _db.UserLog.Add(new TblUserLog()
+                if (_db.PageFormRel.Any(i => i.FormId == addPage.FormId && i.PageId == addPage.PageId && i.IsDeleted == true))
                 {
-                    Text = LogRepo.AddFormPageRel(SelectUser().IdentificationNo, selectedFormEdit.Name.ToString(), selectedPageEdit.Name.ToString()),
-                    UserId = SelectUser().UserId,
-                    Type = 1,
-                    DateCreated = DateTime.Now
-                });
-                _db.Save();
-                #endregion
-                return await Task.FromResult(Redirect("/Admin/Form/Index/" + addPage.FormId + "?name=" + name));
+                    ModelState.AddModelError("PageId", "بخش مورد نظر قبلا به این فرم اضافه شده است");
+                }
+                else
+                {
+                    _db.PageFormRel.Add(addPage);
+                    _db.Save();
+                    #region Add Log
+                    TblForm selectedFormEdit = _db.Form.GetById(addPage.FormId);
+                    TblPage selectedPageEdit = _db.Page.GetById(addPage.PageId);
+                    _db.UserLog.Add(new TblUserLog()
+                    {
+                        Text = LogRepo.AddFormPageRel(SelectUser().IdentificationNo, selectedFormEdit.Name.ToString(), selectedPageEdit.Name.ToString()),
+                        UserId = SelectUser().UserId,
+                        Type = 1,
+                        DateCreated = DateTime.Now
+                    });
+                    _db.Save();
+                    #endregion
+                    return await Task.FromResult(Redirect("/Admin/Form/Index/" + addPage.FormId + "?name=" + name));
+                }
+
 
             }
             ViewBag.FormPageRel = _db.Page.Get(i => i.IsDeleted == false, orderBy: i => i.OrderByDescending(k => k.PageId)).ToList();
@@ -272,21 +280,29 @@ namespace Nursery.Areas.Admin.Controllers
             ViewBag.name = name;
             if (ModelState.IsValid)
             {
-                _db.PageFormRel.Update(editPage);
-                _db.Save();
-                #region Add Log
-                TblForm selectedFormEdit = _db.Form.GetById(editPage.FormId);
-                TblPage selectedPageEdit = _db.Page.GetById(editPage.PageId);
-                _db.UserLog.Add(new TblUserLog()
+                if (_db.PageFormRel.Any(i => i.PageFormRelId != editPage.PageFormRelId && i.FormId == editPage.FormId && i.PageId == editPage.PageId && i.IsDeleted == true))
                 {
-                    Text = LogRepo.EditFormPageRel(SelectUser().IdentificationNo, selectedFormEdit.Name.ToString(), selectedPageEdit.Name.ToString()),
-                    UserId = SelectUser().UserId,
-                    Type = 3,
-                    DateCreated = DateTime.Now
-                });
-                _db.Save();
-                #endregion
-                return await Task.FromResult(Redirect("/Admin/Form/Index/" + editPage.FormId + "?name=" + selectedFormEdit.Name));
+                    ModelState.AddModelError("PageId", "بخش مورد نظر قبلا به این فرم اضافه شده است");
+                }
+                else
+                {
+                    _db.PageFormRel.Update(editPage);
+                    _db.Save();
+                    #region Add Log
+                    TblForm selectedFormEdit = _db.Form.GetById(editPage.FormId);
+                    TblPage selectedPageEdit = _db.Page.GetById(editPage.PageId);
+                    _db.UserLog.Add(new TblUserLog()
+                    {
+                        Text = LogRepo.EditFormPageRel(SelectUser().IdentificationNo, selectedFormEdit.Name.ToString(), selectedPageEdit.Name.ToString()),
+                        UserId = SelectUser().UserId,
+                        Type = 3,
+                        DateCreated = DateTime.Now
+                    });
+                    _db.Save();
+                    #endregion
+                    return await Task.FromResult(Redirect("/Admin/Form/Index/" + editPage.FormId + "?name=" + selectedFormEdit.Name));
+
+                }
 
             }
             ViewBag.FormPageRel = _db.Page.Get(i => i.IsDeleted == false, orderBy: i => i.OrderByDescending(k => k.PageId)).ToList();

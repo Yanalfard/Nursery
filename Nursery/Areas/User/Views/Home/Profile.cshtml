@@ -2,6 +2,8 @@
 @{
     ViewData["Title"] = Model.Name;
     Layout = "~/Areas/User/Views/_UserLayout.cshtml";
+    @using System.Security.Claims
+
 }
 
 <div class="col gap-between-card">
@@ -9,9 +11,23 @@
     <div class="form">
         <div class="form-body">
             <div class="fg-col" uk-lightbox>
-                <a class="uk-margin-auto-left" href="~/st/png/blue.png">
-                    <img class="profile-image" src="~/st/png/blue.png" width="128" height="128" />
-                </a>
+                @{
+                    var ImageUser = @User.FindFirstValue("ImageUser").ToString();
+                }
+
+                @if (ImageUser != null)
+                {
+                    <a class="uk-margin-auto-left" href="~/Images/User/@ImageUser">
+                        <img class="profile-image" src="~/Images/User/@ImageUser" width="128" height="128" />
+                    </a>
+                }
+                else
+                {
+                    <a class="uk-margin-auto-left" href="~/st/png/C.png">
+                        <img class="profile-image" src="~/st/png/C.png" width="128" height="128" />
+                    </a>
+                }
+
             </div>
             <div class="grid-160">
                 <div class="fg-col">

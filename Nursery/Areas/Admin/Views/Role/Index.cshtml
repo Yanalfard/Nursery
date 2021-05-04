@@ -196,11 +196,13 @@
 
     <script>
         function deleteRolePageRelId(id) {
+            LoadingRun();
             $.get('/Admin/Role/DeleteRolePageRelId/' + id, function (result) {
                 if (result == "true") {
                     $('#rolePageRelId_' + id).addClass('uk-text-danger');
                     $("#rolePageRelId_" + id).hide('slow');
                 }
+                LoadingEnd();
             });
         }
     </script>

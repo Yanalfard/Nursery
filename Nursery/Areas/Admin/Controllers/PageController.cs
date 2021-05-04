@@ -76,7 +76,7 @@ namespace Nursery.Areas.Admin.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    if (_db.Page.Any(i => i.Name == role.Name.Trim()))
+                    if (_db.Page.Any(i => i.Name == role.Name.Trim().ToLower() && i.IsDeleted == true))
                     {
                         ModelState.AddModelError("Name", "نام بخش تکراری می باشد");
                     }
@@ -133,9 +133,9 @@ namespace Nursery.Areas.Admin.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    if (_db.Page.Any(i => i.Name == role.Name && i.PageId != role.PageId))
+                    if (_db.Page.Any(i => i.PageId != role.PageId && i.Name == role.Name.Trim().ToLower() && i.IsDeleted == true))
                     {
-                        ModelState.AddModelError("Name", "نام شیفت تکراری می باشد");
+                        ModelState.AddModelError("Name", "نام بخش تکراری می باشد");
                     }
                     else
                     {

@@ -9,7 +9,20 @@
     <div class="card">
         <!-- #region User -->
         <div class="icon-list-item">
-            <img src="~/st/png/blue.png" class="round" width="42" height="42" alt="" />
+            @{
+                var ImageUser = @User.FindFirstValue("ImageUser").ToString();
+
+
+            }
+
+            @if (ImageUser != null)
+            {
+                <img src="~/Images/User/@ImageUser" class="round" width="42" height="42" alt="" />
+            }
+            else
+            {
+                <img src="~/st/png/C.png"class="round" width="42" height="42" alt=""/>
+            }
             <div class="col">
                 <label>@Model.Name</label>
 
@@ -52,7 +65,7 @@
                     <thead>
                         <tr>
                             <th>ردیف</th>
-                            <th>بخش</th>
+                            <th>شیفت</th>
                             <th>از زمان</th>
                             <th>تا زمان</th>
                         </tr>
@@ -89,9 +102,9 @@
     {
         @foreach (var j in item.Role.TblRolePageRel.Where(i => i.IsDeleted == false))
         {
-            @foreach (var k in j.Page.TblPageFormRel.Where(i=>i.IsDeleted==false))
+            @foreach (var k in j.Page.TblPageFormRel.Where(i => i.IsDeleted == false).Select(i => i.Form).Where(i => i.IsDeleted == false))
             {
-                <partial name="_FormBlock" model="k.Form" />
+                <partial name="_FormBlock" model="k" />
             }
         }
     }

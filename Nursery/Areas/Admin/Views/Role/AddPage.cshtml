@@ -1,6 +1,6 @@
 ﻿@model TblRolePageRel
 @{
-    ViewData["Title"] = "تایین بخش برای شیفت" + ViewBag.name;
+    ViewData["Title"] = "   تعیین بخش برای شیفت  " + ViewBag.name;
     Layout = "~/Areas/Admin/Views/_AdminLayout.cshtml";
 }
 
@@ -28,7 +28,7 @@
                         <option value="@item.PageId">@item.Name</option>
                     }
                 </select>
-                <span class="text-danger"></span>
+                <span class="text-danger"asp-validation-for="PageId"></span>
             </div>
 
 
