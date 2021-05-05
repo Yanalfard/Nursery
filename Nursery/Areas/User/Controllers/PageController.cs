@@ -96,9 +96,11 @@ namespace Nursery.Areas.User.Controllers
 
         }
 
-        public IActionResult SubmitForm()
+        [HttpPost]
+        [Route("/User/Page/Form/SubmitForm")]
+        public IActionResult SubmitForm([FromBody] ICollection<TblValue> values)
         {
-            Console.Beep();
+            // User Id
             return Ok();
         }
     }

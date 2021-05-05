@@ -4,6 +4,7 @@ define(["require", "exports"], function (require, exports) {
     exports.TblValue = void 0;
     var TblValue = /** @class */ (function () {
         function TblValue() {
+            this.FormFieldId = -1;
             this.ValueId = -1;
             this.UserId = -1;
             this.Value = '';

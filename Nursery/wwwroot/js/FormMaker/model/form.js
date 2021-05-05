@@ -49,11 +49,34 @@ define(["require", "exports", "./field"], function (require, exports, field_1) {
             return ans;
         };
         Form.prototype.submitClick = function (e) {
+            var _this = this;
             //e.preventDefault(); return null;
             e.preventDefault();
             if (!this.validate())
                 return null;
-            this.element.submit();
+            var res = [];
+            this.Fields.forEach(function (i) {
+                var val = i.getVal();
+                val.FormFieldId = _this.data.FormId;
+                res.push(val);
+            });
+            eval('LoadingRun();');
+            fetch(this.sendto, {
+                method: 'post',
+                mode: 'cors',
+                cache: 'no-cache',
+                credentials: 'same-origin',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(res)
+            }).then(function (response) {
+                window.location.href = _this.element.getAttribute('goto');
+            })["catch"](function () {
+                eval('LoadingEnd();');
+            });
+            console.log(res);
+            //this.element.submit();
         };
         return Form;
     }());

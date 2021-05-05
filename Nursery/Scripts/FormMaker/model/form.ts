@@ -1,13 +1,17 @@
 ﻿import { TblField } from "./db/tblField";
 import { TblForm } from "./db/tblForm";
+import { TblValue } from "./db/tblValue";
 import { Field } from "./field";
 
 export class Form {
+    dform: HTMLElement;
     element: HTMLFormElement;
     header: HTMLElement;
     body: HTMLElement;
     footer: HTMLElement;
     submit: HTMLButtonElement;
+    public sendto: string;
+    public goto: string;
 
     public readonly data: TblForm;
 
@@ -62,11 +66,39 @@ export class Form {
     }
 
     submitClick(e): void {
+
         //e.preventDefault(); return null;
         e.preventDefault();
         if (!this.validate()) return null;
 
-        this.element.submit();
+        let res: TblValue[] = [];
+
+        this.Fields.forEach(i => {
+            let val = i.getVal();
+            val.FormFieldId = this.data.FormId;
+            res.push(val);
+        });
+
+        eval('LoadingRun();');
+
+        fetch(this.sendto, {
+            method: 'post',
+            mode: 'cors',
+            cache: 'no-cache',
+            credentials: 'same-origin',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(res)
+        }).then(response => {
+            window.location.href = this.element.getAttribute('goto');
+        }).catch(() => {
+            eval('LoadingEnd();');
+        })
+
+        console.log(res);
+
+        //this.element.submit();
     }
 
 }
