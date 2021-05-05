@@ -82,7 +82,7 @@ namespace Nursery.Areas.Admin.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    if (_db.Role.Any(i => i.Name == role.Name.Trim().ToLower() && i.IsDeleted == true))
+                    if (_db.Role.Any(i => i.Name == role.Name.Trim().ToLower() && i.IsDeleted == false))
                     {
                         ModelState.AddModelError("Name", "نام بخش تکراری می باشد");
                     }
@@ -142,7 +142,7 @@ namespace Nursery.Areas.Admin.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    if (_db.Role.Any(i => i.RoleId != role.RoleId && i.Name == role.Name.Trim().ToLower() && i.IsDeleted == true))
+                    if (_db.Role.Any(i => i.RoleId != role.RoleId && i.Name == role.Name.Trim().ToLower() && i.IsDeleted == false))
                     {
                         ModelState.AddModelError("Name", "نام بخش تکراری می باشد");
                     }
@@ -194,7 +194,7 @@ namespace Nursery.Areas.Admin.Controllers
             ViewBag.name = name;
             if (ModelState.IsValid)
             {
-                if (_db.RolePageRel.Any(i => i.RoleId == addPage.RoleId && i.PageId == addPage.PageId && i.IsDeleted == true))
+                if (_db.RolePageRel.Any(i => i.RoleId == addPage.RoleId && i.PageId == addPage.PageId && i.IsDeleted == false))
                 {
                     ModelState.AddModelError("PageId", "بخش مورد نظر به این شیفت اضافه شده است");
                 }
@@ -235,7 +235,7 @@ namespace Nursery.Areas.Admin.Controllers
             ViewBag.name = name;
             if (ModelState.IsValid)
             {
-                if (_db.RolePageRel.Any(i => i.RolePageRelId != editPage.RolePageRelId && i.RoleId == editPage.RoleId && i.PageId == editPage.PageId && i.IsDeleted == true))
+                if (_db.RolePageRel.Any(i => i.RolePageRelId != editPage.RolePageRelId && i.RoleId == editPage.RoleId && i.PageId == editPage.PageId && i.IsDeleted == false))
                 {
                     ModelState.AddModelError("PageId", "بخش مورد نظر به این شیفت اضافه شده است");
                 }

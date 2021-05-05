@@ -64,7 +64,7 @@ namespace Nursery.Areas.Admin.Controllers
         {
             if (ModelState.IsValid)
             {
-                if (_db.Kid.Any(i => i.Nickname == kid.Nickname && i.IsDeleted == true))
+                if (_db.Kid.Any(i => i.Nickname == kid.Nickname && i.IsDeleted == false))
                 {
 
                     ModelState.AddModelError("Nickname", "نام مستعار تکراریست");
@@ -112,7 +112,7 @@ namespace Nursery.Areas.Admin.Controllers
         {
             if (ModelState.IsValid)
             {
-                if (_db.Kid.Any(i => i.KidId != kid.KidId && i.Nickname == kid.Nickname && i.IsDeleted == true))
+                if (_db.Kid.Any(i => i.KidId != kid.KidId && i.Nickname == kid.Nickname && i.IsDeleted == false))
                 {
                     ModelState.AddModelError("Nickname", "نام مستعار تکراریست");
 

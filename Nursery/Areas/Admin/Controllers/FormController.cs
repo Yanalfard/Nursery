@@ -237,7 +237,7 @@ namespace Nursery.Areas.Admin.Controllers
             ViewBag.name = name;
             if (ModelState.IsValid)
             {
-                if (_db.PageFormRel.Any(i => i.FormId == addPage.FormId && i.PageId == addPage.PageId && i.IsDeleted == true))
+                if (_db.PageFormRel.Any(i => i.FormId == addPage.FormId && i.PageId == addPage.PageId && i.IsDeleted == false))
                 {
                     ModelState.AddModelError("PageId", "بخش مورد نظر قبلا به این فرم اضافه شده است");
                 }
@@ -280,7 +280,7 @@ namespace Nursery.Areas.Admin.Controllers
             ViewBag.name = name;
             if (ModelState.IsValid)
             {
-                if (_db.PageFormRel.Any(i => i.PageFormRelId != editPage.PageFormRelId && i.FormId == editPage.FormId && i.PageId == editPage.PageId && i.IsDeleted == true))
+                if (_db.PageFormRel.Any(i => i.PageFormRelId != editPage.PageFormRelId && i.FormId == editPage.FormId && i.PageId == editPage.PageId && i.IsDeleted == false))
                 {
                     ModelState.AddModelError("PageId", "بخش مورد نظر قبلا به این فرم اضافه شده است");
                 }

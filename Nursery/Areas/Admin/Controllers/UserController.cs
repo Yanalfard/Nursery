@@ -48,11 +48,11 @@ namespace Nursery.Areas.Admin.Controllers
         {
             if (ModelState.IsValid)
             {
-                if (_db.User.Any(i => i.TellNo == user.TellNo && i.IsDeleted == true))
+                if (_db.User.Any(i => i.TellNo == user.TellNo && i.IsDeleted == false))
                 {
                     ModelState.AddModelError("TellNo", "شماره تلفن تکراریست");
                 }
-                else if (_db.User.Any(i => i.IdentificationNo == user.IdentificationNo && i.IsDeleted == true))
+                else if (_db.User.Any(i => i.IdentificationNo == user.IdentificationNo && i.IsDeleted == false))
                 {
                     ModelState.AddModelError("IdentificationNo", "کدملی تکراریست");
                 }
@@ -122,11 +122,11 @@ namespace Nursery.Areas.Admin.Controllers
         {
             if (ModelState.IsValid)
             {
-                if (_db.User.Any(i => i.UserId != user.UserId && i.TellNo == user.TellNo && i.IsDeleted == true))
+                if (_db.User.Any(i => i.UserId != user.UserId && i.TellNo == user.TellNo && i.IsDeleted == false))
                 {
                     ModelState.AddModelError("TellNo", "شماره تلفن تکراریست");
                 }
-                else if (_db.User.Any(i => i.UserId != user.UserId && i.IdentificationNo == user.IdentificationNo && i.IsDeleted == true))
+                else if (_db.User.Any(i => i.UserId != user.UserId && i.IdentificationNo == user.IdentificationNo && i.IsDeleted == false))
                 {
                     ModelState.AddModelError("IdentificationNo", "کدملی تکراریست");
                 }
@@ -312,7 +312,7 @@ namespace Nursery.Areas.Admin.Controllers
             ViewBag.name = name;
             if (ModelState.IsValid)
             {
-                if (_db.UserRoleRel.Any(i =>i.RoleId == addRole.RoleId && i.UserId == addRole.UserId && i.IsDeleted == true))
+                if (_db.UserRoleRel.Any(i => i.RoleId == addRole.RoleId && i.UserId == addRole.UserId && i.IsDeleted == false))
                 {
                     ModelState.AddModelError("RoleId", "این شیفت به این کاربر  قبلا اضافه شده است");
                 }
@@ -353,7 +353,7 @@ namespace Nursery.Areas.Admin.Controllers
             ViewBag.name = name;
             if (ModelState.IsValid)
             {
-                if (_db.UserRoleRel.Any(i => i.UserRoleId != addRole.UserRoleId && i.UserId == addRole.UserId && i.RoleId == addRole.RoleId))
+                if (_db.UserRoleRel.Any(i => i.UserRoleId != addRole.UserRoleId && i.UserId == addRole.UserId && i.RoleId == addRole.RoleId && i.IsDeleted == false))
                 {
                     ModelState.AddModelError("RoleId", "این شیفت به این کاربر  قبلا اضافه شده است");
                 }
