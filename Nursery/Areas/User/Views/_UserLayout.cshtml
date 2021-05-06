@@ -61,12 +61,14 @@
         @*<span>نام شیفت</span>*@
     </div>
     @{
-        var ImageUser = @User.FindFirstValue("ImageUser").ToString();
-
-
+        var ImageUser = "";
+        if (User.FindFirstValue("ImageUser").ToString() != "")
+        {
+            ImageUser = User.FindFirstValue("ImageUser").ToString();
+        }
     }
 
-    @if (ImageUser != null)
+    @if (ImageUser != "")
     {
         <img src="~/Images/User/@ImageUser" height="48" width="48" alt="عکس کاربر" />
     }

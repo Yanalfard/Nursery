@@ -97,6 +97,7 @@ namespace Nursery.Areas.Admin.Controllers
                 field.Tooltip = dfield.Tooltip;
                 field.Type = dfield.Type.ToString();
                 field.IsDeleted = false;
+                field.IsRequired = dfield.IsRequired;
 
                 //field -> db
                 _db.Field.Add(field);

@@ -56,9 +56,16 @@ namespace Nursery.Controllers
                         //new Claim(ClaimTypes.Role,db.Role.GetById(user.RoleId).Name.Trim()),
                         new Claim(ClaimTypes.Email,user.IdentificationNo.Trim()),
                         new Claim("CodeMeli", user.IdentificationNo),
-                        new Claim("ImageUser", user.ImageUrl),
 
                     };
+                        if (user.ImageUrl != null)
+                        {
+                            claims.Add(new Claim("ImageUser", user.ImageUrl));
+                        }
+                        else
+                        {
+                            claims.Add(new Claim("ImageUser", ""));
+                        }
                         var identity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
                         var principal = new ClaimsPrincipal(identity);
 

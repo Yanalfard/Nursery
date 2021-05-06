@@ -10,18 +10,20 @@
         <!-- #region User -->
         <div class="icon-list-item">
             @{
-                var ImageUser = @User.FindFirstValue("ImageUser").ToString();
-
-
+                var ImageUser = "";
+                if (User.FindFirstValue("ImageUser").ToString() != "")
+                {
+                    ImageUser = User.FindFirstValue("ImageUser").ToString();
+                }
             }
 
-            @if (ImageUser != null)
+            @if (ImageUser != "")
             {
                 <img src="~/Images/User/@ImageUser" class="round" width="42" height="42" alt="" />
             }
             else
             {
-                <img src="~/st/png/C.png"class="round" width="42" height="42" alt=""/>
+                <img src="~/st/png/C.png" class="round" width="42" height="42" alt="" />
             }
             <div class="col">
                 <label>@Model.Name</label>

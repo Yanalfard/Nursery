@@ -2,6 +2,7 @@
 using DataLayer.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Routing;
 using Newtonsoft.Json;
 using Nursery.Utilities;
 using Services.Services;
@@ -32,6 +33,10 @@ namespace Nursery.Areas.User.Controllers
         [Route("/User/Page/Form/{formID}")]
         public IActionResult Form(int? formId)
         {
+            if (formId == null)
+            {
+                return Redirect("/User/Home/Index");
+            }
             TblForm selectedForm = _db.Form.GetById(formId);
             ViewBag.name = selectedForm.Name;
             List<TblFormFieldRel> listFild = _db.FormFieldRel.Get(i => i.FormId == selectedForm.FormId).ToList();
@@ -57,7 +62,7 @@ namespace Nursery.Areas.User.Controllers
 
                 fields.Add(new DFieldVm
                 {
-                    FieldId = item.FieldId,
+                    FieldId = item.FormFieldId,
                     FormId = selectedForm.FormId,
                     IsRequired = (bool)item.Field.IsRequired,
                     Label = item.Field.Label,
@@ -98,10 +103,25 @@ namespace Nursery.Areas.User.Controllers
 
         [HttpPost]
         [Route("/User/Page/Form/SubmitForm")]
-        public IActionResult SubmitForm([FromBody] ICollection<TblValue> values)
+        public IActionResult SubmitForm([FromBody] ICollection<DValueVm> values)
         {
-            // User Id
-            return Ok();
+            //Get user Id User Id
+            int userId = SelectUser().UserId;
+
+            List<TblValue> addValue = new List<TblValue>();
+            foreach (var val in values)
+            {
+                TblValue addVal = new TblValue();
+                addVal.UserId = userId;
+                addVal.DateCreated = DateTime.Now;
+                addVal.FormFieldId = val.FormFieldId;
+                addVal.Value = val.Value;
+                addVal.IsAccepted = false;
+                addVal.IsDeleted = false;
+                _db.Value.Add(addVal);
+            }
+            _db.Save();
+           return Ok();
         }
     }
 }

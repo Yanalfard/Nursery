@@ -57,7 +57,8 @@ define(["require", "exports", "./field"], function (require, exports, field_1) {
             var res = [];
             this.Fields.forEach(function (i) {
                 var val = i.getVal();
-                val.FormFieldId = _this.data.FormId;
+                val.FormFieldId = i.data.FieldId;
+                val.FormId = _this.data.FormId;
                 res.push(val);
             });
             eval('LoadingRun();');

@@ -75,9 +75,12 @@ export class Form {
 
         this.Fields.forEach(i => {
             let val = i.getVal();
-            val.FormFieldId = this.data.FormId;
+            val.FormFieldId = i.data.FieldId;
+            val.FormId = this.data.FormId;
             res.push(val);
         });
+
+
 
         eval('LoadingRun();');
 

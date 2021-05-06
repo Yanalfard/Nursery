@@ -12,10 +12,14 @@
         <div class="form-body">
             <div class="fg-col" uk-lightbox>
                 @{
-                    var ImageUser = @User.FindFirstValue("ImageUser").ToString();
+                    var ImageUser = "";
+                    if (User.FindFirstValue("ImageUser").ToString() != "")
+                    {
+                        ImageUser = User.FindFirstValue("ImageUser").ToString();
+                    }
                 }
 
-                @if (ImageUser != null)
+                @if (ImageUser != "")
                 {
                     <a class="uk-margin-auto-left" href="~/Images/User/@ImageUser">
                         <img class="profile-image" src="~/Images/User/@ImageUser" width="128" height="128" />
@@ -83,7 +87,7 @@
                     {
                         <tr id="userRoleIdId_@item.UserRoleId">
                             <td>@(Model.TblUserRoleRel.Where(i => i.IsDeleted == false).ToList().IndexOf(item)+1)</td>
-                            <td>دسترسی به بخش   @item.Role.Name </td>
+                            <td>دسترسی به شیفت   @item.Role.Name </td>
                             <td>@item.ShiftStart.TimeOfDay</td>
                             <td>@item.ShiftEnd.TimeOfDay</td>
                         </tr>
