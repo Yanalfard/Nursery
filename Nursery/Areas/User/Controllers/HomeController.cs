@@ -64,5 +64,26 @@ namespace Nursery.Areas.User.Controllers
                 return await Task.FromResult(Redirect("404.html"));
             }
         }
+        public async Task<IActionResult> Kids(int pageId = 1, string name = null, string nickname = null)
+        {
+            ViewBag.name = name;
+            ViewBag.nickname = nickname;
+            List<TblKid> list = _db.Kid.Get(orderBy: j => j.OrderByDescending(k => k.KidId)).ToList();
+            if (name != null)
+            {
+                list = list.Where(i => i.Name.Contains(name)).ToList();
+            }
+            if (nickname != null)
+            {
+                list = list.Where(i => i.Nickname.Contains(nickname)).ToList();
+            }
+            //Pagging
+            int take = 10;
+            int skip = (pageId - 1) * take;
+            ViewBag.PageCount = Convert.ToInt32(Math.Ceiling((double)list.Count() / take));
+            ViewBag.PageShow = pageId;
+            return await Task.FromResult(View(list.Skip(skip).Take(take)));
+        }
+
     }
 }

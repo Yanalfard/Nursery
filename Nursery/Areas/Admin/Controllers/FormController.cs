@@ -40,18 +40,25 @@ namespace Nursery.Areas.Admin.Controllers
         }
 
 
-        public IActionResult Add(int id, string name = null)
+        public async Task<IActionResult> Add(int id, string name = null)
         {
-            List<TblRegex> list = _db.Regex.Get(i => i.IsDeleted == false).ToList();
-            foreach (var item in list)
-                options.Add(new DRegexVm(item));
+            try
+            {
+                List<TblRegex> list = _db.Regex.Get(i => i.IsDeleted == false).ToList();
+                foreach (var item in list)
+                    options.Add(new DRegexVm(item));
 
-            ViewData["Options"] = options.ToList();
-            HttpContext.Session.SetComplexData("pageId", id);
-            HttpContext.Session.SetComplexData("name", name);
-            ViewBag.name = name;
-            ViewBag.pageId = id;
-            return View();
+                ViewData["Options"] = options.ToList();
+                HttpContext.Session.SetComplexData("pageId", id);
+                HttpContext.Session.SetComplexData("name", name);
+                ViewBag.name = name;
+                ViewBag.pageId = id;
+                return View();
+            }
+            catch
+            {
+                return await Task.FromResult(Redirect("404.html"));
+            }
         }
 
 
@@ -62,88 +69,94 @@ namespace Nursery.Areas.Admin.Controllers
         //}
 
         [HttpPost]
-        public IActionResult Create([FromBody] DFormVm dform)
+        public async Task<IActionResult> Create([FromBody] DFormVm dform)
         {
-
-            int pageId = HttpContext.Session.GetComplexData<int>("pageId");
-            string name = HttpContext.Session.GetComplexData<string>("name");
-            TblForm form = new TblForm();
-            form.Name = dform.Name;
-            form.Body = dform.Body;
-            form.DateCreated = DateTime.Now;
-            form.IsDeleted = false;
-
-            //form -> db
-            // formid
-            _db.Form.Add(form);
-            _db.Save();
-
-
-            if (pageId > 0)
+            try
             {
-                TblPageFormRel addPage = new TblPageFormRel();
-                addPage.PageId = pageId;
-                addPage.FormId = form.FormId;
-                addPage.IndexNo = 1;
-                _db.PageFormRel.Add(addPage);
-                _db.Save();
-            }
-            dform.Fields.ForEach(dfield =>
-            {
-                TblField field = new TblField();
-                field.Label = dfield.Label;
-                field.Options = dfield.Options;
-                field.Placeholder = dfield.Placeholder;
-                field.Tooltip = dfield.Tooltip;
-                field.Type = dfield.Type.ToString();
-                field.IsDeleted = false;
-                field.IsRequired = dfield.IsRequired;
+                int pageId = HttpContext.Session.GetComplexData<int>("pageId");
+                string name = HttpContext.Session.GetComplexData<string>("name");
+                TblForm form = new TblForm();
+                form.Name = dform.Name;
+                form.Body = dform.Body;
+                form.DateCreated = DateTime.Now;
+                form.IsDeleted = false;
 
-                //field -> db
-                _db.Field.Add(field);
+                //form -> db
+                // formid
+                _db.Form.Add(form);
                 _db.Save();
 
 
-                TblFormFieldRel relFormFieldRel = new TblFormFieldRel();
-                relFormFieldRel.FieldId = field.FieldId;
-                relFormFieldRel.FormId = form.FormId;
-                _db.FormFieldRel.Add(relFormFieldRel);
-                _db.Save();
-
-                dfield.Validations.ForEach(dvalidation =>
+                if (pageId > 0)
                 {
-
-                    //TblRegex regex = new TblRegex();
-                    //regex.Name = dvalidation.Name;
-                    //regex.IsDeleted = false;
-                    //regex.Regex = dvalidation.Regex;
-                    //regex.ValidationMessage = dvalidation.ValidationMessage;
-
-                    //regex -> db
-                    //_db.Regex.Add(regex);
-                    //_db.Save();
-
-                    TblFieldRegexRel rel = new TblFieldRegexRel();
-                    rel.FieldId = field.FieldId;
-                    rel.RegexId = dvalidation.RegexId;
-
-                    //regexFieldRel -> db
-                    _db.FieldRegexRel.Add(rel);
+                    TblPageFormRel addPage = new TblPageFormRel();
+                    addPage.PageId = pageId;
+                    addPage.FormId = form.FormId;
+                    addPage.IndexNo = 1;
+                    _db.PageFormRel.Add(addPage);
                     _db.Save();
+                }
+                dform.Fields.ForEach(dfield =>
+                {
+                    TblField field = new TblField();
+                    field.Label = dfield.Label;
+                    field.Options = dfield.Options;
+                    field.Placeholder = dfield.Placeholder;
+                    field.Tooltip = dfield.Tooltip;
+                    field.Type = dfield.Type.ToString();
+                    field.IsDeleted = false;
+                    field.IsRequired = dfield.IsRequired;
+
+                    //field -> db
+                    _db.Field.Add(field);
+                    _db.Save();
+
+
+                    TblFormFieldRel relFormFieldRel = new TblFormFieldRel();
+                    relFormFieldRel.FieldId = field.FieldId;
+                    relFormFieldRel.FormId = form.FormId;
+                    _db.FormFieldRel.Add(relFormFieldRel);
+                    _db.Save();
+
+                    dfield.Validations.ForEach(dvalidation =>
+                    {
+
+                        //TblRegex regex = new TblRegex();
+                        //regex.Name = dvalidation.Name;
+                        //regex.IsDeleted = false;
+                        //regex.Regex = dvalidation.Regex;
+                        //regex.ValidationMessage = dvalidation.ValidationMessage;
+
+                        //regex -> db
+                        //_db.Regex.Add(regex);
+                        //_db.Save();
+
+                        TblFieldRegexRel rel = new TblFieldRegexRel();
+                        rel.FieldId = field.FieldId;
+                        rel.RegexId = dvalidation.RegexId;
+
+                        //regexFieldRel -> db
+                        _db.FieldRegexRel.Add(rel);
+                        _db.Save();
+
+                    });
 
                 });
 
-            });
-
-            _db.UserLog.Add(new TblUserLog()
+                _db.UserLog.Add(new TblUserLog()
+                {
+                    Text = LogRepo.AddPageFormRel(SelectUser().IdentificationNo, form.Name.ToString(), name),
+                    UserId = SelectUser().UserId,
+                    Type = 1,
+                    DateCreated = DateTime.Now
+                });
+                _db.Save();
+                return Ok("LOL");
+            }
+            catch
             {
-                Text = LogRepo.AddPageFormRel(SelectUser().IdentificationNo, form.Name.ToString(), name),
-                UserId = SelectUser().UserId,
-                Type = 1,
-                DateCreated = DateTime.Now
-            });
-            _db.Save();
-            return Ok("LOL");
+                return await Task.FromResult(Redirect("404.html"));
+            }
 
             // return await Task.FromResult(Redirect("/Admin/Page/Index/" + pageId + "?name=" + name));
 
@@ -152,41 +165,57 @@ namespace Nursery.Areas.Admin.Controllers
 
         public async Task<IActionResult> List(int pageId = 1, int id = 0, string description = null, string name = null, string checkedDelete = null)
         {
-            //var claimIdentity = this.User.Identity as ClaimsIdentity;
-            //IEnumerable<Claim> claims = claimIdentity.Claims;
+            try
+            {
+                //var claimIdentity = this.User.Identity as ClaimsIdentity;
+                //IEnumerable<Claim> claims = claimIdentity.Claims;
 
-            //var userId = Convert.ToInt32(User.Claims.First().Value);
-            //var names = User.Identities.First().Name;
-            //var currentUserID = claimIdentity.FindFirst(ClaimTypes.Email).Value;
-            ViewBag.name = name;
-            ViewBag.id = id;
-            ViewBag.description = description;
-            ViewBag.checkedDelete = checkedDelete == "on" ? true : false;
-            List<TblForm> list = _db.Form.Get(orderBy: j => j.OrderByDescending(k => k.FormId)).ToList();
-            if (name != null)
-            {
-                list = list.Where(i => i.Name.Contains(name)).ToList();
+                //var userId = Convert.ToInt32(User.Claims.First().Value);
+                //var names = User.Identities.First().Name;
+                //var currentUserID = claimIdentity.FindFirst(ClaimTypes.Email).Value;
+                ViewBag.name = name;
+                ViewBag.id = id;
+                ViewBag.description = description;
+                ViewBag.checkedDelete = checkedDelete == "on" ? true : false;
+                List<TblForm> list = _db.Form.Get(orderBy: j => j.OrderByDescending(k => k.FormId)).ToList();
+                if (name != null)
+                {
+                    list = list.Where(i => i.Name.Contains(name)).ToList();
+                }
+                if (description != null)
+                {
+                    list = list.Where(i => i.Body.Contains(description)).ToList();
+                }
+                if (id != 0)
+                {
+                    list = list.Where(i => i.FormId == id).ToList();
+                }
+                list = list.Where(i => i.IsDeleted == ViewBag.checkedDelete).ToList();
+                //Pagging
+                int take = 10;
+                int skip = (pageId - 1) * take;
+                ViewBag.PageCount = Convert.ToInt32(Math.Ceiling((double)list.Count() / take));
+                ViewBag.PageShow = pageId;
+                return await Task.FromResult(PartialView(list.Skip(skip).Take(take)));
             }
-            if (description != null)
+            catch
             {
-                list = list.Where(i => i.Body.Contains(description)).ToList();
+                return await Task.FromResult(Redirect("404.html"));
             }
-            if (id != 0)
-            {
-                list = list.Where(i => i.FormId == id).ToList();
-            }
-            list = list.Where(i => i.IsDeleted == ViewBag.checkedDelete).ToList();
-            //Pagging
-            int take = 10;
-            int skip = (pageId - 1) * take;
-            ViewBag.PageCount = Convert.ToInt32(Math.Ceiling((double)list.Count() / take));
-            ViewBag.PageShow = pageId;
-            return await Task.FromResult(PartialView(list.Skip(skip).Take(take)));
+
         }
 
         public async Task<IActionResult> Edit(int id)
         {
-            return await Task.FromResult(View(_db.Form.GetById(id)));
+            try
+            {
+                return await Task.FromResult(View(_db.Form.GetById(id)));
+            }
+            catch
+            {
+                return await Task.FromResult(Redirect("404.html"));
+            }
+
         }
         [HttpPost]
         public async Task<IActionResult> Edit(TblForm form)
