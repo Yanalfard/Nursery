@@ -147,6 +147,8 @@ namespace DataLayer.Models
 
             modelBuilder.Entity<TblUser>(entity =>
             {
+                entity.Property(e => e.DateCreated).HasDefaultValueSql("(getdate())");
+
                 entity.Property(e => e.IsDeleted).HasDefaultValueSql("((0))");
             });
 
@@ -191,6 +193,11 @@ namespace DataLayer.Models
                     .HasForeignKey(d => d.FormFieldId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_TblValue_TblFormFieldId");
+
+                entity.HasOne(d => d.Kid)
+                    .WithMany(p => p.TblValue)
+                    .HasForeignKey(d => d.KidId)
+                    .HasConstraintName("FK_TblValue_TblKid");
 
                 entity.HasOne(d => d.User)
                     .WithMany(p => p.TblValue)

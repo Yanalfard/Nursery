@@ -64,8 +64,9 @@ namespace Nursery.Areas.User.Controllers
                 return await Task.FromResult(Redirect("404.html"));
             }
         }
-        public async Task<IActionResult> Kids(int pageId = 1, string name = null, string nickname = null)
+        public async Task<IActionResult> Kids(int formId = 1, int pageId = 1, string name = null, string nickname = null)
         {
+            ViewBag.FormId = formId;
             ViewBag.name = name;
             ViewBag.nickname = nickname;
             List<TblKid> list = _db.Kid.Get(orderBy: j => j.OrderByDescending(k => k.KidId)).ToList();

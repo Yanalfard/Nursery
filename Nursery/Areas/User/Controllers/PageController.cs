@@ -30,13 +30,14 @@ namespace Nursery.Areas.User.Controllers
         {
             return View(_db.Page.GetById(pageId));
         }
-        [Route("/User/Page/Form/{formID}")]
-        public IActionResult Form(int? formId)
+        [Route("/User/Page/Form/{formID?}/{kidId?}")]
+        public IActionResult Form(int? formId, int? kidId)
         {
-            if (formId == null)
+            if (formId == null || kidId == null)
             {
                 return Redirect("/User/Home/Index");
             }
+            ViewBag.kidId = kidId;
             TblForm selectedForm = _db.Form.GetById(formId);
             ViewBag.name = selectedForm.Name;
             List<TblFormFieldRel> listFild = _db.FormFieldRel.Get(i => i.FormId == selectedForm.FormId).ToList();
@@ -103,7 +104,7 @@ namespace Nursery.Areas.User.Controllers
 
         [HttpPost]
         [Route("/User/Page/Form/SubmitForm")]
-        public IActionResult SubmitForm([FromBody] ICollection<DValueVm> values)
+        public IActionResult SubmitForm([FromBody] ICollection<DValueVm> values,int kidId)
         {
             //Get user Id User Id
             int userId = SelectUser().UserId;
@@ -116,12 +117,13 @@ namespace Nursery.Areas.User.Controllers
                 addVal.DateCreated = DateTime.Now;
                 addVal.FormFieldId = val.FormFieldId;
                 addVal.Value = val.Value;
+                addVal.KidId = kidId;
                 addVal.IsAccepted = false;
                 addVal.IsDeleted = false;
                 _db.Value.Add(addVal);
             }
             _db.Save();
-           return Ok();
+            return Ok();
         }
     }
 }

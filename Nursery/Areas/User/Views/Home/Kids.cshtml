@@ -25,7 +25,8 @@
     </div>
 
     <div class="form-search" uk-sticky="offset: 139;cls-active: sticked uk-box-shadow-medium;bottom:true">
-        <form id="formSearchKid" action="/User/Kid/Index" class="controls-grid">
+        <form id="formSearchKid" action="/User/Home/Kids" class="controls-grid">
+            <input class="entry" type="hidden" id="formId" name="formId" value="@ViewBag?.FormId">
             <input class="entry" type="hidden" id="pageId" name="pageId" value="@ViewBag.PageShow">
             <input class="entry" type="text" id="name" name="name" placeholder="نام" value="@ViewBag.name">
             <input class="entry" type="text" id="nickname" name="nickname" placeholder="نام مستعار" value="@ViewBag.nickname">
@@ -50,7 +51,7 @@
                         <td>@item.Name</td>
                         <td>@item.Nickname</td>
                         <td class="actions">
-                            <a href="/User/Kid/Edit/@item.KidId" class="rowr">
+                            <a href="/User/Page/Form/@ViewBag?.FormId?kidId=@item.KidId" class="rowr">
                                 <span class="new">انتخاب</span>
                                 <span class="small" uk-icon="pen-square"></span>
                             </a>
