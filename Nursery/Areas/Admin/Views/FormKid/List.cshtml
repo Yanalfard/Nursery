@@ -1,0 +1,163 @@
+﻿@model IEnumerable<ValueListVm>
+@{
+    ViewData["Title"] = "لیست فرم های ارسالی ";
+    Layout = "~/Areas/Admin/Views/_AdminLayout.cshtml";
+}
+
+<!-- This is the modal -->
+<div id="Modal" uk-modal>
+    <div class="uk-modal-dialog uk-modal-body">
+        <h2 class="uk-modal-title">این یک مودال می باشد</h2>
+    </div>
+</div>
+
+<div class="form">
+
+    <div class="form-header" uk-sticky="offset: 72;cls-active: sticked;bottom: true">
+        <div class="rowr">
+            <h2 class="card-title">
+                لیست کاربر ها
+            </h2>
+            <a onclick="showOtherPage(1)" class="btn btn-secondary uk-margin-auto-right">
+                <span>جستوجو</span>
+                <span class="tiny" uk-icon="search"></span>
+            </a>
+            <a href="/Admin/User/Add" class="btn btn-primary uk-margin-small-right">
+                <span>اضافه</span>
+                <span class="tiny" uk-icon="plus-square"></span>
+            </a>
+
+        </div>
+    </div>
+
+    <div class="form-search" uk-sticky="offset: 140;cls-active: sticked uk-box-shadow-medium;bottom:true">
+        <form id="formSearchUser" action="/Admin/User/List" class="controls-grid">
+            @*<input class="entry" type="hidden" id="pageId" name="pageId" value="@ViewBag.PageShow">
+            <input class="entry" type="text" id="name" name="name" placeholder="نام" value="@ViewBag.name">
+            <input class="entry" type="tel" id="tell" name="tell" placeholder="شماره تلفن" value="@ViewBag.tell">
+            <input class="entry" type="number" id="identificationNo" name="identificationNo" placeholder="کد ملی" value="@ViewBag.identificationNo">
+            <div class="col">
+                <label class="fg-label row text-3">
+                    حذف شده
+                    <input class="uk-checkbox" id="checkedDelete" name="checkedDelete" type="checkbox" @(((bool)ViewBag.checkedDelete == true) ? "checked" : "")>
+                </label>
+                <span class="text-danger"></span>
+            </div>*@
+        </form>
+    </div>
+
+    <div class="form-body scrollh-container uk-padding-remove">
+        <table class="tbl tbl-striped" dir="rtl">
+            <thead>
+                <tr>
+                    <th>کد</th>
+                    <th>نام فرم</th>
+                    <th>نام کاربر ثبت کننده</th>
+                    <th>کد ملی ثبت کننده</th>
+                    <th>نام مستعار کودک</th>
+                    <th>نام بخش </th>
+                    <th>نام شیفت </th>
+                    <th>تاریخ ثبت </th>
+                    <th>عملیات</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                <tr id="userId_@item.FormFieldId">
+                    <td>@item.FormFieldId</td>
+                    <td>@item.Form?.Name</td>
+                    <td>@item.User?.Name</td>
+                    <td>@item.User?.IdentificationNo</td>
+                    <td>@item.Kid?.Nickname</td>
+                    <td>@item.Page?.Name</td>
+                    <td>@item.Role?.Name</td>
+                    <td>@item.Value.DateCreated?.AllToShamsi()</td>
+                    <td class="actions">
+                        <a href="" class="btn-icon round text-4" uk-icon="icon:ellipsis-h;ratio:.72"></a>
+                        <div class="dropdown" uk-drop="mode: click;offset:4">
+                            <ul class="dropdown-list">
+                                <li>
+                                    <a asp-area="Admin"
+                                       asp-controller="FormKid"
+                                       asp-action="Index"
+                                       asp-route-formFieldId="@item.FormFieldId"
+                                       class="rowr">
+                                        <span class="new">مشاهده</span>
+                                        <span class="small" uk-icon="eye"></span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="rowr btn-danger" popconfirm="floating:true;description:آیا از حذف کاربر اطمینان دارید؟;direction:rt;type:danger;title:هشدار;okText:حذف;" popok="deleteUser(@item.ValueId)">
+                                        <span>حذف</span>
+                                        <span class="small" uk-icon="trash"></span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </td>
+                </tr>
+                }
+
+            </tbody>
+        </table>
+    </div>
+    <div class="form-footer">
+        @*<button class="btn btn-primary">اضافه</button>*@
+   
+    </div>
+</div>
+
+
+
+
+
+
+
+@section Scripts{
+
+
+    @if (Context.Request.Query["editUser"].ToString() == "true")
+    {
+        <script>
+            notify('کاربر مورد نظر ویرایش شد', 'success');
+        </script>
+    }
+
+    @if (Context.Request.Query["addUser"].ToString() == "true")
+    {
+        <script>
+            notify('کاربر جدید اضافه شد', 'success');
+        </script>
+    }
+    <script>
+        function showOtherPage(id) {
+            $('#pageId').val(id);
+            document.getElementById('formSearchUser').submit();
+        }
+
+
+        function deleteUser(id) {
+            LoadingRun();
+            $.get('/Admin/User/Delete/' + id, function (result) {
+                if (result == "true") {
+                    $('#userId_' + id).addClass('uk-text-danger');
+                    $("#userId_" + id).hide('slow');
+                }
+                LoadingEnd();
+            });
+        }
+    </script>
+
+
+
+    <script>
+        require(['config'], function () {
+            require(['confirm'], function () {
+
+            })
+        });
+    </script>
+}
+
+

@@ -45,7 +45,6 @@ namespace Nursery.Areas.User.Controllers
             foreach (var item in listFild)
             {
                 List<TblRegex> listTblRegex = _db.Regex.Get(i => i.IsDeleted == false).ToList();
-
                 List<DRegexVm> validations = new List<DRegexVm>();
                 foreach (var j in listTblRegex)
                 {
@@ -58,9 +57,7 @@ namespace Nursery.Areas.User.Controllers
                     });
                 }
                 // convert string to enum
-
                 Enum.TryParse(item.Field.Type, out DFieldType myStatus);
-
                 fields.Add(new DFieldVm
                 {
                     FieldId = item.FormFieldId,
