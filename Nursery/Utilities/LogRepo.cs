@@ -17,13 +17,13 @@ namespace Nursery.Utilities
         {
             return
                 $"User: {username} Deleted UserRole: {userRoleId} From Identification :{identificationNo}";
-        } 
-       
+        }
+
         public static string AddUser(string username, string AdduserName)
         {
             return
                 $"User: {username} Add User: {AdduserName}";
-        } 
+        }
         public static string AddRole(string username, string AdduserName)
         {
             return
@@ -48,14 +48,14 @@ namespace Nursery.Utilities
         {
             return
                 $"کاربر: {usernameAdmin} کاربر : {deleteUsername} را حذف کرد";
-        } 
-        public static string AddUserRoleRel(string usernameAdmin, string roleName,string roleusername)
+        }
+        public static string AddUserRoleRel(string usernameAdmin, string roleName, string roleusername)
         {
             return
                 $"کاربر :{usernameAdmin} شیفت{roleName} رو به کاربر {roleusername}  اضافه کرد";
 
         }
-        public static string EditUserRoleRel(string usernameAdmin, string roleName,string roleusername)
+        public static string EditUserRoleRel(string usernameAdmin, string roleName, string roleusername)
         {
             return
                  $"کاربر :{usernameAdmin} شیفت{roleName} رو به کاربر {roleusername}  ویرایش کرد";
@@ -91,7 +91,7 @@ namespace Nursery.Utilities
             return
                 $"کاربر {username} بخش {namePage} را حذف  کرد";
         }
-        public static string AddRolePageRel(string username,string nameRole, string namePage)
+        public static string AddRolePageRel(string username, string nameRole, string namePage)
         {
             return
                 $"کاربر {username} بخش {namePage} برای شیفت {nameRole}    تعریف کرد    ";
@@ -151,6 +151,25 @@ namespace Nursery.Utilities
         {
             return
                 $"کاربر: {username} فرم:  {formName} را حذف کرد";
+        }
+
+
+
+
+        public static string AddFormKid(string username, string formName)
+        {
+            return
+               $"کاربر: {username} فرم:  {formName} را ایجاد کرد";
+        }
+        public static string EditFormKid(string username, string formName)
+        {
+            return
+               $"کاربر: {username} فرم:  {formName} را ویرایش کرد";
+        }
+        public static string DeleteFormKid(string username, string KidName, string userAdd)
+        {
+            return
+                $" کاربر{username} فرم کودک {KidName} که توسط کاربر {userAdd} اضافه شده بود رو حذف کرد ";
         }
 
     }

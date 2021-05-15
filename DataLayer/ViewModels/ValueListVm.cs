@@ -9,7 +9,7 @@ namespace DataLayer.ViewModels
     {
         public int ValueId { get; set; }
         public int FormFieldId { get; set; }
-        public DateTime? DateCreated { get; set; }
+        public DateTime DateCreated { get; set; }
         public bool? IsAccepted { get; set; }
         public bool? IsDeleted { get; set; }
         public int? IndexN { get; set; }

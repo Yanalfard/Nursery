@@ -61,6 +61,10 @@
 
   <ItemGroup>
     <None Include="wwwroot\404.html" />
+    <None Include="wwwroot\datePersion\persianDatepicker.js" />
+    <None Include="wwwroot\datePersion\persianDatepicker.min.js" />
+    <None Include="wwwroot\datePersion\prism.js" />
+    <None Include="wwwroot\datePersion\prism.min.js" />
     <None Include="wwwroot\Jquery\docs.min.js" />
     <None Include="wwwroot\Jquery\Home.js" />
     <None Include="wwwroot\Jquery\jquery-3.4.1.js" />
