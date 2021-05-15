@@ -101,10 +101,16 @@ namespace Nursery.Areas.User.Controllers
 
         [HttpPost]
         [Route("/User/Page/Form/SubmitForm")]
-        public IActionResult SubmitForm([FromBody] ICollection<DValueVm> values,int kidId)
+        public IActionResult SubmitForm([FromBody] ICollection<DValueVm> values, int kidId)
         {
             //Get user Id User Id
             int userId = SelectUser().UserId;
+            var SelectedIndexN = _db.Value.Get(orderBy: i => i.OrderByDescending(i => i.ValueId)).FirstOrDefault();
+            int IndexN = 1;
+            if (SelectedIndexN != null)
+            {
+                IndexN = (int)SelectedIndexN.IndexN + 1;
+            }
 
             List<TblValue> addValue = new List<TblValue>();
             foreach (var val in values)
@@ -117,6 +123,7 @@ namespace Nursery.Areas.User.Controllers
                 addVal.KidId = kidId;
                 addVal.IsAccepted = false;
                 addVal.IsDeleted = false;
+                addVal.IndexN = IndexN;
                 _db.Value.Add(addVal);
             }
             _db.Save();

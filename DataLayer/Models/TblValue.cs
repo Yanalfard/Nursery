@@ -19,6 +19,7 @@ namespace DataLayer.Models
         public bool? IsAccepted { get; set; }
         public bool? IsDeleted { get; set; }
         public int? KidId { get; set; }
+        public int? IndexN { get; set; }
 
         [ForeignKey(nameof(FormFieldId))]
         [InverseProperty(nameof(TblFormFieldRel.TblValue))]

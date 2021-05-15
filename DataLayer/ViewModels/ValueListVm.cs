@@ -12,6 +12,7 @@ namespace DataLayer.ViewModels
         public DateTime? DateCreated { get; set; }
         public bool? IsAccepted { get; set; }
         public bool? IsDeleted { get; set; }
+        public int? IndexN { get; set; }
 
         public TblValue Value { get; set; }
         public TblKid Kid { get; set; }
