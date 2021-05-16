@@ -113,6 +113,7 @@ namespace Nursery.Areas.User.Controllers
             }
 
             List<TblValue> addValue = new List<TblValue>();
+            int selectformId = 0;
             foreach (var val in values)
             {
                 TblValue addVal = new TblValue();
@@ -125,8 +126,22 @@ namespace Nursery.Areas.User.Controllers
                 addVal.IsDeleted = false;
                 addVal.IndexN = IndexN;
                 _db.Value.Add(addVal);
+                selectformId = val.FormId;
             }
             _db.Save();
+
+            #region Add Log
+            string name = _db.Kid.GetById(kidId).Nickname;
+            string formName = _db.Form.GetById(selectformId).Name;
+            _db.UserLog.Add(new TblUserLog()
+            {
+                Text = LogRepo.AddFormKid(SelectUser().IdentificationNo, formName, name),
+                UserId = SelectUser().UserId,
+                Type = 1,
+                DateCreated = DateTime.Now
+            });
+            _db.Save();
+            #endregion
             return Ok();
         }
     }
