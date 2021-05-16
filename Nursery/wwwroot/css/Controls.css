@@ -186,7 +186,7 @@ a.btn.btn-primary:hover {
 
 .btn-secondary {
   border: 1px #ddd solid;
-  background-color: transparent;
+  background-color: #fff;
   color: #454545;
   -moz-box-shadow: 0 2px 2px rgba(0, 0, 0, 0.1);
   -webkit-box-shadow: 0 2px 2px rgba(0, 0, 0, 0.1);
@@ -194,7 +194,7 @@ a.btn.btn-primary:hover {
 
 .btn-dashed {
   border: 1px #ddd dashed;
-  background-color: transparent;
+  background-color: #fff;
   color: #262626;
   -moz-box-shadow: 0 2px 2px rgba(0, 0, 0, 0.1);
   -webkit-box-shadow: 0 2px 2px rgba(0, 0, 0, 0.1);

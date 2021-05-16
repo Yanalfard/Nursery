@@ -162,14 +162,14 @@ a.btn.btn-primary:hover {
 
 .btn-secondary {
     @include component-border;
-    background-color: transparent;
+    background-color: $mat-background;
     color: lighten($Text,12%);
     @include btn-static-shadow;
 }
 
 .btn-dashed {
     border: 1px #ddd dashed;
-    background-color: transparent;
+    background-color: $mat-background;
     color: $Text;
     @include btn-static-shadow;
 }
