@@ -1,7 +1,65 @@
 ﻿@model IEnumerable<ValueListVm>
 @{
     ViewData["Title"] = "Index";
+    Layout = "~/Areas/Admin/Views/_AdminLayout.cshtml";
+
+    TblUser submittingUser = (TblUser)ViewData["SubmittingUser"] ?? new TblUser();
 }
 
-<h1>Index</h1>
+<div class="col gap-between-card">
+    <!-- #region Profile -->
+    <div class="form">
+        <div class="form-header">
+            <h1 class="card-title">
+                نام فرم
+            </h1>
+        </div>
+        <div class="form-body">
+            <div class="grid-160">
+                <div class="fg-col">
+                    <label class="dl-label">نام کودک</label>
+                    <p class="dl-data">@(Model.FirstOrDefault()?.Kid.Name ?? "کودک")</p>
+                </div>
+                @foreach (var item in Model)
+                {
+                    <div class="fg-col">
+                        <label class="dl-label">@item.Value.FormField.Field.Label</label>
+                        <p class="dl-data">@item.Value.Value</p>
+                    </div>
+                }
+            </div>
+        </div>
+        <div class="form-footer">
+            <a asp-action="Edit" asp-controller="User" asp-area="Admin" asp-route-id="@submittingUser.UserId" class="btn btn-primary">
+                <span>تایید</span>
+                <span uk-icon="check"></span>
+            </a>
+            <a asp-action="Edit" asp-controller="User" asp-area="Admin" asp-route-id="@submittingUser.UserId" class="btn btn-danger">
+                <span>رد</span>
+                <span uk-icon="times"></span>
+            </a>
 
+        </div>
+    </div>
+
+    <div class="form">
+        <div class="form-header">
+            <h3 class="card-title">
+                ثبت شده توسط
+            </h3>
+        </div>
+        <div class="form-body">
+            <!-- #region User -->
+            <div class="icon-list-item">
+                <img src="~/st/png/@submittingUser.ImageUrl" class="round" width="42" height="42" alt="" />
+                <div class="col">
+                    <label>@submittingUser.Name</label>
+                    <span>@submittingUser.TblUserRoleRel.FirstOrDefault()?.Role.Name</span>
+                </div>
+                <a href="" uk-tooltip="مشاهده پروفایل" class="btn btn-icon round text-4" uk-icon="icon:eye;ratio:.72"></a>
+            </div>
+            <!-- #endregion -->
+        </div>
+    </div>
+
+</div>
