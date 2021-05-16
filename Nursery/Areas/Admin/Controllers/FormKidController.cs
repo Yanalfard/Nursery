@@ -195,6 +195,60 @@ namespace Nursery.Areas.Admin.Controllers
 
         }
 
+        public async Task<IActionResult> IsAccepted(int id, int value)
+        {
+            List<TblValue> selectedUser = _db.Value.Get(i => i.IndexN == id).ToList();
+            if (selectedUser != null)
+            {
+                if (value == 1)
+                {
+                    string kidName = "";
+                    string userName = "";
+                    foreach (var item in selectedUser)
+                    {
+                        userName = item.User.Name;
+                        kidName = item.Kid.Nickname;
+                        item.IsAccepted = true;
+                        _db.Value.Update(item);
+                    }
+                    _db.Save();
+                    #region Add Log
+                    var addLog = new TblUserLog();
+                    addLog.UserId = SelectUser().UserId;
+                    addLog.Type = 3;
+                    addLog.DateCreated = DateTime.Now;
+                    addLog.Text = LogRepo.UpdateIsAcceptedFormKid(SelectUser().IdentificationNo, kidName, userName);
+                    _db.UserLog.Add(addLog);
+                    _db.Save();
+                    #endregion
+                }
+                else if (value == 0)
+                {
+                    string kidName = "";
+                    string userName = "";
+                    foreach (var item in selectedUser)
+                    {
+                        userName = item.User.Name;
+                        kidName = item.Kid.Nickname;
+                        item.IsAccepted = false;
+                        _db.Value.Update(item);
+                    }
+                    _db.Save();
+                    #region Add Log
+                    var addLog = new TblUserLog();
+                    addLog.UserId = SelectUser().UserId;
+                    addLog.Type = 3;
+                    addLog.DateCreated = DateTime.Now;
+                    addLog.Text = LogRepo.UpdateOffAcceptedFormKid(SelectUser().IdentificationNo, kidName, userName);
+                    _db.UserLog.Add(addLog);
+                    _db.Save();
+                    #endregion
+                }
+
+            }
+            return await Task.FromResult(Redirect("/Admin/FormKid/Index?indexN=" + id));
+
+        }
 
     }
 }

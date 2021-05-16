@@ -161,10 +161,15 @@ namespace Nursery.Utilities
             return
                $"کاربر: {username}  فرم   {formName} برای کودک {kidName} پر کرد";
         }
-        public static string EditFormKid(string username, string formName)
+        public static string UpdateIsAcceptedFormKid(string username, string KidName, string userAdd)
         {
             return
-               $"کاربر: {username} فرم:  {formName} را ویرایش کرد";
+               $"کاربر:  فرم: {username} فرم {KidName} که {userAdd} اضافه کرده بود رو تائید کرد ";
+        }
+        public static string UpdateOffAcceptedFormKid(string username, string KidName, string userAdd)
+        {
+            return
+               $"کاربر:  فرم: {username} فرم {KidName} که {userAdd} اضافه کرده بود رو رد کرد ";
         }
         public static string DeleteFormKid(string username, string KidName, string userAdd)
         {

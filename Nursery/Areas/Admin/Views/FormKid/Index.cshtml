@@ -3,7 +3,7 @@
     ViewData["Title"] = "Index";
     Layout = "~/Areas/Admin/Views/_AdminLayout.cshtml";
 
-    TblUser submittingUser = (TblUser)ViewData["SubmittingUser"] ?? new TblUser();
+    TblValue value = Model.FirstOrDefault().Value;
 }
 
 <div class="col gap-between-card">
@@ -18,7 +18,7 @@
             <div class="grid-160">
                 <div class="fg-col">
                     <label class="dl-label">نام کودک</label>
-                    <p class="dl-data">@(Model.FirstOrDefault()?.Kid.Name ?? "کودک")</p>
+                    <p class="dl-data">@(value.Kid.Name ?? "کودک")</p>
                 </div>
                 @foreach (var item in Model)
                 {
@@ -30,14 +30,21 @@
             </div>
         </div>
         <div class="form-footer">
-            <a asp-action="Edit" asp-controller="User" asp-area="Admin" asp-route-id="@submittingUser.UserId" class="btn btn-primary">
-                <span>تایید</span>
-                <span uk-icon="check"></span>
-            </a>
-            <a asp-action="Edit" asp-controller="User" asp-area="Admin" asp-route-id="@submittingUser.UserId" class="btn btn-danger">
-                <span>رد</span>
-                <span uk-icon="times"></span>
-            </a>
+            @if (value.IsAccepted == true)
+            {
+                <a asp-action="IsAccepted" asp-controller="FormKid" asp-area="Admin" asp-route-id="@value.IndexN" asp-route-value="0" class="btn btn-danger" onclick="LoadingRun()">
+                    <span>رد</span>
+                    <span uk-icon="times"></span>
+                </a>
+            }
+            else
+            {
+                <a asp-action="IsAccepted" asp-controller="FormKid" asp-area="Admin" asp-route-id="@value.IndexN" asp-route-value="1" class="btn btn-primary" onclick="LoadingRun()">
+                    <span>تایید</span>
+                    <span uk-icon="check"></span>
+                </a>
+            }
+
 
         </div>
     </div>
@@ -51,12 +58,16 @@
         <div class="form-body">
             <!-- #region User -->
             <div class="icon-list-item">
-                <img src="~/st/png/@submittingUser.ImageUrl" class="round" width="42" height="42" alt="" />
+                <img src="~/Images/User/@value.User.ImageUrl" class="round" width="42" height="42" alt="" />
                 <div class="col">
-                    <label>@submittingUser.Name</label>
-                    <span>@submittingUser.TblUserRoleRel.FirstOrDefault()?.Role.Name</span>
+                    <label>@value.User.Name</label>
+                    <span>@value.User?.TblUserRoleRel.FirstOrDefault()?.Role.Name</span>
                 </div>
-                <a href="" uk-tooltip="مشاهده پروفایل" class="btn btn-icon round text-4" uk-icon="icon:eye;ratio:.72"></a>
+                <a asp-area="Admin"
+                   asp-controller="User"
+                   asp-action="Index"
+                   asp-route-id="@value.User.UserId"
+                   asp-route-name="@value.User.Name" uk-tooltip="مشاهده پروفایل" class="btn btn-icon round text-4" uk-icon="icon:eye;ratio:.72"></a>
             </div>
             <!-- #endregion -->
         </div>
