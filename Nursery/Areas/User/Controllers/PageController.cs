@@ -129,5 +129,16 @@ namespace Nursery.Areas.User.Controllers
             _db.Save();
             return Ok();
         }
+
+        public IActionResult UploadDemo()
+        {
+            return View();
+        }
+
+        public IActionResult Upload()
+        {
+            return Ok();
+        }
+
     }
 }
