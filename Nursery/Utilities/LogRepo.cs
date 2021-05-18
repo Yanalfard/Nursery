@@ -122,17 +122,17 @@ namespace Nursery.Utilities
         public static string AddFormPageRel(string username, string nameForm, string namePage)
         {
             return
-                $"کاربر {username} فرم{nameForm} را به بخش{namePage} اضافه کرد ";
+                $"کاربر {username} فرم  {nameForm}  را به بخش {namePage} اضافه کرد ";
         }
         public static string EditFormPageRel(string username, string nameForm, string namePage)
         {
             return
-               $"کاربر {username} فرم{nameForm} را از بخش{namePage} ویرایش کرد ";
+               $"کاربر {username} فرم  {nameForm} را از بخش  {namePage} ویرایش کرد ";
         }
         public static string DeleteFormPageRel(string username, string nameForm, string namePage)
         {
             return
-               $"کاربر {username} فرم{nameForm} را از بخش{namePage} حدف کرد ";
+               $"کاربر {username} فرم  {nameForm} را از بخش {namePage} حدف کرد ";
         }
 
 
@@ -156,20 +156,25 @@ namespace Nursery.Utilities
 
 
 
-        public static string AddFormKid(string username, string formName)
+        public static string AddFormKid(string username, string formName,string kidName)
         {
             return
-               $"کاربر: {username} فرم:  {formName} را ایجاد کرد";
+               $"کاربر: {username}  فرم   {formName} برای کودک {kidName} پر کرد";
         }
-        public static string EditFormKid(string username, string formName)
+        public static string UpdateIsAcceptedFormKid(string username, string KidName, string userAdd)
         {
             return
-               $"کاربر: {username} فرم:  {formName} را ویرایش کرد";
+               $"کاربر:  فرم: {username} فرم {KidName} که {userAdd} اضافه کرده بود رو تائید کرد ";
+        }
+        public static string UpdateOffAcceptedFormKid(string username, string KidName, string userAdd)
+        {
+            return
+               $"کاربر:  فرم: {username} فرم {KidName} که {userAdd} اضافه کرده بود رو رد کرد ";
         }
         public static string DeleteFormKid(string username, string KidName, string userAdd)
         {
             return
-                $" کاربر{username} فرم کودک {KidName} که توسط کاربر {userAdd} اضافه شده بود رو حذف کرد ";
+                $" کاربر{username} فرم کودک  {KidName} که توسط کاربر  {userAdd}  اضافه شده بود رو حذف کرد ";
         }
 
     }

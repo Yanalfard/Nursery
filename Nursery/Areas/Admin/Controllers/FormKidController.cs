@@ -80,7 +80,9 @@ namespace Nursery.Areas.Admin.Controllers
             ViewBag.StartDate = startDate;
             ViewBag.EndDate = endDate;
 
-            List<TblValue> selectedListFormFieldRel = _db.Value.Get().ToList();
+            List<TblValue> selectedListFormFieldRel = _db.Value.Get(i => i.IsDeleted == false
+            && i.FormField.IsDeleted == false
+            && i.FormField.Form.IsDeleted == false, orderBy: i => i.OrderByDescending(i => i.ValueId)).ToList();
             List<ValueListVm> list = new List<ValueListVm>();
             foreach (var item in selectedListFormFieldRel)
             {
@@ -161,18 +163,22 @@ namespace Nursery.Areas.Admin.Controllers
             List<TblValue> selectedUser = _db.Value.Get(i => i.IndexN == id).ToList();
             if (selectedUser != null)
             {
+                string kidName = "";
+                string userName = "";
                 foreach (var item in selectedUser)
                 {
+                    userName = item.User.Name;
+                    kidName = item.Kid.Nickname;
                     item.IsDeleted = true;
                     _db.Value.Update(item);
                 }
                 _db.Save();
                 #region Add Log
                 var addLog = new TblUserLog();
-                addLog.Text = LogRepo.DeleteFormKid(SelectUser().IdentificationNo, selectedUser.SingleOrDefault().Kid.Nickname, selectedUser.SingleOrDefault().User.Name);
                 addLog.UserId = SelectUser().UserId;
                 addLog.Type = 2;
                 addLog.DateCreated = DateTime.Now;
+                addLog.Text = LogRepo.DeleteFormKid(SelectUser().IdentificationNo, kidName, userName);
                 _db.UserLog.Add(addLog);
                 //_db.UserLog.Add(new TblUserLog()
                 //{
@@ -189,6 +195,60 @@ namespace Nursery.Areas.Admin.Controllers
 
         }
 
+        public async Task<IActionResult> IsAccepted(int id, int value)
+        {
+            List<TblValue> selectedUser = _db.Value.Get(i => i.IndexN == id).ToList();
+            if (selectedUser != null)
+            {
+                if (value == 1)
+                {
+                    string kidName = "";
+                    string userName = "";
+                    foreach (var item in selectedUser)
+                    {
+                        userName = item.User.Name;
+                        kidName = item.Kid.Nickname;
+                        item.IsAccepted = true;
+                        _db.Value.Update(item);
+                    }
+                    _db.Save();
+                    #region Add Log
+                    var addLog = new TblUserLog();
+                    addLog.UserId = SelectUser().UserId;
+                    addLog.Type = 3;
+                    addLog.DateCreated = DateTime.Now;
+                    addLog.Text = LogRepo.UpdateIsAcceptedFormKid(SelectUser().IdentificationNo, kidName, userName);
+                    _db.UserLog.Add(addLog);
+                    _db.Save();
+                    #endregion
+                }
+                else if (value == 0)
+                {
+                    string kidName = "";
+                    string userName = "";
+                    foreach (var item in selectedUser)
+                    {
+                        userName = item.User.Name;
+                        kidName = item.Kid.Nickname;
+                        item.IsAccepted = false;
+                        _db.Value.Update(item);
+                    }
+                    _db.Save();
+                    #region Add Log
+                    var addLog = new TblUserLog();
+                    addLog.UserId = SelectUser().UserId;
+                    addLog.Type = 3;
+                    addLog.DateCreated = DateTime.Now;
+                    addLog.Text = LogRepo.UpdateOffAcceptedFormKid(SelectUser().IdentificationNo, kidName, userName);
+                    _db.UserLog.Add(addLog);
+                    _db.Save();
+                    #endregion
+                }
+
+            }
+            return await Task.FromResult(Redirect("/Admin/FormKid/Index?indexN=" + id));
+
+        }
 
     }
 }
