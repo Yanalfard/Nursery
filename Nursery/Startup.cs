@@ -8,6 +8,7 @@ using Microsoft.Extensions.Hosting;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace Nursery
@@ -73,12 +74,33 @@ namespace Nursery
             app.UseRouting();
             app.UseAuthorization();
             app.UseMvc();
+
+
+            app.Use(async (context, next) =>
+            {
+                // Do work that doesn't write to the Response.
+                if (context.Request.Path.StartsWithSegments("/Admin"))
+                {
+                    if (!context.User.Identity.IsAuthenticated)
+                    {
+                        context.Response.Redirect("/Login");
+                    }
+                    else if (!bool.Parse(context.User.FindFirstValue("IsAdmin")))
+                    {
+                        context.Response.Redirect("/Login");
+                    }
+                }
+                await next.Invoke();
+                // Do logging or other work that doesn't write to the Response.
+            });
+
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
             });
+
 
             app.UseMvc(routes =>
             {
