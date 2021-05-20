@@ -1,6 +1,6 @@
 ﻿@model TblPage
 @{
-    ViewData["Title"] = ViewData["name"];
+    ViewData["Title"] = "بخش" + ViewData["name"];
     Layout = "~/Areas/Admin/Views/_AdminLayout.cshtml";
 }
 
@@ -38,7 +38,17 @@
                    asp-route-id="@Model.PageId"
                    asp-route-name="@Model.Name"
                    class="btn btn-primary uk-margin-auto-right">
-                    <span>اضافه کزدن فرم</span>
+                    <span>اضافه کردن فرم (ایجاد فرم)</span>
+                    <span class="tiny" uk-icon="plus-square"></span>
+                </a>
+
+                <a asp-area="admin"
+                   asp-controller="Page"
+                   asp-action="AddForm"
+                   asp-route-pageId="@Model.PageId"
+                   asp-route-name="@Model.Name"
+                   class="btn btn-primary uk-margin-auto-right">
+                    <span>اضافه کردن فرم ( از فرم های ثبت شده)</span>
                     <span class="tiny" uk-icon="plus-square"></span>
                 </a>
             </div>
@@ -90,13 +100,19 @@
 
                                     <ul class="dropdown-list">
                                         <li>
-                                            <a href="/User/Page/Form/@item.FormId" class="rowr">
+                                            <a href="/User/Home/Kids?formId=@item.FormId" class="rowr">
                                                 <span class="new">مشاهده</span>
                                                 <span class="small" uk-icon="eye"></span>
                                             </a>
                                         </li>
                                         <li>
-                                            <a href="/Admin/Form/Edit/@item.FormId" class="rowr">
+                                            <a
+                                               asp-area="Admin"
+                                               asp-controller="Page"
+                                               asp-action="EditForm"
+                                               asp-route-pageId="@item.PageFormRelId"
+                                               asp-route-name="@Model.Name"
+                                               class="rowr">
                                                 <span>ویرایش</span>
                                                 <span class="small" uk-icon="pen-square"></span>
                                             </a>
@@ -227,7 +243,7 @@
 
         function deletePageFormRel(id) {
             LoadingRun();
-            $.get('/Admin/Page/DeletePageFormRel/' + id, function (result) {
+            $.get('/Admin/Page/DeletePageFormRel?id=' + id, function (result) {
                 if (result == "true") {
                     $('#pageFormRel_' + id).addClass('uk-text-danger');
                     $("#pageFormRel_" + id).hide('slow');

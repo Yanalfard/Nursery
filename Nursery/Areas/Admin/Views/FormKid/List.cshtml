@@ -236,7 +236,7 @@
 
         function deleteFormKid(id) {
             LoadingRun();
-            $.get('/Admin/FormKid/Delete/' + id, function (result) {
+            $.get('/Admin/FormKid/Delete?id=' + id, function (result) {
                 if (result == "true") {
                     $('#formKidId_' + id).addClass('uk-text-danger');
                     $("#formKidId_" + id).hide('slow');

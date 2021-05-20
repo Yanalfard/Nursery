@@ -223,7 +223,7 @@ namespace Nursery.Areas.Admin.Controllers
                     });
                     _db.Save();
                     #endregion
-                    return await Task.FromResult(Redirect("/Admin/Role/Index/" + addPage.RoleId + "?name=" + name));
+                    return await Task.FromResult(Redirect("/Admin/Role/Index?id=" + addPage.RoleId + "&name=" + name));
                 }
 
             }
@@ -265,7 +265,7 @@ namespace Nursery.Areas.Admin.Controllers
                     });
                     _db.Save();
                     #endregion
-                    return await Task.FromResult(Redirect("/Admin/Role/Index/" + editPage.RoleId + "?name=" + name));
+                    return await Task.FromResult(Redirect("/Admin/Role/Index?id=" + editPage.RoleId + "&name=" + name));
 
                 }
             }

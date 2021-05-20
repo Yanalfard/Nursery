@@ -333,7 +333,7 @@ namespace Nursery.Areas.Admin.Controllers
                     });
                     _db.Save();
                     #endregion
-                    return await Task.FromResult(Redirect("/Admin/User/Index/" + addRole.UserId + "?name=" + name + "&addRoleInUser=true"));
+                    return await Task.FromResult(Redirect("/Admin/User/Index?id=" + addRole.UserId + "&name=" + name + "&addRoleInUser=true"));
 
                 }
             }
@@ -376,7 +376,7 @@ namespace Nursery.Areas.Admin.Controllers
                     });
                     _db.Save();
                     #endregion
-                    return await Task.FromResult(Redirect("/Admin/User/Index/" + addRole.UserId + "?name=" + name + "&editRoleInUser=true"));
+                    return await Task.FromResult(Redirect("/Admin/User/Index?id=" + addRole.UserId + "&name=" + name + "&editRoleInUser=true"));
 
                 }
             }

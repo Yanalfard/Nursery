@@ -191,5 +191,92 @@ namespace Nursery.Areas.Admin.Controllers
 
         }
 
+
+
+        public async Task<IActionResult> AddForm(int PageId, string name = null)
+        {
+            ViewBag.name = name;
+            ViewBag.PageFormRel = _db.Form.Get(i => i.IsDeleted == false, orderBy: i => i.OrderByDescending(k => k.FormId)).ToList();
+            return await Task.FromResult(View(new TblPageFormRel()
+            {
+                PageId = PageId
+            }));
+        }
+        [HttpPost]
+        public async Task<IActionResult> AddFormAsync(TblPageFormRel addPage, string name = null)
+        {
+            ViewBag.name = name;
+            if (ModelState.IsValid)
+            {
+                if (_db.PageFormRel.Any(i => i.FormId == addPage.FormId && i.PageId == addPage.PageId && i.IsDeleted == false))
+                {
+                    ModelState.AddModelError("FormId", "فرم مورد نظر قبلا به این بخش اضافه شده است");
+                }
+                else
+                {
+                    _db.PageFormRel.Add(addPage);
+                    _db.Save();
+                    #region Add Log
+                    TblForm selectedFormEdit = _db.Form.GetById(addPage.FormId);
+                    TblPage selectedPageEdit = _db.Page.GetById(addPage.PageId);
+                    _db.UserLog.Add(new TblUserLog()
+                    {
+                        Text = LogRepo.AddFormPageRel(SelectUser().IdentificationNo, selectedFormEdit.Name.ToString(), selectedPageEdit.Name.ToString()),
+                        UserId = SelectUser().UserId,
+                        Type = 1,
+                        DateCreated = DateTime.Now
+                    });
+                    _db.Save();
+                    #endregion
+                    return await Task.FromResult(Redirect("/Admin/Page/Index?id=" + addPage.PageId + "&name=" + name));
+                }
+            }
+            ViewBag.PageFormRel = _db.Form.Get(i => i.IsDeleted == false, orderBy: i => i.OrderByDescending(k => k.FormId)).ToList();
+            return await Task.FromResult(View(addPage));
+        }
+
+
+        public async Task<IActionResult> EditForm(int pageId, string name = null)
+        {
+            ViewBag.name = name;
+            ViewBag.PageFormRel = _db.Form.Get(i => i.IsDeleted == false, orderBy: i => i.OrderByDescending(k => k.FormId)).ToList();
+            TblPageFormRel selected = _db.PageFormRel.GetById(pageId);
+            return await Task.FromResult(View(selected));
+        }
+        [HttpPost]
+        public async Task<IActionResult> EditFormAsync(TblPageFormRel editPage, string name = null)
+        {
+            ViewBag.name = name;
+            if (ModelState.IsValid)
+            {
+                if (_db.PageFormRel.Any(i => i.PageFormRelId != editPage.PageFormRelId && i.FormId == editPage.FormId && i.PageId == editPage.PageId && i.IsDeleted == false))
+                {
+                    ModelState.AddModelError("FormId", "فرم مورد نظر قبلا به این بخش اضافه شده است");
+                }
+                else
+                {
+
+                    _db.PageFormRel.Update(editPage);
+                    _db.Save();
+                    #region Add Log
+                    TblForm selectedFormEdit = _db.Form.GetById(editPage.FormId);
+                    TblPage selectedPageEdit = _db.Page.GetById(editPage.PageId);
+                    _db.UserLog.Add(new TblUserLog()
+                    {
+                        Text = LogRepo.EditFormPageRel(SelectUser().IdentificationNo, selectedFormEdit.Name.ToString(), selectedPageEdit.Name.ToString()),
+                        UserId = SelectUser().UserId,
+                        Type = 3,
+                        DateCreated = DateTime.Now
+                    });
+                    _db.Save();
+                    #endregion
+                    return await Task.FromResult(Redirect("/Admin/Page/Index?id=" + editPage.PageId + "&name=" + name));
+
+                }
+            }
+            ViewBag.PageFormRel = _db.Form.Get(i => i.IsDeleted == false, orderBy: i => i.OrderByDescending(k => k.FormId)).ToList();
+            return await Task.FromResult(View(editPage));
+        }
+
     }
 }

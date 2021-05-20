@@ -1,6 +1,6 @@
 ﻿@model TblRole
 @{
-    ViewData["Title"] = "کاربر" + ViewData["name"];
+    ViewData["Title"] = "شیقت" + ViewData["name"];
     Layout = "~/Areas/Admin/Views/_AdminLayout.cshtml";
 }
 
@@ -21,7 +21,7 @@
             </div>
         </div>
         <div class="form-footer">
-            <a href="/Admin/Role/Edit/@Model.RoleId" class="btn btn-primary">
+            <a href="/Admin/Role/Edit?id=@Model.RoleId" class="btn btn-primary">
                 <span>ویرایش</span>
                 <span uk-icon="pen-square"></span>
             </a>
@@ -45,9 +45,9 @@
                    asp-controller="Role"
                    asp-action="AddPage"
                    asp-route-id="@Model.RoleId"
-                   asp-route-name="@Model.Name.Replace(" ","")"
+                   asp-route-name="@Model.Title.Replace(" ","")"
                    class="btn btn-primary uk-margin-auto-right">
-                    <span>اضافه</span>
+                    <span>اضافه کردن بخش</span>
                     <span class="tiny" uk-icon="plus-square"></span>
                 </a>
             </div>
@@ -83,7 +83,7 @@
                                             </a>
                                         </li>
                                         <li>
-                                            <a class="rowr btn-danger" popconfirm="description:آیا از حذف  اطمینان دارید؟;direction:rb;type:danger;title:هشدار;okText:حذف;" popok="deleteRolePageRelId(@item.RolePageRelId)">
+                                            <a class="rowr btn-danger" popconfirm="floating:true;description:آیا از حذف اطمینان دارید؟;direction:rt;type:danger;title:هشدار;okText:حذف;" popok="deleteRolePageRelId(@item.RolePageRelId)">
                                                 <span>حذف</span>
                                                 <span class="small" uk-icon="trash"></span>
                                             </a>
@@ -197,7 +197,7 @@
     <script>
         function deleteRolePageRelId(id) {
             LoadingRun();
-            $.get('/Admin/Role/DeleteRolePageRelId/' + id, function (result) {
+            $.get('/Admin/Role/DeleteRolePageRelId?id=' + id, function (result) {
                 if (result == "true") {
                     $('#rolePageRelId_' + id).addClass('uk-text-danger');
                     $("#rolePageRelId_" + id).hide('slow');

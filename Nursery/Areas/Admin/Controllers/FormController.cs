@@ -159,7 +159,7 @@ namespace Nursery.Areas.Admin.Controllers
                 return await Task.FromResult(Redirect("404.html"));
             }
 
-            // return await Task.FromResult(Redirect("/Admin/Page/Index/" + pageId + "?name=" + name));
+            // return await Task.FromResult(Redirect("/Admin/Page/Index/" + pageId + "&name=" + name));
 
         }
 
@@ -288,13 +288,13 @@ namespace Nursery.Areas.Admin.Controllers
                     });
                     _db.Save();
                     #endregion
-                    return await Task.FromResult(Redirect("/Admin/Form/Index/" + addPage.FormId + "?name=" + name));
+                    return await Task.FromResult(Redirect("/Admin/Form/Index?id=" + addPage.FormId + "&name=" + name));
                 }
 
 
             }
             ViewBag.FormPageRel = _db.Page.Get(i => i.IsDeleted == false, orderBy: i => i.OrderByDescending(k => k.PageId)).ToList();
-            return await Task.FromResult(View());
+            return await Task.FromResult(View(addPage));
         }
 
 
@@ -331,13 +331,13 @@ namespace Nursery.Areas.Admin.Controllers
                     });
                     _db.Save();
                     #endregion
-                    return await Task.FromResult(Redirect("/Admin/Form/Index/" + editPage.FormId + "?name=" + selectedFormEdit.Name));
+                    return await Task.FromResult(Redirect("/Admin/Form/Index?id=" + editPage.FormId + "&name=" + selectedFormEdit.Name));
 
                 }
 
             }
             ViewBag.FormPageRel = _db.Page.Get(i => i.IsDeleted == false, orderBy: i => i.OrderByDescending(k => k.PageId)).ToList();
-            return await Task.FromResult(View());
+            return await Task.FromResult(View(editPage));
         }
 
 

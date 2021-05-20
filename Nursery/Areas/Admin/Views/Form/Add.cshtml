@@ -633,7 +633,7 @@
             <div class="actions">
                 @if (ViewBag.pageId > 0)
                 {
-                    <button id="btn-finish" goto="/Admin/Page/Index/@ViewBag.pageId?name=@ViewBag.name&addForm=true" class="btn btn-primary">
+                    <button id="btn-finish" goto="/Admin/Page?id=@ViewBag.pageId&name=@ViewBag.name&addForm=true" class="btn btn-primary">
                         <span>تایید</span>
                     </button>
                 }

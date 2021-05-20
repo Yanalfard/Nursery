@@ -23,7 +23,7 @@
                 <span class="tiny" uk-icon="search"></span>
             </a>
             <a href="/Admin/Form/Add" class="btn btn-primary uk-margin-small-right">
-                <span>اضافه</span>
+                <span>اضافه کردن فرم</span>
                 <span class="tiny" uk-icon="plus-square"></span>
             </a>
 
@@ -202,7 +202,7 @@
 
         function deleteForm(id) {
             LoadingRun();
-            $.get('/Admin/Form/Delete/' + id, function (result) {
+            $.get('/Admin/Form/Delete?id=' + id, function (result) {
                 if (result == "true") {
                     $('#formId_' + id).addClass('uk-text-danger');
                     $("#formId_" + id).hide('slow');

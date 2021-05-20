@@ -298,7 +298,7 @@
 
         function deleteUser(id) {
             LoadingRun();
-            $.get('/Admin/User/Delete/' + id, function (result) {
+            $.get('/Admin/User/Delete?id=' + id, function (result) {
                 if (result == "true") {
                     window.location.href = "/Admin/User/List";
                     //$('#userId_' + id).addClass('text-danger');
@@ -309,7 +309,7 @@
         }
         function deleteUserRoleId(id) {
             LoadingRun();
-            $.get('/Admin/User/DeleteUserRoleId/' + id, function (result) {
+            $.get('/Admin/User/DeleteUserRoleId?id=' + id, function (result) {
                 if (result == "true") {
                     $('#userRoleIdId_' + id).addClass('uk-text-danger');
                     $("#userRoleIdId_" + id).hide('slow');
