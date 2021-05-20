@@ -42,8 +42,8 @@ namespace Nursery.Areas.Admin.Controllers
                     val.User = item.User;
                     val.Kid = item.Kid;
                     val.Form = item?.FormField?.Form;
-                    val.Page = val.Form?.TblPageFormRel?.Single().Page;
-                    val.Role = val.Page?.TblRolePageRel?.Single().Role;
+                    val.Page = val.Form?.TblPageFormRel?.FirstOrDefault()?.Page;
+                    val.Role = val.Page?.TblRolePageRel?.FirstOrDefault()?.Role;
                     val.IndexN = item.IndexN;
                     list.Add(val);
                 }
@@ -96,8 +96,8 @@ namespace Nursery.Areas.Admin.Controllers
                     val.User = item.User;
                     val.Kid = item.Kid;
                     val.Form = item?.FormField?.Form;
-                    val.Page = val.Form?.TblPageFormRel?.Single().Page;
-                    val.Role = val.Page?.TblRolePageRel?.Single().Role;
+                    val.Page = val.Form?.TblPageFormRel?.FirstOrDefault()?.Page;
+                    val.Role = val.Page?.TblRolePageRel?.FirstOrDefault()?.Role;
                     val.IndexN = item.IndexN;
                     val.IsAccepted = item.IsAccepted;
                     val.IsDeleted = item.IsDeleted;
