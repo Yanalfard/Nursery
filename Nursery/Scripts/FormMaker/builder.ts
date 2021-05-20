@@ -59,6 +59,8 @@ btnFinish.addEventListener('click', () => {
         body.Fields.push(field);
     });
 
+    console.log(body);
+    debugger
     fetch('/Admin/Form/Create', {
         method: 'post',
         mode: 'cors',

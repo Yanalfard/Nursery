@@ -1,6 +1,7 @@
 ﻿using DataLayer.Models;
 using DataLayer.ViewModels;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Routing;
 using Newtonsoft.Json;
@@ -8,6 +9,7 @@ using Nursery.Utilities;
 using Services.Services;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -145,14 +147,35 @@ namespace Nursery.Areas.User.Controllers
             return Ok();
         }
 
-        public IActionResult UploadDemo()
+        [HttpPost]
+        [Route("/User/Page/OnPostUploadAsync")]
+        public async Task<IActionResult> OnPostUploadAsync(List<IFormFile> files)
         {
-            return View();
-        }
+            var http = HttpContext;
+            long size = files.Sum(f => f.Length);
+            List<TblValue> vals = new List<TblValue>();
 
-        public IActionResult Upload()
-        {
-            return Ok();
+            foreach (var formFile in files)
+            {
+                string nameImage = Guid.NewGuid().ToString() + Path.GetExtension(formFile.FileName);
+                string savePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/FilesUploads/");
+                var imagePath = Path.Combine(Directory.GetCurrentDirectory(), savePath, nameImage);
+                if (!Directory.Exists(savePath))
+                {
+                    Directory.CreateDirectory(savePath);
+                }
+                using (var stream = new FileStream(imagePath, FileMode.Create))
+                {
+                    await formFile.CopyToAsync(stream);
+                }
+
+                vals.Add(new TblValue() { Value = imagePath });
+            }
+
+            // Process uploaded files
+            // Don't rely on or trust the FileName property without validation.
+
+            return Ok(vals);
         }
 
     }

@@ -163,7 +163,7 @@ backdrop-filter: saturate(80%);
     background-image: linear-gradient($angle, $primary, $secondary);
 }
 
-@mixin trans($seconds) {
+@mixin trans($seconds: 0.2s) {
     -moz-transition: all ease $seconds;
     -o-transition: all ease $seconds;
     -webkit-transition: all ease $seconds;

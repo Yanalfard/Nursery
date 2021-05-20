@@ -6,7 +6,7 @@
     date,
     dateTime,
     email,
-    file, //*
+    file,  
     hidden, //-
     image, //*
     month, 

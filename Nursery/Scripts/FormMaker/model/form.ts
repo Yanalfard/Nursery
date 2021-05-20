@@ -2,6 +2,7 @@
 import { TblForm } from "./db/tblForm";
 import { TblValue } from "./db/tblValue";
 import { Field } from "./field";
+import { InputType } from "./inputType";
 
 export class Form {
     dform: HTMLElement;
@@ -12,10 +13,12 @@ export class Form {
     submit: HTMLButtonElement;
     public sendto: string;
     public goto: string;
+    public uploadto: string;
 
     public readonly data: TblForm;
 
     public Fields: Field[] = [];
+    public Uploadables: Field[] = [];
 
     constructor(tblForm: TblForm) {
         this.data = tblForm;
@@ -48,10 +51,15 @@ export class Form {
 
     addField(tblField: TblField): void {
         const newField = new Field(tblField);
-        this.Fields.push(newField);
+        if (tblField.Type == InputType.file || tblField.Type == InputType.image) {
+            this.Uploadables.push(newField);
+        }
+        else {
+            this.Fields.push(newField);
+        }
         newField.element.childNodes.forEach(node => this.body.appendChild(node));
         return;
-    }
+    };
 
     attachForm(element: HTMLElement) { return element.appendChild(this.element) }
 
@@ -65,7 +73,7 @@ export class Form {
         return ans;
     }
 
-    submitClick(e): void {
+    submitClick(e) {
 
         //e.preventDefault(); return null;
         e.preventDefault();
@@ -80,26 +88,52 @@ export class Form {
             res.push(val);
         });
 
-
-
         eval('LoadingRun();');
 
-        fetch(this.sendto, {
-            method: 'post',
-            mode: 'cors',
-            cache: 'no-cache',
-            credentials: 'same-origin',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(res)
-        }).then(response => {
-            window.location.href = this.element.getAttribute('goto');
-        }).catch(() => {
-            eval('LoadingEnd();');
-        })
+        const formData = new FormData(this.element);
+        console.log(formData.get('files'));
 
-        console.log(res);
+        try {
+            // Upload files first
+            fetch(this.uploadto, {
+                method: 'POST',
+                body: formData
+            }).then(response => {
+                (response.json().then((filenames: TblValue[]) => {
+                    // Recieve file names
+
+                    // Put FormId and FieldId back to values
+                    for (var file = 0; file < filenames.length; file++) {
+                        filenames[file].FormFieldId = this.Uploadables[file].data.FieldId;
+                        filenames[file].FormId = this.Uploadables[file].data.FormId;
+                    }
+
+                    // Combine values to send and fileName
+                    res = [...res, ...filenames];
+
+                    // Then send data
+                    fetch(this.sendto, {
+                        method: 'post',
+                        mode: 'cors',
+                        cache: 'no-cache',
+                        credentials: 'same-origin',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify(res)
+                    }).then(response => {
+                        console.log('send data response', response);
+                        // Go to wherever after submission
+                        window.location.href = this.element.getAttribute('goto');
+                    }).catch(() => {
+                        eval('LoadingEnd();');
+                    })
+                }));
+            }).catch()
+
+        } catch (error) {
+            console.error('Error:', error);
+        }
 
         //this.element.submit();
     }
