@@ -97,7 +97,7 @@ namespace Nursery.Areas.Admin.Controllers
             }
             return await Task.FromResult(View(kid));
         }
-        public async Task<IActionResult> Edit(int id)
+        public async Task<IActionResult> Edit(int id, string name)
         {
             TblKid selectedKid = _db.Kid.GetById(id);
             AddKidVm kid = new AddKidVm()

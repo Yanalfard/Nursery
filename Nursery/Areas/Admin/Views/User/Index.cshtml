@@ -64,7 +64,7 @@
                    asp-route-id="@Model.UserId"
                    asp-route-name="@Model.Name"
                    class="btn btn-primary uk-margin-auto-right">
-                    <span>اضافه</span>
+                    <span>اضافه کردن شیفت</span>
                     <span class="tiny" uk-icon="plus-square"></span>
                 </a>
             </div>
@@ -103,6 +103,7 @@
                                                    asp-action="EditRole"
                                                    asp-route-id="@item.UserRoleId"
                                                    asp-route-name="@item.Role.Name"
+                                                   asp-route-nameUser="@Model.Name"
                                                    class="rowr">
                                                     <span class="new">ویرایش</span>
                                                     <span class="small" uk-icon="pen-square"></span>
@@ -220,7 +221,7 @@
     <div class="activity card-mat">
         <div class="header card-padding">
             <h1 class="title" dir="rtl">
-                فعالیت ها
+                فعالیت های کاربر @Model.Name
             </h1>
             @*<h3 class="subtitle" dir="rtl">
                     3 مورد فعالیت در یک هفته گذشته

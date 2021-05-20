@@ -1,17 +1,18 @@
 ﻿@model TblUserRoleRel
 @{
-    ViewData["Title"] = "ویرایش شیفت";
+    ViewData["Title"] = "ویرایش شیفت برای کاربر" + ViewData["nameUser"];
+
     Layout = "~/Areas/Admin/Views/_AdminLayout.cshtml";
 }
 
 <form class="form" asp-action="EditRole" method="post">
 
-    <input type="hidden" asp-for="UserRoleId"/>
-    <input type="hidden" asp-for="UserId"/>
-    <input type="hidden" asp-for="IsDeleted"/>
-    <div class="form-header">
+    <input type="hidden" asp-for="UserRoleId" />
+    <input type="hidden" asp-for="UserId" />
+    <input type="hidden" asp-for="IsDeleted" />
+    <div class="form-header" dir="rtl">
         <h3>
-            ویرایش شیفت
+            ویرایش شیفت برای کاربر @ViewData["nameUser"]
         </h3>
     </div>
     <div class="form-body">
@@ -26,7 +27,7 @@
                 <select class="uk-select" asp-for="RoleId">
                     @foreach (var item in listRole)
                     {
-                        <option value="@item.RoleId" >@item.Title</option>
+                        <option value="@item.RoleId">@item.Title</option>
                     }
                 </select>
                 <span class="text-danger" asp-validation-for="RoleId"></span>

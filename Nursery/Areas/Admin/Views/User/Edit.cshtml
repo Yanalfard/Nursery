@@ -7,9 +7,9 @@
 <form class="form" asp-action="Edit" method="post" enctype="multipart/form-data">
     <input type="hidden" name="ImageUrl" asp-for="ImageUrl" />
     <input type="hidden" name="UserId" asp-for="UserId" />
-    <div class="form-header">
+    <div class="form-header" dir="rtl">
         <h3>
-            ویرایش شیفت
+            ویرایش کاربر @Model.Name
         </h3>
     </div>
     <div class="form-body" confirmOk="callAjax()" confirmCancel="">

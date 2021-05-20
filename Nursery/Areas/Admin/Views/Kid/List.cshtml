@@ -22,7 +22,7 @@
                 <span class="tiny" uk-icon="search"></span>
             </a>
             <a href="/Admin/Kid/Add" class="btn btn-primary uk-margin-small-right">
-                <span>اضافه</span>
+                <span>اضافه کردن کودک</span>
                 <span class="tiny" uk-icon="plus-square"></span>
             </a>
         </div>
@@ -65,7 +65,13 @@
                             <div class="dropdown" uk-drop="mode: click;offset:4">
                                 <ul class="dropdown-list">
                                     <li>
-                                        <a href="/Admin/Kid/Edit/@item.KidId" class="rowr">
+                                        <a
+                                           asp-area="Admin"
+                                           asp-controller="Kid"
+                                           asp-action="Edit"
+                                           asp-route-id="@item.KidId"
+                                           asp-route-name="@item.Name"
+                                           class="rowr">
                                             <span class="new">ویرایش</span>
                                             <span class="small" uk-icon="pen-square"></span>
                                         </a>
@@ -153,7 +159,7 @@
         }
         function deleteKid(id) {
             LoadingRun();
-            $.get('/Admin/Kid/Delete/' + id, function (result) {
+            $.get('/Admin/Kid/Delete?id=' + id, function (result) {
                 if (result == "true") {
                     $('#kidId_' + id).addClass('uk-text-danger');
                     $("#kidId_" + id).hide('slow');
