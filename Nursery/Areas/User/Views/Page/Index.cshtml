@@ -1,20 +1,73 @@
 ﻿@model TblPage
 @{
-    ViewData["Title"] = Model.Name;
+    ViewData["Title"] = Model?.Name;
     Layout = "~/Areas/User/Views/_UserLayout.cshtml";
 }
 
 <div class="headline">
-    <h3>
-        نام بخش
-    </h3>
-    <hr />
-</div>
+        <h3>
+            @(Model?.Name ?? "نام بخش")
+        </h3>
+        <hr />
+    </div>
 
-<div class="forms">
-    @foreach (var item in Model.TblPageFormRel.Where(i => i.IsDeleted == false).Select(i=>i.Form).Where(i => i.IsDeleted == false))
-    {
-        <partial name="_FormBlock" model="item" />
+    <div class="forms">
+        @if (Model?.TblPageFormRel?.Count > 0)
+        {
+            @foreach (var item in Model.TblPageFormRel.Where(i => i.IsDeleted == false).Select(i => i.Form).Where(i => i.IsDeleted == false))
+            {
+                <partial name="_FormBlock" model="item" />
+            }
+        }
+
+    </div>
+
+@*<form action="OnPostUploadAsync/?handler=Upload"
+      enctype="multipart/form-data" onsubmit="AJAXSubmit(this);return false;"
+      method="post">
+    <dl>
+        <dt>
+            <label for="FileUpload_FormFile1">File</label>
+        </dt>
+        <dd>
+            <input id="FileUpload_FormFile1" type="file"
+                   name="files" />
+        </dd>
+        <dt>
+            <label for="FileUpload_FormFile2">File</label>
+        </dt>
+        <dd>
+            <input id="FileUpload_FormFile2" type="file"
+                   name="files" />
+        </dd>
+    </dl>
+
+    <input class="btn" type="submit" value="Upload" />
+
+    <div style="margin-top:15px">
+        <output name="result"></output>
+    </div>
+</form>
+
+<script>
+  async function AJAXSubmit (oFormElement) {
+    var resultElement = oFormElement.elements.namedItem("result");
+    const formData = new FormData(oFormElement);
+
+    try {
+    const response = await fetch(oFormElement.action, {
+      method: 'POST',
+      body: formData
+    });
+
+    if (response.ok) {
+      
     }
 
-</div>
+    resultElement.value = 'Result: ' + response.status + ' ' +
+      response.statusText;
+    } catch (error) {
+      console.error('Error:', error);
+    }
+  }
+</script>*@

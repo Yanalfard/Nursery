@@ -37,7 +37,7 @@ define(["require", "exports", "./db/tblValue", "./inputType"], function (require
                     break;
                 case inputType_1.InputType.file:
                     templateString =
-                        "\n                <label class=\"fg-label\" for=\"" + this.id + "\">" + data.Label + "</label>\n                <input class=\"entry\" id=\"" + this.id + "\" " + (data.IsRequired ? 'required' : '') + " type=\"file\">\n                <span class=\"text-danger\"></span>\n                   ";
+                        "\n                <label class=\"fg-label\" for=\"" + this.id + "\">" + data.Label + "</label>\n                <label class=\"comp-upload\">\n                    " + this.data.Options.join(' ,') + "\n                    <input id=\"" + this.id + "\" type=\"file\" name=\"files\" accept=\"" + this.data.Options.map(function (i) { return '.' + i; }).join(',') + "\" />\n                </label>\n                <span class=\"text-danger\"></span>\n                   ";
                     break;
                 case inputType_1.InputType.hidden:
                     templateString =

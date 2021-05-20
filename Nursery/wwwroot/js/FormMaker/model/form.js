@@ -1,4 +1,9 @@
-define(["require", "exports", "./field"], function (require, exports, field_1) {
+var __spreadArray = (this && this.__spreadArray) || function (to, from) {
+    for (var i = 0, il = from.length, j = to.length; i < il; i++, j++)
+        to[j] = from[i];
+    return to;
+};
+define(["require", "exports", "./field", "./inputType"], function (require, exports, field_1, inputType_1) {
     "use strict";
     exports.__esModule = true;
     exports.Form = void 0;
@@ -6,6 +11,7 @@ define(["require", "exports", "./field"], function (require, exports, field_1) {
         function Form(tblForm) {
             var _this = this;
             this.Fields = [];
+            this.Uploadables = [];
             this.data = tblForm;
             this.element = document.createElement('form');
             this.element.id = 'form';
@@ -34,10 +40,16 @@ define(["require", "exports", "./field"], function (require, exports, field_1) {
         Form.prototype.addField = function (tblField) {
             var _this = this;
             var newField = new field_1.Field(tblField);
-            this.Fields.push(newField);
+            if (tblField.Type == inputType_1.InputType.file || tblField.Type == inputType_1.InputType.image) {
+                this.Uploadables.push(newField);
+            }
+            else {
+                this.Fields.push(newField);
+            }
             newField.element.childNodes.forEach(function (node) { return _this.body.appendChild(node); });
             return;
         };
+        ;
         Form.prototype.attachForm = function (element) { return element.appendChild(this.element); };
         Form.prototype.validate = function () {
             var ans = true;
@@ -62,21 +74,46 @@ define(["require", "exports", "./field"], function (require, exports, field_1) {
                 res.push(val);
             });
             eval('LoadingRun();');
-            fetch(this.sendto, {
-                method: 'post',
-                mode: 'cors',
-                cache: 'no-cache',
-                credentials: 'same-origin',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(res)
-            }).then(function (response) {
-                window.location.href = _this.element.getAttribute('goto');
-            })["catch"](function () {
-                eval('LoadingEnd();');
-            });
-            console.log(res);
+            var formData = new FormData(this.element);
+            console.log(formData.get('files'));
+            try {
+                // Upload files first
+                fetch(this.uploadto, {
+                    method: 'POST',
+                    body: formData
+                }).then(function (response) {
+                    (response.json().then(function (filenames) {
+                        // Recieve file names
+                        // Put FormId and FieldId back to values
+                        for (var file = 0; file < filenames.length; file++) {
+                            filenames[file].FormFieldId = _this.Uploadables[file].data.FieldId;
+                            filenames[file].FormId = _this.Uploadables[file].data.FormId;
+                        }
+                        // Combine values to send and fileName
+                        res = __spreadArray(__spreadArray([], res), filenames);
+                        // Then send data
+                        fetch(_this.sendto, {
+                            method: 'post',
+                            mode: 'cors',
+                            cache: 'no-cache',
+                            credentials: 'same-origin',
+                            headers: {
+                                'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify(res)
+                        }).then(function (response) {
+                            console.log('send data response', response);
+                            // Go to wherever after submission
+                            window.location.href = _this.element.getAttribute('goto');
+                        })["catch"](function () {
+                            eval('LoadingEnd();');
+                        });
+                    }));
+                })["catch"]();
+            }
+            catch (error) {
+                console.error('Error:', error);
+            }
             //this.element.submit();
         };
         return Form;

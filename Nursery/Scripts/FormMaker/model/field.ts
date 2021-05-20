@@ -68,7 +68,10 @@ export class Field {
                 templateString =
                     `
                 <label class="fg-label" for="${this.id}">${data.Label}</label>
-                <input class="entry" id="${this.id}" ${data.IsRequired ? 'required' : ''} type="file">
+                <label class="comp-upload">
+                    ${(this.data.Options as string[]).join(' ,')}
+                    <input id="${this.id}" type="file" name="files" accept="${(this.data.Options as string[]).map(i => '.' + i).join(',')}" />
+                </label>
                 <span class="text-danger"></span>
                    `;
                 break;

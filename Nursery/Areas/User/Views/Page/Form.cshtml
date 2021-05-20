@@ -5,7 +5,10 @@
     var formModel = ViewData["Data"];
 }
 
-<dform model="@formModel" sendto="/User/Page/Form/SubmitForm?kidId=@ViewBag.kidId" goto="/User/Home/Index"></dform>
+<dform model="@formModel"
+       sendto="/User/Page/Form/SubmitForm?kidId=@ViewBag.kidId"
+       uploadto="/User/Page/OnPostUploadAsync/?handler=Upload"
+       goto="/User/Home/Index"></dform>
 
 @section Scripts{
 

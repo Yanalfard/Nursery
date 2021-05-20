@@ -47,6 +47,7 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
+    <PackageReference Include="System.Text.Encodings.Web" Version="5.0.1" />
   </ItemGroup>
 
   <ItemGroup>
@@ -57,6 +58,7 @@
     <Folder Include="Areas\Admin\Views\Shared\" />
     <Folder Include="wwwroot\dyn\img\" />
     <Folder Include="wwwroot\Images\User\" />
+    <Folder Include="wwwroot\FilesUploads\" />
   </ItemGroup>
 
   <ItemGroup>
