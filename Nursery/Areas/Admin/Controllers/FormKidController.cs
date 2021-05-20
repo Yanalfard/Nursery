@@ -1,5 +1,6 @@
 ﻿using DataLayer.Models;
 using DataLayer.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using Nursery.Utilities;
@@ -14,7 +15,7 @@ using System.Threading.Tasks;
 namespace Nursery.Areas.Admin.Controllers
 {
     [Area("Admin")]
-    [PermissionChecker("admin")]
+    [Authorize]
     public class FormKidController : Controller
     {
         private Core _db = new Core();
