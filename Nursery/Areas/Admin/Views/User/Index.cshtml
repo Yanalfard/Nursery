@@ -1,6 +1,10 @@
 ﻿@model TblUser
-@{ ViewData["Title"] = "کاربر" + ViewData["name"];
-    Layout = "~/Areas/Admin/Views/_AdminLayout.cshtml"; }
+@using Nursery.Utilities;
+
+@{
+    ViewData["Title"] = "کاربر" + ViewData["name"];
+    Layout = "~/Areas/Admin/Views/_AdminLayout.cshtml";
+}
 
 <div class="col gap-between-card">
     <!-- #region Profile -->
@@ -255,13 +259,10 @@
             @if (Model.TblUserLog.Any())
             {
 
-
-
-
                 @foreach (var item in Model.TblUserLog.OrderByDescending(i => i.DateCreated))
                 {
                     <div class="item @(colorByType(Convert.ToInt32(item.Type)))">
-                        <span class="time">@item.DateCreated.Value.AllToShamsi()</span>
+                        <span class="time">@item.DateCreated.Value.ToRelativeDate()</span>
                         <i class="badge"></i>
                         <p class="text">
                             @item.Text
