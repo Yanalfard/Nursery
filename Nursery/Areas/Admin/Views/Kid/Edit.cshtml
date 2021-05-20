@@ -1,14 +1,14 @@
 ﻿@model AddKidVm
 @{
-    ViewData["Title"] = "ویرایش کودک";
+    ViewData["Title"] = "ویرایش کودک" + Model.Name;
     Layout = "~/Areas/Admin/Views/_AdminLayout.cshtml";
 }
 
 <form class="form" asp-action="Edit" method="post">
     <input type="hidden" asp-for="KidId" />
-    <div class="form-header">
+    <div class="form-header" dir="rtl">
         <h3>
-            ویرایش
+            ویرایش کودک @Model.Name
         </h3>
     </div>
     <div class="form-body">

@@ -342,9 +342,10 @@ namespace Nursery.Areas.Admin.Controllers
         }
 
 
-        public async Task<IActionResult> EditRole(int id, string name = null)
+        public async Task<IActionResult> EditRole(int id, string name = null, string nameUser = null)
         {
             ViewBag.name = name;
+            ViewBag.nameUser = nameUser;
             ViewBag.UserRoleRel = _db.Role.Get(i => i.IsDeleted == false, orderBy: i => i.OrderByDescending(k => k.RoleId)).ToList();
             return await Task.FromResult(View(_db.UserRoleRel.GetById(id)));
         }

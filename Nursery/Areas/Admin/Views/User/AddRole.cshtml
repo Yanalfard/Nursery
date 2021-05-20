@@ -1,15 +1,15 @@
 ﻿@model TblUserRoleRel
 @{
-    ViewData["Title"] = "تایین شیفت";
+    ViewData["Title"] = "تعیین شیفت";
     Layout = "~/Areas/Admin/Views/_AdminLayout.cshtml";
 }
 
 <form class="form" method="post" asp-action="AddRole">
     <input type="hidden" asp-for="UserId" />
     <input type="hidden" name="name" value="@ViewBag.name" />
-    <div class="form-header">
+    <div class="form-header" dir="rtl">
         <h3>
-            تعیین شیفت
+            تعیین شیفت برای کاربر @ViewData["name"]
         </h3>
     </div>
     <div class="form-body">

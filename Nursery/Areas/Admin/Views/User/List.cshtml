@@ -92,7 +92,11 @@
                                         </a>
                                     </li>
                                     <li>
-                                        <a href="/Admin/User/Edit/@item.UserId" class="rowr">
+                                        <a asp-area="Admin"
+                                           asp-controller="User"
+                                           asp-action="Edit"
+                                           asp-route-id="@item.UserId"
+                                           class="rowr">
                                             <span class="new">ویرایش</span>
                                             <span class="small" uk-icon="pen-square"></span>
                                         </a>
@@ -107,7 +111,7 @@
                             </div>
                         </td>
                     </tr>
-}
+                }
 
             </tbody>
         </table>
@@ -124,34 +128,34 @@
                 @if (pageShow > 1)
                 {
                     <li><a onclick="showOtherPage(@(pageShow==0?1:pageShow-1))"><span uk-pagination-previous></span></a></li>
-}
+                }
                 @if (pageShow > 3)
                 {
                     <li><a onclick="showOtherPage(1)">1</a></li>
-}
+                }
                 @for (int i = 1; i <= pageCount; i++)
                 {
                     @if (i >= minPage && i <= maxPage)
                     {
                         <li><a onclick="showOtherPage(@(i))" class="@(pageShow==i?"uk-active":"")">@i</a></li>
- notpage = 0;
+                        notpage = 0;
                     }
                     else
                     {
                         if (notpage == 0)
                         {
                             <li class="uk-disabled"><span>...</span></li>
-notpage++;
+                            notpage++;
                         }
                     }}
                 @if (pageShow <= pageCount - 3)
                 {
                     <li><a onclick="showOtherPage(@(pageCount))">@pageCount</a></li>
-}
+                }
                 @if (pageShow < pageCount)
                 {
                     <li><a onclick="showOtherPage(@(pageShow==0?2:pageShow+1))"><span uk-pagination-next></span></a></li>
-}
+                }
 
             </ul>
         </div>
@@ -172,14 +176,14 @@ notpage++;
         <script>
             notify('کاربر مورد نظر ویرایش شد');
         </script>
-}
+    }
 
     @if (Context.Request.Query["addUser"].ToString() == "true")
     {
         <script>
             notify('کاربر جدید اضافه شد', 'success');
         </script>
-}
+    }
     <script>
         function showOtherPage(id) {
             $('#pageId').val(id);
@@ -189,7 +193,7 @@ notpage++;
 
         function deleteUser(id) {
             LoadingRun();
-            $.get('/Admin/User/Delete/' + id, function (result) {
+            $.get('/Admin/User/Delete?id=' + id, function (result) {
                 if (result == "true") {
                     $('#userId_' + id).addClass('uk-text-danger');
                     $("#userId_" + id).hide('slow');

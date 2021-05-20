@@ -85,7 +85,11 @@ namespace Nursery.Areas.Admin.Controllers
                 {
                     if (_db.Role.Any(i => i.Name == role.Name.Trim().ToLower() && i.IsDeleted == false))
                     {
-                        ModelState.AddModelError("Name", "نام بخش تکراری می باشد");
+                        ModelState.AddModelError("Name", "نام شیفت تکراری می باشد");
+                    }
+                    if (_db.Role.Any(i => i.Title == role.Title && i.IsDeleted == false))
+                    {
+                        ModelState.AddModelError("Title", "تیتر شیفت تکراری می باشد");
                     }
                     else
                     {
@@ -145,7 +149,11 @@ namespace Nursery.Areas.Admin.Controllers
                 {
                     if (_db.Role.Any(i => i.RoleId != role.RoleId && i.Name == role.Name.Trim().ToLower() && i.IsDeleted == false))
                     {
-                        ModelState.AddModelError("Name", "نام بخش تکراری می باشد");
+                        ModelState.AddModelError("Name", "نام شیفت تکراری می باشد");
+                    }
+                    if (_db.Role.Any(i => i.RoleId != role.RoleId && i.Title == role.Title && i.IsDeleted == false))
+                    {
+                        ModelState.AddModelError("Title", "تیتر شیفت تکراری می باشد");
                     }
                     else
                     {
