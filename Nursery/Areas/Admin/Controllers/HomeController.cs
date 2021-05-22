@@ -28,7 +28,41 @@ namespace Nursery.Areas.Admin.Controllers
 
         public IActionResult Index()
         {
-            return View();
+            List<TblValue> selectedListFormFieldRel = db.Value.Get(i => i.IsDeleted == false
+       && i.FormField.IsDeleted == false
+       && i.FormField.Form.IsDeleted == false, orderBy: i => i.OrderByDescending(i => i.ValueId)).ToList();
+            List<ValueListVm> list = new List<ValueListVm>();
+            foreach (var item in selectedListFormFieldRel)
+            {
+                if (!list.Any(i => i.IndexN == item.IndexN))
+                {
+                    ValueListVm val = new ValueListVm();
+                    val.FormFieldId = item.FormFieldId;
+                    val.Value = item;
+                    val.DateCreated = (DateTime)item.DateCreated;
+                    val.User = item.User;
+                    val.Kid = item.Kid;
+                    val.Form = item?.FormField?.Form;
+                    val.Page = val.Form?.TblPageFormRel?.FirstOrDefault()?.Page;
+                    val.Role = val.Page?.TblRolePageRel?.FirstOrDefault()?.Role;
+                    val.IndexN = item.IndexN;
+                    val.IsAccepted = item.IsAccepted;
+                    val.IsDeleted = item.IsDeleted;
+                    list.Add(val);
+                }
+            }
+
+
+            DashbordInfoVm countDashbord = new DashbordInfoVm();
+            countDashbord.FormCount = db.Form.Get(i => i.IsDeleted == false).ToList().Count();
+            countDashbord.RoleCount = db.Role.Get(i => i.IsDeleted == false).ToList().Count();
+            countDashbord.PageCount = db.Page.Get(i => i.IsDeleted == false).ToList().Count();
+            countDashbord.KidCount = db.Kid.Get(i => i.IsDeleted == false).ToList().Count();
+            countDashbord.UserCount = db.User.Get(i => i.IsDeleted == false).ToList().Count();
+            countDashbord.ValuesCount = list.Count();
+            countDashbord.ValusAcceptCount = list.Count(i => i.IsAccepted == true);
+
+            return View(countDashbord);
         }
 
         [Obsolete]

@@ -33,20 +33,17 @@ namespace Nursery.Areas.Admin.Controllers
             List<ValueListVm> list = new List<ValueListVm>();
             foreach (var item in selectedListFormFieldRel)
             {
-                if (!list.Any(i => i.IndexN == item.IndexN))
-                {
-                    ValueListVm val = new ValueListVm();
-                    val.FormFieldId = item.FormFieldId;
-                    val.Value = item;
-                    val.DateCreated = (DateTime)item.DateCreated;
-                    val.User = item.User;
-                    val.Kid = item.Kid;
-                    val.Form = item?.FormField?.Form;
-                    val.Page = val.Form?.TblPageFormRel?.FirstOrDefault()?.Page;
-                    val.Role = val.Page?.TblRolePageRel?.FirstOrDefault()?.Role;
-                    val.IndexN = item.IndexN;
-                    list.Add(val);
-                }
+                ValueListVm val = new ValueListVm();
+                val.FormFieldId = item.FormFieldId;
+                val.Value = item;
+                val.DateCreated = (DateTime)item.DateCreated;
+                val.User = item.User;
+                val.Kid = item.Kid;
+                val.Form = item?.FormField?.Form;
+                val.Page = val.Form?.TblPageFormRel?.FirstOrDefault()?.Page;
+                val.Role = val.Page?.TblRolePageRel?.FirstOrDefault()?.Role;
+                val.IndexN = item.IndexN;
+                list.Add(val);
             }
             return await Task.FromResult(View(list));
         }

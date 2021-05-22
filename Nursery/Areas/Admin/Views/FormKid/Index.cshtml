@@ -22,10 +22,20 @@
                 </div>
                 @foreach (var item in Model)
                 {
-                    <div class="fg-col">
-                        <label class="dl-label">@item.Value.FormField.Field.Label</label>
-                        <p class="dl-data">@item.Value.Value</p>
-                    </div>
+                    if (item.Value.FormField.Field.Type != "File")
+                    {
+                        <div class="fg-col">
+                            <label class="dl-label">@item.Value.FormField.Field.Label</label>
+                            <p class="dl-data">@item.Value.Value</p>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="fg-col">
+                            <label class="dl-label">@item.Value.FormField.Field.Label</label>
+                            <a class="dl-data" href="~/FilesUploads/@item.Value.Value" target="_blank">مشاهده فایل</a>
+                        </div>
+                    }
                 }
             </div>
         </div>

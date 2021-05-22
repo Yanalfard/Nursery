@@ -51,6 +51,7 @@
                     <th>کد</th>
                     <th>نام</th>
                     <th>شماره تماس</th>
+                    <th>کد ملی </th>
                     <th>تاریخ ثبت نام</th>
                     <th>تاریخ آخرین ورود</th>
                     @*<th>نقش</th>*@
@@ -64,6 +65,7 @@
                         <td>@(Model.ToList().IndexOf(item)+1)</td>
                         <td>@item.Name</td>
                         <td><bdi>@item.TellNo</bdi></td>
+                        <td>@item.IdentificationNo</td>
                         <td>@item.DateCreated.DateToShamsi()</td>
                         <td>
 

@@ -169,7 +169,7 @@ namespace Nursery.Areas.User.Controllers
                     await formFile.CopyToAsync(stream);
                 }
 
-                vals.Add(new TblValue() { Value = imagePath });
+                vals.Add(new TblValue() { Value = nameImage });
             }
 
             // Process uploaded files

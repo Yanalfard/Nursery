@@ -28,6 +28,12 @@ namespace Nursery.Controllers
             //{
             //    return Redirect("/");
             //}
+            if (User.Identity.IsAuthenticated)
+            {
+                if (bool.Parse(User.FindFirstValue("IsAdmin")))
+                    return Redirect("/Admin");
+                return Redirect("/User");
+            }
             return await Task.FromResult(View());
         }
         [Route("Login")]
@@ -36,6 +42,7 @@ namespace Nursery.Controllers
         {
             try
             {
+               
                 //if (!await _captchaValidator.IsCaptchaPassedAsync(login.Captcha))
                 //{
                 //    ModelState.AddModelError("TellNo", "ورود غیر مجاز");
@@ -86,8 +93,10 @@ namespace Nursery.Controllers
                             DateCreated = DateTime.Now
                         });
                         db.Save();
+                        if (user.IsAdmin)
+                            return Redirect("/Admin");
                         #endregion
-                        return Redirect(ReturnUrl);
+                        return Redirect("/User");
                     }
                     else
                     {

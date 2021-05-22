@@ -1,4 +1,6 @@
 ﻿@using DataLayer.ViewModels;
+@model DashbordInfoVm
+
 @{
     ViewData["Title"] = "Index";
     Layout = "~/Areas/Admin/Views/_AdminLayout.cshtml";
@@ -12,7 +14,7 @@
                 <div class="content">
                     <img src="" uk-icon="icon:user-tie;ratio:1.4" alt="" />
                     <div class="col">
-                        <label class="number">1,600,000</label>
+                        <label class="number">@Model.UserCount</label>
                         <span class="title">کاربر</span>
                     </div>
                 </div>
@@ -21,7 +23,7 @@
                 <div class="content">
                     <img src="" uk-icon="icon:child;ratio:1.4" alt="" />
                     <div class="col">
-                        <label class="number">1,600,000</label>
+                        <label class="number">@Model.KidCount</label>
                         <span class="title">کودک</span>
                     </div>
                 </div>
@@ -30,8 +32,8 @@
                 <div class="content">
                     <img src="" uk-icon="icon:copy;ratio:1.4" alt="" />
                     <div class="col">
-                        <label class="number">1,600,000</label>
-                        <span class="title">فرم پرنشده</span>
+                        <label class="number">@Model.FormCount</label>
+                        <span class="title">فرم ها</span>
                     </div>
                 </div>
             </div>
@@ -39,15 +41,43 @@
                 <div class="content">
                     <img src="" uk-icon="icon:file-alt;ratio:1.4" alt="" />
                     <div class="col">
-                        <label class="number">1,600,000</label>
+                        <label class="number">@Model.ValuesCount</label>
                         <span class="title">فرم پرشده</span>
                     </div>
                 </div>
             </div>
+            <div class="counter counter-red">
+                <div class="content">
+                    <img src="" uk-icon="icon:copy;ratio:1.4" alt="" />
+                    <div class="col">
+                        <label class="number">@Model.ValusAcceptCount</label>
+                        <span class="title">فرم های تائید شده</span>
+                    </div>
+                </div>
+            </div>
+            <div class="counter counter-red">
+                <div class="content">
+                    <img src="" uk-icon="icon:copy;ratio:1.4" alt="" />
+                    <div class="col">
+                        <label class="number">@Model.RoleCount</label>
+                        <span class="title">تعداد شیفت ها</span>
+                    </div>
+                </div>
+            </div>
+            <div class="counter counter-red">
+                <div class="content">
+                    <img src="" uk-icon="icon:copy;ratio:1.4" alt="" />
+                    <div class="col">
+                        <label class="number">@Model.PageCount</label>
+                        <span class="title">تعداد بخش ها</span>
+                    </div>
+                </div>
+            </div>
+
         </div>
     </div>
 
-    <div class="activity card-mat">
+    @*<div class="activity card-mat">
         <div class="header card-padding">
             <h1 class="title" dir="rtl">
                 فعالیت های اخیر
@@ -125,7 +155,7 @@
     <div class="card col gap-4">
         @for (int i = 0; i < 5; i++)
         {
-            <!-- #region User -->
+             #region User 
             <div class="icon-list-item">
                 <img src="~/st/png/blue.png" class="round" width="42" height="42" alt="" />
                 <div class="col">
@@ -156,9 +186,20 @@
                     </ul>
                 </div>
             </div>
-            <!-- #endregion -->
+             #endregion 
         }
-    </div>
+    </div>*@
+
+
+
+
+
+
+
+
+
+
+
 
     <!-- #region -->
     @*<div class="card col">
@@ -303,34 +344,33 @@
             </div>
         </div>*@
     <!-- #endregion -->
-
     @*<div class="card col">
-        <h3>
-            مودال ها
-        </h3>
+            <h3>
+                مودال ها
+            </h3>
 
-        <div class="row gap-3">
-            <button uk-toggle="#modal" class="btn btn-primary"><span>MODAL</span></button>
-            <button uk-toggle="#form" class="btn btn-primary"><span>FORM</span></button>
-        </div>
-    </div>*@
+            <div class="row gap-3">
+                <button uk-toggle="#modal" class="btn btn-primary"><span>MODAL</span></button>
+                <button uk-toggle="#form" class="btn btn-primary"><span>FORM</span></button>
+            </div>
+        </div>*@
 
     <!-- This is the modal -->
     @*<div id="modal" uk-modal>
-        <div class="uk-modal-dialog uk-modal-body">
-            <h2 class="uk-modal-title">مودال</h2>
-            <p>
-                Laoreet ac, aliquam sit amet justo nunc tempor, metus vel placerat suscipit, orci nisl iaculis eros, a tincidunt nisi odio eget lorem nulla condimentum tempor mattis ut vitae feugiat augue cras ut metus a risus iaculis scelerisque eu ac ante fusce non varius purus aenean nec magna felis fusce vestibulum.
-            </p>
-            <div class="rowr">
-                <button class="btn btn-primary uk-modal-close" dir="rtl">
-                    <span>
-                        بستن
-                    </span>
-                </button>
+            <div class="uk-modal-dialog uk-modal-body">
+                <h2 class="uk-modal-title">مودال</h2>
+                <p>
+                    Laoreet ac, aliquam sit amet justo nunc tempor, metus vel placerat suscipit, orci nisl iaculis eros, a tincidunt nisi odio eget lorem nulla condimentum tempor mattis ut vitae feugiat augue cras ut metus a risus iaculis scelerisque eu ac ante fusce non varius purus aenean nec magna felis fusce vestibulum.
+                </p>
+                <div class="rowr">
+                    <button class="btn btn-primary uk-modal-close" dir="rtl">
+                        <span>
+                            بستن
+                        </span>
+                    </button>
+                </div>
             </div>
-        </div>
-    </div>*@
+        </div>*@
 
     <!-- This is the modal -->
     <!--<div id="form" uk-modal>
@@ -357,67 +397,66 @@
             </div>
         </div>
     </div>-->
-
     @*<div class="card col">
-        <h3>
-            گیج ها
-        </h3>
+            <h3>
+                گیج ها
+            </h3>
 
-        <div class="col-at-xs col-at-s col-at-m row-at-l row-at-xl gap-3">
+            <div class="col-at-xs col-at-s col-at-m row-at-l row-at-xl gap-3">
 
-            <div gauge="percent:32;size:240;thickness:12">
-                <div class="uk-margin-auto col">
-                    <label>
-                        30
-                    </label>
-                    <span>
-                        این یک تست می باشد
-                    </span>
+                <div gauge="percent:32;size:240;thickness:12">
+                    <div class="uk-margin-auto col">
+                        <label>
+                            30
+                        </label>
+                        <span>
+                            این یک تست می باشد
+                        </span>
+                    </div>
                 </div>
+                <div gauge="percent:64;size:120;thickness:6"></div>
+                <div gauge="percent:72;size:60;thickness:4"></div>
+
+                <div gauge="percent:72;size:20;thickness:4"></div>
+
+
             </div>
-            <div gauge="percent:64;size:120;thickness:6"></div>
-            <div gauge="percent:72;size:60;thickness:4"></div>
 
-            <div gauge="percent:72;size:20;thickness:4"></div>
-
-
-        </div>
-
-    </div>*@
+        </div>*@
 
     @*<div class="card col">
-        <h3>
-            آپلود
-        </h3>
+            <h3>
+                آپلود
+            </h3>
 
-        <div class="row">
-            <label class="profile-image" style="background-image:url('/st/png/blue.png')" preview="">
-                <input type="file" accept="image/png,image/jpg,image/jpeg,image/gif" value="" />
-            </label>
-        </div>
+            <div class="row">
+                <label class="profile-image" style="background-image:url('/st/png/blue.png')" preview="">
+                    <input type="file" accept="image/png,image/jpg,image/jpeg,image/gif" value="" />
+                </label>
+            </div>
 
-    </div>*@
+        </div>*@
 
     @*<div class="col-at-xs rowr-at-m gap-between-card uk-child-width-1-1-at-xs uk-child-width-1-2">
-        <div>
-            <div class="form">
-                <div class="form-header">
-                    این تایتل فرم می باشد
-                </div>
-                <div class="form-search card-padding">
-                    this is a test
-                </div>
-                <div class="form-body">
-                    Ut fusce varius nisl ac ipsum gravida vel pretium tellus tincidunt integer eu augue augue nunc elit dolor, luctus placerat.
-                </div>
-                <div class="form-footer">
-                    <button class="btn btn-primary">
-                        <span>تایید</span>
-                    </button>
+            <div>
+                <div class="form">
+                    <div class="form-header">
+                        این تایتل فرم می باشد
+                    </div>
+                    <div class="form-search card-padding">
+                        this is a test
+                    </div>
+                    <div class="form-body">
+                        Ut fusce varius nisl ac ipsum gravida vel pretium tellus tincidunt integer eu augue augue nunc elit dolor, luctus placerat.
+                    </div>
+                    <div class="form-footer">
+                        <button class="btn btn-primary">
+                            <span>تایید</span>
+                        </button>
+                    </div>
                 </div>
             </div>
-        </div>
-    </div>*@
+        </div>*@
 
 </div>
 
