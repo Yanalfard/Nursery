@@ -12,11 +12,7 @@
             <div class="grid-160">
                 <div class="fg-col">
                     <label class="dl-label">نام</label>
-                    <p class="dl-data">@Model.Name </p>
-                </div>
-                <div class="fg-col">
-                    <label class="dl-label">تیتر</label>
-                    <p class="dl-data">@Model.Title</p>
+                    <p class="dl-data">@Model.Title </p>
                 </div>
             </div>
         </div>
@@ -76,7 +72,7 @@
                                                asp-controller="Role"
                                                asp-action="EditPage"
                                                asp-route-id="@item.RolePageRelId"
-                                               asp-route-name="@item.Role.Name.Replace(" ","")"
+                                               asp-route-name="@item.Role.Title"
                                                class="rowr">
                                                 <span class="new">ویرایش</span>
                                                 <span class="small" uk-icon="pen-square"></span>

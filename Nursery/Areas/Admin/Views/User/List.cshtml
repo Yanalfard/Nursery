@@ -59,10 +59,16 @@
                 </tr>
             </thead>
             <tbody>
+                @{
+                    int skip = ViewBag.skip;
+                }
                 @foreach (var item in Model)
                 {
                     <tr id="userId_@item.UserId">
-                        <td>@(Model.ToList().IndexOf(item)+1)</td>
+                        <td>@(skip + 1)</td>
+                        @{
+                            skip += 1;
+                        }
                         <td>@item.Name</td>
                         <td><bdi>@item.TellNo</bdi></td>
                         <td>@item.IdentificationNo</td>

@@ -35,7 +35,7 @@ namespace Nursery.Areas.User.Controllers
         public async Task<IActionResult> ChangePassword()
         {
             return await Task.FromResult(View());
-        }    
+        }
         [HttpPost]
         public async Task<IActionResult> ChangePassword(ResetChangePasswordVm change)
         {
@@ -69,7 +69,7 @@ namespace Nursery.Areas.User.Controllers
             ViewBag.FormId = formId;
             ViewBag.name = name;
             ViewBag.nickname = nickname;
-            List<TblKid> list = _db.Kid.Get(orderBy: j => j.OrderByDescending(k => k.KidId)).ToList();
+            List<TblKid> list = _db.Kid.Get(j => j.IsDeleted == false, orderBy: j => j.OrderByDescending(k => k.KidId)).ToList();
             if (name != null)
             {
                 list = list.Where(i => i.Name.Contains(name)).ToList();
@@ -83,6 +83,7 @@ namespace Nursery.Areas.User.Controllers
             int skip = (pageId - 1) * take;
             ViewBag.PageCount = Convert.ToInt32(Math.Ceiling((double)list.Count() / take));
             ViewBag.PageShow = pageId;
+            ViewBag.skip = skip;
             return await Task.FromResult(View(list.Skip(skip).Take(take)));
         }
 

@@ -42,10 +42,6 @@ namespace Nursery.Areas.Admin.Controllers
                 ViewBag.name = name;
                 ViewBag.titles = titles;
                 List<TblRole> list = _db.Role.Get(orderBy: j => j.OrderByDescending(k => k.RoleId)).ToList();
-                if (name != null)
-                {
-                    list = list.Where(i => i.Name.Contains(name)).ToList();
-                }
                 if (titles != null)
                 {
                     list = list.Where(i => i.Title.Contains(titles)).ToList();
@@ -55,6 +51,7 @@ namespace Nursery.Areas.Admin.Controllers
                 int skip = (pageId - 1) * take;
                 ViewBag.PageCount = Convert.ToInt32(Math.Ceiling((double)list.Count() / take));
                 ViewBag.PageShow = pageId;
+                ViewBag.skip = skip;
                 return await Task.FromResult(View(list.Skip(skip).Take(take)));
             }
             catch
@@ -83,10 +80,6 @@ namespace Nursery.Areas.Admin.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    if (_db.Role.Any(i => i.Name == role.Name.Trim().ToLower() && i.IsDeleted == false))
-                    {
-                        ModelState.AddModelError("Name", "نام شیفت تکراری می باشد");
-                    }
                     if (_db.Role.Any(i => i.Title == role.Title && i.IsDeleted == false))
                     {
                         ModelState.AddModelError("Title", "تیتر شیفت تکراری می باشد");
@@ -95,15 +88,14 @@ namespace Nursery.Areas.Admin.Controllers
                     {
                         TblRole addRole = new TblRole()
                         {
-                            Name = role.Name.Trim(),
-                            Title = role.Title.Trim(),
+                            Title = role.Title,
                         };
                         _db.Role.Add(addRole);
                         _db.Save();
                         #region Add Log
                         _db.UserLog.Add(new TblUserLog()
                         {
-                            Text = LogRepo.AddRole(SelectUser().IdentificationNo, addRole.Name.ToString()),
+                            Text = LogRepo.AddRole(SelectUser().IdentificationNo, addRole.Title.ToString()),
                             UserId = SelectUser().UserId,
                             Type = 1,
                             DateCreated = DateTime.Now
@@ -128,8 +120,7 @@ namespace Nursery.Areas.Admin.Controllers
                 TblRole selectedRole = _db.Role.GetById(id);
                 AddRoleVm edit = new AddRoleVm()
                 {
-                    Name = selectedRole.Name.Trim(),
-                    Title = selectedRole.Title.Trim(),
+                    Title = selectedRole.Title,
                     RoleId = selectedRole.RoleId,
                 };
                 return await Task.FromResult(View(edit));
@@ -147,10 +138,6 @@ namespace Nursery.Areas.Admin.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    if (_db.Role.Any(i => i.RoleId != role.RoleId && i.Name == role.Name.Trim().ToLower() && i.IsDeleted == false))
-                    {
-                        ModelState.AddModelError("Name", "نام شیفت تکراری می باشد");
-                    }
                     if (_db.Role.Any(i => i.RoleId != role.RoleId && i.Title == role.Title && i.IsDeleted == false))
                     {
                         ModelState.AddModelError("Title", "تیتر شیفت تکراری می باشد");
@@ -160,14 +147,13 @@ namespace Nursery.Areas.Admin.Controllers
                         TblRole selectedRole = _db.Role.GetById(role.RoleId);
                         if (selectedRole != null)
                         {
-                            selectedRole.Name = role.Name.Trim();
                             selectedRole.Title = role.Title.Trim();
                             _db.Role.Update(selectedRole);
                             _db.Save();
                             #region Add Log
                             _db.UserLog.Add(new TblUserLog()
                             {
-                                Text = LogRepo.EditRole(SelectUser().IdentificationNo, selectedRole.Name.ToString()),
+                                Text = LogRepo.EditRole(SelectUser().IdentificationNo, selectedRole.Title.ToString()),
                                 UserId = SelectUser().UserId,
                                 Type = 3,
                                 DateCreated = DateTime.Now
@@ -216,7 +202,7 @@ namespace Nursery.Areas.Admin.Controllers
                     TblPage selectedPageEdit = _db.Page.GetById(addPage.PageId);
                     _db.UserLog.Add(new TblUserLog()
                     {
-                        Text = LogRepo.AddRolePageRel(SelectUser().IdentificationNo, selectedRoleEdit.Name.ToString(), selectedPageEdit.Name.ToString()),
+                        Text = LogRepo.AddRolePageRel(SelectUser().IdentificationNo, selectedRoleEdit.Title.ToString(), selectedPageEdit.Name.ToString()),
                         UserId = SelectUser().UserId,
                         Type = 1,
                         DateCreated = DateTime.Now
@@ -258,7 +244,7 @@ namespace Nursery.Areas.Admin.Controllers
                     TblPage selectedPageEdit = _db.Page.GetById(editPage.PageId);
                     _db.UserLog.Add(new TblUserLog()
                     {
-                        Text = LogRepo.EditRolePageRel(SelectUser().IdentificationNo, selectedRoleEdit.Name.ToString(), selectedPageEdit.Name.ToString()),
+                        Text = LogRepo.EditRolePageRel(SelectUser().IdentificationNo, selectedRoleEdit.Title.ToString(), selectedPageEdit.Name.ToString()),
                         UserId = SelectUser().UserId,
                         Type = 3,
                         DateCreated = DateTime.Now
@@ -285,7 +271,7 @@ namespace Nursery.Areas.Admin.Controllers
                 TblPage selectedPageEdit = _db.Page.GetById(selectedUser.PageId);
                 _db.UserLog.Add(new TblUserLog()
                 {
-                    Text = LogRepo.DeleteRolePageRel(SelectUser().IdentificationNo, selectedRoleEdit.Name.ToString(), selectedPageEdit.Name.ToString()),
+                    Text = LogRepo.DeleteRolePageRel(SelectUser().IdentificationNo, selectedRoleEdit.Title.ToString(), selectedPageEdit.Name.ToString()),
                     UserId = SelectUser().UserId,
                     Type = 2,
                     DateCreated = DateTime.Now

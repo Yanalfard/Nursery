@@ -52,6 +52,7 @@ namespace Nursery.Areas.Admin.Controllers
             int skip = (pageId - 1) * take;
             ViewBag.PageCount = Convert.ToInt32(Math.Ceiling((double)list.Count() / take));
             ViewBag.PageShow = pageId;
+            ViewBag.skip = skip;
             return await Task.FromResult(View(list.Skip(skip).Take(take)));
         }
 

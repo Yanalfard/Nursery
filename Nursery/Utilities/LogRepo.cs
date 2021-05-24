@@ -16,33 +16,33 @@ namespace Nursery.Utilities
         public static string DeleteUserRole(string username, string userRoleId, string identificationNo)
         {
             return
-                $"User: {username} Deleted UserRole: {userRoleId} From Identification :{identificationNo}";
+                $"کاربر: {username} شیفت: {userRoleId} از کابر  :{identificationNo} حذف کرد";
         }
 
         public static string AddUser(string username, string AdduserName)
         {
             return
-                $"User: {username} Add User: {AdduserName}";
+                $"کاربر: {username} کاربر: {AdduserName}  رو اضافه کرد";
         }
         public static string AddRole(string username, string AdduserName)
         {
             return
-                $"User: {username} Add Role: {AdduserName}";
+                $"کاربر : {username} شیفت : {AdduserName} ایجاد کرد";
         }
         public static string EditRole(string username, string AdduserName)
         {
             return
-                $"User: {username} Edit Role: {AdduserName}";
+               $"کاربر : {username} شیفت : {AdduserName} ویرایش کرد";
         }
         public static string EditUser(string username, string AdduserName)
         {
             return
-                $"User: {username} Edit User: {AdduserName}";
+                  $"کاربر: {username} کاربر: {AdduserName}  رو ویرایش کرد";
         }
         public static string EditUserPassword(string username, string AdduserName)
         {
             return
-                $"User: {username} Edit Password User: {AdduserName}";
+                 $"کاربر: {username} رمز کاربر: {AdduserName}  رو ویرایش کرد";
         }
         public static string DeleteUser(string usernameAdmin, string deleteUsername)
         {

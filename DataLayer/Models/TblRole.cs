@@ -16,9 +16,6 @@ namespace DataLayer.Models
         public int RoleId { get; set; }
         [Required]
         [StringLength(50)]
-        public string Name { get; set; }
-        [Required]
-        [StringLength(50)]
         public string Title { get; set; }
         public bool? IsDeleted { get; set; }
 

@@ -77,7 +77,7 @@
                         {
                             <tr>
                                 <td>@(Model.TblUserRoleRel.Where(i => i.IsDeleted == false).ToList().IndexOf(item)+1)</td>
-                                <td>@item.Role.Name</td>
+                                <td>@item.Role.Title</td>
                                 <td>@item.ShiftStart.TimeOfDay</td>
                                 <td>@item.ShiftEnd.TimeOfDay</td>
                             </tr>

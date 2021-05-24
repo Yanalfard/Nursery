@@ -124,8 +124,6 @@ namespace DataLayer.Models
             modelBuilder.Entity<TblRole>(entity =>
             {
                 entity.Property(e => e.IsDeleted).HasDefaultValueSql("((0))");
-
-                entity.Property(e => e.Name).IsFixedLength();
             });
 
             modelBuilder.Entity<TblRolePageRel>(entity =>

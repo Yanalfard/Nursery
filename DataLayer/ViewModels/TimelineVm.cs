@@ -21,7 +21,7 @@ namespace DataLayer.ViewModels
         public TimelineVm()
         {
             UserId = 0;
-            Role = new TblRole() { Name = "ROLE" };
+            Role = new TblRole() { Title = "ROLE" };
             MinuteStart = (int)Math.Round(DateTime.Now.TimeOfDay.TotalMinutes);
             MinuteEnd = (int)Math.Round(DateTime.Now.AddMinutes(5).TimeOfDay.TotalMinutes);
         }

@@ -54,10 +54,16 @@
                 </tr>
             </thead>
             <tbody>
+                @{
+                    int skip = ViewBag.skip;
+                }
                 @foreach (var item in Model)
                 {
                     <tr id="kidId_@item.KidId">
-                        <td>@(Model.ToList().IndexOf(item)+1)</td>
+                        <td>@(skip + 1)</td>
+                        @{
+                            skip += 1;
+                        }
                         <td>@item.Name</td>
                         <td>@item.Nickname</td>
                         <td class="actions">
@@ -65,8 +71,7 @@
                             <div class="dropdown" uk-drop="mode: click;offset:4">
                                 <ul class="dropdown-list">
                                     <li>
-                                        <a
-                                           asp-area="Admin"
+                                        <a asp-area="Admin"
                                            asp-controller="Kid"
                                            asp-action="Edit"
                                            asp-route-id="@item.KidId"

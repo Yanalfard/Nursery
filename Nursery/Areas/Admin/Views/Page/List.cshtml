@@ -46,10 +46,16 @@
                 </tr>
             </thead>
             <tbody>
+                @{
+                    int skip = ViewBag.skip;
+                }
                 @foreach (var item in Model)
                 {
                     <tr id="pageId_@item.PageId">
-                        <td>@(Model.ToList().IndexOf(item)+1)</td>
+                        <td>@(skip + 1)</td>
+                        @{
+                            skip += 1;
+                        }
                         <td>@item.Name</td>
                         <td class="actions">
                             <a href="" class="btn-icon round text-4" uk-icon="icon:ellipsis-h;ratio:.72"></a>

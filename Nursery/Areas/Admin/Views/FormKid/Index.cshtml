@@ -71,7 +71,7 @@
                 <img src="~/Images/User/@value.User.ImageUrl" class="round" width="42" height="42" alt="" />
                 <div class="col">
                     <label>@value.User.Name</label>
-                    <span>@value.User?.TblUserRoleRel.FirstOrDefault()?.Role.Name</span>
+                    <span>@value.User?.TblUserRoleRel.FirstOrDefault()?.Role.Title</span>
                 </div>
                 <a asp-area="Admin"
                    asp-controller="User"

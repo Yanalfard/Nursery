@@ -42,7 +42,7 @@ namespace Nursery.Controllers
         {
             try
             {
-               
+
                 //if (!await _captchaValidator.IsCaptchaPassedAsync(login.Captcha))
                 //{
                 //    ModelState.AddModelError("TellNo", "ورود غیر مجاز");
@@ -54,7 +54,9 @@ namespace Nursery.Controllers
                     if (db.User.Get().Any(i => i.IdentificationNo == login.IdentificationNo && i.Password == password))
                     {
                         TblUser user = db.User.Get().SingleOrDefault(i => i.IdentificationNo == login.IdentificationNo);
-                        var claims = new List<Claim>()
+                        if (user.IsDeleted == false)
+                        {
+                            var claims = new List<Claim>()
                     {
                         //new Claim(ClaimTypes.NameIdentifier,user.UserId.ToString()),
                         //new Claim(ClaimTypes.Name,user.IdentificationNo)
@@ -66,41 +68,45 @@ namespace Nursery.Controllers
                         new Claim("IsAdmin", user.IsAdmin.ToString()),
 
                     };
-                        if (user.ImageUrl != null)
-                        {
-                            claims.Add(new Claim("ImageUser", user.ImageUrl));
+                            if (user.ImageUrl != null)
+                            {
+                                claims.Add(new Claim("ImageUser", user.ImageUrl));
+                            }
+                            else
+                            {
+                                claims.Add(new Claim("ImageUser", ""));
+                            }
+                            var identity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
+                            var principal = new ClaimsPrincipal(identity);
+
+                            var properties = new AuthenticationProperties
+                            {
+                                IsPersistent = login.RememberMe
+                            };
+                            await HttpContext.SignInAsync(principal, properties);
+                            ViewBag.IsSuccess = true;
+                            #region Add Log
+                            db.UserLog.Add(new TblUserLog()
+                            {
+                                Text = LogRepo.UserLogin(user.IdentificationNo),
+                                UserId = user.UserId,
+                                Type = 1,
+                                DateCreated = DateTime.Now
+                            });
+                            db.Save();
+                            if (user.IsAdmin)
+                                return Redirect("/Admin");
+                            #endregion
+                            return Redirect("/User");
                         }
                         else
                         {
-                            claims.Add(new Claim("ImageUser", ""));
+                            ModelState.AddModelError("IdentificationNo", "حساب شما حذف شده است");
                         }
-                        var identity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
-                        var principal = new ClaimsPrincipal(identity);
-
-                        var properties = new AuthenticationProperties
-                        {
-                            IsPersistent = login.RememberMe
-                        };
-                        await HttpContext.SignInAsync(principal, properties);
-                        ViewBag.IsSuccess = true;
-
-                        #region Add Log
-                        db.UserLog.Add(new TblUserLog()
-                        {
-                            Text = LogRepo.UserLogin(user.IdentificationNo),
-                            UserId = user.UserId,
-                            Type = 1,
-                            DateCreated = DateTime.Now
-                        });
-                        db.Save();
-                        if (user.IsAdmin)
-                            return Redirect("/Admin");
-                        #endregion
-                        return Redirect("/User");
                     }
                     else
                     {
-                        ModelState.AddModelError("TellNo", "شماره تلفن  یا رمز اشتباه است");
+                        ModelState.AddModelError("IdentificationNo", "کد ملی  یا رمز اشتباه است");
                     }
                 }
                 return await Task.FromResult(View(login));

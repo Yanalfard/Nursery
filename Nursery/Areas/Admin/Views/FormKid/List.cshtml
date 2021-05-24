@@ -106,7 +106,7 @@
                         <td>@item.User?.IdentificationNo</td>
                         <td>@item.Kid?.Nickname</td>
                         <td>@item.Page?.Name</td>
-                        <td>@item.Role?.Name</td>
+                        <td>@item.Role?.Title</td>
                         <td>@item.Value.DateCreated?.AllToShamsi()</td>
                         <td>
                             @if (item.IsAccepted == true)
@@ -117,7 +117,6 @@
                             {
                                 <span>تائید نشده</span>
                             }
-
                         </td>
                         <td class="actions">
                             <a href="" class="btn-icon round text-4" uk-icon="icon:ellipsis-h;ratio:.72"></a>

@@ -149,7 +149,7 @@ namespace Nursery.Areas.Admin.Controllers
             int skip = (pageId - 1) * take;
             ViewBag.PageCount = Convert.ToInt32(Math.Ceiling((double)list.Count() / take));
             ViewBag.PageShow = pageId;
-
+            ViewBag.skip = skip;
             ViewBag.UserRoleRel = _db.Role.Get(i => i.IsDeleted == false, orderBy: i => i.OrderByDescending(k => k.RoleId)).ToList();
             ViewBag.RolePageRel = _db.Page.Get(i => i.IsDeleted == false, orderBy: i => i.OrderByDescending(k => k.PageId)).ToList();
             return await Task.FromResult(View(list.Skip(skip).Take(take)));

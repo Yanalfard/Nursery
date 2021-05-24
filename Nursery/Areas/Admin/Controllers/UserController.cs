@@ -196,7 +196,7 @@ namespace Nursery.Areas.Admin.Controllers
             ViewBag.tell = tell;
             ViewBag.identificationNo = identificationNo;
             ViewBag.checkedDelete = checkedDelete == "on" ? true : false;
-            List<TblUser> list = _db.User.Get(orderBy: j => j.OrderByDescending(k => k.UserId)).ToList();
+            List<TblUser> list = _db.User.Get(j => j.IsAdmin == false, orderBy: j => j.OrderByDescending(k => k.UserId)).ToList();
             if (name != null)
             {
                 list = list.Where(i => i.Name.Contains(name)).ToList();
@@ -216,6 +216,7 @@ namespace Nursery.Areas.Admin.Controllers
             int skip = (pageId - 1) * take;
             ViewBag.PageCount = Convert.ToInt32(Math.Ceiling((double)list.Count() / take));
             ViewBag.PageShow = pageId;
+            ViewBag.skip = skip;
             return await Task.FromResult(PartialView(list.Skip(skip).Take(take)));
         }
 
@@ -326,7 +327,7 @@ namespace Nursery.Areas.Admin.Controllers
                     TblUser selectedUserEdit = _db.User.GetById(addRole.UserId);
                     _db.UserLog.Add(new TblUserLog()
                     {
-                        Text = LogRepo.AddUserRoleRel(SelectUser().IdentificationNo, selectedRoleEdit.Name.ToString(), selectedUserEdit.IdentificationNo.ToString()),
+                        Text = LogRepo.AddUserRoleRel(SelectUser().IdentificationNo, selectedRoleEdit.Title.ToString(), selectedUserEdit.IdentificationNo.ToString()),
                         UserId = SelectUser().UserId,
                         Type = 1,
                         DateCreated = DateTime.Now
@@ -369,7 +370,7 @@ namespace Nursery.Areas.Admin.Controllers
                     TblUser selectedUserEdit = _db.User.GetById(addRole.UserId);
                     _db.UserLog.Add(new TblUserLog()
                     {
-                        Text = LogRepo.EditUserRoleRel(SelectUser().IdentificationNo, selectedRoleEdit.Name.ToString(), selectedUserEdit.IdentificationNo.ToString()),
+                        Text = LogRepo.EditUserRoleRel(SelectUser().IdentificationNo, selectedRoleEdit.Title.ToString(), selectedUserEdit.IdentificationNo.ToString()),
                         UserId = SelectUser().UserId,
                         Type = 3,
                         DateCreated = DateTime.Now

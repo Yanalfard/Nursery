@@ -33,7 +33,7 @@
     <div class="form-search" uk-sticky="offset: 140;cls-active: sticked uk-box-shadow-medium;bottom:true">
         <form id="formSearchForm" action="/Admin/Form/List" class="controls-grid">
             <input class="entry" type="hidden" id="pageId" name="pageId" value="@ViewBag.PageShow">
-            <input class="entry" type="number" name="id" placeholder="کد" value="@ViewBag.id">
+            @*<input class="entry" type="number" name="id" placeholder="کد" value="@ViewBag.id">*@
             <input class="entry" type="text" name="name" placeholder="نام" value="@ViewBag.name">
             <input class="entry" type="text" name="description" placeholder="توضیحات" value="@ViewBag.description">
             <div class="col">
@@ -60,71 +60,77 @@
                 </tr>
             </thead>
             <tbody>
+                @{
+                    int skip = ViewBag.skip;
+                }
                 @foreach (var item in Model)
                 {
-                    <tr id="formId_@item.FormId">
-                        <td>@item.FormId</td>
-                        <td>@item.Name</td>
-                        <td>
-                            <a href="#ModalDescription_desc_@item.FormId" class="btn-icon round text-4" uk-icon="icon:eye;ratio:.5" uk-toggle></a>
+                <tr id="formId_@item.FormId">
+                    <td>@(skip + 1)</td>
+                    @{
+                        skip += 1;
+                    }
+                    <td>@item.Name</td>
+                    <td>
+                        <a href="#ModalDescription_desc_@item.FormId" class="btn-icon round text-4" uk-icon="icon:eye;ratio:.5" uk-toggle></a>
 
-                            <!-- Description Modal -->
-                            <div id="ModalDescription_desc_@item.FormId" uk-modal>
-                                <div class="uk-modal-dialog form">
-                                    <div class="form-header">
-                                        <h3>توضیحات</h3>
-                                    </div>
-                                    <div class="form-body">
-                                        <p>
-                                            @item.Body
-                                        </p>
-                                    </div>
-                                    <div class="form-footer">
-                                        <div class="actions">
-                                            <button class="btn btn-primary uk-modal-close"><span>بستن</span></button>
-                                        </div>
+                        <!-- Description Modal -->
+                        <div id="ModalDescription_desc_@item.FormId" uk-modal>
+                            <div class="uk-modal-dialog form">
+                                <div class="form-header">
+                                    <h3>توضیحات</h3>
+                                </div>
+                                <div class="form-body">
+                                    <p>
+                                        @item.Body
+                                    </p>
+                                </div>
+                                <div class="form-footer">
+                                    <div class="actions">
+                                        <button class="btn btn-primary uk-modal-close"><span>بستن</span></button>
                                     </div>
                                 </div>
                             </div>
-                        </td>
-                        <td>@item.DateCreated.Value.AllToShamsi()</td>
-                        <td class="actions">
-                            <a href="" class="btn-icon round text-4" uk-icon="icon:ellipsis-h;ratio:.72"></a>
-                            <div class="dropdown" uk-drop="mode: click;offset:4">
+                        </div>
+                    </td>
+                    <td>@item.DateCreated.Value.AllToShamsi()</td>
+                    <td class="actions">
+                        <a href="" class="btn-icon round text-4" uk-icon="icon:ellipsis-h;ratio:.72"></a>
+                        <div class="dropdown" uk-drop="mode: click;offset:4">
 
-                                <ul class="dropdown-list">
-                                    <li>
-                                        <a class="rowr"
-                                           asp-area="admin"
-                                           asp-controller="Form"
-                                           asp-action="Index"
-                                           asp-route-id="@item.FormId"
-                                           asp-route-name="@item.Name">
-                                            <span class="new">مشاهده</span>
-                                            <span class="small" uk-icon="eye"></span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a class="rowr"
-                                           asp-area="admin"
-                                           asp-controller="Form"
-                                           asp-action="Edit"
-                                           asp-route-id="@item.FormId"
-                                           asp-route-name="@item.Name.Replace(" ","")">
-                                            <span class="new">ویرایش</span>
-                                            <span class="small" uk-icon="pen-square"></span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a class="rowr btn-danger" popconfirm="floating:true;description:آیا از حذف کاربر اطمینان دارید؟;direction:rt;type:danger;title:هشدار;okText:حذف;" popok="deleteForm(@item.FormId)">
-                                            <span>حذف</span>
-                                            <span class="small" uk-icon="trash"></span>
-                                        </a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </td>
-                    </tr>
+                            <ul class="dropdown-list">
+                                <li>
+                                    <a class="rowr"
+                                       asp-area="admin"
+                                       asp-controller="Form"
+                                       asp-action="Index"
+                                       asp-route-id="@item.FormId"
+                                       asp-route-name="@item.Name">
+                                        <span class="new">مشاهده</span>
+                                        <span class="small" uk-icon="eye"></span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="rowr"
+                                       asp-area="admin"
+                                       asp-controller="Form"
+                                       asp-action="Edit"
+                                       asp-route-id="@item.FormId"
+                                       asp-route-name="@item.Name.Replace(" ","")">
+                                        <span class="new">ویرایش</span>
+                                        <span class="small" uk-icon="pen-square"></span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="rowr btn-danger" popconfirm="floating:true;description:آیا از حذف کاربر اطمینان دارید؟;direction:rt;type:danger;title:هشدار;okText:حذف;" popok="deleteForm(@item.FormId)">
+                                        <span>حذف</span>
+                                        <span class="small" uk-icon="trash"></span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </td>
+                </tr>
                 }
 
             </tbody>
