@@ -88,7 +88,7 @@
                 {
                     @if (i >= minPage && i <= maxPage)
                     {
-                        <li><a onclick="showOtherPage(@(i))" class="@(pageShow==i?"uk-active":"")">@i</a></li>
+                        <li><a onclick="showOtherPage(@(i))" class="@(pageShow==i?"uk-text-danger":"")">@i</a></li>
                         notpage = 0;
                     }
                     else

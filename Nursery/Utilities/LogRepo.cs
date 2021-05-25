@@ -22,22 +22,22 @@ namespace Nursery.Utilities
         public static string AddUser(string username, string AdduserName)
         {
             return
-                $"کاربر: {username} کاربر: {AdduserName}  رو اضافه کرد";
+                $"کاربر: {username} کاربر:  {AdduserName}  رو اضافه کرد";
         }
         public static string AddRole(string username, string AdduserName)
         {
             return
-                $"کاربر : {username} شیفت : {AdduserName} ایجاد کرد";
+                $"کاربر : {username} شیفت :  {AdduserName} ایجاد کرد";
         }
         public static string EditRole(string username, string AdduserName)
         {
             return
-               $"کاربر : {username} شیفت : {AdduserName} ویرایش کرد";
+               $"کاربر : {username}    شیفت :  {AdduserName} ویرایش کرد";
         }
         public static string EditUser(string username, string AdduserName)
         {
             return
-                  $"کاربر: {username} کاربر: {AdduserName}  رو ویرایش کرد";
+                  $"کاربر: {username}   کاربر:   {AdduserName}  رو ویرایش کرد";
         }
         public static string EditUserPassword(string username, string AdduserName)
         {
@@ -52,13 +52,13 @@ namespace Nursery.Utilities
         public static string AddUserRoleRel(string usernameAdmin, string roleName, string roleusername)
         {
             return
-                $"کاربر :{usernameAdmin} شیفت{roleName} رو به کاربر {roleusername}  اضافه کرد";
+                $"کاربر :{usernameAdmin} شیفت  {roleName} رو به کاربر {roleusername}  اضافه کرد";
 
         }
         public static string EditUserRoleRel(string usernameAdmin, string roleName, string roleusername)
         {
             return
-                 $"کاربر :{usernameAdmin} شیفت{roleName} رو به کاربر {roleusername}  ویرایش کرد";
+                 $"کاربر :{usernameAdmin} شیفت  {roleName} رو به کاربر {roleusername}  ویرایش کرد";
         }
 
         public static string AddKid(string username, string createUser, string nickname)
