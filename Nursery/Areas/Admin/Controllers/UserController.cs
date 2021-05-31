@@ -196,7 +196,8 @@ namespace Nursery.Areas.Admin.Controllers
             ViewBag.tell = tell;
             ViewBag.identificationNo = identificationNo;
             ViewBag.checkedDelete = checkedDelete == "on" ? true : false;
-            List<TblUser> list = _db.User.Get(j => j.IsAdmin == false, orderBy: j => j.OrderByDescending(k => k.UserId)).ToList();
+           // List<TblUser> list = _db.User.Get(j => j.IsAdmin == false, orderBy: j => j.OrderByDescending(k => k.UserId)).ToList();
+            List<TblUser> list = _db.User.Get(orderBy: j => j.OrderByDescending(k => k.UserId)).ToList();
             if (name != null)
             {
                 list = list.Where(i => i.Name.Contains(name)).ToList();

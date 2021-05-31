@@ -183,6 +183,7 @@ define(["require", "exports", "./model/db/tblField", "./model/db/tblForm", "./mo
             // add
             toolModel.selectBtn.addEventListener('click', function () {
                 var val = toolModel.selectInput.value;
+                toolModel.selectInput.value = '';
                 if (!val)
                     return;
                 var template = "<div class=\"select-item\">\n                    <label select-item=\"" + val + "\" class=\"cell-label\">" + val + "</label>\n                    <button btnSelect class=\"cell-btn cell-border-right\" uk-icon=\"times\"></button>\n                </div>";

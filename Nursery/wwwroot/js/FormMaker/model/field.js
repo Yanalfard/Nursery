@@ -36,8 +36,9 @@ define(["require", "exports", "./db/tblValue", "./inputType"], function (require
                         "\n                <label class=\"fg-label\" for=\"" + this.id + "\">" + data.Label + "</label>\n                <input class=\"entry\" id=\"" + this.id + "\" " + (data.IsRequired ? 'required' : '') + " type=\"email\" placeholder=\"" + data.Placeholder + "\" pattern=\"" + ((_d = data.Validations[0]) === null || _d === void 0 ? void 0 : _d.Regex) + "\">\n                <span class=\"text-danger\"></span>\n                   ";
                     break;
                 case inputType_1.InputType.file:
+                    console.log('hello world');
                     templateString =
-                        "\n                <label class=\"fg-label\" for=\"" + this.id + "\">" + data.Label + "</label>\n                <label class=\"comp-upload\">\n                    " + this.data.Options.join(' ,') + "\n                    <input id=\"" + this.id + "\" type=\"file\" name=\"files\" accept=\"" + this.data.Options.map(function (i) { return '.' + i; }).join(',') + "\" />\n                </label>\n                <span class=\"text-danger\"></span>\n                   ";
+                        "\n                <label class=\"fg-label\" for=\"" + this.id + "\">" + data.Label + "</label>\n                <label class=\"comp-upload\" preview=\"\">\n                    " + this.data.Options.join(' ,') + "\n                    <input id=\"" + this.id + "\" type=\"file\" name=\"files\" accept=\"" + this.data.Options.map(function (i) { return '.' + i; }).join(',') + "\" />\n                </label>\n                <span class=\"text-danger\"></span>\n                   ";
                     break;
                 case inputType_1.InputType.hidden:
                     templateString =
@@ -144,6 +145,7 @@ define(["require", "exports", "./db/tblValue", "./inputType"], function (require
                     ans.Value = input.value;
                     break;
             }
+            console.log(ans);
             return ans;
         };
         /** Validates the field's Value.

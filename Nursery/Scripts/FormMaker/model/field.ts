@@ -65,10 +65,11 @@ export class Field {
                    `;
                 break;
             case InputType.file:
+                console.log('hello world');
                 templateString =
                     `
                 <label class="fg-label" for="${this.id}">${data.Label}</label>
-                <label class="comp-upload">
+                <label class="comp-upload" preview="">
                     ${(this.data.Options as string[]).join(' ,')}
                     <input id="${this.id}" type="file" name="files" accept="${(this.data.Options as string[]).map(i => '.' + i).join(',')}" />
                 </label>
@@ -245,6 +246,8 @@ export class Field {
                 ans.Value = input.value;
                 break;
         }
+
+        console.log(ans)
 
         return ans;
     }

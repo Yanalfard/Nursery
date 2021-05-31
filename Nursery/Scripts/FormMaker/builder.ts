@@ -233,7 +233,10 @@ prototype.addEventListener('added', (event: any) => {
         // add
         toolModel.selectBtn.addEventListener('click', () => {
             let val = toolModel.selectInput.value;
+            toolModel.selectInput.value = '';
             if (!val) return;
+
+
 
             const template =
                 `<div class="select-item">
