@@ -448,7 +448,7 @@ input:not(input[type=checkbox]):not(input[type=radio]) {
   height: 72px;
   z-index: 1020; }
   .m-top .m-logo {
-    background-color: #1890FF;
+    background-color: white;
     height: 72px;
     width: 76px;
     min-width: 72px;
