@@ -1,4 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using System;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata;
 
 namespace DataLayer.Models
 {
@@ -29,18 +31,19 @@ namespace DataLayer.Models
         public virtual DbSet<TblUserRoleRel> TblUserRoleRel { get; set; }
         public virtual DbSet<TblValue> TblValue { get; set; }
 
-        //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        //{
-        //    if (!optionsBuilder.IsConfigured)
-        //    {
-        //        optionsBuilder.UseSqlServer("Data Source=103.216.62.27;Initial Catalog=Nursery;User ID=Yanal;Password=1710ahmad.fard");
-        //    }
-        //}
+        //        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        //        {
+        //            if (!optionsBuilder.IsConfigured)
+        //            {
+        //#warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
+        //                optionsBuilder.UseSqlServer("Data Source=103.216.62.27;Initial Catalog=Nursery;User ID=Yanal;Password=1710ahmad.fard");
+        //            }
+        //        }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-          => optionsBuilder
-         .UseLazyLoadingProxies()
-         .UseSqlServer("Data Source=103.216.62.27;Initial Catalog=Nursery;User ID=Yanal;Password=1710ahmad.fard");
+        => optionsBuilder
+       .UseLazyLoadingProxies()
+       .UseSqlServer("Data Source=103.216.62.27;Initial Catalog=Nursery;User ID=Yanal;Password=1710ahmad.fard");
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

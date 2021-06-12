@@ -29,8 +29,9 @@ namespace DataLayer.Models
         [StringLength(500)]
         public string ImageUrl { get; set; }
         public bool? IsDeleted { get; set; }
-        public bool IsAdmin { get; set; }
+        [Column(TypeName = "datetime")]
         public DateTime DateCreated { get; set; }
+        public bool IsAdmin { get; set; }
 
         [InverseProperty("User")]
         public virtual ICollection<TblUserLog> TblUserLog { get; set; }
