@@ -111,7 +111,7 @@ namespace Nursery.Areas.User.Controllers
             int IndexN = 1;
             if (SelectedIndexN != null)
             {
-                IndexN = (int)SelectedIndexN.IndexN + 1;
+                IndexN = (int)SelectedIndexN.IndexNo + 1;
             }
 
             List<TblValue> addValue = new List<TblValue>();
@@ -126,7 +126,7 @@ namespace Nursery.Areas.User.Controllers
                 addVal.KidId = kidId;
                 addVal.IsAccepted = false;
                 addVal.IsDeleted = false;
-                addVal.IndexN = IndexN;
+                addVal.IndexNo = IndexN;
                 _db.Value.Add(addVal);
                 selectformId = val.FormId;
             }

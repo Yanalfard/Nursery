@@ -34,7 +34,7 @@
 
             <div class="fg-col ">
                 <label class="fg-label" for="password">گذرواژه</label>
-                <input class="entry" id="Password" type="text" asp-for="Password">  
+                <input class="entry" id="Password" type="text" asp-for="Password">
                 <span class="text-danger" asp-validation-for="Password"></span>
             </div>
 
@@ -42,6 +42,11 @@
                 <label class="fg-label" for="identification">کد ملی</label>
                 <input class="entry" id="IdentificationNo" type="text" asp-for="IdentificationNo">
                 <span class="text-danger" asp-validation-for="IdentificationNo"></span>
+            </div>
+
+            <div class="fg-col ">
+                <label class="fg-label" for="IsAdmin">مدیر</label>
+                <input class="uk-checkbox" id="IsAdmin" type="checkbox" asp-for="IsAdmin">
             </div>
         </div>
 

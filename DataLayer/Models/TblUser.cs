@@ -9,6 +9,9 @@ namespace DataLayer.Models
     {
         public TblUser()
         {
+            TblRefrenceFrom = new HashSet<TblRefrence>();
+            TblRefrenceTo = new HashSet<TblRefrence>();
+            TblUserFormRel = new HashSet<TblUserFormRel>();
             TblUserLog = new HashSet<TblUserLog>();
             TblUserRoleRel = new HashSet<TblUserRoleRel>();
             TblValue = new HashSet<TblValue>();
@@ -33,6 +36,12 @@ namespace DataLayer.Models
         public DateTime DateCreated { get; set; }
         public bool IsAdmin { get; set; }
 
+        [InverseProperty(nameof(TblRefrence.From))]
+        public virtual ICollection<TblRefrence> TblRefrenceFrom { get; set; }
+        [InverseProperty(nameof(TblRefrence.To))]
+        public virtual ICollection<TblRefrence> TblRefrenceTo { get; set; }
+        [InverseProperty("User")]
+        public virtual ICollection<TblUserFormRel> TblUserFormRel { get; set; }
         [InverseProperty("User")]
         public virtual ICollection<TblUserLog> TblUserLog { get; set; }
         [InverseProperty("User")]

@@ -78,8 +78,8 @@
                             <tr>
                                 <td>@(Model.TblUserRoleRel.Where(i => i.IsDeleted == false).ToList().IndexOf(item)+1)</td>
                                 <td>@item.Role.Title</td>
-                                <td>@item.ShiftStart.TimeOfDay</td>
-                                <td>@item.ShiftEnd.TimeOfDay</td>
+                                @*<td>@item.ShiftStart.TimeOfDay</td>
+                                <td>@item.ShiftEnd.TimeOfDay</td>*@
                             </tr>
                         }
 
@@ -100,7 +100,7 @@
 </div>
 
 <div class="forms">
-    @foreach (var item in Model.TblUserRoleRel.Where(i => i.ShiftStart.TimeOfDay <= DateTime.Now.TimeOfDay && i.ShiftEnd.TimeOfDay >= DateTime.Now.TimeOfDay))
+    @foreach (var item in Model.TblUserRoleRel.Where(i => i.IsShiftPreminent || i.ShiftDate.Value.TimeOfDay == DateTime.Now.TimeOfDay))
     {
         @foreach (var j in item.Role.TblRolePageRel.Where(i => i.IsDeleted == false))
         {

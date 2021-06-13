@@ -7,6 +7,7 @@ using Nursery.Utilities;
 using Services.Services;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Security.Claims;
@@ -115,6 +116,7 @@ namespace Nursery.Areas.Admin.Controllers
                 IdentificationNo = selectedUser.IdentificationNo,
                 TellNo = selectedUser.TellNo,
                 UserId = selectedUser.UserId,
+                IsAdmin = selectedUser.IsAdmin
             };
             return await Task.FromResult(View(user));
         }
@@ -196,7 +198,7 @@ namespace Nursery.Areas.Admin.Controllers
             ViewBag.tell = tell;
             ViewBag.identificationNo = identificationNo;
             ViewBag.checkedDelete = checkedDelete == "on" ? true : false;
-           // List<TblUser> list = _db.User.Get(j => j.IsAdmin == false, orderBy: j => j.OrderByDescending(k => k.UserId)).ToList();
+            // List<TblUser> list = _db.User.Get(j => j.IsAdmin == false, orderBy: j => j.OrderByDescending(k => k.UserId)).ToList();
             List<TblUser> list = _db.User.Get(orderBy: j => j.OrderByDescending(k => k.UserId)).ToList();
             if (name != null)
             {
@@ -313,6 +315,7 @@ namespace Nursery.Areas.Admin.Controllers
         public async Task<IActionResult> AddRole(TblUserRoleRel addRole, string name = null)
         {
             ViewBag.name = name;
+            ViewBag.checkedIsDate = false;
             if (ModelState.IsValid)
             {
                 if (_db.UserRoleRel.Any(i => i.RoleId == addRole.RoleId && i.UserId == addRole.UserId && i.IsDeleted == false))
@@ -321,22 +324,37 @@ namespace Nursery.Areas.Admin.Controllers
                 }
                 else
                 {
-                    _db.UserRoleRel.Add(addRole);
-                    _db.Save();
-                    #region Add Log
-                    TblRole selectedRoleEdit = _db.Role.GetById(addRole.RoleId);
-                    TblUser selectedUserEdit = _db.User.GetById(addRole.UserId);
-                    _db.UserLog.Add(new TblUserLog()
+                    if (addRole.IsShiftPreminent == false && addRole.ShiftDate == null)
                     {
-                        Text = LogRepo.AddUserRoleRel(SelectUser().IdentificationNo, selectedRoleEdit.Title.ToString(), selectedUserEdit.IdentificationNo.ToString()),
-                        UserId = SelectUser().UserId,
-                        Type = 1,
-                        DateCreated = DateTime.Now
-                    });
-                    _db.Save();
-                    #endregion
-                    return await Task.FromResult(Redirect("/Admin/User/Index?id=" + addRole.UserId + "&name=" + name + "&addRoleInUser=true"));
+                        ViewBag.checkedIsDate = true;
+                        ModelState.AddModelError("IsShiftPreminent", " تاریخ وارد نشده است");
+                    }
+                    else
+                    {
+                        if (addRole.ShiftDate != null)
+                        {
+                            PersianCalendar pc = new PersianCalendar();
+                            string[] Start = Convert.ToString(addRole.ShiftDate).Split('/');
+                            DateTime startTime = pc.ToDateTime(Convert.ToInt32(Start[0]), Convert.ToInt32(Start[1]), Convert.ToInt32(Start[2]), 0, 0, 0, 0).Date;
+                            addRole.ShiftDate = startTime.Date;
+                        }
+                        _db.UserRoleRel.Add(addRole);
+                        _db.Save();
+                        #region Add Log
+                        TblRole selectedRoleEdit = _db.Role.GetById(addRole.RoleId);
+                        TblUser selectedUserEdit = _db.User.GetById(addRole.UserId);
+                        _db.UserLog.Add(new TblUserLog()
+                        {
+                            Text = LogRepo.AddUserRoleRel(SelectUser().IdentificationNo, selectedRoleEdit.Title.ToString(), selectedUserEdit.IdentificationNo.ToString()),
+                            UserId = SelectUser().UserId,
+                            Type = 1,
+                            DateCreated = DateTime.Now
+                        });
+                        _db.Save();
+                        #endregion
+                        return await Task.FromResult(Redirect("/Admin/User/Index?id=" + addRole.UserId + "&name=" + name + "&addRoleInUser=true"));
 
+                    }
                 }
             }
             ViewBag.UserRoleRel = _db.Role.Get(i => i.IsDeleted == false, orderBy: i => i.OrderByDescending(k => k.RoleId)).ToList();

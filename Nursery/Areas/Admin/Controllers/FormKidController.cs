@@ -29,7 +29,7 @@ namespace Nursery.Areas.Admin.Controllers
         public async Task<IActionResult> Index(int indexN)
         {
             //List<>
-            List<TblValue> selectedListFormFieldRel = _db.Value.Get(i => i.IndexN == indexN).ToList();
+            List<TblValue> selectedListFormFieldRel = _db.Value.Get(i => i.IndexNo == indexN).ToList();
             List<ValueListVm> list = new List<ValueListVm>();
             foreach (var item in selectedListFormFieldRel)
             {
@@ -42,7 +42,7 @@ namespace Nursery.Areas.Admin.Controllers
                 val.Form = item?.FormField?.Form;
                 val.Page = val.Form?.TblPageFormRel?.FirstOrDefault()?.Page;
                 val.Role = val.Page?.TblRolePageRel?.FirstOrDefault()?.Role;
-                val.IndexN = item.IndexN;
+                val.IndexN = item.IndexNo;
                 list.Add(val);
             }
             return await Task.FromResult(View(list));
@@ -84,7 +84,7 @@ namespace Nursery.Areas.Admin.Controllers
             List<ValueListVm> list = new List<ValueListVm>();
             foreach (var item in selectedListFormFieldRel)
             {
-                if (!list.Any(i => i.IndexN == item.IndexN))
+                if (!list.Any(i => i.IndexN == item.IndexNo))
                 {
                     ValueListVm val = new ValueListVm();
                     val.FormFieldId = item.FormFieldId;
@@ -95,7 +95,7 @@ namespace Nursery.Areas.Admin.Controllers
                     val.Form = item?.FormField?.Form;
                     val.Page = val.Form?.TblPageFormRel?.FirstOrDefault()?.Page;
                     val.Role = val.Page?.TblRolePageRel?.FirstOrDefault()?.Role;
-                    val.IndexN = item.IndexN;
+                    val.IndexN = item.IndexNo;
                     val.IsAccepted = item.IsAccepted;
                     val.IsDeleted = item.IsDeleted;
                     list.Add(val);
@@ -158,7 +158,7 @@ namespace Nursery.Areas.Admin.Controllers
 
         public async Task<string> Delete(int id)
         {
-            List<TblValue> selectedUser = _db.Value.Get(i => i.IndexN == id).ToList();
+            List<TblValue> selectedUser = _db.Value.Get(i => i.IndexNo == id).ToList();
             if (selectedUser != null)
             {
                 string kidName = "";
@@ -195,7 +195,7 @@ namespace Nursery.Areas.Admin.Controllers
 
         public async Task<IActionResult> IsAccepted(int id, int value)
         {
-            List<TblValue> selectedUser = _db.Value.Get(i => i.IndexN == id).ToList();
+            List<TblValue> selectedUser = _db.Value.Get(i => i.IndexNo == id).ToList();
             if (selectedUser != null)
             {
                 if (value == 1)

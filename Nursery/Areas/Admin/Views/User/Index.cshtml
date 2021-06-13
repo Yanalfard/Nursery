@@ -95,8 +95,8 @@
                             <tr id="userRoleIdId_@item.UserRoleId">
                                 <td>@(Model.TblUserRoleRel.Where(i => i.IsDeleted == false).ToList().IndexOf(item)+1)</td>
                                 <td>دسترسی به شیفت   @item.Role.Title </td>
-                                <td>@item.ShiftStart.TimeOfDay</td>
-                                <td>@item.ShiftEnd.TimeOfDay</td>
+                                @*<td>@item.ShiftStart.TimeOfDay</td>
+                                <td>@item.ShiftEnd.TimeOfDay</td>*@
                                 <td class="actions">
                                     <a href="" class="btn-icon round text-4" uk-icon="icon:ellipsis-h;ratio:.72"></a>
                                     <div class="dropdown" uk-drop="mode: click;offset:4">

@@ -16,7 +16,7 @@ namespace Nursery.Components.User
         {
             List<TblPage> list = new List<TblPage>();
             TblUser selectedUser = _db.User.GetById(id);
-            foreach (var item in selectedUser.TblUserRoleRel.Where(i => i.ShiftStart.TimeOfDay <= DateTime.Now.TimeOfDay && i.ShiftEnd.TimeOfDay >= DateTime.Now.TimeOfDay))
+            foreach (var item in selectedUser.TblUserRoleRel.Where(i => i.IsShiftPreminent || i.ShiftDate.Value.TimeOfDay == DateTime.Now.TimeOfDay))
             {
                 foreach (var j in item.Role.TblRolePageRel)
                 {

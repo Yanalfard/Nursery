@@ -42,14 +42,14 @@
         <div class="form-footer">
             @if (value.IsAccepted == true)
             {
-                <a asp-action="IsAccepted" asp-controller="FormKid" asp-area="Admin" asp-route-id="@value.IndexN" asp-route-value="0" class="btn btn-danger" onclick="LoadingRun()">
+                <a asp-action="IsAccepted" asp-controller="FormKid" asp-area="Admin" asp-route-id="@value.IndexNo" asp-route-value="0" class="btn btn-danger" onclick="LoadingRun()">
                     <span>رد</span>
                     <span uk-icon="times"></span>
                 </a>
             }
             else
             {
-                <a asp-action="IsAccepted" asp-controller="FormKid" asp-area="Admin" asp-route-id="@value.IndexN" asp-route-value="1" class="btn btn-primary" onclick="LoadingRun()">
+                <a asp-action="IsAccepted" asp-controller="FormKid" asp-area="Admin" asp-route-id="@value.IndexNo" asp-route-value="1" class="btn btn-primary" onclick="LoadingRun()">
                     <span>تایید</span>
                     <span uk-icon="check"></span>
                 </a>

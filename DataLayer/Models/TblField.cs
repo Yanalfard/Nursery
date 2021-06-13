@@ -11,6 +11,7 @@ namespace DataLayer.Models
         {
             TblFieldRegexRel = new HashSet<TblFieldRegexRel>();
             TblFormFieldRel = new HashSet<TblFormFieldRel>();
+            TblValueFormRel = new HashSet<TblValueFormRel>();
         }
 
         [Key]
@@ -33,5 +34,7 @@ namespace DataLayer.Models
         public virtual ICollection<TblFieldRegexRel> TblFieldRegexRel { get; set; }
         [InverseProperty("Field")]
         public virtual ICollection<TblFormFieldRel> TblFormFieldRel { get; set; }
+        [InverseProperty("Form")]
+        public virtual ICollection<TblValueFormRel> TblValueFormRel { get; set; }
     }
 }

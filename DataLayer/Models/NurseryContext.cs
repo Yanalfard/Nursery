@@ -23,13 +23,16 @@ namespace DataLayer.Models
         public virtual DbSet<TblKid> TblKid { get; set; }
         public virtual DbSet<TblPage> TblPage { get; set; }
         public virtual DbSet<TblPageFormRel> TblPageFormRel { get; set; }
+        public virtual DbSet<TblRefrence> TblRefrence { get; set; }
         public virtual DbSet<TblRegex> TblRegex { get; set; }
         public virtual DbSet<TblRole> TblRole { get; set; }
         public virtual DbSet<TblRolePageRel> TblRolePageRel { get; set; }
         public virtual DbSet<TblUser> TblUser { get; set; }
+        public virtual DbSet<TblUserFormRel> TblUserFormRel { get; set; }
         public virtual DbSet<TblUserLog> TblUserLog { get; set; }
         public virtual DbSet<TblUserRoleRel> TblUserRoleRel { get; set; }
         public virtual DbSet<TblValue> TblValue { get; set; }
+        public virtual DbSet<TblValueFormRel> TblValueFormRel { get; set; }
 
         //        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         //        {
@@ -97,6 +100,14 @@ namespace DataLayer.Models
                     .HasConstraintName("FK_TblFormFieldId_TblForm");
             });
 
+            modelBuilder.Entity<TblKid>(entity =>
+            {
+                entity.HasOne(d => d.Page)
+                    .WithMany(p => p.TblKid)
+                    .HasForeignKey(d => d.PageId)
+                    .HasConstraintName("FK_TblKid_TblPage");
+            });
+
             modelBuilder.Entity<TblPage>(entity =>
             {
                 entity.Property(e => e.IsDeleted).HasDefaultValueSql("((0))");
@@ -117,6 +128,23 @@ namespace DataLayer.Models
                     .HasForeignKey(d => d.PageId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_TblPageFormRel_TblPage");
+            });
+
+            modelBuilder.Entity<TblRefrence>(entity =>
+            {
+                entity.Property(e => e.DateSubmited).HasDefaultValueSql("(getdate())");
+
+                entity.HasOne(d => d.From)
+                    .WithMany(p => p.TblRefrenceFrom)
+                    .HasForeignKey(d => d.FromId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_TblRefrence_TblUser");
+
+                entity.HasOne(d => d.To)
+                    .WithMany(p => p.TblRefrenceTo)
+                    .HasForeignKey(d => d.ToId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_TblRefrence_TblUser1");
             });
 
             modelBuilder.Entity<TblRegex>(entity =>
@@ -151,6 +179,23 @@ namespace DataLayer.Models
                 entity.Property(e => e.DateCreated).HasDefaultValueSql("(getdate())");
 
                 entity.Property(e => e.IsDeleted).HasDefaultValueSql("((0))");
+            });
+
+            modelBuilder.Entity<TblUserFormRel>(entity =>
+            {
+                entity.Property(e => e.DateSubmited).HasDefaultValueSql("(getdate())");
+
+                entity.HasOne(d => d.Form)
+                    .WithMany(p => p.TblUserFormRel)
+                    .HasForeignKey(d => d.FormId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_TblUserFormRel_TblForm");
+
+                entity.HasOne(d => d.User)
+                    .WithMany(p => p.TblUserFormRel)
+                    .HasForeignKey(d => d.UserId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_TblUserFormRel_TblUser");
             });
 
             modelBuilder.Entity<TblUserLog>(entity =>
@@ -205,6 +250,23 @@ namespace DataLayer.Models
                     .HasForeignKey(d => d.UserId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_TblValue_TblUser");
+            });
+
+            modelBuilder.Entity<TblValueFormRel>(entity =>
+            {
+                entity.Property(e => e.Priority).HasDefaultValueSql("((5))");
+
+                entity.HasOne(d => d.Form)
+                    .WithMany(p => p.TblValueFormRel)
+                    .HasForeignKey(d => d.FormId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_TblValueFormRel_TblField");
+
+                entity.HasOne(d => d.Kid)
+                    .WithMany(p => p.TblValueFormRel)
+                    .HasForeignKey(d => d.KidId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_TblValueFormRel_TblKid");
             });
 
             OnModelCreatingPartial(modelBuilder);

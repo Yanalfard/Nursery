@@ -3,6 +3,7 @@
     ViewData["Title"] = "تعیین شیفت";
     Layout = "~/Areas/Admin/Views/_AdminLayout.cshtml";
 }
+<link href="~/datePersion/persianDatepicker-default.css" rel="stylesheet" />
 
 <form class="form" method="post" asp-action="AddRole">
     <input type="hidden" asp-for="UserId" />
@@ -32,17 +33,17 @@
             </div>
 
             <div class="fg-col ">
-                <label class="fg-label" for="tel">از زمان</label>
-                <input class="entry" type="time" asp-for="ShiftStart" required>
-                <span class="text-danger"></span>
-            </div>
+                <label class="fg-label" for="shiftPreminent">دسترسی کامل</label>
+                <input class="entry" type="radio" checked name="shiftPreminent" onclick="javascript:yesnoCheck();" id="noCheck" @((ViewBag.checkedIsDate == false) ? "checked" : "")>
 
-            <div class="fg-col ">
-                <label class="fg-label" for="tel">تا زمان</label>
-                <input class="entry" type="time" asp-for="ShiftEnd" required>
-                <span class="text-danger"></span>
+                <label class="fg-label" for="shiftPreminent">زماندار</label>
+                <input class="entry" type="radio" required name="shiftPreminent" onclick="javascript:yesnoCheck();" id="yesCheck" @((ViewBag.checkedIsDate == true) ? "checked" : "")>
+                <span class="text-danger" asp-validation-for="IsShiftPreminent"></span>
             </div>
-
+            <input  asp-for="IsShiftPreminent"  checked/>
+            <div style="visibility: hidden" id="ifYes">
+                <input readonly class="entry" type="text" id="ShiftDate" name="ShiftDate" placeholder="در تاریخ">
+            </div>
         </div>
 
     </div>
@@ -50,3 +51,37 @@
         <button class="btn btn-primary"><span>اضافه</span></button>
     </div>
 </form>
+
+@section Scripts{
+    <script>
+        yesnoCheck();
+        function yesnoCheck() {
+            if (document.getElementById('yesCheck').checked) {
+                document.getElementById('ifYes').style.visibility = 'visible';
+            //    document.getElementById('IsShiftPreminent').checked = "false";
+                $("#IsShiftPreminent").attr("checked", false);
+            }
+            else {
+              //  document.getElementById('IsShiftPreminent').checked = "true";
+                document.getElementById('ifYes').style.visibility = 'hidden';
+                $("#IsShiftPreminent").attr("checked", true);
+
+            }
+        }
+    </script>
+
+
+    <script src="~/datePersion/prism.js"></script>
+    <script src="~/datePersion/persianDatepicker.js"></script>
+    <script>
+
+        $(function () {
+            //selectedBefor & selectedDate
+            $("#ShiftDate").persianDatepicker();
+        });
+    </script>
+
+
+}
+
+
