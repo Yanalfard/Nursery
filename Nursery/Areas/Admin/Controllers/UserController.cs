@@ -334,8 +334,8 @@ namespace Nursery.Areas.Admin.Controllers
                         if (addRole.ShiftDate != null)
                         {
                             PersianCalendar pc = new PersianCalendar();
-                            string[] Start = Convert.ToString(addRole.ShiftDate).Split('/');
-                            DateTime startTime = pc.ToDateTime(Convert.ToInt32(Start[0]), Convert.ToInt32(Start[1]), Convert.ToInt32(Start[2]), 0, 0, 0, 0).Date;
+                            string[] Start = Convert.ToString(addRole.ShiftDate).Split(' ')[0].Split('/');
+                            DateTime startTime = pc.ToDateTime(Convert.ToInt32(Start[2]), Convert.ToInt32(Start[0]), Convert.ToInt32(Start[1]), 0, 0, 0, 0).Date;
                             addRole.ShiftDate = startTime.Date;
                         }
                         _db.UserRoleRel.Add(addRole);

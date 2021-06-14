@@ -40,7 +40,7 @@
                 <input class="entry" type="radio" required name="shiftPreminent" onclick="javascript:yesnoCheck();" id="yesCheck" @((ViewBag.checkedIsDate == true) ? "checked" : "")>
                 <span class="text-danger" asp-validation-for="IsShiftPreminent"></span>
             </div>
-            <input  asp-for="IsShiftPreminent"  checked/>
+            <input type="hidden"  asp-for="IsShiftPreminent"  checked/>
             <div style="visibility: hidden" id="ifYes">
                 <input readonly class="entry" type="text" id="ShiftDate" name="ShiftDate" placeholder="در تاریخ">
             </div>
