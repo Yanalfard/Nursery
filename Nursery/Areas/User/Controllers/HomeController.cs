@@ -64,12 +64,18 @@ namespace Nursery.Areas.User.Controllers
                 return await Task.FromResult(Redirect("404.html"));
             }
         }
-        public async Task<IActionResult> Kids(int formId = 1, int pageId = 1, string name = null, string nickname = null)
+        public async Task<IActionResult> Kids(int formId = 1, int pagesId = 1, int pageId = 1, string name = null, string nickname = null)
         {
             ViewBag.FormId = formId;
+            ViewBag.PagesId = pagesId;
+            List<int> pageIds = _db.Form.GetById(formId).TblPageFormRel?.Select(i => i.PageId).ToList();
             ViewBag.name = name;
             ViewBag.nickname = nickname;
-            List<TblKid> list = _db.Kid.Get(j => j.IsDeleted == false, orderBy: j => j.OrderByDescending(k => k.KidId)).ToList();
+            List<TblKid> list = new List<TblKid>();
+            foreach (var item in pageIds)
+            {
+                list.AddRange(_db.Kid.Get(j => j.PageId == item && j.IsDeleted == false, orderBy: j => j.OrderByDescending(k => k.KidId)).ToList());
+            }
             if (name != null)
             {
                 list = list.Where(i => i.Name.Contains(name)).ToList();
