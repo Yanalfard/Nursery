@@ -48,6 +48,7 @@
             <thead>
                 <tr>
                     <th>کد</th>
+                    <th>عکس</th>
                     <th>نام</th>
                     <th>نام مستعار</th>
                     <th>عملیات</th>
@@ -64,6 +65,16 @@
                         @{
                             skip += 1;
                         }
+                    <td>
+                        @if (item.ImageUrl != "")
+                        {
+                            <img src="~/Images/Kid/@item.ImageUrl" height="48" width="48" alt="عکس کاربر" />
+                        }
+                        else
+                        {
+                            <img src="~/st/png/C.png" height="48" width="48" alt="عکس کاربر" />
+                        }
+                    </td>
                         <td>@item.Name</td>
                         <td>@item.Nickname</td>
                         <td class="actions">
