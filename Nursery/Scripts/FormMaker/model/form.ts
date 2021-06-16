@@ -124,7 +124,8 @@ export class Form {
                     }).then(response => {
                         console.log('send data response', response);
                         // Go to wherever after submission
-                        window.location.href = this.element.getAttribute('goto');
+
+                        window.location.href = this.goto;
                     }).catch(() => {
                         eval('LoadingEnd();');
                     })

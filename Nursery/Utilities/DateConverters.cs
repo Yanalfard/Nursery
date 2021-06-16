@@ -12,19 +12,19 @@ namespace Nursery.Utilities
             var dist = DateTime.Now.Subtract(date);
             string ans = "";
 
-            if (TimeSpan.FromSeconds(0) <= dist && dist > TimeSpan.FromSeconds(60))
+            if (TimeSpan.FromSeconds(0) <= dist && dist < TimeSpan.FromSeconds(60))
             {
                 ans = $"{dist.Seconds} ثانیه";
             }
-            else if (TimeSpan.FromMinutes(1) <= dist && dist > TimeSpan.FromMinutes(60))
+            else if (TimeSpan.FromMinutes(1) <= dist && dist < TimeSpan.FromMinutes(60))
             {
                 ans = $"{dist.Minutes} دقیقه";
             }
-            else if (TimeSpan.FromHours(1) <= dist && dist > TimeSpan.FromHours(24))
+            else if (TimeSpan.FromHours(1) <= dist && dist < TimeSpan.FromHours(24))
             {
                 ans = $"{dist.Hours} ساعت";
             }
-            else if (TimeSpan.FromDays(1) <= dist && dist > TimeSpan.FromDays(365))
+            else if (TimeSpan.FromDays(1) <= dist && dist < TimeSpan.FromDays(365))
             {
                 ans = $"{dist.Days} روز";
             }

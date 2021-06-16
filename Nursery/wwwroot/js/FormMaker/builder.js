@@ -43,7 +43,6 @@ define(["require", "exports", "./model/db/tblField", "./model/db/tblForm", "./mo
             field.Validations = f.regexs.map(function (i) { return i.tblRegex; });
             body.Fields.push(field);
         });
-        console.log(body);
         debugger;
         fetch('/Admin/Form/Create', {
             method: 'post',
