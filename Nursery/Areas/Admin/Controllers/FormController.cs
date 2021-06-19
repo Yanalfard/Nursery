@@ -79,6 +79,7 @@ namespace Nursery.Areas.Admin.Controllers
                 TblForm form = new TblForm();
                 form.Name = dform.Name;
                 form.Body = dform.Body;
+                form.Priority= dform.Priority;
                 form.DateCreated = DateTime.Now;
                 form.IsDeleted = false;
 

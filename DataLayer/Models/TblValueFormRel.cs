@@ -12,7 +12,6 @@ namespace DataLayer.Models
         public int FormId { get; set; }
         public int KidId { get; set; }
         public int? IndexNo { get; set; }
-        public short Priority { get; set; }
         public bool IsDeleted { get; set; }
 
         [ForeignKey(nameof(FormId))]

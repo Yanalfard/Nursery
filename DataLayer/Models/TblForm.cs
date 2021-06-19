@@ -23,6 +23,7 @@ namespace DataLayer.Models
         [Column(TypeName = "datetime")]
         public DateTime? DateCreated { get; set; }
         public bool? IsDeleted { get; set; }
+        public short Priority { get; set; }
 
         [InverseProperty("Form")]
         public virtual ICollection<TblFormFieldRel> TblFormFieldRel { get; set; }

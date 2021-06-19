@@ -14,6 +14,8 @@ namespace DataLayer.ViewModels
         /// Text to show under the Title
         /// </summary>
         public string Body { get; set; }
+        public short Priority { get; set; }
+
         /// <summary>
         /// The date the form was created
         /// </summary>

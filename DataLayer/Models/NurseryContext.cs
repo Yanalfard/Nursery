@@ -48,7 +48,6 @@ namespace DataLayer.Models
        .UseLazyLoadingProxies()
        .UseSqlServer("Data Source=103.216.62.27;Initial Catalog=Nursery;User ID=Yanal;Password=1710ahmad.fard");
 
-
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<TblField>(entity =>
@@ -254,8 +253,6 @@ namespace DataLayer.Models
 
             modelBuilder.Entity<TblValueFormRel>(entity =>
             {
-                entity.Property(e => e.Priority).HasDefaultValueSql("((5))");
-
                 entity.HasOne(d => d.Form)
                     .WithMany(p => p.TblValueFormRel)
                     .HasForeignKey(d => d.FormId)

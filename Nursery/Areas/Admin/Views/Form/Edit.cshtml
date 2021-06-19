@@ -27,7 +27,21 @@
 
             <div class="fg-col ">
                 <label class="fg-label" for="tel">توضیحات</label>
-                <textarea class="entry"  asp-for="Body" value="@Model.Body" required></textarea>
+                <textarea class="entry" asp-for="Body" value="@Model.Body" required></textarea>
+                <span class="text-danger"></span>
+            </div>
+
+
+            <div class="fg-col ">
+                <label class="fg-label" for="name">اولویت فرم</label>
+                <select class="uk-select" asp-for="Priority">
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                    <option value="6">6</option>
+                </select>
                 <span class="text-danger"></span>
             </div>
 

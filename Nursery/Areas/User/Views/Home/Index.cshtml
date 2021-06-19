@@ -116,7 +116,7 @@
     {
         @foreach (var j in item.Role.TblRolePageRel.Where(i => i.IsDeleted == false))
         {
-            @foreach (var k in j.Page.TblPageFormRel.Where(i => i.IsDeleted == false).Select(i => i.Form).Where(i => i.IsDeleted == false))
+            @foreach (var k in j.Page.TblPageFormRel.Where(i => i.IsDeleted == false).Select(i => i.Form).Where(i => i.IsDeleted == false).OrderBy(i=>i.Priority))
             {
                 <partial name="_FormBlock" model="k" />
             }

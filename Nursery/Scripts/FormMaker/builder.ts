@@ -22,6 +22,7 @@ btnFinish.addEventListener('click', () => {
     let body = new TblForm();
     const formName = (document.getElementById('txtFormName') as HTMLInputElement).value;
     const description = (document.getElementById('txtDecsription') as HTMLTextAreaElement).value;
+    const priority = (document.getElementById('txtPriority') as HTMLTextAreaElement).value;
 
     //#region  validated 
 
@@ -41,6 +42,7 @@ btnFinish.addEventListener('click', () => {
 
     body.Name = formName;
     body.Body = description;
+    body.Priority = parseInt(priority);
 
     componentList.forEach((f: Tool) => {
         const field = new TblField();

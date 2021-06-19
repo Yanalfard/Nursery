@@ -5,6 +5,7 @@ export class TblForm {
     Name: string = '';
     /** A text to put on forms subtitle */
     Body: string = '';
+    Priority: number = 0;
     DateCreated: Date;
     IsDeleted: boolean = false;
     //-
