@@ -13,9 +13,15 @@
                 <label>بخش ها</label>
             </a>
             <ul>
-                @await Component.InvokeAsync("PagesInUser" ,new { id= Convert.ToInt32(User.Claims.First().Value) })
+                @await Component.InvokeAsync("PagesInUser", new { id = Convert.ToInt32(User.Claims.First().Value) })
                 @*@await Component.InvokeAsync("PagesInUser")*@
             </ul>
         </div>
+    </li>
+    <li>
+        <a href="/User/Form">
+            <span uk-icon="folder-upload"></span>
+            <label>فرم های پر شده</label>
+        </a>
     </li>
 </ul>
