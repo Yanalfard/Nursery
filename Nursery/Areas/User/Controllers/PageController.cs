@@ -110,7 +110,7 @@ namespace Nursery.Areas.User.Controllers
             int userId = SelectUser().UserId;
             var SelectedIndexN = _db.Value.Get(orderBy: i => i.OrderByDescending(i => i.ValueId)).FirstOrDefault();
             int IndexN = 1;
-            if (SelectedIndexN != null)
+            if (SelectedIndexN != null && SelectedIndexN.IndexNo != null)
             {
                 IndexN = (int)SelectedIndexN.IndexNo + 1;
             }

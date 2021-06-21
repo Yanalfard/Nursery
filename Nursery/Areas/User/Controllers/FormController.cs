@@ -1,16 +1,120 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using DataLayer.Models;
+using DataLayer.ViewModels;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using Services.Services;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 
 namespace Nursery.Areas.User.Controllers
 {
+    [Area("User")]
+    [Authorize]
     public class FormController : Controller
     {
-        public IActionResult Index()
+        private Core _db = new Core();
+        TblUser SelectUser()
         {
-            return View();
+            int userId = Convert.ToInt32(User.Claims.First().Value);
+            TblUser selectUser = _db.User.GetById(userId);
+            return selectUser;
+        }
+        public async Task<IActionResult> Index(int pageId = 1,
+            string nameForm = null,
+            string nickname = null,
+            string startDate = null,
+            string endDate = null
+            )
+        {
+            ViewBag.nameForm = nameForm;
+            ViewBag.nickname = nickname;
+            ViewBag.StartDate = startDate;
+            ViewBag.EndDate = endDate;
+
+            List<TblValue> selectedListFormFieldRel = _db.Value.Get(i => i.IsDeleted == false
+            && i.FormField.IsDeleted == false
+            && i.FormField.Form.IsDeleted == false && i.UserId == SelectUser().UserId
+            ,orderBy: i => i.OrderByDescending(i => i.ValueId)).ToList();
+            List<ValueListVm> list = new List<ValueListVm>();
+            foreach (var item in selectedListFormFieldRel)
+            {
+                if (!list.Any(i => i.IndexN == item.IndexNo))
+                {
+                    ValueListVm val = new ValueListVm();
+                    val.FormFieldId = item.FormFieldId;
+                    val.Value = item;
+                    val.DateCreated = (DateTime)item.DateCreated;
+                    val.User = item.User;
+                    val.Kid = item.Kid;
+                    val.Form = item?.FormField?.Form;
+                    val.Page = val.Form?.TblPageFormRel?.FirstOrDefault()?.Page;
+                    val.Role = val.Page?.TblRolePageRel?.FirstOrDefault()?.Role;
+                    val.IndexN = item.IndexNo;
+                    val.IsAccepted = item.IsAccepted;
+                    val.IsDeleted = item.IsDeleted;
+                    list.Add(val);
+                }
+            }
+
+            if (nameForm != null)
+            {
+                list = list.Where(i => i.Form.Name.Contains(nameForm)).ToList();
+            }
+            if (nickname != null)
+            {
+                list = list.Where(i => i.Kid.Name.Contains(nickname)).ToList();
+            }
+            if (startDate != null)
+            {
+                PersianCalendar pc = new PersianCalendar();
+                string[] Start = startDate.Split('/');
+                DateTime startTime = pc.ToDateTime(Convert.ToInt32(Start[0]), Convert.ToInt32(Start[1]), Convert.ToInt32(Start[2]), 0, 0, 0, 0).Date;
+                list = list.Where(i => i.DateCreated.Date >= startTime.Date).ToList();
+            }
+            if (endDate != null)
+            {
+                PersianCalendar pc = new PersianCalendar();
+                string[] Start = endDate.Split('/');
+                DateTime endTime = pc.ToDateTime(Convert.ToInt32(Start[0]), Convert.ToInt32(Start[1]), Convert.ToInt32(Start[2]), 0, 0, 0, 0).Date;
+                list = list.Where(i => i.DateCreated.Date <= endTime.Date).ToList();
+            }
+
+            list = list.Distinct().ToList();
+            //Pagging
+            int take = 10;
+            int skip = (pageId - 1) * take;
+            ViewBag.PageCount = Convert.ToInt32(Math.Ceiling((double)list.Count() / take));
+            ViewBag.PageShow = pageId;
+            ViewBag.skip = skip;
+            ViewBag.UserRoleRel = _db.Role.Get(i => i.IsDeleted == false, orderBy: i => i.OrderByDescending(k => k.RoleId)).ToList();
+            ViewBag.RolePageRel = _db.Page.Get(i => i.IsDeleted == false, orderBy: i => i.OrderByDescending(k => k.PageId)).ToList();
+            return await Task.FromResult(View(list.Skip(skip).Take(take)));
+        }
+
+
+        public async Task<IActionResult> ShowForm(int indexN)
+        {
+            //List<>
+            List<TblValue> selectedListFormFieldRel = _db.Value.Get(i => i.IndexNo == indexN).ToList();
+            List<ValueListVm> list = new List<ValueListVm>();
+            foreach (var item in selectedListFormFieldRel)
+            {
+                ValueListVm val = new ValueListVm();
+                val.FormFieldId = item.FormFieldId;
+                val.Value = item;
+                val.DateCreated = (DateTime)item.DateCreated;
+                val.User = item.User;
+                val.Kid = item.Kid;
+                val.Form = item?.FormField?.Form;
+                val.Page = val.Form?.TblPageFormRel?.FirstOrDefault()?.Page;
+                val.Role = val.Page?.TblRolePageRel?.FirstOrDefault()?.Role;
+                val.IndexN = item.IndexNo;
+                list.Add(val);
+            }
+            return await Task.FromResult(View(list));
         }
     }
 }

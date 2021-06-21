@@ -1,4 +1,182 @@
-﻿
-@*
-    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿@model IEnumerable<ValueListVm>
+@{
+    ViewData["Title"] = "لیست کودکان";
+    Layout = "~/Areas/User/Views/_UserLayout.cshtml";
+}
+
+<link href="~/datePersion/persianDatepicker-default.css" rel="stylesheet" />
+
+<!-- This is the modal -->
+<div id="Modal" uk-modal>
+    <div class="uk-modal-dialog uk-modal-body">
+        <h2 class="uk-modal-title">این یک مودال می باشد</h2>
+    </div>
+</div>
+
+<div class="form">
+
+    <div class="form-header" uk-sticky="offset: 72;cls-active: sticked;bottom: true">
+        <div class="rowr">
+            <h2 class="card-title">
+                لیست فرم های ثبت شده
+            </h2>
+            <a onclick="showOtherPage(1)" class="btn btn-secondary uk-margin-auto-right">
+                <span>جستوجو</span>
+                <span class="tiny" uk-icon="search"></span>
+            </a>
+        </div>
+    </div>
+
+    <div class="form-search" uk-sticky="offset: 140;cls-active: sticked uk-box-shadow-medium;bottom:true">
+        <form id="formSearchUser" action="/User/Form/Index" class="controls-grid">
+            <input class="entry" type="hidden" id="pageId" name="pageId" value="@ViewBag.PageShow">
+            <input class="entry" type="text" id="nameForm" name="nameForm" placeholder="نام فرم" value="@ViewBag.nameForm">
+
+            <input class="entry" type="text" id="nickname" name="nickname" placeholder="نام مستعار کودک" value="@ViewBag.nickname">
+
+            <input readonly class="entry" type="text" id="startDate" name="startDate" placeholder="از تاریخ  " value="@ViewBag.StartDate">
+            <input readonly class="entry" type="text" id="endDate" name="endDate" placeholder="تا تاریخ  " value="@ViewBag.EndDate">
+        </form>
+    </div>
+
+    <div class="form-body scrollh-container uk-padding-remove">
+        <table class="tbl tbl-striped" dir="rtl">
+            <thead>
+                <tr>
+                    <th>کد</th>
+                    <th>نام فرم</th>
+                    <th>نام مستعار کودک</th>
+                    <th>تاریخ ثبت </th>
+                    <th>عملیات</th>
+                </tr>
+            </thead>
+            <tbody>
+                @{
+                    int skip = ViewBag.skip;
+                }
+                @foreach (var item in Model)
+                {
+                    <tr id="formKidId_@item.IndexN">
+
+                        <td>@(skip + 1)</td>
+                        @{
+                            skip += 1;
+                        }
+
+                        <td>@item.Form?.Name</td>
+                        <td>@item.Kid?.Nickname</td>
+                        <td>@item.Value.DateCreated?.AllToShamsi()</td>
+                        <td>
+                            @if (item.IsAccepted == true)
+                            {
+                                <span class="uk-text-success">تائید</span>
+                            }
+                            else
+                            {
+                                <span class="uk-text-danger">تائید نشده</span>
+                            }
+                        </td>
+                        <td class="actions">
+
+
+                            <a asp-area="User"
+                               asp-controller="Form"
+                               asp-action="ShowForm"
+                               asp-route-indexN="@item.IndexN"
+                               class="btn-icon round text-4">
+                                <span class="new">مشاهده</span>
+                                <span class="small" uk-icon="eye"></span>
+                            </a>
+                        </td>
+                    </tr>
+                }
+
+            </tbody>
+        </table>
+    </div>
+    <div class="form-footer">
+        @*<button class="btn btn-primary">اضافه</button>*@
+        <div class="uk-margin-auto-right">
+            <ul class="uk-pagination uk-margin-remove uk-margin-auto-right">
+                @{ int pageCount = ViewBag.PageCount;
+                    int pageShow = ViewBag.PageShow;
+                    int minPage = pageShow <= 1 ? pageShow : pageShow - 2;
+                    int maxPage = pageShow <= 1 ? pageShow + 4 : pageShow + 2;
+                    int notpage = 0; }
+                @if (pageShow > 1)
+                {
+                    <li><a onclick="showOtherPage(@(pageShow==0?1:pageShow-1))"><span uk-pagination-previous></span></a></li>
+                }
+                @if (pageShow > 3)
+                {
+                    <li><a onclick="showOtherPage(1)">1</a></li>
+                }
+                @for (int i = 1; i <= pageCount; i++)
+                {
+                    @if (i >= minPage && i <= maxPage)
+                    {
+                        <li><a onclick="showOtherPage(@(i))" class="@(pageShow==i?"uk-text-danger":"")">@i</a></li>
+                        notpage = 0;
+                    }
+                    else
+                    {
+                        if (notpage == 0)
+                        {
+                            <li class="uk-disabled"><span>...</span></li>
+                            notpage++;
+                        }
+                    }}
+                @if (pageShow <= pageCount - 3)
+                {
+                    <li><a onclick="showOtherPage(@(pageCount))">@pageCount</a></li>
+                }
+                @if (pageShow < pageCount)
+                {
+                    <li><a onclick="showOtherPage(@(pageShow==0?2:pageShow+1))"><span uk-pagination-next></span></a></li>
+                }
+
+            </ul>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+@section Scripts{
+    <script src="~/datePersion/prism.js"></script>
+    <script src="~/datePersion/persianDatepicker.js"></script>
+    <script>
+        $('#pageName').val($('#selectedpageName').val());
+        $('#roleName').val($('#selectedroleName').val());
+
+        $(function () {
+            //selectedBefor & selectedDate
+            $("#startDate").persianDatepicker();
+            $("#endDate").persianDatepicker();
+        });
+    </script>
+
+    <script>
+        function showOtherPage(id) {
+            $('#pageId').val(id);
+            document.getElementById('formSearchUser').submit();
+        }
+
+    </script>
+
+
+
+    <script>
+        require(['config'], function () {
+            require(['confirm'], function () {
+
+            })
+        });
+    </script>
+}
+
+
