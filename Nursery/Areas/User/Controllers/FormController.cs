@@ -37,7 +37,7 @@ namespace Nursery.Areas.User.Controllers
             List<TblValue> selectedListFormFieldRel = _db.Value.Get(i => i.IsDeleted == false
             && i.FormField.IsDeleted == false
             && i.FormField.Form.IsDeleted == false && i.UserId == SelectUser().UserId
-            ,orderBy: i => i.OrderByDescending(i => i.ValueId)).ToList();
+            , orderBy: i => i.OrderByDescending(i => i.ValueId)).ToList();
             List<ValueListVm> list = new List<ValueListVm>();
             foreach (var item in selectedListFormFieldRel)
             {
@@ -115,6 +115,31 @@ namespace Nursery.Areas.User.Controllers
                 list.Add(val);
             }
             return await Task.FromResult(View(list));
+        }
+
+        public async Task<IActionResult> ToUsers(int IndexN)
+        {
+            ViewBag.IndexN = IndexN;
+            ViewBag.UsersId = _db.User.Get(i => i.UserId != SelectUser().UserId);
+            return await Task.FromResult(View());
+        }
+        [HttpPost]
+        public async Task<IActionResult> ToUsers(int IndexN, string comment, List<int> usersId)
+        {
+            ViewBag.IndexN = IndexN;
+            int selecteUserId = SelectUser().UserId;
+            foreach (var item in usersId)
+            {
+                TblRefrence refrence = new TblRefrence();
+                refrence.FromId = selecteUserId;
+                refrence.ToId = item;
+                refrence.DateSubmited = DateTime.Now;
+                refrence.IndexNo = IndexN;
+                refrence.Comment = comment;
+                _db.Refrence.Add(refrence);
+                _db.Save();
+            }
+            return await Task.FromResult(Redirect("/User/Form/Index"));
         }
     }
 }
