@@ -1,0 +1,82 @@
+﻿@model IEnumerable<TblRefrence>
+@{
+    ViewData["Title"] = "مشاهده فرم";
+    Layout = "~/Areas/User/Views/_UserLayout.cshtml";
+    @using System.Security.Claims;
+    int userId = Convert.ToInt32(User.FindFirstValue(ClaimTypes.NameIdentifier));
+}
+
+
+<!-- This is the modal -->
+<div id="Modal" uk-modal>
+    <div class="uk-modal-dialog uk-modal-body">
+        <h2 class="uk-modal-title">این یک مودال می باشد</h2>
+    </div>
+</div>
+
+<div class="form">
+    <div class="form-header" uk-sticky="offset: 72;cls-active: sticked;bottom: true">
+        <div class="rowr">
+            <h2 class="card-title">
+                نظرات فرم
+            </h2>
+            <a href="/Admin/Kid/Add" class="btn btn-primary uk-margin-small-right">
+                <span> ارجاع دادن فرم </span>
+                <span class="tiny" uk-icon="plus-square"></span>
+            </a>
+        </div>
+    </div>
+
+    <div class="form-body scrollh-container uk-padding-remove">
+        <table class="tbl tbl-striped" dir="rtl">
+            <thead>
+                <tr>
+                    <th>کد</th>
+                    <th> از کاربر</th>
+                    <th> به کاربر</th>
+                    <th> تاریخ ثبت پیام</th>
+                    <th>پیام</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@(Model.ToList().IndexOf(item)+1)</td>
+
+                        <td>
+                            @if (userId == item.FromId)
+                            {
+                                <p>شما</p>
+                            }
+                            else
+                            {
+                                @item.From.Name
+                            }
+                        </td>
+                        <td>
+                            @if (userId == item.FromId)
+                            {
+                                <p>شما</p>
+                            }
+                            else
+                            {
+                                @item.From.Name
+                            }
+                        </td>
+                        <td>@item.DateSubmited.AllToShamsi()</td>
+                        <td>@item.Comment</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+
+    <div class="form-footer">
+        <div class="uk-margin-auto-right">
+
+        </div>
+    </div>
+</div>
+
+

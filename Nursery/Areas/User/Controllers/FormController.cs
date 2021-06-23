@@ -141,5 +141,33 @@ namespace Nursery.Areas.User.Controllers
             }
             return await Task.FromResult(Redirect("/User/Form/Index"));
         }
+        public async Task<IActionResult> Refrence()
+        {
+            List<TblRefrence> refrence = _db.Refrence.Get(i => i.ToId == SelectUser().UserId, orderBy: i => i.OrderByDescending(i => i.RefrenceId)).ToList();
+            List<RefrenceVm> refrences = new List<RefrenceVm>();
+            foreach (var item in refrence)
+            {
+                if (!refrences.Any(i => i.IndexNo == item.IndexNo))
+                {
+                    TblValue value = _db.Value.Get(i => i.IndexNo == item.IndexNo).FirstOrDefault();
+                    RefrenceVm addRefrence = new RefrenceVm();
+                    addRefrence.Form = value.FormField.Form;
+                    addRefrence.Refrence = item;
+                    addRefrence.User = item.From;
+                    addRefrence.Kid = value.Kid;
+                    addRefrence.IndexNo = (int)item.IndexNo;
+                    addRefrence.PageName = value.Kid.Page.Name;
+                    addRefrence.IsEnded = _db.Refrence.Get(i => i.IndexNo == item.IndexNo).Any(i => i.IsEnded);
+                    refrences.Add(addRefrence);
+                }
+            }
+            return await Task.FromResult(View(refrences));
+        }
+        public async Task<IActionResult> ShowRefrence(int indexN)
+        {
+            List<TblRefrence> refrence = _db.Refrence.Get(i => i.IndexNo == indexN, orderBy: i => i.OrderByDescending(i => i.RefrenceId)).ToList();
+            return await Task.FromResult(View(refrence));
+       
+        }
     }
 }
