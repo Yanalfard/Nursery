@@ -20,11 +20,18 @@
             <h2 class="card-title">
                 نظرات فرم
             </h2>
-            <a href="/Admin/Kid/Add" class="btn btn-primary uk-margin-small-right">
-                <span> ارجاع دادن فرم </span>
-                <span class="tiny" uk-icon="plus-square"></span>
-            </a>
+            @if (!(bool)ViewBag.IsEnded)
+            {
+                <a href="/User/Form/ToUsers/" class="btn btn-primary uk-margin-small-right">
+                    <span> ارجاع دادن فرم </span>
+                    <span class="tiny" uk-icon="plus-square"></span>
+                </a>
+            }
         </div>
+        @if ((bool)ViewBag.IsEnded)
+        {
+            <div class="uk-text-danger rowr"> خاتمه یافته </div>
+        }
     </div>
 
     <div class="form-body scrollh-container uk-padding-remove">
