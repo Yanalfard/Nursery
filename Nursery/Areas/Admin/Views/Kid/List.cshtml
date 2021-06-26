@@ -48,8 +48,10 @@
             <thead>
                 <tr>
                     <th>کد</th>
+                    <th>عکس</th>
                     <th>نام</th>
                     <th>نام مستعار</th>
+                    <th>بخش </th>
                     <th>عملیات</th>
                 </tr>
             </thead>
@@ -64,8 +66,19 @@
                         @{
                             skip += 1;
                         }
+                    <td>
+                        @if (item.ImageUrl != "")
+                        {
+                            <img src="~/Images/Kid/@item.ImageUrl" height="48" width="48" alt="عکس کاربر" />
+                        }
+                        else
+                        {
+                            <img src="~/st/png/C.png" height="48" width="48" alt="عکس کاربر" />
+                        }
+                    </td>
                         <td>@item.Name</td>
                         <td>@item.Nickname</td>
+                        <td>@item.Page.Name</td>
                         <td class="actions">
                             <a href="" class="btn-icon round text-4" uk-icon="icon:ellipsis-h;ratio:.72"></a>
                             <div class="dropdown" uk-drop="mode: click;offset:4">

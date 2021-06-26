@@ -53,7 +53,7 @@ namespace Nursery.Controllers
                     string password = PasswordHelper.EncodePasswordMd5(login.Password);
                     if (db.User.Get().Any(i => i.IdentificationNo == login.IdentificationNo && i.Password == password))
                     {
-                        TblUser user = db.User.Get().SingleOrDefault(i => i.IdentificationNo == login.IdentificationNo);
+                        var user = db.User.Get(i => i.IdentificationNo == login.IdentificationNo).FirstOrDefault();
                         if (user.IsDeleted == false)
                         {
                             var claims = new List<Claim>()

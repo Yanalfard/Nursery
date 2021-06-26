@@ -1,0 +1,89 @@
+﻿@model IEnumerable<RefrenceVm>
+@{
+    ViewData["Title"] = "فرم های ارجاع داده شده مربوط به فرم شما";
+    Layout = "~/Areas/User/Views/_UserLayout.cshtml";
+
+}
+
+<!-- This is the modal -->
+<div id="Modal" uk-modal>
+    <div class="uk-modal-dialog uk-modal-body">
+        <h2 class="uk-modal-title">این یک مودال می باشد</h2>
+    </div>
+</div>
+
+<div class="form">
+
+    <div class="form-header" uk-sticky="offset: 72;cls-active: sticked;bottom: true">
+        <div class="rowr">
+            <h2 class="card-title">
+                لیست فرم های ثبت شده
+            </h2>
+            <a onclick="showOtherPage(1)" class="btn btn-secondary uk-margin-auto-right">
+                <span>جستوجو</span>
+                <span class="tiny" uk-icon="search"></span>
+            </a>
+        </div>
+    </div>
+
+    <div class="form-body scrollh-container uk-padding-remove">
+        <table class="tbl tbl-striped" dir="rtl">
+            <thead>
+                <tr>
+                    <th>کد</th>
+                    <th>نام فرم</th>
+                    <th>نام کاربر ثبت کننده</th>
+                    <th>نام مستعار کودک</th>
+                    <th>نام بخش </th>
+                    <th>تاریخ ثبت </th>
+                    <th>وضعیت ارجاع  </th>
+                    <th>عملیات</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@item.IndexNo</td>
+                        <td>@item.Form?.Name</td>
+                        <td>@item.User?.Name</td>
+                        <td>@item.Kid?.Nickname</td>
+                        <td>@item.PageName</td>
+                        <td>@item.Refrence.DateSubmited.AllToShamsi()</td>
+                        <td>
+                            @if (item.IsEnded)
+                            {
+                                <span>خاتمه</span>
+                            }
+                            else
+                            {
+                                <span>در حال بررسی </span>
+                            }
+                        </td>
+                        <td class="actions">
+                            <a href="" class="btn-icon round text-4" uk-icon="icon:ellipsis-h;ratio:.72"></a>
+                            <div class="dropdown" uk-drop="mode: click;offset:4">
+                                <ul class="dropdown-list">
+                                    <li>
+                                        <a asp-area="User"
+                                           asp-controller="Form"
+                                           asp-action="ShowRefrence"
+                                           asp-route-indexN="@item.IndexNo"
+                                           class="rowr">
+                                            <span class="new">مشاهده فرم </span>
+                                            <span class="small" uk-icon="eye"></span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </td>
+                    </tr>
+                }
+
+            </tbody>
+        </table>
+    </div>
+    <div class="form-footer">
+
+    </div>
+</div>

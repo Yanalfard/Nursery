@@ -80,8 +80,7 @@
                     <tr>
                         <th>کد</th>
                         <th>نام</th>
-                        <th>از زمان</th>
-                        <th>تا زمان</th>
+                        <th>زمان </th>
                         <th></th>
                     </tr>
                 </thead>
@@ -95,8 +94,21 @@
                             <tr id="userRoleIdId_@item.UserRoleId">
                                 <td>@(Model.TblUserRoleRel.Where(i => i.IsDeleted == false).ToList().IndexOf(item)+1)</td>
                                 <td>دسترسی به شیفت   @item.Role.Title </td>
-                                <td>@item.ShiftStart.TimeOfDay</td>
-                                <td>@item.ShiftEnd.TimeOfDay</td>
+                                @*<td>@item.ShiftStart.TimeOfDay</td>
+                                    <td>@item.ShiftEnd.TimeOfDay</td>*@
+                                <td>
+                                    @if (item.IsShiftPreminent)
+                                    {
+                                        <p>
+                                            دسترسی کامل
+                                        </p>
+                                    }
+                                    else
+                                    {
+                                        @item.ShiftDate.Value.DateToShamsi()
+                                    }
+                                </td>
+                                <td class="actions">
                                 <td class="actions">
                                     <a href="" class="btn-icon round text-4" uk-icon="icon:ellipsis-h;ratio:.72"></a>
                                     <div class="dropdown" uk-drop="mode: click;offset:4">
@@ -118,8 +130,6 @@
                                                     <span>حذف</span>
                                                     <span class="small" uk-icon="trash"></span>
                                                 </a>
-
-
                                             </li>
                                         </ul>
                                     </div>

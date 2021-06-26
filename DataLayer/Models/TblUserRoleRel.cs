@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -10,11 +11,10 @@ namespace DataLayer.Models
         public int UserRoleId { get; set; }
         public int UserId { get; set; }
         public int RoleId { get; set; }
-        [Column(TypeName = "datetime")]
-        public DateTime ShiftStart { get; set; }
-        [Column(TypeName = "datetime")]
-        public DateTime ShiftEnd { get; set; }
+        [Column(TypeName = "date")]
+        public DateTime? ShiftDate { get; set; }
         public bool? IsDeleted { get; set; }
+        public bool IsShiftPreminent { get; set; }
 
         [ForeignKey(nameof(RoleId))]
         [InverseProperty(nameof(TblRole.TblUserRoleRel))]

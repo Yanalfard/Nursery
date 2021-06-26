@@ -93,13 +93,12 @@ namespace Nursery.Areas.Admin.Controllers
                         _db.Role.Add(addRole);
                         _db.Save();
                         #region Add Log
-                        _db.UserLog.Add(new TblUserLog()
-                        {
-                            Text = LogRepo.AddRole(SelectUser().IdentificationNo, addRole.Title.ToString()),
-                            UserId = SelectUser().UserId,
-                            Type = 1,
-                            DateCreated = DateTime.Now
-                        });
+                        TblUserLog log = new TblUserLog();
+                        log.Text = LogRepo.AddRole(SelectUser().IdentificationNo, addRole.Title.ToString());
+                        log.UserId = SelectUser().UserId;
+                        log.Type = 1;
+                        log.DateCreated = DateTime.Now;
+                        _db.UserLog.Add(log);
                         _db.Save();
                         #endregion
                         return await Task.FromResult(Redirect("/Admin/Role/List?addRole=true"));

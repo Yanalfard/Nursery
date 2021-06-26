@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -8,6 +9,7 @@ namespace DataLayer.Models
     {
         public TblPage()
         {
+            TblKid = new HashSet<TblKid>();
             TblPageFormRel = new HashSet<TblPageFormRel>();
             TblRolePageRel = new HashSet<TblRolePageRel>();
         }
@@ -23,6 +25,8 @@ namespace DataLayer.Models
         public string ActionName { get; set; }
         public bool? IsDeleted { get; set; }
 
+        [InverseProperty("Page")]
+        public virtual ICollection<TblKid> TblKid { get; set; }
         [InverseProperty("Page")]
         public virtual ICollection<TblPageFormRel> TblPageFormRel { get; set; }
         [InverseProperty("Page")]

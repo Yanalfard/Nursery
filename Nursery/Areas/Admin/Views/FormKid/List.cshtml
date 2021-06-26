@@ -133,6 +133,16 @@
                                         </a>
                                     </li>
                                     <li>
+                                        <a asp-area="Admin"
+                                           asp-controller="FormKid"
+                                           asp-action="Refrence"
+                                           asp-route-indexN="@item.IndexN"
+                                           class="rowr">
+                                            <span class="new">ارجاع فرم</span>
+                                            <span class="small" uk-icon="share-square"></span>
+                                        </a>
+                                    </li>
+                                    <li>
                                         <a class="rowr btn-danger" popconfirm="floating:true;description:آیا از حذف کاربر اطمینان دارید؟;direction:rt;type:danger;title:هشدار;okText:حذف;" popok="deleteFormKid(@item.IndexN)">
                                             <span>حذف</span>
                                             <span class="small" uk-icon="trash"></span>

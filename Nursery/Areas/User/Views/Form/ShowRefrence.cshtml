@@ -1,0 +1,132 @@
+﻿@model RefrenceAndValueVm
+@{
+    ViewData["Title"] = "مشاهده فرم";
+    Layout = "~/Areas/User/Views/_UserLayout.cshtml";
+    @using System.Security.Claims;
+    int userId = Convert.ToInt32(User.FindFirstValue(ClaimTypes.NameIdentifier));
+
+
+
+    TblValue value = Model.ValueListVm.FirstOrDefault().Value;
+}
+
+
+<!-- This is the modal -->
+<div id="Modal" uk-modal>
+    <div class="uk-modal-dialog uk-modal-body">
+        <h2 class="uk-modal-title">این یک مودال می باشد</h2>
+    </div>
+</div>
+
+<div class="col gap-between-card">
+    <!-- #region Profile -->
+    <div class="form">
+        <div class="form-header">
+            <h1 class="card-title">
+                نام فرم @Model.ValueListVm.FirstOrDefault().Form.Name
+            </h1>
+        </div>
+        <div class="form-body">
+            <div class="grid-160">
+                <div class="fg-col">
+                    <label class="dl-label">نام کودک</label>
+                    <p class="dl-data">@(value.Kid.Name ?? "کودک")</p>
+                </div>
+                @foreach (var item in Model.ValueListVm)
+                {
+                    if (item.Value.FormField.Field.Type != "File")
+                    {
+                        <div class="fg-col">
+                            <label class="dl-label">@item.Value.FormField.Field.Label</label>
+                            <p class="dl-data">@item.Value.Value</p>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="fg-col">
+                            <label class="dl-label">@item.Value.FormField.Field.Label</label>
+                            <a class="dl-data" href="~/FilesUploads/@item.Value.Value" target="_blank">مشاهده فایل</a>
+                        </div>
+                    }
+                }
+            </div>
+        </div>
+
+    </div>
+
+</div>
+
+
+<div class="form">
+    <div class="form-header" uk-sticky="offset: 72;cls-active: sticked;bottom: true">
+        <div class="rowr">
+            <h2 class="card-title">
+                نظرات فرم
+            </h2>
+            @if (!(bool)ViewBag.IsEnded)
+            {
+                <a asp-area="User" asp-controller="Form" asp-action="ToUsers" asp-route-IndexN="@Model.TblRefrence.FirstOrDefault().IndexNo" class="btn btn-primary uk-margin-small-right">
+                    <span> ارجاع دادن فرم </span>
+                    <span class="tiny" uk-icon="plus-square"></span>
+                </a>
+            }
+        </div>
+        @if ((bool)ViewBag.IsEnded)
+        {
+            <div class="uk-text-danger rowr"> خاتمه یافته </div>
+        }
+    </div>
+
+    <div class="form-body scrollh-container uk-padding-remove">
+        <table class="tbl tbl-striped" dir="rtl">
+            <thead>
+                <tr>
+                    <th>کد</th>
+                    <th> از کاربر</th>
+                    <th> به کاربر</th>
+                    <th> تاریخ ثبت پیام</th>
+                    <th>پیام</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.TblRefrence)
+                {
+                    <tr>
+                        <td>@(Model.TblRefrence.ToList().IndexOf(item)+1)</td>
+
+                        <td>
+                            @if (userId == item.FromId)
+                            {
+                                <p>شما</p>
+                            }
+                            else
+                            {
+                                @item.From.Name
+                            }
+                        </td>
+                        <td>
+                            @if (userId == item.ToId)
+                            {
+                                <p>شما</p>
+                            }
+                            else
+                            {
+                                @item.To.Name
+                            }
+                        </td>
+                        <td>@item.DateSubmited.AllToShamsi()</td>
+                        <td>@item.Comment</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+
+    <div class="form-footer">
+        <div class="uk-margin-auto-right">
+
+        </div>
+    </div>
+</div>
+
+

@@ -8,6 +8,7 @@ define(["require", "exports"], function (require, exports) {
             this.Name = '';
             /** A text to put on forms subtitle */
             this.Body = '';
+            this.Priority = 0;
             this.IsDeleted = false;
             //-
             this.Fields = [];

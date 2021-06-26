@@ -1,7 +1,8 @@
 ﻿@model IEnumerable<ValueListVm>
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = " نام فرم " + Model.FirstOrDefault().Form.Name;
     Layout = "~/Areas/Admin/Views/_AdminLayout.cshtml";
+    @using System.Security.Claims
 
     TblValue value = Model.FirstOrDefault().Value;
 }
@@ -11,7 +12,7 @@
     <div class="form">
         <div class="form-header">
             <h1 class="card-title">
-                نام فرم
+                نام فرم @Model.FirstOrDefault().Form.Name
             </h1>
         </div>
         <div class="form-body">
@@ -42,14 +43,14 @@
         <div class="form-footer">
             @if (value.IsAccepted == true)
             {
-                <a asp-action="IsAccepted" asp-controller="FormKid" asp-area="Admin" asp-route-id="@value.IndexN" asp-route-value="0" class="btn btn-danger" onclick="LoadingRun()">
+                <a asp-action="IsAccepted" asp-controller="FormKid" asp-area="Admin" asp-route-id="@value.IndexNo" asp-route-value="0" class="btn btn-danger" onclick="LoadingRun()">
                     <span>رد</span>
                     <span uk-icon="times"></span>
                 </a>
             }
             else
             {
-                <a asp-action="IsAccepted" asp-controller="FormKid" asp-area="Admin" asp-route-id="@value.IndexN" asp-route-value="1" class="btn btn-primary" onclick="LoadingRun()">
+                <a asp-action="IsAccepted" asp-controller="FormKid" asp-area="Admin" asp-route-id="@value.IndexNo" asp-route-value="1" class="btn btn-primary" onclick="LoadingRun()">
                     <span>تایید</span>
                     <span uk-icon="check"></span>
                 </a>
@@ -68,7 +69,23 @@
         <div class="form-body">
             <!-- #region User -->
             <div class="icon-list-item">
-                <img src="~/Images/User/@value.User.ImageUrl" class="round" width="42" height="42" alt="" />
+
+                @{
+                    var ImageUser = "";
+                    if (User.FindFirstValue("ImageUser").ToString() != "")
+                    {
+                        ImageUser = User.FindFirstValue("ImageUser").ToString();
+                    }
+                }
+
+                @if (ImageUser != "")
+                {
+                    <img src="~/Images/User/@ImageUser" class="round" width="42" height="42" alt="عکس کاربر" />
+                }
+                else
+                {
+                    <img src="~/st/png/C.png" class="round" width="42" height="42" alt="عکس کاربر" />
+                }
                 <div class="col">
                     <label>@value.User.Name</label>
                     <span>@value.User?.TblUserRoleRel.FirstOrDefault()?.Role.Title</span>

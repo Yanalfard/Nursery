@@ -59,10 +59,12 @@ namespace Nursery.Areas.Admin.Controllers
 
         public async Task<IActionResult> Add()
         {
+            ViewBag.RolePageRel = _db.Page.Get(i => i.IsDeleted == false, orderBy: i => i.OrderByDescending(k => k.PageId)).ToList();
+
             return await Task.FromResult(View());
         }
         [HttpPost]
-        public async Task<IActionResult> Add(AddKidVm kid)
+        public async Task<IActionResult> Add(AddKidVm kid, IFormFile ImageUrl)
         {
             if (ModelState.IsValid)
             {
@@ -73,12 +75,29 @@ namespace Nursery.Areas.Admin.Controllers
                 }
                 else
                 {
+                    #region addImage
+                    if (ImageUrl != null && ImageUrl.IsImage() && ImageUrl.Length < 20485760)
+                    {
+                        kid.ImageUrl = Guid.NewGuid().ToString() + Path.GetExtension(ImageUrl.FileName);
+                        string savePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/Images/Kid");
+                        var imagePath = Path.Combine(Directory.GetCurrentDirectory(), savePath, kid.ImageUrl);
+                        if (!Directory.Exists(savePath))
+                        {
+                            Directory.CreateDirectory(savePath);
+                        }
+                        using (var stream = new FileStream(imagePath, FileMode.Create))
+                        {
+                            await ImageUrl.CopyToAsync(stream);
+                        }
+                    }
+                    #endregion addImage
                     TblKid addKid = new TblKid()
                     {
                         Name = kid.Name,
                         Nickname = kid.Nickname,
                         IsDeleted = false,
-
+                        ImageUrl = kid.ImageUrl == null ? "" : kid.ImageUrl,
+                        PageId = kid.PageId,
                     };
                     _db.Kid.Add(addKid);
                     _db.Save();
@@ -106,24 +125,53 @@ namespace Nursery.Areas.Admin.Controllers
                 KidId = selectedKid.KidId,
                 Name = selectedKid.Name,
                 Nickname = selectedKid.Nickname,
+                ImageUrl = selectedKid.ImageUrl,
+                PageId = (int)selectedKid.PageId,
             };
+            ViewBag.RolePageRel = _db.Page.Get(i => i.IsDeleted == false, orderBy: i => i.OrderByDescending(k => k.PageId)).ToList();
+
             return await Task.FromResult(View(kid));
         }
         [HttpPost]
-        public async Task<IActionResult> Edit(AddKidVm kid)
+        public async Task<IActionResult> Edit(AddKidVm kid, IFormFile ImageUrl)
         {
             if (ModelState.IsValid)
             {
                 if (_db.Kid.Any(i => i.KidId != kid.KidId && i.Nickname == kid.Nickname && i.IsDeleted == false))
                 {
                     ModelState.AddModelError("Nickname", "نام مستعار تکراریست");
-
                 }
                 else
                 {
                     TblKid updateKid = _db.Kid.GetById(kid.KidId);
                     updateKid.Name = kid.Name;
                     updateKid.Nickname = kid.Nickname;
+                    updateKid.PageId = kid.PageId;
+                    #region addImage
+                    if (ImageUrl != null && ImageUrl.IsImage() && ImageUrl.Length < 20485760)
+                    {
+                        if (updateKid.ImageUrl != null)
+                        {
+                            var imagePathDelete = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/Images/Kid/", updateKid.ImageUrl);
+                            if (System.IO.File.Exists(imagePathDelete))
+                            {
+                                System.IO.File.Delete(imagePathDelete);
+                            }
+                        }
+                        kid.ImageUrl = Guid.NewGuid().ToString() + Path.GetExtension(ImageUrl.FileName);
+                        string savePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/Images/Kid");
+                        var imagePath = Path.Combine(Directory.GetCurrentDirectory(), savePath, kid.ImageUrl);
+                        if (!Directory.Exists(savePath))
+                        {
+                            Directory.CreateDirectory(savePath);
+                        }
+                        using (var stream = new FileStream(imagePath, FileMode.Create))
+                        {
+                            await ImageUrl.CopyToAsync(stream);
+                        }
+                    }
+                    #endregion addImage
+                    updateKid.ImageUrl = kid.ImageUrl;
                     _db.Kid.Update(updateKid);
                     _db.Save();
                     #region Add Log
@@ -147,6 +195,11 @@ namespace Nursery.Areas.Admin.Controllers
             if (selectedKid != null)
             {
                 selectedKid.IsDeleted = true;
+                //var imagePathDelete = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/Images/Kid/", selectedKid.ImageUrl);
+                //if (System.IO.File.Exists(imagePathDelete))
+                //{
+                //    System.IO.File.Delete(imagePathDelete);
+                //}
                 _db.Kid.Update(selectedKid);
                 _db.Save();
                 #region Add Log

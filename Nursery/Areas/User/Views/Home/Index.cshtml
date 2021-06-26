@@ -43,16 +43,16 @@
 
     <div class="col-at-xs row-at-m gap-between-card uk-child-width-1-1-at-xs uk-child-width-1-2">
         @*<div class="card col uk-margin-remove-bottom">
-            <h4 class="card-title">
-                اعلان های شما
-            </h4>
-            <div class="col">
-                <div class="col uk-align-center uk-margin-auto uk-margin-top">
-                    <img src="~/st/svg/Empty.svg" class="uk-margin-auto" alt="" width="80" />
-                    <h6 class="text-3 uk-margin-small-top">اعلانی وجود ندارد</h6>
+                <h4 class="card-title">
+                    اعلان های شما
+                </h4>
+                <div class="col">
+                    <div class="col uk-align-center uk-margin-auto uk-margin-top">
+                        <img src="~/st/svg/Empty.svg" class="uk-margin-auto" alt="" width="80" />
+                        <h6 class="text-3 uk-margin-small-top">اعلانی وجود ندارد</h6>
+                    </div>
                 </div>
-            </div>
-        </div>*@
+            </div>*@
         <!-- #region Roles -->
         <div class="form">
             <div class="form-header">
@@ -68,8 +68,7 @@
                         <tr>
                             <th>ردیف</th>
                             <th>شیفت</th>
-                            <th>از زمان</th>
-                            <th>تا زمان</th>
+                            <th> زمان</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -78,8 +77,21 @@
                             <tr>
                                 <td>@(Model.TblUserRoleRel.Where(i => i.IsDeleted == false).ToList().IndexOf(item)+1)</td>
                                 <td>@item.Role.Title</td>
-                                <td>@item.ShiftStart.TimeOfDay</td>
-                                <td>@item.ShiftEnd.TimeOfDay</td>
+                                @*<td>@item.ShiftStart.TimeOfDay</td>
+                                    <td>@item.ShiftEnd.TimeOfDay</td>*@
+
+                                <td>
+                                    @if (item.IsShiftPreminent)
+                                    {
+                                        <p>
+                                            دسترسی کامل
+                                        </p>
+                                    }
+                                    else
+                                    {
+                                        @item.ShiftDate.Value.DateToShamsi()
+                                    }
+                                </td>
                             </tr>
                         }
 
@@ -100,11 +112,11 @@
 </div>
 
 <div class="forms">
-    @foreach (var item in Model.TblUserRoleRel.Where(i => i.ShiftStart.TimeOfDay <= DateTime.Now.TimeOfDay && i.ShiftEnd.TimeOfDay >= DateTime.Now.TimeOfDay))
+    @foreach (var item in Model.TblUserRoleRel.Where(i => (i.IsShiftPreminent || i.ShiftDate.Value.TimeOfDay == DateTime.Now.TimeOfDay) && (i.IsDeleted == false)))
     {
         @foreach (var j in item.Role.TblRolePageRel.Where(i => i.IsDeleted == false))
         {
-            @foreach (var k in j.Page.TblPageFormRel.Where(i => i.IsDeleted == false).Select(i => i.Form).Where(i => i.IsDeleted == false))
+            @foreach (var k in j.Page.TblPageFormRel.Where(i => i.IsDeleted == false).Select(i => i.Form).Where(i => i.IsDeleted == false).OrderBy(i=>i.Priority))
             {
                 <partial name="_FormBlock" model="k" />
             }

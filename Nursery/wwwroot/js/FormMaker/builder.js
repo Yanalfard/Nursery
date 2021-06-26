@@ -15,6 +15,7 @@ define(["require", "exports", "./model/db/tblField", "./model/db/tblForm", "./mo
         var body = new tblForm_1.TblForm();
         var formName = document.getElementById('txtFormName').value;
         var description = document.getElementById('txtDecsription').value;
+        var priority = document.getElementById('txtPriority').value;
         //#region  validated 
         if (!formName) {
             alert('نام فرم را وارد کنید');
@@ -28,6 +29,7 @@ define(["require", "exports", "./model/db/tblField", "./model/db/tblForm", "./mo
         eval('LoadingRun();');
         body.Name = formName;
         body.Body = description;
+        body.Priority = parseInt(priority);
         componentList.forEach(function (f) {
             var _a, _b, _c, _d;
             var field = new tblField_1.TblField();
@@ -43,7 +45,6 @@ define(["require", "exports", "./model/db/tblField", "./model/db/tblForm", "./mo
             field.Validations = f.regexs.map(function (i) { return i.tblRegex; });
             body.Fields.push(field);
         });
-        console.log(body);
         debugger;
         fetch('/Admin/Form/Create', {
             method: 'post',

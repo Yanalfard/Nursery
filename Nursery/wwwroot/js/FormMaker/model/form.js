@@ -104,7 +104,7 @@ define(["require", "exports", "./field", "./inputType"], function (require, expo
                         }).then(function (response) {
                             console.log('send data response', response);
                             // Go to wherever after submission
-                            window.location.href = _this.element.getAttribute('goto');
+                            window.location.href = _this.goto;
                         })["catch"](function () {
                             eval('LoadingEnd();');
                         });

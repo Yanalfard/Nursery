@@ -40,6 +40,7 @@ namespace Nursery.Areas.User.Controllers
                 return Redirect("/User/Home/Index");
             }
             ViewBag.kidId = kidId;
+            ViewBag.FormId = formId;
             TblForm selectedForm = _db.Form.GetById(formId);
             ViewBag.name = selectedForm.Name;
             List<TblFormFieldRel> listFild = _db.FormFieldRel.Get(i => i.FormId == selectedForm.FormId).ToList();
@@ -109,9 +110,9 @@ namespace Nursery.Areas.User.Controllers
             int userId = SelectUser().UserId;
             var SelectedIndexN = _db.Value.Get(orderBy: i => i.OrderByDescending(i => i.ValueId)).FirstOrDefault();
             int IndexN = 1;
-            if (SelectedIndexN != null)
+            if (SelectedIndexN != null && SelectedIndexN.IndexNo != null)
             {
-                IndexN = (int)SelectedIndexN.IndexN + 1;
+                IndexN = (int)SelectedIndexN.IndexNo + 1;
             }
 
             List<TblValue> addValue = new List<TblValue>();
@@ -126,7 +127,7 @@ namespace Nursery.Areas.User.Controllers
                 addVal.KidId = kidId;
                 addVal.IsAccepted = false;
                 addVal.IsDeleted = false;
-                addVal.IndexN = IndexN;
+                addVal.IndexNo = IndexN;
                 _db.Value.Add(addVal);
                 selectformId = val.FormId;
             }

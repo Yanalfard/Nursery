@@ -18,5 +18,8 @@ namespace DataLayer.ViewModels
         [MaxLength(100, ErrorMessage = "تعداد کاراکتر بیشتر است")]
         [StringLength(100)]
         public string Nickname { get; set; }
+        [StringLength(500)]
+        public string ImageUrl { get; set; }
+        public int PageId { get; set; }
     }
 }

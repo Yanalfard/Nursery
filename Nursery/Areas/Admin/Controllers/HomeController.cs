@@ -34,7 +34,7 @@ namespace Nursery.Areas.Admin.Controllers
             List<ValueListVm> list = new List<ValueListVm>();
             foreach (var item in selectedListFormFieldRel)
             {
-                if (!list.Any(i => i.IndexN == item.IndexN))
+                if (!list.Any(i => i.IndexN == item.IndexNo))
                 {
                     ValueListVm val = new ValueListVm();
                     val.FormFieldId = item.FormFieldId;
@@ -45,7 +45,7 @@ namespace Nursery.Areas.Admin.Controllers
                     val.Form = item?.FormField?.Form;
                     val.Page = val.Form?.TblPageFormRel?.FirstOrDefault()?.Page;
                     val.Role = val.Page?.TblRolePageRel?.FirstOrDefault()?.Role;
-                    val.IndexN = item.IndexN;
+                    val.IndexN = item.IndexNo;
                     val.IsAccepted = item.IsAccepted;
                     val.IsDeleted = item.IsDeleted;
                     list.Add(val);
