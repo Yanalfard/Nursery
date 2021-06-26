@@ -248,5 +248,31 @@ namespace Nursery.Areas.Admin.Controllers
 
         }
 
+
+        public async Task<IActionResult> ToUsers(int IndexN)
+        {
+            ViewBag.IndexN = IndexN;
+            ViewBag.FormName = _db.Value.Get(i => i.IndexNo == IndexN).FirstOrDefault().FormField.Form.Name;
+            ViewBag.UsersId = _db.User.Get(i => i.UserId != SelectUser().UserId);
+            return await Task.FromResult(View());
+        }
+        [HttpPost]
+        public async Task<IActionResult> ToUsers(int IndexN, string comment, List<int> usersId)
+        {
+            ViewBag.IndexN = IndexN;
+            int selecteUserId = SelectUser().UserId;
+            foreach (var item in usersId)
+            {
+                TblRefrence refrence = new TblRefrence();
+                refrence.FromId = selecteUserId;
+                refrence.ToId = item;
+                refrence.DateSubmited = DateTime.Now;
+                refrence.IndexNo = IndexN;
+                refrence.Comment = comment;
+                _db.Refrence.Add(refrence);
+                _db.Save();
+            }
+            return await Task.FromResult(Redirect("/User/Form/Index"));
+        }
     }
 }

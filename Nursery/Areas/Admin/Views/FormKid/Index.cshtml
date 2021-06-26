@@ -1,7 +1,8 @@
 ﻿@model IEnumerable<ValueListVm>
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = " نام فرم " + Model.FirstOrDefault().Form.Name;
     Layout = "~/Areas/Admin/Views/_AdminLayout.cshtml";
+    @using System.Security.Claims
 
     TblValue value = Model.FirstOrDefault().Value;
 }
@@ -68,7 +69,23 @@
         <div class="form-body">
             <!-- #region User -->
             <div class="icon-list-item">
-                <img src="~/Images/User/@value.User.ImageUrl" class="round" width="42" height="42" alt="" />
+
+                @{
+                    var ImageUser = "";
+                    if (User.FindFirstValue("ImageUser").ToString() != "")
+                    {
+                        ImageUser = User.FindFirstValue("ImageUser").ToString();
+                    }
+                }
+
+                @if (ImageUser != "")
+                {
+                    <img src="~/Images/User/@ImageUser" class="round" width="42" height="42" alt="عکس کاربر" />
+                }
+                else
+                {
+                    <img src="~/st/png/C.png" class="round" width="42" height="42" alt="عکس کاربر" />
+                }
                 <div class="col">
                     <label>@value.User.Name</label>
                     <span>@value.User?.TblUserRoleRel.FirstOrDefault()?.Role.Title</span>

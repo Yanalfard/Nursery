@@ -1,6 +1,6 @@
 ﻿@model IEnumerable<ValueListVm>
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "  نام فرم    " + Model.FirstOrDefault().Form.Name;
     Layout = "~/Areas/User/Views/_UserLayout.cshtml";
 
     TblValue value = Model.FirstOrDefault().Value;
@@ -39,7 +39,7 @@
                 }
             </div>
         </div>
-      
+
     </div>
 
 </div>

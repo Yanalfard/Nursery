@@ -120,6 +120,7 @@ namespace Nursery.Areas.User.Controllers
         public async Task<IActionResult> ToUsers(int IndexN)
         {
             ViewBag.IndexN = IndexN;
+            ViewBag.FormName = _db.Value.Get(i=>i.IndexNo==IndexN).FirstOrDefault().FormField.Form.Name;
             ViewBag.UsersId = _db.User.Get(i => i.UserId != SelectUser().UserId);
             return await Task.FromResult(View());
         }
@@ -168,22 +169,45 @@ namespace Nursery.Areas.User.Controllers
         }
         public async Task<IActionResult> ShowRefrence(int indexN)
         {
+
+            RefrenceAndValueVm refrenceAndValueVm = new RefrenceAndValueVm();
             List<TblRefrence> refrence = _db.Refrence.Get(i => i.IndexNo == indexN, orderBy: i => i.OrderByDescending(i => i.RefrenceId)).ToList();
             ViewBag.IsEnded = refrence.Any(i => i.IsEnded);
-            return await Task.FromResult(View(refrence));
+            //////////////////
+            ///
+            List<TblValue> selectedListFormFieldRel = _db.Value.Get(i => i.IndexNo == indexN).ToList();
+            List<ValueListVm> list = new List<ValueListVm>();
+            foreach (var item in selectedListFormFieldRel)
+            {
+                ValueListVm val = new ValueListVm();
+                val.FormFieldId = item.FormFieldId;
+                val.Value = item;
+                val.DateCreated = (DateTime)item.DateCreated;
+                val.User = item.User;
+                val.Kid = item.Kid;
+                val.Form = item?.FormField?.Form;
+                val.Page = val.Form?.TblPageFormRel?.FirstOrDefault()?.Page;
+                val.Role = val.Page?.TblRolePageRel?.FirstOrDefault()?.Role;
+                val.IndexN = item.IndexNo;
+                list.Add(val);
+            }
+
+            refrenceAndValueVm.TblRefrence = refrence;
+            refrenceAndValueVm.ValueListVm = list;
+            return await Task.FromResult(View(refrenceAndValueVm));
 
         }
 
         public async Task<IActionResult> MyRefrence()
         {
-            List<TblRefrence> refrence = _db.Refrence.Get(i => i.FromId == SelectUser().UserId, orderBy: i => i.OrderByDescending(i => i.RefrenceId)).ToList();
+            List<TblRefrence> refrence = _db.Refrence.Get(i => i.FromId == SelectUser().UserId || i.ToId == SelectUser().UserId, orderBy: i => i.OrderByDescending(i => i.RefrenceId)).ToList();
             List<RefrenceVm> refrences = new List<RefrenceVm>();
             foreach (var item in refrence)
             {
                 if (!refrences.Any(i => i.IndexNo == item.IndexNo))
                 {
                     TblValue value = _db.Value.Get(i => i.IndexNo == item.IndexNo).FirstOrDefault();
-                    if (value.UserId != SelectUser().UserId)
+                    if (value.UserId == SelectUser().UserId)
                     {
                         RefrenceVm addRefrence = new RefrenceVm();
                         addRefrence.Form = value.FormField?.Form;

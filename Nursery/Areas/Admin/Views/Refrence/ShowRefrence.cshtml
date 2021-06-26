@@ -1,7 +1,7 @@
 ﻿@model RefrenceAndValueVm
 @{
     ViewData["Title"] = "مشاهده فرم";
-    Layout = "~/Areas/User/Views/_UserLayout.cshtml";
+    Layout = "~/Areas/Admin/Views/_AdminLayout.cshtml";
     @using System.Security.Claims;
     int userId = Convert.ToInt32(User.FindFirstValue(ClaimTypes.NameIdentifier));
 
