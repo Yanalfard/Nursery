@@ -47,6 +47,7 @@
         <table class="tbl tbl-striped" dir="rtl">
             <thead>
                 <tr>
+                    <th>ردیف</th>
                     <th>کد</th>
                     <th>نام</th>
                     <th>شماره تماس</th>
@@ -68,6 +69,7 @@
                         @{
                             skip += 1;
                         }
+                        <td>@item.UserId</td>
                         <td>@item.Name</td>
                         <td><bdi>@item.TellNo</bdi></td>
                         <td>@item.IdentificationNo</td>
