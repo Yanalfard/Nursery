@@ -77,9 +77,6 @@
                             <tr>
                                 <td>@(Model.TblUserRoleRel.Where(i => i.IsDeleted == false).ToList().IndexOf(item)+1)</td>
                                 <td>@item.Role.Title</td>
-                                @*<td>@item.ShiftStart.TimeOfDay</td>
-                                    <td>@item.ShiftEnd.TimeOfDay</td>*@
-
                                 <td>
                                     @if (item.IsShiftPreminent)
                                     {
@@ -112,11 +109,16 @@
 </div>
 
 <div class="forms">
-    @foreach (var item in Model.TblUserRoleRel.Where(i => (i.IsShiftPreminent || i.ShiftDate.Value.TimeOfDay == DateTime.Now.TimeOfDay) && (i.IsDeleted == false)))
+    @{
+        //string[] dateUser = DateTime.Now.ToString().Split(' ')[0].Split('/');
+        string dateUser = DateTime.Now.ToString().Split(' ')[0];
+        //string result = dateUser[2] + '-' + dateUser[0] + '-' + dateUser[1];
+    }
+    @foreach (var item in Model.TblUserRoleRel.Where(i => (i.IsShiftPreminent || i.ShiftDate.ToString().Split(' ')[0] == dateUser) && (i.IsDeleted == false)))
     {
         @foreach (var j in item.Role.TblRolePageRel.Where(i => i.IsDeleted == false))
         {
-            @foreach (var k in j.Page.TblPageFormRel.Where(i => i.IsDeleted == false).Select(i => i.Form).Where(i => i.IsDeleted == false).OrderBy(i=>i.Priority))
+            @foreach (var k in j.Page.TblPageFormRel.Where(i => i.IsDeleted == false).Select(i => i.Form).Where(i => i.IsDeleted == false).OrderBy(i => i.Priority))
             {
                 <partial name="_FormBlock" model="k" />
             }

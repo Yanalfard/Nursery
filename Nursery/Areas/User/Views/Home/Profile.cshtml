@@ -74,10 +74,9 @@
             <table class="tbl tbl-striped" dir="rtl">
                 <thead>
                     <tr>
-                        <th>کد</th>
-                        <th>نام</th>
-                        <th>از زمان</th>
-                        <th>تا زمان</th>
+                        <th>ردیف</th>
+                        <th>شیفت</th>
+                        <th> زمان</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -85,11 +84,22 @@
 
                     @foreach (var item in Model.TblUserRoleRel.Where(i => i.IsDeleted == false))
                     {
-                        <tr id="userRoleIdId_@item.UserRoleId">
+                        <tr>
                             <td>@(Model.TblUserRoleRel.Where(i => i.IsDeleted == false).ToList().IndexOf(item)+1)</td>
-                            <td>دسترسی به شیفت   @item.Role.Title </td>
-                            @*<td>@item.ShiftStart.TimeOfDay</td>
-                            <td>@item.ShiftEnd.TimeOfDay</td>*@
+                            <td>@item.Role.Title</td>
+
+                            <td>
+                                @if (item.IsShiftPreminent)
+                                {
+                                    <p>
+                                        دسترسی کامل
+                                    </p>
+                                }
+                                else
+                                {
+                                    @item.ShiftDate.Value.DateToShamsi()
+                                }
+                            </td>
                         </tr>
                     }
 

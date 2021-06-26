@@ -51,7 +51,7 @@
 
 @section User{
     <div class="column">
-        <h6>@User.Identity.Name</h6>
+        <h6>@User.FindFirstValue("UserName").ToString()</h6>
         @*<span>نام شیفت</span>*@
     </div>
     @{
@@ -77,7 +77,13 @@
                 <li>
                     <a href="/Admin/" class="rowr">
                         <span class="uk-margin-small-left" uk-icon="user"></span>
-                        <span>پروفایل</span>
+                        <span>پروفایل مدیر</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="/User/" class="rowr">
+                        <span class="uk-margin-small-left" uk-icon="user"></span>
+                        <span>پروفایل کاربری</span>
                     </a>
                 </li>
                 <li>

@@ -17,17 +17,17 @@
 }
 
 @*@section Notifications{
-    <div class="dropdown-list col">
-        <div class="col uk-align-center uk-margin-auto uk-margin-top">
-            <img src="~/st/svg/Empty.svg" class="uk-margin-auto" alt="" width="80" />
-            <h6 class="text-3 uk-margin-small-top">اعلانی وجود ندارد</h6>
+        <div class="dropdown-list col">
+            <div class="col uk-align-center uk-margin-auto uk-margin-top">
+                <img src="~/st/svg/Empty.svg" class="uk-margin-auto" alt="" width="80" />
+                <h6 class="text-3 uk-margin-small-top">اعلانی وجود ندارد</h6>
+            </div>
         </div>
-    </div>
-}*@
+    }*@
 
 @section User{
     <div class="column">
-        <h6>@User.Identity.Name</h6>
+        <h6>@User.FindFirstValue("UserName").ToString()</h6>
         @*<span>نام شیفت</span>*@
     </div>
     @{
@@ -50,6 +50,16 @@
     <div uk-drop="pos: bottom-justify; boundary: .user; boundary-align: true">
         <div class="dropdown">
             <ul class="dropdown-list">
+                @if (Convert.ToBoolean(User.FindFirstValue("IsAdmin")) == true)
+                {
+                    <li>
+                        <a href="/Admin/" class="rowr">
+                            <span class="uk-margin-small-left" uk-icon="user"></span>
+                            <span>پروفایل مدیر</span>
+                        </a>
+                    </li>
+                }
+
                 <li>
                     <a href="/User/Home/Profile" class="rowr">
                         <span class="uk-margin-small-left" uk-icon="user"></span>
