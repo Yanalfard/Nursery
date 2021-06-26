@@ -52,6 +52,7 @@
         <table class="tbl tbl-striped" dir="rtl">
             <thead>
                 <tr>
+                    <th>ردیف</th>
                     <th>کد</th>
                     <th>نام</th>
                     <th>اولویت </th>
@@ -71,6 +72,7 @@
                     @{
                         skip += 1;
                     }
+                    <td>@item.FormId</td>
                     <td>@item.Name</td>
                     <td>@item.Priority</td>
                     <td>

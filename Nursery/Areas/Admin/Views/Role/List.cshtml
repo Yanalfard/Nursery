@@ -41,6 +41,7 @@
         <table class="tbl tbl-striped" dir="rtl">
             <thead>
                 <tr>
+                    <th>ردیف</th>
                     <th>کد</th>
                     <th>نام</th>
                     <th>عملیات</th>
@@ -57,6 +58,7 @@
                         @{
                             skip += 1;
                         }
+                        <td>@item.RoleId</td>
                         <td><bdi>@item.Title</bdi></td>
                         <td class="actions">
                             <a href="" class="btn-icon round text-4" uk-icon="icon:ellipsis-h;ratio:.72"></a>
