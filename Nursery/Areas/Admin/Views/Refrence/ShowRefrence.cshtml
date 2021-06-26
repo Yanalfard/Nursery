@@ -65,16 +65,28 @@
             </h2>
             @if (!(bool)ViewBag.IsEnded)
             {
-                <a asp-area="User" asp-controller="Form" asp-action="ToUsers" asp-route-IndexN="@Model.TblRefrence.FirstOrDefault().IndexNo" class="btn btn-primary uk-margin-small-right">
+                <a asp-area="Admin" asp-controller="FormKid" asp-action="ToUsers" asp-route-IndexN="@Model.TblRefrence.FirstOrDefault().IndexNo" class="btn btn-primary uk-margin-small-right">
                     <span> ارجاع دادن فرم </span>
                     <span class="tiny" uk-icon="plus-square"></span>
                 </a>
+
+                <a asp-area="Admin" asp-controller="Refrence" asp-action="ActiveDisable" asp-route-indexN="@Model.TblRefrence.FirstOrDefault().IndexNo" asp-route-isEnded="1" class="btn btn-danger uk-margin-small-right">
+                    <span>  خاتمه دادن فرم  </span>
+                    <span class="tiny" uk-icon="minus-circle"></span>
+                </a>
+            }
+            @if ((bool)ViewBag.IsEnded)
+            {
+                <a class="uk-text-danger uk-margin-small-right">
+                    <span> خاتمه یافته </span>
+                </a>
+                <a asp-area="Admin" asp-controller="Refrence" asp-action="ActiveDisable" asp-route-indexN="@Model.TblRefrence.FirstOrDefault().IndexNo" asp-route-isEnded="0" class="btn btn-success uk-margin-small-right">
+                    <span>  ارجاع دادن دوباره فرم  </span>
+                    <span class="tiny" uk-icon="retweet"></span>
+                </a>
             }
         </div>
-        @if ((bool)ViewBag.IsEnded)
-        {
-            <div class="uk-text-danger rowr"> خاتمه یافته </div>
-        }
+       
     </div>
 
     <div class="form-body scrollh-container uk-padding-remove">
