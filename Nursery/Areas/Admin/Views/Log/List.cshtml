@@ -1,0 +1,139 @@
+﻿@model IEnumerable<TblUserLog>
+@{
+    ViewData["Title"] = "لیست فعالیت ها";
+    Layout = "~/Areas/Admin/Views/_AdminLayout.cshtml";
+}
+
+<!-- This is the modal -->
+<div id="Modal" uk-modal>
+    <div class="uk-modal-dialog uk-modal-body">
+        <h2 class="uk-modal-title">این یک مودال می باشد</h2>
+    </div>
+</div>
+
+<div class="form">
+    <div class="form-header" uk-sticky="offset: 72;cls-active: sticked;bottom: true">
+        <div class="rowr">
+            <h2 class="card-title">
+                لیست فعالیت ها
+            </h2>
+            <a onclick="showOtherPage(1)" class="btn btn-secondary uk-margin-auto-right">
+                <span>جستجو</span>
+                <span class="tiny" uk-icon="search"></span>
+            </a>
+        </div>
+    </div>
+
+    <div class="form-search" uk-sticky="offset: 139;cls-active: sticked uk-box-shadow-medium;bottom:true">
+        <form id="formSearchKid" action="/Admin/Log/List" class="controls-grid">
+            <input class="entry" type="hidden" id="pageId" name="pageId" value="@ViewBag.PageShow">
+            <input class="entry" type="text" id="name" name="name" placeholder="متن مورد نظر " value="@ViewBag.name">
+        </form>
+    </div>
+
+    <div class="form-body scrollh-container uk-padding-remove">
+        <table class="tbl tbl-striped" dir="rtl">
+            <thead>
+                <tr>
+                    <th>کد</th>
+                    <th>نام</th>
+                    <th>توضیحات </th>
+                    <th>تاریخ </th>
+                </tr>
+            </thead>
+            <tbody>
+                @{
+                    int skip = ViewBag.skip;
+                }
+                @foreach (var item in Model)
+                {
+                    <tr id="kidId_@item.UserLogId">
+                        <td>@(skip + 1)</td>
+                        @{
+                            skip += 1;
+                        }
+                        <td>@item.User.IdentificationNo</td>
+                        <td>@item.Text</td>
+                        <td>@item.DateCreated.Value.AllToShamsi()</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+
+    <div class="form-footer">
+        <div class="uk-margin-auto-right">
+            <ul class="uk-pagination uk-margin-remove uk-margin-auto-right">
+                @{ int pageCount = ViewBag.PageCount;
+                    int pageShow = ViewBag.PageShow;
+                    int minPage = pageShow <= 1 ? pageShow : pageShow - 2;
+                    int maxPage = pageShow <= 1 ? pageShow + 4 : pageShow + 2;
+                    int notpage = 0; }
+                @if (pageShow > 1)
+                {
+                    <li><a onclick="showOtherPage(@(pageShow==0?1:pageShow-1))"><span uk-pagination-previous></span></a></li>
+                }
+                @if (pageShow > 3)
+                {
+                    <li><a onclick="showOtherPage(1)">1</a></li>
+                }
+                @for (int i = 1; i <= pageCount; i++)
+                {
+                    @if (i >= minPage && i <= maxPage)
+                    {
+                        <li><a onclick="showOtherPage(@(i))" class=" @(pageShow==i?"uk-text-danger":"")">@i</a></li>
+                        notpage = 0;
+                    }
+                    else
+                    {
+                        if (notpage == 0)
+                        {
+                            <li class="uk-disabled"><span>...</span></li>
+                            notpage++;
+                        }
+                    }}
+                @if (pageShow <= pageCount - 3)
+                {
+                    <li><a onclick="showOtherPage(@(pageCount))">@pageCount</a></li>
+                }
+                @if (pageShow < pageCount)
+                {
+                    <li><a onclick="showOtherPage(@(pageShow==0?2:pageShow+1))"><span uk-pagination-next></span></a></li>
+                }
+
+            </ul>
+        </div>
+    </div>
+</div>
+
+
+@section Scripts{
+
+
+    <script>
+        function showOtherPage(id) {
+            $('#pageId').val(id);
+            document.getElementById('formSearchKid').submit();
+        }
+        function deleteKid(id) {
+            LoadingRun();
+            $.get('/Admin/Kid/Delete?id=' + id, function (result) {
+                if (result == "true") {
+                    $('#kidId_' + id).addClass('uk-text-danger');
+                    $("#kidId_" + id).hide('slow');
+                }
+                LoadingEnd();
+            });
+        }
+    </script>
+
+
+
+    <script>
+        require(['config'], function () {
+            require(['confirm'], function () {
+
+            })
+        });
+    </script>
+}
