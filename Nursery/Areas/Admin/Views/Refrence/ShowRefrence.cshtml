@@ -65,7 +65,7 @@
             </h2>
             @if (!(bool)ViewBag.IsEnded)
             {
-                <a asp-area="Admin" asp-controller="FormKid" asp-action="ToUsers" asp-route-IndexN="@Model.TblRefrence.FirstOrDefault().IndexNo" class="btn btn-primary uk-margin-small-right">
+                <a asp-area="Admin" asp-controller="Refrence" asp-action="ToUsers" asp-route-IndexN="@Model.TblRefrence.FirstOrDefault().IndexNo" class="btn btn-primary uk-margin-small-right">
                     <span> ارجاع دادن فرم </span>
                     <span class="tiny" uk-icon="plus-square"></span>
                 </a>

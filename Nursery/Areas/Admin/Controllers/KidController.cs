@@ -169,9 +169,9 @@ namespace Nursery.Areas.Admin.Controllers
                         {
                             await ImageUrl.CopyToAsync(stream);
                         }
+                        updateKid.ImageUrl = kid.ImageUrl;
                     }
                     #endregion addImage
-                    updateKid.ImageUrl = kid.ImageUrl;
                     _db.Kid.Update(updateKid);
                     _db.Save();
                     #region Add Log
