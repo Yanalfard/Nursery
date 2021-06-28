@@ -22,6 +22,7 @@ namespace Services.Services
         private MainRepo<TblRole> _role;
         private MainRepo<TblRolePageRel> _rolePageRel;
         private MainRepo<TblUser> _user;
+        private MainRepo<TblUserFormRel> _userFormRel;
         private MainRepo<TblUserLog> _userLog;
         private MainRepo<TblUserRoleRel> _userRoleRel;
         private MainRepo<TblValue> _value;
@@ -40,6 +41,7 @@ namespace Services.Services
         public MainRepo<TblRole> Role => _role ??= new MainRepo<TblRole>(_context);
         public MainRepo<TblRolePageRel> RolePageRel => _rolePageRel ??= new MainRepo<TblRolePageRel>(_context);
         public MainRepo<TblUser> User => _user ??= new MainRepo<TblUser>(_context);
+        public MainRepo<TblUserFormRel> UserFormRel => _userFormRel ??= new MainRepo<TblUserFormRel>(_context);
         public MainRepo<TblUserLog> UserLog => _userLog ??= new MainRepo<TblUserLog>(_context);
         public MainRepo<TblUserRoleRel> UserRoleRel => _userRoleRel ??= new MainRepo<TblUserRoleRel>(_context);
         public MainRepo<TblValue> Value => _value ??= new MainRepo<TblValue>(_context);

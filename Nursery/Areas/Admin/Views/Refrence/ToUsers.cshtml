@@ -47,7 +47,7 @@
                         <td>@(Model.ToList().IndexOf(item)+1)</td>
                         <td>@item.Name @(((bool)item.IsAdmin == true) ? "(مدیر)" : "")</td>
                         <td class="actions">
-                            <input type="checkbox" name="usersId" value="@item.UserId" />
+                            <input type="checkbox" class="yesCheck" onclick="yesnoCheck()" name="usersId" value="@item.UserId" />
                         </td>
                     </tr>
                 }
@@ -60,10 +60,38 @@
 </textarea>
             </div>
             <div class="uk-margin-auto-right">
-                <input type="submit" name="name" value="ثبت" class="btn btn-primary" />
+                <input type="submit" name="name" value="ارجاع" id="ifYes1" class="btn btn-primary"  />
             </div>
         </div>
     </form>
 
 </div>
+
+
+@section Scripts{
+    <script>
+        yesnoCheck();
+        function yesnoCheck() {
+
+            if (document.getElementsByClassName('yesCheck').checked) {
+                alert('5');
+                document.getElementById('ifYes1').style.display = 'visible';
+                //    document.getElementById('IsShiftPreminent').checked = "false";
+                $("#IsShiftPreminent").attr("checked", false);
+            }
+            else {
+                alert('2');
+
+                //  document.getElementById('IsShiftPreminent').checked = "true";
+                document.getElementById('ifYes1').style.visibility = 'hidden';
+                $("#IsShiftPreminent").attr("checked", true);
+            }
+        }
+    </script>
+
+
+
+
+}
+
 

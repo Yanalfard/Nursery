@@ -40,9 +40,33 @@
                 <input class="entry" type="radio" required name="shiftPreminent" onclick="javascript:yesnoCheck();" id="yesCheck" @((ViewBag.checkedIsDate == true) ? "checked" : "")>
                 <span class="text-danger" asp-validation-for="IsShiftPreminent"></span>
             </div>
-            <input type="checkbox" style="display:none"  asp-for="IsShiftPreminent"  checked/>
+            <input type="checkbox" style="display:none" asp-for="IsShiftPreminent" checked />
             <div style="visibility: hidden" id="ifYes">
-                <input readonly class="entry" type="text" id="ShiftDate" name="ShiftDate" placeholder="در تاریخ">
+                @*<div>
+            <label class="mt-3 uk-text-bold">افزودن تاریخ</label>
+            &nbsp;<span onclick="SetNewInputGallery()" class="text-success cursor-pointer" uk-icon="plus-circle"></span>
+        </div>*@
+                <div>
+                    <input readonly class="entry ShiftDate" type="text" name="ShiftDate" placeholder="در تاریخ">
+                </div>
+                @*<div>
+                    <input readonly class="entry ShiftDate" type="text" name="ShiftDate" placeholder="در تاریخ">
+                </div>
+                <div>
+                    <input readonly class="entry ShiftDate" type="text" name="ShiftDate" placeholder="در تاریخ">
+                </div>
+                <div>
+                    <input readonly class="entry ShiftDate" type="text" name="ShiftDate" placeholder="در تاریخ">
+                </div>
+                <div>
+                    <input readonly class="entry ShiftDate" type="text" name="ShiftDate" placeholder="در تاریخ">
+                </div>
+                <div>
+                    <input readonly class="entry ShiftDate" type="text" name="ShiftDate" placeholder="در تاریخ">
+                </div>
+                <div>
+                    <input readonly class="entry ShiftDate" type="text" name="ShiftDate" placeholder="در تاریخ">
+                </div>*@
             </div>
         </div>
 
@@ -59,11 +83,11 @@
 
             if (document.getElementById('yesCheck').checked) {
                 document.getElementById('ifYes').style.visibility = 'visible';
-            //    document.getElementById('IsShiftPreminent').checked = "false";
+                //    document.getElementById('IsShiftPreminent').checked = "false";
                 $("#IsShiftPreminent").attr("checked", false);
             }
             else {
-              //  document.getElementById('IsShiftPreminent').checked = "true";
+                //  document.getElementById('IsShiftPreminent').checked = "true";
                 document.getElementById('ifYes').style.visibility = 'hidden';
                 $("#IsShiftPreminent").attr("checked", true);
             }
@@ -75,10 +99,14 @@
     <script src="~/datePersion/persianDatepicker.js"></script>
     <script>
 
-        $(function () {
-            //selectedBefor & selectedDate
-            $("#ShiftDate").persianDatepicker();
-        });
+            $(".ShiftDate").persianDatepicker();
+
+            //function SetNewInputGallery() {
+            //    $("#ifYes").append(`<div>
+            //            <input readonly class="entry ShiftDate"   type="text" name="ShiftDate" placeholder="در تاریخ">
+            //        </div>`
+            //    );
+            //}
     </script>
 
 

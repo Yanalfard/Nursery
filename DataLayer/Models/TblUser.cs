@@ -11,7 +11,8 @@ namespace DataLayer.Models
         {
             TblRefrenceFrom = new HashSet<TblRefrence>();
             TblRefrenceTo = new HashSet<TblRefrence>();
-            TblUserFormRel = new HashSet<TblUserFormRel>();
+            TblUserFormRelAdmin = new HashSet<TblUserFormRel>();
+            TblUserFormRelUser = new HashSet<TblUserFormRel>();
             TblUserLog = new HashSet<TblUserLog>();
             TblUserRoleRel = new HashSet<TblUserRoleRel>();
             TblValue = new HashSet<TblValue>();
@@ -40,8 +41,10 @@ namespace DataLayer.Models
         public virtual ICollection<TblRefrence> TblRefrenceFrom { get; set; }
         [InverseProperty(nameof(TblRefrence.To))]
         public virtual ICollection<TblRefrence> TblRefrenceTo { get; set; }
-        [InverseProperty("User")]
-        public virtual ICollection<TblUserFormRel> TblUserFormRel { get; set; }
+        [InverseProperty(nameof(TblUserFormRel.Admin))]
+        public virtual ICollection<TblUserFormRel> TblUserFormRelAdmin { get; set; }
+        [InverseProperty(nameof(TblUserFormRel.User))]
+        public virtual ICollection<TblUserFormRel> TblUserFormRelUser { get; set; }
         [InverseProperty("User")]
         public virtual ICollection<TblUserLog> TblUserLog { get; set; }
         [InverseProperty("User")]
