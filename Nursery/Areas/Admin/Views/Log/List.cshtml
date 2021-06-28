@@ -1,7 +1,7 @@
-﻿@model IEnumerable<TblKid>
+﻿@model IEnumerable<TblUserLog>
 @{
-    ViewData["Title"] = "لیست کودکان";
-    Layout = "~/Areas/User/Views/_UserLayout.cshtml";
+    ViewData["Title"] = "لیست فعالیت ها";
+    Layout = "~/Areas/Admin/Views/_AdminLayout.cshtml";
 }
 
 <!-- This is the modal -->
@@ -15,7 +15,7 @@
     <div class="form-header" uk-sticky="offset: 72;cls-active: sticked;bottom: true">
         <div class="rowr">
             <h2 class="card-title">
-                لیست کودکان
+                لیست فعالیت ها
             </h2>
             <a onclick="showOtherPage(1)" class="btn btn-secondary uk-margin-auto-right">
                 <span>جستجو</span>
@@ -25,12 +25,9 @@
     </div>
 
     <div class="form-search" uk-sticky="offset: 139;cls-active: sticked uk-box-shadow-medium;bottom:true">
-        <form id="formSearchKid" action="/User/Home/Kids" class="controls-grid">
-            <input class="entry" type="hidden" id="formId" name="formId" value="@ViewBag?.FormId">
-            <input class="entry" type="hidden" id="pagesId" name="pagesId" value="@ViewBag?.PagesId">
+        <form id="formSearchKid" action="/Admin/Log/List" class="controls-grid">
             <input class="entry" type="hidden" id="pageId" name="pageId" value="@ViewBag.PageShow">
-            <input class="entry" type="text" id="name" name="name" placeholder="نام" value="@ViewBag.name">
-            <input class="entry" type="text" id="nickname" name="nickname" placeholder="نام مستعار" value="@ViewBag.nickname">
+            <input class="entry" type="text" id="name" name="name" placeholder="متن مورد نظر " value="@ViewBag.name">
         </form>
     </div>
 
@@ -40,8 +37,8 @@
                 <tr>
                     <th>کد</th>
                     <th>نام</th>
-                    <th>نام مستعار</th>
-                    <th>عملیات</th>
+                    <th>توضیحات </th>
+                    <th>تاریخ </th>
                 </tr>
             </thead>
             <tbody>
@@ -50,19 +47,14 @@
                 }
                 @foreach (var item in Model)
                 {
-                    <tr id="kidId_@item.KidId">
+                    <tr id="kidId_@item.UserLogId">
                         <td>@(skip + 1)</td>
                         @{
                             skip += 1;
                         }
-                        <td>@item.Name</td>
-                        <td>@item.Nickname</td>
-                        <td class="actions">
-                            <a href="/User/Page/Form/@ViewBag?.FormId?kidId=@item.KidId" class="btn btn-dashed rowr uk-margin-auto-right">
-                                <span class="new">انتخاب</span>
-                                <span class="small" uk-icon="pen-square"></span>
-                            </a>
-                        </td>
+                        <td>@item.User.IdentificationNo</td>
+                        <td>@item.Text</td>
+                        <td>@item.DateCreated.Value.AllToShamsi()</td>
                     </tr>
                 }
             </tbody>
@@ -89,7 +81,7 @@
                 {
                     @if (i >= minPage && i <= maxPage)
                     {
-                        <li><a onclick="showOtherPage(@(i))" class="@(pageShow==i?"uk-text-danger":"")">@i</a></li>
+                        <li><a onclick="showOtherPage(@(i))" class=" @(pageShow==i?"uk-text-danger":"")">@i</a></li>
                         notpage = 0;
                     }
                     else
@@ -117,10 +109,21 @@
 
 @section Scripts{
 
+
     <script>
         function showOtherPage(id) {
             $('#pageId').val(id);
             document.getElementById('formSearchKid').submit();
+        }
+        function deleteKid(id) {
+            LoadingRun();
+            $.get('/Admin/Kid/Delete?id=' + id, function (result) {
+                if (result == "true") {
+                    $('#kidId_' + id).addClass('uk-text-danger');
+                    $("#kidId_" + id).hide('slow');
+                }
+                LoadingEnd();
+            });
         }
     </script>
 

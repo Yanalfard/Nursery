@@ -315,14 +315,11 @@ namespace Nursery.Areas.Admin.Controllers
         public async Task<IActionResult> AddRole(TblUserRoleRel addRole, string name = null)
         {
             ViewBag.name = name;
-            ViewBag.checkedIsDate = false;
-            if (!addRole.IsShiftPreminent)
-            {
-                ViewBag.checkedIsDate = true;
-            }
+            bool checkedIsDate = !addRole.IsShiftPreminent;
+
             if (ModelState.IsValid)
             {
-                if (_db.UserRoleRel.Any(i => i.RoleId == addRole.RoleId && i.UserId == addRole.UserId && i.IsDeleted == false))
+                if (_db.UserRoleRel.Any(i => i.RoleId == addRole.RoleId && !checkedIsDate && i.IsShiftPreminent && i.UserId == addRole.UserId && i.IsDeleted == false))
                 {
                     ModelState.AddModelError("RoleId", "این شیفت به این کاربر  قبلا اضافه شده است");
                 }
@@ -330,7 +327,7 @@ namespace Nursery.Areas.Admin.Controllers
                 {
                     if (addRole.IsShiftPreminent == false && addRole.ShiftDate == null)
                     {
-                        ViewBag.checkedIsDate = true;
+                        checkedIsDate = true;
                         ModelState.AddModelError("IsShiftPreminent", " تاریخ وارد نشده است");
                     }
                     else
@@ -361,6 +358,7 @@ namespace Nursery.Areas.Admin.Controllers
                     }
                 }
             }
+            ViewBag.checkedIsDate = checkedIsDate;
             ViewBag.UserRoleRel = _db.Role.Get(i => i.IsDeleted == false, orderBy: i => i.OrderByDescending(k => k.RoleId)).ToList();
             return await Task.FromResult(View(addRole));
         }

@@ -74,7 +74,25 @@ namespace Nursery.Areas.User.Controllers
             List<TblKid> list = new List<TblKid>();
             foreach (var item in pageIds)
             {
-                list.AddRange(_db.Kid.Get(j => j.PageId == item && j.IsDeleted == false, orderBy: j => j.OrderByDescending(k => k.KidId)).ToList());
+                //bachehayi ke dar an bakhsh hastand
+                List<TblKid> listKid = _db.Kid.Get(j => j.PageId == item && j.IsDeleted == false, orderBy: j => j.OrderByDescending(k => k.KidId)).ToList();
+                foreach (var j in listKid)
+                {
+                    string date = DateTime.Now.ToString().Split(' ')[0];
+                    var c = j.TblValue.Where(i => i.DateCreated.Value.Date != DateTime.Now.Date).ToList();
+                    var d = c.Where(i => i.KidId != j.KidId).ToList();
+                    var e = c.Where(i => i.UserId != SelectUser().UserId).ToList();
+
+                    if (j.TblValue.Any(i => i.DateCreated.Value.Date != DateTime.Now.Date))
+                    {
+                        list.Add(j);
+                    }
+                    //var xxx = _db.Value.Get().FirstOrDefault().DateCreated.Value.Date;
+                    //if (selectedValues.Any(i => i.KidId != j.KidId))
+                    //{
+                    //    list.Add(j);
+                    //}
+                }
             }
             if (name != null)
             {
