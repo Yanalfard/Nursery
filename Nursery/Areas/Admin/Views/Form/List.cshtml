@@ -48,7 +48,7 @@
 
 
 
-    <div class="form-body scrollh-container uk-padding-remove">
+    <div class="form-body scrollh-container uk-padding-remove" >
         <table class="tbl tbl-striped" dir="rtl">
             <thead>
                 <tr>
@@ -111,6 +111,17 @@
                                        asp-route-id="@item.FormId"
                                        asp-route-name="@item.Name">
                                         <span class="new">مشاهده و اضافه کردن بخش</span>
+                                        <span class="small" uk-icon="eye"></span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="rowr"
+                                       asp-area="admin"
+                                       asp-controller="Form"
+                                       asp-action="AddFormInUser"
+                                       asp-route-id="@item.FormId"
+                                       asp-route-name="@item.Name">
+                                        <span class="new">اختصاص دادن به کاربر</span>
                                         <span class="small" uk-icon="eye"></span>
                                     </a>
                                 </li>

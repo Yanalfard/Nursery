@@ -43,10 +43,12 @@ namespace DataLayer.Models
         //            }
         //        }
 
+
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         => optionsBuilder
        .UseLazyLoadingProxies()
        .UseSqlServer("Data Source=103.216.62.27;Initial Catalog=Nursery;User ID=Yanal;Password=1710ahmad.fard");
+
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -184,6 +186,12 @@ namespace DataLayer.Models
             {
                 entity.Property(e => e.DateSubmited).HasDefaultValueSql("(getdate())");
 
+                entity.HasOne(d => d.Admin)
+                    .WithMany(p => p.TblUserFormRelAdmin)
+                    .HasForeignKey(d => d.AdminId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_TblUserFormRel_TblUser1");
+
                 entity.HasOne(d => d.Form)
                     .WithMany(p => p.TblUserFormRel)
                     .HasForeignKey(d => d.FormId)
@@ -191,7 +199,7 @@ namespace DataLayer.Models
                     .HasConstraintName("FK_TblUserFormRel_TblForm");
 
                 entity.HasOne(d => d.User)
-                    .WithMany(p => p.TblUserFormRel)
+                    .WithMany(p => p.TblUserFormRelUser)
                     .HasForeignKey(d => d.UserId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_TblUserFormRel_TblUser");

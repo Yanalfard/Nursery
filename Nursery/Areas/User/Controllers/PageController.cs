@@ -35,6 +35,23 @@ namespace Nursery.Areas.User.Controllers
         [Route("/User/Page/Form/{formID?}/{kidId?}")]
         public IActionResult Form(int? formId, int? kidId)
         {
+            if (_db.Value.Any(i => i.FormField.FormId == formId
+             && i.KidId == kidId
+             && i.UserId == SelectUser().UserId
+             && i.DateCreated.Value.Date == DateTime.Now.Date))
+            {
+                return Redirect("/");
+            }
+            TblUserFormRel tblUserFormRel = _db.UserFormRel
+                .Get(i => i.FormId == formId && i.UserId == SelectUser().UserId).FirstOrDefault();
+            if (tblUserFormRel != null)
+            {
+                int countSubmit = tblUserFormRel.Count + 1;
+                if (countSubmit > tblUserFormRel.DoneCount)
+                {
+                    return Redirect("/");
+                }
+            }
             if (formId == null || kidId == null)
             {
                 return Redirect("/User/Home/Index");
@@ -144,6 +161,21 @@ namespace Nursery.Areas.User.Controllers
                 DateCreated = DateTime.Now
             });
             _db.Save();
+
+            TblUserFormRel selectedUserFormRel = _db.UserFormRel
+               .Get(i => i.FormId == selectformId && i.UserId == SelectUser().UserId).FirstOrDefault();
+            if (selectedUserFormRel != null)
+            {
+                int countSubmit = selectedUserFormRel.Count + 1;
+                if (countSubmit <= selectedUserFormRel.DoneCount)
+                {
+                    selectedUserFormRel.DateSubmited = DateTime.Now;
+                    selectedUserFormRel.Count = countSubmit;
+                    _db.UserFormRel.Update(selectedUserFormRel);
+                    _db.Save();
+                }
+            }
+
             #endregion
             return Ok();
         }

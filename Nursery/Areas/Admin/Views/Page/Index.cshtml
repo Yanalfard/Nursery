@@ -57,6 +57,7 @@
             <table class="tbl tbl-striped" dir="rtl">
                 <thead>
                     <tr>
+                        <th>ردیف</th>
                         <th>کد</th>
                         <th>نام</th>
                         <th>توضیحات</th>
@@ -70,6 +71,7 @@
                     {
                         <tr id="pageFormRel_@item.PageFormRelId">
                             <td>@(Model.TblPageFormRel.Where(i => i.IsDeleted == false).OrderByDescending(i => i.FormId).ToList().IndexOf(item)+1)</td>
+                            <td>@item.PageFormRelId</td>
                             <td>@item.Form.Name</td>
                             <td>
                                 <a href="#ModalDescription_@item.PageFormRelId" class="btn-icon round text-4" uk-icon="icon:eye;ratio:.5" uk-toggle></a>

@@ -10,6 +10,8 @@
     </div>
 </div>
 
+
+
 <div class="form">
     <div class="form-header" uk-sticky="offset: 72;cls-active: sticked;bottom: true">
         <div class="rowr">
@@ -34,6 +36,7 @@
         <table class="tbl tbl-striped" dir="rtl">
             <thead>
                 <tr>
+                    <th>ردیف</th>
                     <th>کد</th>
                     <th>نام</th>
                     <th>عملیات</th>
@@ -45,9 +48,10 @@
                 {
                     <tr>
                         <td>@(Model.ToList().IndexOf(item)+1)</td>
+                        <td>@item.UserId</td>
                         <td>@item.Name @(((bool)item.IsAdmin == true) ? "(مدیر)" : "")</td>
                         <td class="actions">
-                            <input type="checkbox" name="usersId" value="@item.UserId" />
+                            <input type="checkbox" class="myCheckbox" onclick="yesnoCheck()" name="usersId" value="@item.UserId" />
                         </td>
                     </tr>
                 }
@@ -60,10 +64,38 @@
 </textarea>
             </div>
             <div class="uk-margin-auto-right">
-                <input type="submit" name="name" value="ثبت" class="btn btn-primary" />
+                <span class="uk-text-danger answer">
+                    لطفا حداقل یک کاربر انتخاب شود
+                </span>
+                <input type="submit" name="name" value="ارجاع" id="myButton" class="btn btn-primary" disabled />
             </div>
         </div>
     </form>
 
 </div>
+
+
+@section Scripts{
+    <script>
+        yesnoCheck();
+        function yesnoCheck() {
+            $('#myButton').prop("disabled", !$(".myCheckbox").prop("checked"));
+
+            if ($('.myCheckbox').is(":checked")) {
+                $("#myButton").show();
+                $(".answer").hide();
+            }
+            else {
+                $(".answer").show();
+                $("#myButton").hide();
+            }
+        }
+
+    </script>
+
+
+
+
+}
+
 

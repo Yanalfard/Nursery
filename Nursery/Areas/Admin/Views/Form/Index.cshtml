@@ -53,6 +53,7 @@
             <table class="tbl tbl-striped" dir="rtl">
                 <thead>
                     <tr>
+                        <th>ردیف</th>
                         <th>کد</th>
                         <th>نام بخش</th>
                         <th></th>
@@ -62,6 +63,7 @@
                     @foreach (var item in Model.TblPageFormRel.Where(i => i.IsDeleted == false).OrderByDescending(i => i.PageFormRelId).Where(i => i.Page.IsDeleted == false))
                     {
                         <tr id="formPageRelId_@item.PageFormRelId">
+                            <td>@(Model.TblPageFormRel.Where(i => i.IsDeleted == false).OrderByDescending(i => i.FormId).ToList().IndexOf(item)+1)</td>
                             <td>@item.PageFormRelId</td>
                             <td>@item.Page.Name</td>
                             <td class="actions">

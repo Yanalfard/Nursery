@@ -67,15 +67,33 @@
                     <thead>
                         <tr>
                             <th>ردیف</th>
+                            <th>کد</th>
                             <th>شیفت</th>
                             <th> زمان</th>
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach (var item in Model.TblUserRoleRel.Where(i => i.IsDeleted == false))
+                        @{
+
+                            List<TblUserRoleRel> tblUserRoleRels = Model.TblUserRoleRel.Where(i => i.IsDeleted == false).ToList();
+                            List<TblUserRoleRel> list = new List<TblUserRoleRel>();
+                            foreach (var item in tblUserRoleRels)
+                            {
+                                if (item.IsShiftPreminent)
+                                {
+                                    list.Add(item);
+                                }
+                                else if (item.ShiftDate.Value.Date >= DateTime.Now.Date)
+                                {
+                                    list.Add(item);
+                                }
+                            }
+                        }
+                        @foreach (var item in list)
                         {
                             <tr>
                                 <td>@(Model.TblUserRoleRel.Where(i => i.IsDeleted == false).ToList().IndexOf(item)+1)</td>
+                                <td>@item.UserRoleId</td>
                                 <td>@item.Role.Title</td>
                                 <td>
                                     @if (item.IsShiftPreminent)
@@ -129,4 +147,21 @@
 </div>
 
 
+
+<div class="headline uk-margin-top">
+    <h3>
+        فرم های ویژه
+    </h3>
+    <hr />
+</div>
+
+<div class="forms">
+
+    @foreach (var item in Model.TblUserFormRelUser.Select(i => i.Form))
+    {
+        <partial name="_FormBlock" model="item" />
+    }
+
+
+</div>
 

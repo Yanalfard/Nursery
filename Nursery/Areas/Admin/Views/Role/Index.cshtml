@@ -52,6 +52,7 @@
             <table class="tbl tbl-striped" dir="rtl">
                 <thead>
                     <tr>
+                        <th>ردیف</th>
                         <th>کد</th>
                         <th>نام بخش</th>
                         <th></th>
@@ -62,6 +63,7 @@
                     {
                         <tr id="rolePageRelId_@item.RolePageRelId">
                             <td>@(Model.TblRolePageRel.Where(i => i.IsDeleted == false).ToList().IndexOf(item)+1)</td>
+                            <td>@item.RolePageRelId</td>
                             <td>@item.Page.Name</td>
                             <td class="actions">
                                 <a href="" class="btn-icon round text-4" uk-icon="icon:ellipsis-h;ratio:.72"></a>

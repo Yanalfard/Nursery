@@ -606,7 +606,7 @@ input:not(input[type=checkbox]):not(input[type=radio]) {
         background-color: rgba(255, 255, 255, 0.15); }
     .m-aside .navigation [accordion] {
       position: relative;
-      background-color: #2F3246; }
+      /*background-color: #2F3246;*/ }
       .m-aside .navigation [accordion] ul {
         display: flex;
         margin: 0;
