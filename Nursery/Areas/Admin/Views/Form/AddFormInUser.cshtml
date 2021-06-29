@@ -1,0 +1,192 @@
+﻿@model IEnumerable<TblUserFormRel>
+@{
+    ViewData["Title"] = "ارجاع فرم به کاربران ";
+    Layout = "~/Areas/Admin/Views/_AdminLayout.cshtml";
+}
+
+<!-- This is the modal -->
+<div id="Modal" uk-modal>
+    <div class="uk-modal-dialog uk-modal-body">
+        <h2 class="uk-modal-title">این یک مودال می باشد</h2>
+    </div>
+</div>
+
+
+@if (Model.Any())
+{
+    <div class="form">
+
+        <div class="form-header" uk-sticky="offset: 72;cls-active: sticked;bottom: true">
+            <div class="rowr">
+                <h2 class="card-title">
+                    لیست ثبت شده ها
+                </h2>
+            </div>
+        </div>
+
+
+        <div class="form-body scrollh-container uk-padding-remove">
+            <table class="tbl tbl-striped" dir="rtl">
+                <thead>
+                    <tr>
+                        <th>ردیف</th>
+                        <th>کد</th>
+                        <th>کاربر</th>
+                        <th>تعداد مجاز  </th>
+                        <th>تعداد ثبت شده توسط کاربر  </th>
+                        <th>تاریخ ثبت </th>
+                        <th>عملیات</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    @foreach (var item in Model)
+                    {
+                        <tr id="userId_@item.UserFormId">
+                            <td>@(Model.ToList().IndexOf(item)+1)</td>
+                            <td>@item.UserId</td>
+                            <td>@item.User.Name</td>
+                            <td>@item.DoneCount</td>
+                            <td>@item.Count</td>
+                            <td>@item.DateSubmited.DateToShamsi()</td>
+                            <td class="actions">
+                                <a href="" class="btn-icon round text-4" uk-icon="icon:ellipsis-h;ratio:.72"></a>
+                                <div class="dropdown" uk-drop="mode: click;offset:4">
+                                    <ul class="dropdown-list">
+                                        <li>
+                                            <a class="rowr btn-danger" popconfirm="floating:true;description:آیا از حذف  اطمینان دارید؟;direction:rt;type:danger;title:هشدار;okText:حذف;" popok="deleteFormInUser(@item.UserFormId)">
+                                                <span>حذف</span>
+                                                <span class="small" uk-icon="trash"></span>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </td>
+                        </tr>
+                    }
+
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+
+
+}
+
+<hr />
+
+@{
+    List<TblUser> Mod = ViewBag.User as List<TblUser>;
+}
+
+<div class="form" style="margin-top:20px;">
+    <div class="form-header" uk-sticky="offset: 72;cls-active: sticked;bottom: true">
+        <div class="rowr">
+            <h2 class="card-title">
+                ارجاع فرم @ViewBag.FormName
+            </h2>
+        </div>
+    </div>
+    <div class="form-header" uk-sticky="offset: 72;cls-active: sticked;bottom: true">
+        <div class="rowr">
+            <h2 class="card-title">
+                لیست کاربران
+            </h2>
+        </div>
+    </div>
+
+
+    @if (Mod.Any())
+    {
+
+
+        <form action="ToUsers" method="post" class="form-body scrollh-container uk-padding-remove">
+            <input type="hidden" name="id" value="@ViewBag.id" readonly />
+            <input type="hidden" name="name" value="@ViewData["name"]" readonly />
+
+            <table class="tbl tbl-striped" dir="rtl">
+                <thead>
+                    <tr>
+                        <th>ردیف</th>
+                        <th>کد</th>
+                        <th>نام</th>
+                        <th>عملیات</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    @foreach (var item in Mod)
+                    {
+                        <tr>
+                            <td>@(Mod.ToList().IndexOf(item) + 1)</td>
+                            <td>@item.UserId</td>
+                            <td>@item.Name @(((bool)item.IsAdmin == true) ? "(مدیر)" : "")</td>
+                            <td class="actions">
+                                <input type="checkbox" class="myCheckbox" onclick="yesnoCheck()" name="usersId" value="@item.UserId" />
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+            <div class="form-footer">
+                <div class="uk-margin-auto-right">
+                    <input type="number" name="doneCount" required />
+                </div>
+                <div class="uk-margin-auto-right">
+                    <span class="uk-text-danger answer">
+                        لطفا حداقل یک کاربر انتخاب شود
+                    </span>
+                    <input type="submit" name="name" value="ثبت" class="btn btn-primary myButton" disabled />
+                </div>
+            </div>
+        </form>
+
+
+    }
+
+
+</div>
+
+
+@section Scripts{
+    <script>
+        yesnoCheck();
+        function yesnoCheck() {
+            $('.myButton').prop("disabled", !$(".myCheckbox").prop("checked"));
+
+            if ($('.myCheckbox').is(":checked")) {
+                $(".myButton").show();
+                $(".answer").hide();
+            }
+            else {
+                $(".answer").show();
+                $(".myButton").hide();
+            }
+        }
+
+        function deleteFormInUser(id) {
+            LoadingRun();
+            $.get('/Admin/Form/DeleteFormInUser?id=' + id, function (result) {
+                if (result == "true") {
+                    location.reload();
+                    //$('#userId_' + id).addClass('uk-text-danger');
+                    //$("#userId_" + id).hide('slow');
+                }
+            });
+        }
+
+    </script>
+
+
+    <script>
+        require(['config'], function () {
+            require(['confirm'], function () {
+
+            })
+        });
+    </script>
+
+}
+
+

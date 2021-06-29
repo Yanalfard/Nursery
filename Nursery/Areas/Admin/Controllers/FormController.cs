@@ -40,6 +40,72 @@ namespace Nursery.Areas.Admin.Controllers
             }
         }
 
+        public async Task<IActionResult> AddFormInUser(int id = 0, string name = null)
+        {
+            try
+            {
+                ViewData["name"] = name;
+                ViewBag.id = id;
+                List<TblUserFormRel> list = _db.UserFormRel.Get(i => i.FormId == id).ToList();
+                var allUser = _db.User.Get(orderBy: i => i.OrderByDescending(i => i.UserId));
+                List<TblUser> listUser = new List<TblUser>();
+                foreach (var item in allUser)
+                {
+                    if (!list.Any(i => i.UserId == item.UserId))
+                    {
+                        listUser.Add(item);
+                    }
+                }
+                ViewBag.User = listUser;
+                return await Task.FromResult(View(list));
+            }
+            catch
+            {
+                return await Task.FromResult(Redirect("404.html"));
+            }
+        }
+        [HttpPost]
+        public async Task<IActionResult> AddFormInUser(int id, string name, int doneCount, List<int> usersId)
+        {
+            ViewBag.id = id;
+            int selecteUserId = SelectUser().UserId;
+            foreach (var item in usersId)
+            {
+                TblUserFormRel formRel = new TblUserFormRel();
+                formRel.FormId = id;
+                formRel.AdminId = selecteUserId;
+                formRel.UserId = item;
+                formRel.DateSubmited = DateTime.Now;
+                formRel.DoneCount = doneCount;
+                _db.UserFormRel.Add(formRel);
+                _db.Save();
+            }
+            return await Task.FromResult(Redirect("/Admin/Form/AddFormInUser/" + id + "?name=" + name));
+        }
+
+        public async Task<string> DeleteFormInUser(int id)
+        {
+            TblUserFormRel selectedUserFormRel = _db.UserFormRel.GetById(id);
+            if (selectedUserFormRel != null)
+            {
+              
+                _db.UserFormRel.Delete(selectedUserFormRel);
+                _db.Save();
+                #region Add Log
+                //_db.UserLog.Add(new TblUserLog()
+                //{
+                //    Text = LogRepo.DeleteUser(SelectUser().IdentificationNo, selectedUser.IdentificationNo.ToString()),
+                //    UserId = SelectUser().UserId,
+                //    Type = 2,
+                //    DateCreated = DateTime.Now
+                //});
+                //_db.Save();
+                #endregion
+                return await Task.FromResult("true");
+            }
+            return await Task.FromResult("false");
+
+        }
 
         public async Task<IActionResult> Add(int id, string name = null)
         {
@@ -79,7 +145,7 @@ namespace Nursery.Areas.Admin.Controllers
                 TblForm form = new TblForm();
                 form.Name = dform.Name;
                 form.Body = dform.Body;
-                form.Priority= dform.Priority;
+                form.Priority = dform.Priority;
                 form.DateCreated = DateTime.Now;
                 form.IsDeleted = false;
 

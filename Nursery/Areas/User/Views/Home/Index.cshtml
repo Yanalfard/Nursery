@@ -148,3 +148,20 @@
 
 
 
+<div class="headline uk-margin-top">
+    <h3>
+        فرم های ویژه
+    </h3>
+    <hr />
+</div>
+
+<div class="forms">
+
+    @foreach (var item in Model.TblUserFormRelUser.Select(i => i.Form))
+    {
+        <partial name="_FormBlock" model="item" />
+    }
+
+
+</div>
+
