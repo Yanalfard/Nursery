@@ -43,15 +43,15 @@
                 <span class="text-danger" asp-validation-for="IsShiftPreminent"></span>
             </div>
             <input type="checkbox" style="display:none" asp-for="IsShiftPreminent" checked />
-            <div style="visibility: hidden" id="ifYes">
-                <div>
-                    <label class="mt-3 uk-text-bold">افزودن تاریخ</label>
-                    &nbsp;<span onclick="SetNewInputGallery()" class="text-success cursor-pointer btn-primary" uk-icon="plus-circle"></span>
-                </div>
-                    <input readonly class="entry ShiftDate" type="text" name="ShiftDate" placeholder="در تاریخ">
-            </div>
-        </div>
 
+        </div>
+        <div style="visibility: hidden" id="ifYes" class="ifYes">
+            <div>
+                <label class="mt-3 uk-text-bold">افزودن تاریخ</label>
+                &nbsp;<span onclick="SetNewInputGallery()" class="text-success cursor-pointer btn-primary" uk-icon="plus-circle"></span>
+            </div>
+            <input readonly class="entry ShiftDate" type="text" name="ShiftDate" placeholder="در تاریخ">
+        </div>
     </div>
     <div class="form-footer">
         <button class="btn btn-primary"><span>اضافه</span></button>
@@ -59,6 +59,25 @@
 </form>
 
 @section Scripts{
+
+    <script>
+        function SetNewInputGallery2() {
+            $(".ShiftDate2").persianDatepicker();
+        }
+        let x = 3;
+        const y = x;
+
+        function SetNewInputGallery() {
+            alert(y);
+            y = y++;
+            $(".ifYes").append(`
+
+                <input readonly class="entry ShiftDate2" onclick="SetNewInputGallery2()" type="text" name="ShiftDate" placeholder="در تاریخ">
+
+                                    `
+            );
+        }
+    </script>
     <script>
         yesnoCheck();
         function yesnoCheck() {
@@ -80,15 +99,7 @@
     <script src="~/datePersion/prism.js"></script>
     <script src="~/datePersion/persianDatepicker.js"></script>
     <script>
-
         $(".ShiftDate").persianDatepicker();
-
-        function SetNewInputGallery() {
-            $("#ifYes").append(`
-                            <input readonly class="entry ShiftDate"   type="text" name="ShiftDate" placeholder="در تاریخ">
-                        `
-            );
-        }
     </script>
 
 
