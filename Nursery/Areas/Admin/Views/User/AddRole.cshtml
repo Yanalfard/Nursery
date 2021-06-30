@@ -21,7 +21,7 @@
 
             }
 
-            <div class="fg-col ">
+            <div class="fg-col">
                 <label class="fg-label" for="name">شیفت</label>
                 <select class="uk-select" asp-for="RoleId">
                     @foreach (var item in listRole)
@@ -31,42 +31,24 @@
                 </select>
                 <span class="text-danger" asp-validation-for="RoleId"></span>
             </div>
-
-            <div class="fg-col ">
-                <label class="fg-label" for="shiftPreminent">دسترسی کامل</label>
-                <input class="entry" type="radio" checked name="shiftPreminent" onclick="javascript:yesnoCheck();" id="noCheck" @((ViewBag.checkedIsDate == false) ? "checked" : "")>
-
-                <label class="fg-label" for="shiftPreminent">زماندار</label>
-                <input class="entry" type="radio" required name="shiftPreminent" onclick="javascript:yesnoCheck();" id="yesCheck" @((ViewBag.checkedIsDate == true) ? "checked" : "")>
+            <div class="uk-margin uk-grid-small uk-child-width-auto uk-grid" style="direction:rtl">
+                <label class="fg-label " for="shiftPreminent">
+                    دسترسی کامل
+                    <input class="uk-radio" type="radio" checked name="shiftPreminent" onclick="javascript:yesnoCheck();" id="noCheck" @((ViewBag.checkedIsDate == false) ? "checked" : "")>
+                </label>
+                <label class="fg-label uk-margin-large-right" for="shiftPreminent">
+                    زماندار
+                    <input class="uk-radio" type="radio" required name="shiftPreminent" onclick="javascript:yesnoCheck();" id="yesCheck" @((ViewBag.checkedIsDate == true) ? "checked" : "")>
+                </label>
                 <span class="text-danger" asp-validation-for="IsShiftPreminent"></span>
             </div>
             <input type="checkbox" style="display:none" asp-for="IsShiftPreminent" checked />
             <div style="visibility: hidden" id="ifYes">
-                @*<div>
-            <label class="mt-3 uk-text-bold">افزودن تاریخ</label>
-            &nbsp;<span onclick="SetNewInputGallery()" class="text-success cursor-pointer" uk-icon="plus-circle"></span>
-        </div>*@
                 <div>
-                    <input readonly class="entry ShiftDate" type="text" name="ShiftDate" placeholder="در تاریخ">
+                    <label class="mt-3 uk-text-bold">افزودن تاریخ</label>
+                    &nbsp;<span onclick="SetNewInputGallery()" class="text-success cursor-pointer btn-primary" uk-icon="plus-circle"></span>
                 </div>
-                @*<div>
                     <input readonly class="entry ShiftDate" type="text" name="ShiftDate" placeholder="در تاریخ">
-                </div>
-                <div>
-                    <input readonly class="entry ShiftDate" type="text" name="ShiftDate" placeholder="در تاریخ">
-                </div>
-                <div>
-                    <input readonly class="entry ShiftDate" type="text" name="ShiftDate" placeholder="در تاریخ">
-                </div>
-                <div>
-                    <input readonly class="entry ShiftDate" type="text" name="ShiftDate" placeholder="در تاریخ">
-                </div>
-                <div>
-                    <input readonly class="entry ShiftDate" type="text" name="ShiftDate" placeholder="در تاریخ">
-                </div>
-                <div>
-                    <input readonly class="entry ShiftDate" type="text" name="ShiftDate" placeholder="در تاریخ">
-                </div>*@
             </div>
         </div>
 
@@ -99,14 +81,14 @@
     <script src="~/datePersion/persianDatepicker.js"></script>
     <script>
 
-            $(".ShiftDate").persianDatepicker();
+        $(".ShiftDate").persianDatepicker();
 
-            //function SetNewInputGallery() {
-            //    $("#ifYes").append(`<div>
-            //            <input readonly class="entry ShiftDate"   type="text" name="ShiftDate" placeholder="در تاریخ">
-            //        </div>`
-            //    );
-            //}
+        function SetNewInputGallery() {
+            $("#ifYes").append(`
+                            <input readonly class="entry ShiftDate"   type="text" name="ShiftDate" placeholder="در تاریخ">
+                        `
+            );
+        }
     </script>
 
 
