@@ -312,50 +312,77 @@ namespace Nursery.Areas.Admin.Controllers
             }));
         }
         [HttpPost]
-        public async Task<IActionResult> AddRole(TblUserRoleRel addRole, string name = null)
+        public async Task<IActionResult> AddRole(TblUserRoleRel addRole, List<DateTime> shiftDatas, string name = null)
         {
             ViewBag.name = name;
             bool checkedIsDate = !addRole.IsShiftPreminent;
 
-            if (ModelState.IsValid)
+            if (_db.UserRoleRel.Any(i => i.RoleId == addRole.RoleId && !checkedIsDate && i.IsShiftPreminent && i.UserId == addRole.UserId && i.IsDeleted == false))
             {
-                if (_db.UserRoleRel.Any(i => i.RoleId == addRole.RoleId && !checkedIsDate && i.IsShiftPreminent && i.UserId == addRole.UserId && i.IsDeleted == false))
+                ModelState.AddModelError("RoleId", "این شیفت به این کاربر  قبلا اضافه شده است");
+            }
+            else
+            {
+                shiftDatas = shiftDatas.Where(i => !string.IsNullOrEmpty(i.ToString())).ToList();
+                if (addRole.IsShiftPreminent == false && !shiftDatas.Any())
                 {
-                    ModelState.AddModelError("RoleId", "این شیفت به این کاربر  قبلا اضافه شده است");
+                    checkedIsDate = true;
+                    ModelState.AddModelError("IsShiftPreminent", " تاریخ وارد نشده است");
                 }
                 else
                 {
-                    if (addRole.IsShiftPreminent == false && addRole.ShiftDate == null)
+                    if (addRole.IsShiftPreminent == false && shiftDatas.Any())
                     {
-                        checkedIsDate = true;
-                        ModelState.AddModelError("IsShiftPreminent", " تاریخ وارد نشده است");
+                        foreach (var item in shiftDatas)
+                        {
+                            PersianCalendar pc = new PersianCalendar();
+                            string[] Start = Convert.ToString(item).Split(' ')[0].Split('/');
+                            DateTime startTime = pc.ToDateTime(Convert.ToInt32(Start[2]), Convert.ToInt32(Start[0]), Convert.ToInt32(Start[1]), 0, 0, 0, 0).Date;
+                            if (startTime.Date >= DateTime.Now.Date)
+                            {
+                                if (!_db.UserRoleRel.Any(i => i.ShiftDate == startTime.Date
+                                && i.RoleId == addRole.RoleId
+                                && i.UserId == addRole.UserId 
+                                && i.IsDeleted == false))
+                                {
+                                    addRole.ShiftDate = startTime.Date;
+                                    TblUserRoleRel addTblUserRoleRel = new TblUserRoleRel();
+                                    addTblUserRoleRel.RoleId = addRole.RoleId;
+                                    addTblUserRoleRel.UserId = addRole.UserId;
+                                    addTblUserRoleRel.ShiftDate = addRole.ShiftDate;
+                                    _db.UserRoleRel.Add(addTblUserRoleRel);
+                                    _db.Save();
+                                }
+                            }
+                        }
                     }
                     else
                     {
-                        if (addRole.ShiftDate != null)
-                        {
-                            PersianCalendar pc = new PersianCalendar();
-                            string[] Start = Convert.ToString(addRole.ShiftDate).Split(' ')[0].Split('/');
-                            DateTime startTime = pc.ToDateTime(Convert.ToInt32(Start[2]), Convert.ToInt32(Start[0]), Convert.ToInt32(Start[1]), 0, 0, 0, 0).Date;
-                            addRole.ShiftDate = startTime.Date;
-                        }
                         _db.UserRoleRel.Add(addRole);
                         _db.Save();
-                        #region Add Log
-                        TblRole selectedRoleEdit = _db.Role.GetById(addRole.RoleId);
-                        TblUser selectedUserEdit = _db.User.GetById(addRole.UserId);
-                        _db.UserLog.Add(new TblUserLog()
-                        {
-                            Text = LogRepo.AddUserRoleRel(SelectUser().IdentificationNo, selectedRoleEdit.Title.ToString(), selectedUserEdit.IdentificationNo.ToString()),
-                            UserId = SelectUser().UserId,
-                            Type = 1,
-                            DateCreated = DateTime.Now
-                        });
-                        _db.Save();
-                        #endregion
-                        return await Task.FromResult(Redirect("/Admin/User/Index?id=" + addRole.UserId + "&name=" + name + "&addRoleInUser=true"));
-
                     }
+                    //if (addRole.ShiftDate != null)
+                    //{
+                    //    PersianCalendar pc = new PersianCalendar();
+                    //    string[] Start = Convert.ToString(addRole.ShiftDate).Split(' ')[0].Split('/');
+                    //    DateTime startTime = pc.ToDateTime(Convert.ToInt32(Start[2]), Convert.ToInt32(Start[0]), Convert.ToInt32(Start[1]), 0, 0, 0, 0).Date;
+                    //    addRole.ShiftDate = startTime.Date;
+                    //}
+
+                    #region Add Log
+                    TblRole selectedRoleEdit = _db.Role.GetById(addRole.RoleId);
+                    TblUser selectedUserEdit = _db.User.GetById(addRole.UserId);
+                    _db.UserLog.Add(new TblUserLog()
+                    {
+                        Text = LogRepo.AddUserRoleRel(SelectUser().IdentificationNo, selectedRoleEdit.Title.ToString(), selectedUserEdit.IdentificationNo.ToString()),
+                        UserId = SelectUser().UserId,
+                        Type = 1,
+                        DateCreated = DateTime.Now
+                    });
+                    _db.Save();
+                    #endregion
+                    return await Task.FromResult(Redirect("/Admin/User/Index?id=" + addRole.UserId + "&name=" + name + "&addRoleInUser=true"));
+
                 }
             }
             ViewBag.checkedIsDate = checkedIsDate;

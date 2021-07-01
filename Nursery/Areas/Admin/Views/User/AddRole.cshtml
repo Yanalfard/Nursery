@@ -40,17 +40,18 @@
                     زماندار
                     <input class="uk-radio" type="radio" required name="shiftPreminent" onclick="javascript:yesnoCheck();" id="yesCheck" @((ViewBag.checkedIsDate == true) ? "checked" : "")>
                 </label>
-                <span class="text-danger" asp-validation-for="IsShiftPreminent"></span>
+               
             </div>
             <input type="checkbox" style="display:none" asp-for="IsShiftPreminent" checked />
 
         </div>
         <div style="visibility: hidden" id="ifYes" class="ifYes">
+            <span class="text-danger" asp-validation-for="IsShiftPreminent"></span>
             <div>
                 <label class="mt-3 uk-text-bold">افزودن تاریخ</label>
                 &nbsp;<span onclick="SetNewInputGallery()" class="text-success cursor-pointer btn-primary" uk-icon="plus-circle"></span>
             </div>
-            <input readonly class="entry ShiftDate" type="text" name="ShiftDate" placeholder="در تاریخ">
+            <input readonly class="entry ShiftDate" type="text" name="shiftDatas" placeholder="در تاریخ">
         </div>
     </div>
     <div class="form-footer">
@@ -61,21 +62,14 @@
 @section Scripts{
 
     <script>
-        function SetNewInputGallery2() {
-            $(".ShiftDate2").persianDatepicker();
+        function SetNewInputGallery2(id) {
+            $(".ShiftDate" + id).persianDatepicker();
         }
-        let x = 3;
-        const y = x;
-
+        let x = 1;
         function SetNewInputGallery() {
-            alert(y);
-            y = y++;
-            $(".ifYes").append(`
-
-                <input readonly class="entry ShiftDate2" onclick="SetNewInputGallery2()" type="text" name="ShiftDate" placeholder="در تاریخ">
-
-                                    `
-            );
+            y = x;
+            x++;
+            $(".ifYes").append(`<input readonly class="entry ShiftDate` + y + `" onclick="SetNewInputGallery2(` + y + `)" type="text" name="shiftDatas" placeholder="در تاریخ">`);
         }
     </script>
     <script>
