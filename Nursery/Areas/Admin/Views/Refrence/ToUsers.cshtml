@@ -58,16 +58,18 @@
             </tbody>
         </table>
         <div class="form-footer">
-            <div class="uk-margin-auto-right">
-                <textarea name="comment">
 
-</textarea>
+            <div class="uk-margin">
+                <textarea name="comment"  maxlength="500" class="uk-textarea" dir="rtl" cols="250" rows="5" placeholder="پیام شما"></textarea>
             </div>
-            <div class="uk-margin-auto-right">
-                <span class="uk-text-danger answer">
-                    لطفا حداقل یک کاربر انتخاب شود
-                </span>
-                <input type="submit" name="name" value="ارجاع" id="myButton" class="btn btn-primary" disabled />
+
+        </div>
+        <div class="uk-margin-auto-right">
+            <span class="uk-text-danger answer">
+                لطفا حداقل یک کاربر انتخاب کنید
+            </span>
+            <div class="myButton">
+                <button type="submit" class="uk-button uk-button-primary">ارجاع</button>
             </div>
         </div>
     </form>
@@ -79,15 +81,15 @@
     <script>
         yesnoCheck();
         function yesnoCheck() {
-            $('#myButton').prop("disabled", !$(".myCheckbox").prop("checked"));
+            $('.myButton').prop("disabled", !$(".myCheckbox").prop("checked"));
 
             if ($('.myCheckbox').is(":checked")) {
-                $("#myButton").show();
+                $(".myButton").show();
                 $(".answer").hide();
             }
             else {
                 $(".answer").show();
-                $("#myButton").hide();
+                $(".myButton").hide();
             }
         }
 
