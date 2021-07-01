@@ -30,6 +30,7 @@
         <table class="tbl tbl-striped" dir="rtl">
             <thead>
                 <tr>
+                    <th>ردیف</th>
                     <th>کد</th>
                     <th>نام فرم</th>
                     <th>نام کاربر ثبت کننده</th>
@@ -43,41 +44,42 @@
             <tbody>
                 @foreach (var item in Model)
                 {
-                    <tr>
-                        <td>@item.IndexNo</td>
-                        <td>@item.Form?.Name</td>
-                        <td>@item.User?.Name</td>
-                        <td>@item.Kid?.Nickname</td>
-                        <td>@item.PageName</td>
-                        <td>@item.Refrence.DateSubmited.AllToShamsi()</td>
-                        <td>
-                            @if (item.IsEnded)
-                            {
-                                <span>خاتمه</span>
-                            }
-                            else
-                            {
-                        <span>جاری </span>
-                            }
-                        </td>
-                        <td class="actions">
-                            <a href="" class="btn-icon round text-4" uk-icon="icon:ellipsis-h;ratio:.72"></a>
-                            <div class="dropdown" uk-drop="mode: click;offset:4">
-                                <ul class="dropdown-list">
-                                    <li>
-                                        <a asp-area="User"
-                                           asp-controller="Form"
-                                           asp-action="ShowRefrence"
-                                           asp-route-indexN="@item.IndexNo"
-                                           class="rowr">
-                                            <span class="new">مشاهده فرم </span>
-                                            <span class="small" uk-icon="eye"></span>
-                                        </a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </td>
-                    </tr>
+                <tr>
+                    <td>@(Model.ToList().IndexOf(item)+1)</td>
+                    <td>@item.IndexNo</td>
+                    <td>@item.Form?.Name</td>
+                    <td>@item.User?.Name</td>
+                    <td>@item.Kid?.Nickname</td>
+                    <td>@item.PageName</td>
+                    <td>@item.Refrence.DateSubmited.AllToShamsi()</td>
+                    <td>
+                        @if (item.IsEnded)
+                        {
+                            <span>خاتمه</span>
+                        }
+                        else
+                        {
+                            <span>جاری </span>
+                        }
+                    </td>
+                    <td class="actions">
+                        <a href="" class="btn-icon round text-4" uk-icon="icon:ellipsis-h;ratio:.72"></a>
+                        <div class="dropdown" uk-drop="mode: click;offset:4">
+                            <ul class="dropdown-list">
+                                <li>
+                                    <a asp-area="User"
+                                       asp-controller="Form"
+                                       asp-action="ShowRefrence"
+                                       asp-route-indexN="@item.IndexNo"
+                                       class="rowr">
+                                        <span class="new">مشاهده فرم </span>
+                                        <span class="small" uk-icon="eye"></span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </td>
+                </tr>
                 }
 
             </tbody>

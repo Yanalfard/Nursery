@@ -17,7 +17,7 @@
     <div class="form-header" uk-sticky="offset: 72;cls-active: sticked;bottom: true">
         <div class="rowr">
             <h2 class="card-title">
-                لیست فرم های ثبت شده
+                لیست فرم های ارجاع داده شده
             </h2>
             <a onclick="showOtherPage(1)" class="btn btn-secondary uk-margin-auto-right">
                 <span>جستجو</span>
@@ -30,6 +30,7 @@
         <table class="tbl tbl-striped" dir="rtl">
             <thead>
                 <tr>
+                    <th>ردیف</th>
                     <th>کد</th>
                     <th>نام فرم</th>
                     <th>نام کاربر ثبت کننده</th>
@@ -44,6 +45,7 @@
                 @foreach (var item in Model)
                 {
                     <tr>
+                        <td>@(Model.ToList().IndexOf(item)+1)</td>
                         <td>@item.IndexNo</td>
                         <td>@item.Form?.Name</td>
                         <td>@item.User?.Name</td>
@@ -84,6 +86,6 @@
         </table>
     </div>
     <div class="form-footer">
-     
+
     </div>
 </div>

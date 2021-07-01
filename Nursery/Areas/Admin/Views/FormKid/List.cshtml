@@ -84,6 +84,7 @@
         <table class="tbl tbl-striped" dir="rtl">
             <thead>
                 <tr>
+                    <th>ردیف</th>
                     <th>کد</th>
                     <th>نام فرم</th>
                     <th>نام کاربر ثبت کننده</th>
@@ -100,6 +101,7 @@
                 @foreach (var item in Model)
                 {
                     <tr id="formKidId_@item.IndexN">
+                        <td>@(Model.ToList().IndexOf(item)+1)</td>
                         <td>@item.IndexN</td>
                         <td>@item.Form?.Name</td>
                         <td>@item.User?.Name</td>
@@ -115,7 +117,7 @@
                             }
                             else
                             {
-                        <span>جاری</span>
+                                <span>جاری</span>
                             }
                         </td>
                         <td class="actions">
