@@ -3,6 +3,7 @@
 @{
     ViewData["Title"] = Model.Name;
     Layout = "~/Areas/User/Views/_UserLayout.cshtml";
+    int count = 1;
 }
 
 <div class="gap-between-card col">
@@ -74,7 +75,6 @@
                     </thead>
                     <tbody>
                         @{
-
                             List<TblUserRoleRel> tblUserRoleRels = Model.TblUserRoleRel.Where(i => i.IsDeleted == false).ToList();
                             List<TblUserRoleRel> list = new List<TblUserRoleRel>();
                             foreach (var item in tblUserRoleRels)
@@ -92,7 +92,7 @@
                         @foreach (var item in list)
                         {
                             <tr>
-                                <td>@(Model.TblUserRoleRel.Where(i => i.IsDeleted == false).ToList().IndexOf(item)+1)</td>
+                                <td>@(count++)</td>
                                 <td>@item.UserRoleId</td>
                                 <td>@item.Role.Title</td>
                                 <td>
