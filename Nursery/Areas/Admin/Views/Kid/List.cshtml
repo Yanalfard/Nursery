@@ -66,16 +66,16 @@
                         @{
                             skip += 1;
                         }
-                    <td>
-                        @if (item.ImageUrl != "")
-                        {
-                            <img src="~/Images/Kid/@item.ImageUrl" height="48" width="48" alt="عکس کاربر" />
-                        }
-                        else
-                        {
-                            <img src="~/st/png/C.png" height="48" width="48" alt="عکس کاربر" />
-                        }
-                    </td>
+                        <td>
+                            @if (item.ImageUrl != "")
+                            {
+                                <img src="~/Images/Kid/@item.ImageUrl" height="48" width="48" alt="عکس کاربر" />
+                            }
+                            else
+                            {
+                                <img src="~/st/png/C.png" height="48" width="48" alt="عکس کاربر" />
+                            }
+                        </td>
                         <td>@item.Name</td>
                         <td>@item.Nickname</td>
                         <td>@item.Page.Name</td>
@@ -83,6 +83,30 @@
                             <a href="" class="btn-icon round text-4" uk-icon="icon:ellipsis-h;ratio:.72"></a>
                             <div class="dropdown" uk-drop="mode: click;offset:4">
                                 <ul class="dropdown-list">
+
+                                    @if ((bool)ViewBag.IsRegister)
+                                    {
+                                        <li>
+                                            <a asp-area="Admin"
+                                               asp-controller="Form"
+                                               asp-action="PriorityFormInKids"
+                                               asp-route-kidId="@item.KidId"
+                                               class="rowr">
+                                                <span class="new"> فرم های اختصاص داده شده</span>
+                                                <span class="small" uk-icon="pen-square"></span>
+                                            </a>
+                                        </li>
+                                    }
+                                    <li>
+                                        <a asp-area="Admin"
+                                           asp-controller="Form"
+                                           asp-action="FormValueInKid"
+                                           asp-route-kidId="@item.KidId"
+                                           class="rowr">
+                                            <span class="new"> فرم های پر شده برای این کودک</span>
+                                            <span class="small" uk-icon="pen-square"></span>
+                                        </a>
+                                    </li>
                                     <li>
                                         <a asp-area="Admin"
                                            asp-controller="Kid"

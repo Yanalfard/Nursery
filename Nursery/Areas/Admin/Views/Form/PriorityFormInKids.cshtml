@@ -1,6 +1,6 @@
-﻿@model IEnumerable<TblForm>
+﻿@model IEnumerable<TblKidFormVm>
 @{
-    ViewData["Title"] = "لیست فرم ها";
+    ViewData["Title"] = "لیست فرم ها اختصاص داده شده";
     Layout = "~/Areas/Admin/Views/_AdminLayout.cshtml";
 }
 
@@ -16,7 +16,11 @@
     <div class="form-header" uk-sticky="offset: 72;cls-active: sticked;bottom: true">
         <div class="rowr">
             <h2 class="card-title">
-                لیست فرم ها
+                <span style="direction:rtl">
+                    (@ViewBag.KidName :اسم مستعار کودک)
+                </span>
+                لیست فرم های اختصاص داده شده
+
             </h2>
             <a onclick="showOtherPage(1)" class="btn btn-secondary uk-margin-auto-right">
                 <span>جستجو</span>
@@ -31,32 +35,26 @@
     </div>
 
     <div class="form-search" uk-sticky="offset: 140;cls-active: sticked uk-box-shadow-medium;bottom:true">
-        <form id="formSearchForm" action="/Admin/Form/List" class="controls-grid">
+        <form id="formSearchForm" action="/Admin/Form/PriorityFormInKids" class="controls-grid">
             <input class="entry" type="hidden" id="pageId" name="pageId" value="@ViewBag.PageShow">
+            <input class="entry" type="hidden" name="kidId" value="@ViewBag.kidId">
             @*<input class="entry" type="number" name="id" placeholder="کد" value="@ViewBag.id">*@
             <input class="entry" type="text" name="name" placeholder="نام" value="@ViewBag.name">
             <input class="entry" type="text" name="description" placeholder="توضیحات" value="@ViewBag.description">
-            <div class="col">
-                <label class="fg-label row text-3">
-                    حذف شده
-                    <input class="uk-checkbox" id="checkedDelete" name="checkedDelete" type="checkbox" @(((bool)ViewBag.checkedDelete == true) ? "checked" : "")>
-                </label>
-                <span class="text-danger"></span>
-            </div>
         </form>
     </div>
 
 
 
-    <div class="form-body scrollh-container uk-padding-remove" >
+    <div class="form-body scrollh-container uk-padding-remove">
         <table class="tbl tbl-striped" dir="rtl">
             <thead>
                 <tr>
                     <th>ردیف</th>
                     <th>کد</th>
                     <th>نام</th>
-                    <th>اولویت </th>
                     <th>توضیحات</th>
+                    <th>وضعیت</th>
                     <th>تاریخ</th>
                     <th></th>
                 </tr>
@@ -74,7 +72,6 @@
                     }
                     <td>@item.FormId</td>
                     <td>@item.Name</td>
-                    <td>@item.Priority</td>
                     <td>
                         <a href="#ModalDescription_desc_@item.FormId" class="btn-icon round text-4" uk-icon="icon:eye;ratio:.5" uk-toggle></a>
 
@@ -97,57 +94,56 @@
                             </div>
                         </div>
                     </td>
+
+                    @if (item.IsFull)
+                    {
+                        <td>
+                            پر شده
+                        </td>
+
+                    }
+                    else
+                    {
+                        <td>
+                            پر نشده
+                        </td>
+
+                    }
                     <td>@item.DateCreated.Value.AllToShamsi()</td>
+
                     <td class="actions">
                         <a href="" class="btn-icon round text-4" uk-icon="icon:ellipsis-h;ratio:.72"></a>
                         <div class="dropdown" uk-drop="mode: click;offset:4">
 
                             <ul class="dropdown-list">
-                                <li>
-                                    <a class="rowr"
-                                       asp-area="admin"
-                                       asp-controller="Form"
-                                       asp-action="Index"
-                                       asp-route-id="@item.FormId"
-                                       asp-route-name="@item.Name">
-                                        <span class="new">مشاهده و اضافه کردن بخش</span>
-                                        <span class="small" uk-icon="eye"></span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a class="rowr"
-                                       asp-area="admin"
-                                       asp-controller="Form"
-                                       asp-action="AddFormInUser"
-                                       asp-route-id="@item.FormId"
-                                       asp-route-name="@item.Name">
-                                        <span class="new">اختصاص دادن به کاربر</span>
-                                        <span class="small" uk-icon="eye"></span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a class="rowr" onclick="addPriorityInUser(@item.FormId)">
-                                        <span class="new">اختصاص دادن به عنوان فرم کودک</span>
-                                        <span class="small" uk-icon="eye"></span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a class="rowr"
-                                       asp-area="admin"
-                                       asp-controller="Form"
-                                       asp-action="Edit"
-                                       asp-route-id="@item.FormId"
-                                       asp-route-name="@item.Name.Replace(" ","")">
-                                        <span class="new">ویرایش</span>
-                                        <span class="small" uk-icon="pen-square"></span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a class="rowr btn-danger" popconfirm="floating:true;description:آیا از حذف کاربر اطمینان دارید؟;direction:rt;type:danger;title:هشدار;okText:حذف;" popok="deleteForm(@item.FormId)">
-                                        <span>حذف</span>
-                                        <span class="small" uk-icon="trash"></span>
-                                    </a>
-                                </li>
+                                @if (item.IsFull)
+                                {
+                                    <li>
+                                        <a asp-area="Admin"
+                                           asp-controller="FormKid"
+                                           asp-action="Index"
+                                           asp-route-indexN="@item.TblValue.IndexNo"
+                                           class="rowr">
+                                            <span class="new">مشاهده فرم</span>
+                                            <span class="small" uk-icon="pen-square"></span>
+                                        </a>
+                                    </li>
+                                }
+                                else
+                                {
+                                    <li>
+                                        <a asp-area="User"
+                                           asp-controller="Page"
+                                           asp-action="Form"
+                                           asp-route-formId="@item.FormId"
+                                           asp-route-kidId="@item.KidId"
+                                           class="rowr">
+                                            <span class="new">پر کردن فرم</span>
+                                            <span class="small" uk-icon="pen-square"></span>
+                                        </a>
+                                    </li>
+                                }
+
                             </ul>
                         </div>
                     </td>

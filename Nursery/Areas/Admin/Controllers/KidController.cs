@@ -47,6 +47,30 @@ namespace Nursery.Areas.Admin.Controllers
                 list = list.Where(i => i.Nickname.Contains(nickname)).ToList();
             }
             list = list.Where(i => i.IsDeleted == ViewBag.checkedDelete).ToList();
+            ViewBag.IsRegister = _db.Form.Any(i => i.Priority == 0);
+            //List<TblKidFormVm> listKids = new List<TblKidFormVm>();
+            //TblForm checkForm = _db.Form.Get(i => i.Priority == 0).FirstOrDefault();
+            //foreach (var item in list)
+            //{
+            //    TblKidFormVm addKid = new TblKidFormVm();
+            //    addKid.ImageUrl = item.ImageUrl;
+            //    addKid.KidId = item.KidId;
+            //    addKid.Name = item.Name;
+            //    addKid.Nickname = item.Nickname;
+            //    addKid.PageId = item.PageId;
+            //    addKid.PageName = item.Page.Name;
+            //    //addKid.FormId = checkForm != null ? checkForm.FormId : 0;
+            //    //addKid.FormName = checkForm != null ? checkForm.Name : "";
+            //    addKid.IsRegister = _db.Form.Any(i => i.Priority == 0);
+            //    //TblValue value = _db.Value.Get(i => i.FormField.FormId == checkForm.FormId
+            //    //&& i.KidId == item.KidId).FirstOrDefault();
+            //    //if (value != null && checkForm != null)
+            //    //{
+            //    //    addKid.IsFull = true;
+            //    //    addKid.TblValue = value;
+            //    //}
+            //    listKids.Add(addKid);
+            //}
             //Pagging
             int take = 10;
             int skip = (pageId - 1) * take;

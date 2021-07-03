@@ -1,6 +1,6 @@
 ﻿@model IEnumerable<ValueListVm>
 @{
-    ViewData["Title"] = " لیست فرم های ثبت شده";
+    ViewData["Title"] = " لیست فرم های ثبت شده برای کودک   " + Model.FirstOrDefault().Kid.Name;
     Layout = "~/Areas/Admin/Views/_AdminLayout.cshtml";
 }
 <link href="~/datePersion/persianDatepicker-default.css" rel="stylesheet" />
@@ -17,8 +17,12 @@
     <div class="form-header" uk-sticky="offset: 72;cls-active: sticked;bottom: true">
         <div class="rowr">
             <h2 class="card-title">
-                لیست فرم های ثبت شده
+                لیست فرم های ثبت شده برای کودک
             </h2>
+            &nbsp;
+            <span>
+                @Model.FirstOrDefault().Kid.Name
+            </span>
             <a onclick="showOtherPage(1)" class="btn btn-secondary uk-margin-auto-right">
                 <span>جستجو</span>
                 <span class="tiny" uk-icon="search"></span>
@@ -29,36 +33,10 @@
     <div class="form-search" uk-sticky="offset: 140;cls-active: sticked uk-box-shadow-medium;bottom:true">
         <form id="formSearchUser" action="/Admin/FormKid/List" class="controls-grid">
             <input class="entry" type="hidden" id="pageId" name="pageId" value="@ViewBag.PageShow">
+            <input class="entry" type="hidden" name="kidId" value="@ViewBag.kidId">
             <input class="entry" type="text" id="nameForm" name="nameForm" placeholder="نام فرم" value="@ViewBag.nameForm">
             <input class="entry" type="text" id="nameUser" name="nameUser" placeholder="نام کاربر ثبت کننده" value="@ViewBag.nameUser">
             <input class="entry" type="number" id="identificationNo" name="identificationNo" placeholder="کد ملی" value="@ViewBag.identificationNo">
-            <input class="entry" type="text" id="nickname" name="nickname" placeholder="نام مستعار کودک" value="@ViewBag.nickname">
-            @{
-                List<TblRole> listRole = ViewBag.UserRoleRel as List<TblRole>;
-
-            }
-            <select class="uk-select" name="roleName" id="roleName">
-                <option value="0">نام شیفت</option>
-                @foreach (var item in listRole)
-                {
-                    <option value="@item.RoleId">@item.Title</option>
-                }
-            </select>
-            <input class="entry" type="hidden" id="selectedroleName" name="selectedroleName" placeholder="نام شیفت " value="@ViewBag.roleName">
-
-            @{
-                List<TblPage> listPage = ViewBag.RolePageRel as List<TblPage>;
-
-            }
-            <select class="uk-select" name="pageName" id="pageName">
-                <option value="0">نام بخش</option>
-                @foreach (var item in listPage)
-                {
-                    <option value="@item.PageId">@item.Name</option>
-                }
-            </select>
-
-            <input class="entry" type="hidden" id="selectedpageName" name="selectedpageName" placeholder="نام بخش " value="@ViewBag.pageName">
             <input readonly class="entry" type="text" id="startDate" name="startDate" placeholder="از تاریخ  " value="@ViewBag.StartDate">
             <input readonly class="entry" type="text" id="endDate" name="endDate" placeholder="تا تاریخ  " value="@ViewBag.EndDate">
 
@@ -89,7 +67,6 @@
                     <th>نام فرم</th>
                     <th>نام کاربر ثبت کننده</th>
                     <th>کد ملی ثبت کننده</th>
-                    <th>نام مستعار کودک</th>
                     <th>نام بخش </th>
                     <th>نام شیفت </th>
                     <th>تاریخ ثبت </th>
@@ -106,7 +83,6 @@
                         <td>@item.Form?.Name</td>
                         <td>@item.User?.Name</td>
                         <td>@item.User?.IdentificationNo</td>
-                        <td>@item.Kid?.Nickname</td>
                         <td>@item.Page?.Name</td>
                         <td>@item.Role?.Title</td>
                         <td>@item.Value.DateCreated?.AllToShamsi()</td>

@@ -7,6 +7,7 @@ using Nursery.Utilities;
 using Services.Services;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -88,7 +89,7 @@ namespace Nursery.Areas.Admin.Controllers
             TblUserFormRel selectedUserFormRel = _db.UserFormRel.GetById(id);
             if (selectedUserFormRel != null)
             {
-              
+
                 _db.UserFormRel.Delete(selectedUserFormRel);
                 _db.Save();
                 #region Add Log
@@ -321,6 +322,36 @@ namespace Nursery.Areas.Admin.Controllers
             }
             return await Task.FromResult("false");
         }
+        public async Task<string> AddPriorityInUser(int id)
+        {
+            TblForm selectedForm = _db.Form.GetById(id);
+            if (selectedForm != null)
+            {
+                selectedForm.Priority = 0;
+                selectedForm.IsRegister = true;
+                _db.Form.Update(selectedForm);
+                _db.Save();
+                TblForm selected = _db.Form.Get(i => i.Priority == 0 && i.FormId != id).FirstOrDefault();
+                if (selected != null)
+                {
+                    selected.Priority = 1;
+                    _db.Form.Update(selected);
+                    _db.Save();
+                }
+                //#region Add Log
+                //_db.UserLog.Add(new TblUserLog()
+                //{
+                //    Text = LogRepo.DeleteForm(SelectUser().IdentificationNo, selectedForm.Name),
+                //    UserId = SelectUser().UserId,
+                //    Type = 2,
+                //    DateCreated = DateTime.Now
+                //});
+                //_db.Save();
+                //#endregion
+                return await Task.FromResult("true");
+            }
+            return await Task.FromResult("false");
+        }
         public async Task<IActionResult> AddPage(int id, string name = null)
         {
             ViewBag.name = name;
@@ -431,5 +462,169 @@ namespace Nursery.Areas.Admin.Controllers
             return await Task.FromResult("false");
 
         }
+
+        public async Task<IActionResult> PriorityFormInKids(int pageId = 1, int kidId = 0, int id = 0, string description = null, string name = null, string checkedDelete = null)
+        {
+            try
+            {
+                ViewBag.name = name;
+                ViewBag.kidId = kidId;
+                ViewBag.id = id;
+                ViewBag.description = description;
+                ViewBag.checkedDelete = checkedDelete == "on" ? true : false;
+                List<TblForm> list = _db.Form.Get(i => i.IsRegister, orderBy: j => j.OrderByDescending(k => k.FormId)).ToList();
+                if (name != null)
+                {
+                    list = list.Where(i => i.Name.Contains(name)).ToList();
+                }
+                if (description != null)
+                {
+                    list = list.Where(i => i.Body.Contains(description)).ToList();
+                }
+                if (id != 0)
+                {
+                    list = list.Where(i => i.FormId == id).ToList();
+                }
+                list = list.Where(i => i.IsDeleted == ViewBag.checkedDelete).ToList();
+                List<TblKidFormVm> listForm = new List<TblKidFormVm>();
+                TblKid checkKid = _db.Kid.GetById(kidId);
+                if (checkKid != null)
+                {
+                    ViewBag.KidName = checkKid.Nickname;
+                    foreach (var item in list)
+                    {
+                        TblKidFormVm addForm = new TblKidFormVm();
+                        addForm.KidId = checkKid.KidId;
+                        addForm.Name = item.Name;
+                        addForm.PageId = checkKid.PageId;
+                        addForm.PageName = checkKid.Page.Name;
+                        addForm.Priority = item.Priority;
+                        addForm.FormId = item.FormId;
+                        addForm.DateCreated = item.DateCreated;
+                        addForm.Body = item.Body;
+                        addForm.IsDeleted = item.IsDeleted;
+                        TblValue value = _db.Value.Get(i => i.FormField.FormId == item.FormId
+                        && i.KidId == kidId).FirstOrDefault();
+                        if (value != null)
+                        {
+                            addForm.IsFull = true;
+                            addForm.TblValue = value;
+                        }
+                        listForm.Add(addForm);
+                    }
+                }
+                //Pagging
+                int take = 10;
+                int skip = (pageId - 1) * take;
+                ViewBag.PageCount = Convert.ToInt32(Math.Ceiling((double)listForm.Count() / take));
+                ViewBag.PageShow = pageId;
+                ViewBag.skip = skip;
+                return await Task.FromResult(PartialView(listForm.Skip(skip).Take(take)));
+            }
+            catch
+            {
+                return await Task.FromResult(Redirect("404.html"));
+            }
+
+        }
+        public async Task<IActionResult> FormValueInKid(int pageId = 1, int kidId = 0,
+            string nameForm = null,
+            string nameUser = null,
+            string identificationNo = null,
+            string nickname = null,
+            int roleName = 0,
+            int pageName = 0,
+            string checkedDelete = null,
+            string checkedOffAccepted = null,
+            string checkedOnAccepted = null,
+            string startDate = null,
+            string endDate = null
+            )
+        {
+            ViewBag.nameForm = nameForm;
+            ViewBag.kidId = kidId;
+            ViewBag.nameUser = nameUser;
+            ViewBag.identificationNo = identificationNo;
+            ViewBag.checkedDelete = checkedDelete == "on" ? true : false;
+            ViewBag.checkedOnAccepted = checkedOnAccepted == "on" ? true : false;
+            ViewBag.StartDate = startDate;
+            ViewBag.EndDate = endDate;
+
+            List<TblValue> selectedListFormFieldRel = _db.Value.Get(i => i.KidId == kidId && i.IsDeleted == false
+            && i.FormField.IsDeleted == false
+            && i.FormField.Form.IsDeleted == false, orderBy: i => i.OrderByDescending(i => i.ValueId)).ToList();
+            List<ValueListVm> list = new List<ValueListVm>();
+            foreach (var item in selectedListFormFieldRel)
+            {
+                if (!list.Any(i => i.IndexN == item.IndexNo))
+                {
+                    ValueListVm val = new ValueListVm();
+                    val.FormFieldId = item.FormFieldId;
+                    val.Value = item;
+                    val.DateCreated = (DateTime)item.DateCreated;
+                    val.User = item.User;
+                    val.Kid = item.Kid;
+                    val.Form = item?.FormField?.Form;
+                    val.Page = val.Form?.TblPageFormRel?.FirstOrDefault()?.Page;
+                    val.Role = val.Page?.TblRolePageRel?.FirstOrDefault()?.Role;
+                    val.IndexN = item.IndexNo;
+                    val.IsAccepted = item.IsAccepted;
+                    val.IsDeleted = item.IsDeleted;
+                    list.Add(val);
+                }
+            }
+
+            if (nameForm != null)
+            {
+                list = list.Where(i => i.Form.Name.Contains(nameForm)).ToList();
+            }
+            if (nameUser != null)
+            {
+                list = list.Where(i => i.User.Name.Contains(nameUser)).ToList();
+            }
+            if (identificationNo != null)
+            {
+                list = list.Where(i => i.User.IdentificationNo.Contains(identificationNo)).ToList();
+            }
+            if (nickname != null)
+            {
+                list = list.Where(i => i.Kid.Name.Contains(nickname)).ToList();
+            }
+            if (roleName != 0)
+            {
+                list = list.Where(i => i.Role.RoleId == roleName).ToList();
+            }
+            if (pageName != 0)
+            {
+                list = list.Where(i => i.Page.PageId == pageName).ToList();
+            }
+            if (startDate != null)
+            {
+                PersianCalendar pc = new PersianCalendar();
+                string[] Start = startDate.Split('/');
+                DateTime startTime = pc.ToDateTime(Convert.ToInt32(Start[0]), Convert.ToInt32(Start[1]), Convert.ToInt32(Start[2]), 0, 0, 0, 0).Date;
+                list = list.Where(i => i.DateCreated.Date >= startTime.Date).ToList();
+            }
+            if (endDate != null)
+            {
+                PersianCalendar pc = new PersianCalendar();
+                string[] Start = endDate.Split('/');
+                DateTime endTime = pc.ToDateTime(Convert.ToInt32(Start[0]), Convert.ToInt32(Start[1]), Convert.ToInt32(Start[2]), 0, 0, 0, 0).Date;
+                list = list.Where(i => i.DateCreated.Date <= endTime.Date).ToList();
+            }
+
+            list = list.Where(i => i.IsDeleted == ViewBag.checkedDelete).ToList();
+            list = list.Where(i => i.IsAccepted == ViewBag.checkedOnAccepted).ToList();
+            list = list.Distinct().ToList();
+            //Pagging
+            int take = 10;
+            int skip = (pageId - 1) * take;
+            ViewBag.PageCount = Convert.ToInt32(Math.Ceiling((double)list.Count() / take));
+            ViewBag.PageShow = pageId;
+            ViewBag.skip = skip;
+            return await Task.FromResult(View(list.Skip(skip).Take(take)));
+        }
+
+
     }
 }
